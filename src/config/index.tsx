@@ -3,7 +3,9 @@ import { mainnet, arbitrum } from '@reown/appkit/networks'
 import type { AppKitNetwork } from '@reown/appkit/networks'
 
 // Get projectId from https://cloud.reown.com
-export const projectId = import.meta.env.VITE_PROJECT_ID
+// @ts-ignore
+// export const projectId = import.meta.env.VITE_PROJECT_ID
+export const projectId = "81fbff8584aa79a5251128f0d3ee3544"
 
 if (!projectId) {
   throw new Error('Project ID is not defined')

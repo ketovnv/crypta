@@ -6,8 +6,8 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-- 
-  /**
+- /\*\*
+
 * Main package configuration for Crypta project
 * A React-based web application using Vite as build tool
 *
@@ -24,4 +24,4 @@ Currently, two official plugins are available:
 * build - Create production build
 * lint - Run ESLint checks
 * preview - Preview production build locally
-  */
+  \*/
