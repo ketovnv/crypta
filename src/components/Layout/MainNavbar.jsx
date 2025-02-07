@@ -1,4 +1,4 @@
-import { Navbar, NavLink, ScrollArea } from '@mantine/core';
+import { NavLink, ScrollArea, AppShell } from '@mantine/core';
 import {
     FiHome,
     FiSettings,
@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fi';
 import styled from '@emotion/styled';
 
-const StyledNavbar = styled(Navbar)`
+const StyledNavbar = styled(AppShell.Navbar)`
     background: ${({ theme }) =>
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white};
     border-right: 2px solid ${({ theme }) =>
@@ -31,7 +31,7 @@ export const MainNavbar = ({ hidden }) => {
             hidden={hidden}
             width={{ sm: 200, lg: 300 }}
         >
-            <Navbar.Section grow component={ScrollArea}>
+            <AppShell.Navbar grow component={ScrollArea}>
                 {menuItems.map((item) => (
                     <NavLink
                         key={item.link}
@@ -41,7 +41,7 @@ export const MainNavbar = ({ hidden }) => {
                         href={item.link}
                     />
                 ))}
-            </Navbar.Section>
+            </AppShell.Navbar>
         </StyledNavbar>
     );
 };

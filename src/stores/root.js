@@ -1,15 +1,14 @@
 import { themeStore } from './theme';
-import { createUiStore } from './ui.store';
-import { createStatsStore } from './stats.store';
+import { uiStore } from './ui';
+import { statsStore } from './stats';
 
 export const rootStore = () => {
 
     const rootStore = {};
 
-    // Инициализируем сторы, передавая rootStore для кросс-стор взаимодействия
     rootStore.themeStore = themeStore(rootStore);
-    rootStore.uiStore = createUiStore(rootStore);
-    rootStore.statsStore = createStatsStore(rootStore);
+    rootStore.uiStore = uiStore(rootStore);
+    rootStore.statsStore =statsStore(rootStore);
 
     return rootStore;
 };

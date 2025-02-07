@@ -1,8 +1,8 @@
-import { Header, Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { Group, ActionIcon, useMantineColorScheme,AppShell } from '@mantine/core';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import styled from '@emotion/styled';
 
-const StyledHeader = styled(Header)`
+const StyledHeader = styled(AppShell.Header)`
     border-bottom: 2px solid ${({ theme }) =>
             theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]};
 `;

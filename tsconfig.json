@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    // Базовые настройки
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
+    // Настройки JSX
+    "jsx": "react-jsx",
+
+    // Разрешаем JavaScript файлы
+    "allowJs": true,
+    "checkJs": false,
+
+    // Настройки для смешанного кода
+    "strict": false,           // Отключаем строгий режим TypeScript
+    "noImplicitAny": false,   // Разрешаем неявный any
+    "strictNullChecks": false,// Отключаем строгие проверки null
+
+    // Пути и алиасы
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "references": []
+}

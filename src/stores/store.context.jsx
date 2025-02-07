@@ -13,7 +13,7 @@ export const useStores = () => {
 };
 
 // Создаем провайдер
-export const StoreProvider = (children) => {
+export const StoreProvider = ({children}) => {
     const store = useMemo(() => rootStore(), []);
 
     return (

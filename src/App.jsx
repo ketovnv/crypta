@@ -1,17 +1,14 @@
-import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { observer } from 'mobx-react-lite';
-import { StoreProvider, useStore } from './contexts/StoreContext';
+import { StoreProvider, useStores } from './stores/store.context.jsx';
 import { AppShell } from './components/Layout/AppShell';
 import { theme } from './theme';
+import {Shell} from "@components/Layout/Shell/Shell.jsx";
 
 const AppContent = observer(() => {
-    const { themeStore } = useStore();
+    const { themeStore } = useStores();
 
     return (
-        <ColorSchemeProvider
-            colorScheme={themeStore.colorScheme}
-            toggleColorScheme={themeStore.toggleColorScheme}
-        >
             <MantineProvider
                 theme={{
                     ...theme,
@@ -34,10 +31,11 @@ const AppContent = observer(() => {
                 }}
                 withGlobalStyles
                 withNormalizeCSS
+                defaultColorScheme="dark"
+                forceColorScheme="dark"
             >
-                <AppShell />
+                <Shell/>
             </MantineProvider>
-        </ColorSchemeProvider>
     );
 });
 

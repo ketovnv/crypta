@@ -1,9 +1,6 @@
 import {
     AppShell as MantineAppShell,
-    Header,
-    Navbar,
     Text,
-    MediaQuery,
     Burger,
     useMantineTheme,
 } from '@mantine/core';
