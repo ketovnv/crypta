@@ -1,0 +1,8 @@
+.navbar{
+  background:  light-dark(var(--mantine-color-body), var(--mantine-color-dark-6));
+  border-right: 2px solid var(--mantine-color-gray-2);
+  border-right-color: dark(var(--mantine-color-dark-5));
+}
+
+
+

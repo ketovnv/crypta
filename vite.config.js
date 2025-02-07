@@ -13,7 +13,7 @@ export default defineConfig({
                 plugins: [
                     ["@babel/plugin-proposal-decorators",
                         {
-                            legacy: false,  // Используем современный синтаксис декораторов
+                            version: "2023-11",
                             decoratorsBeforeExport: true  // Размещаем декораторы перед export
                         }
                     ]
@@ -35,7 +35,6 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
             '@components': path.resolve(__dirname, './src/components'),
             '@assets': path.resolve(__dirname, './src/assets'),
-            '@mantinex': path.resolve(__dirname, 'node_modules/@mantinex')
         }
     },
 
@@ -45,21 +44,9 @@ export default defineConfig({
         minify: 'esbuild', // используем esbuild для минификации
         rollupOptions: {
             output: {
-                manualChunks(id) {
-                    // Группируем все модули @mantinex в один чанк
-                    if (id.includes('@mantinex')) {
-                        return 'mantinex-bundle';
-                    }
-                    // Если модуль из node_modules, но не @mantinex
-                    if (id.includes('node_modules')) {
-                        if (id.includes('@mantine/core')) {
-                            return 'mantine-core';
-                        }
-                        if (id.includes('react')) {
-                            return 'react-vendor';
-                        }
-                        return 'vendors';
-                    }
+                manualChunks: {
+                    'vendor': ['react', 'react-dom'],
+                    'mantine': ['@mantine/core', '@mantine/hooks']
                 }
             }
         },
@@ -88,13 +75,7 @@ export default defineConfig({
     // Оптимизация зависимостей
     optimizeDeps: {
         // Предварительно бандлим все компоненты @mantinex
-        include: [
-            '@mantinex/mantine-header',
-            '@mantinex/mantine-logo',
-            '@mantinex/mantine-meta',
-            '@mantinex/dev-icons',
-            '@mantinex/shiki'
-        ],
+        include: ['react', 'react-dom', '@mantine/core', '@mantine/hooks'],
         // Настройки для более эффективной сборки
         esbuildOptions: {
             target: 'esnext'

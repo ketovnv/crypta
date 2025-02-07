@@ -1,62 +1,35 @@
-import { MantineProvider } from '@mantine/core';
-import { observer } from 'mobx-react-lite';
-import { StoreProvider, useStores } from './stores/store.context.jsx';
-import { AppShell } from './components/Layout/AppShell';
-import { theme } from './theme';
-import {Shell} from "@components/Layout/Shell/Shell.jsx";
+import '@mantine/core/styles.css';
+import {MantineProvider} from '@mantine/core';
+import {observer} from 'mobx-react-lite';
+import {StoreProvider} from './stores/store.context.jsx';
+import {Layout} from '@components/Layout';
+import {theme} from './styles/theme.js';
+
 
 const AppContent = observer(() => {
-    const { themeStore } = useStores();
 
     return (
-            <MantineProvider
-                theme={{
-                    ...theme,
-                    colorScheme: themeStore.colorScheme,
-                    colors: {
-                        ...theme.colors,
-                        brand: [
-                            '#F0BBDD',
-                            '#ED9BCF',
-                            '#EC7CC3',
-                            '#ED5DB8',
-                            '#F13DAF',
-                            '#F71FA7',
-                            '#FF00A1',
-                            '#E00890',
-                            '#C50E82',
-                            '#AD1374'
-                        ],
-                    },
-                }}
-                withGlobalStyles
-                withNormalizeCSS
-                defaultColorScheme="dark"
-                forceColorScheme="dark"
-            >
-                <Shell/>
-            </MantineProvider>
+        <MantineProvider
+            theme={theme}
+            withGlobalStyles
+            withNormalizeCSS
+            defaultColorScheme="dark"
+            forceColorScheme="dark"
+        >
+                <Layout/>
+        </MantineProvider>
     );
 });
 
 const App = () => {
     return (
         <StoreProvider>
-            <AppContent />
+            <AppContent/>
         </StoreProvider>
-    );
+    )
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
 
 
 // import React, {Component} from 'react';
@@ -78,7 +51,7 @@ export default App;
 // // import {InfoList} from './components/InfoList'
 // import {projectId, metadata, networks, wagmiAdapter} from './config'
 //
-// import "./App.css"
+
 // import {useFullscreen} from "@mantine/hooks";
 // import {
 //     Button,

@@ -1,0 +1,6 @@
+.header {
+  border-bottom: 2px solid var(--mantine-color-gray-2);
+  height: 60px;
+  background:  dark(var(--mantine-color-dark-5))
+}
+

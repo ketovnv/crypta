@@ -5,20 +5,20 @@ import { createSpotlight, Spotlight } from '@mantine/spotlight';
 export const [searchStore, searchHandlers] = createSpotlight();
 
 export function Search({ data }: { data: any[] }) {
-    const { themeStore } = useStores();
 
-  const actions = data?.map((item) => ({
-    id: item.component,
-    label: item.component,
-    description: item.attributes.title,
-    onClick: () => router.push(`/component/${item.slug}`),
-  }));
+
+  // const actions = data?.map((item) => ({
+  //   id: item.component,
+  //   label: item.component,
+  //   description: item.attributes.title,
+  //   onClick: () => router.push(`/component/${item.slug}`),
+  // }));
 
   return (
     <Spotlight
       store={searchStore}
       shortcut={['mod + K', 'mod + P', '/']}
-      actions={actions || []}
+       actions={[]}
       tagsToIgnore={[]}
       highlightQuery
       clearQueryOnClose
