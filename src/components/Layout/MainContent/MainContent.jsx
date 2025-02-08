@@ -1,5 +1,6 @@
 import {
-    Container,
+    Highlight,
+    AppShell,
     Paper,
     Title,
     Text,
@@ -9,16 +10,16 @@ import {
     Badge,
     Button,
     Group,
-    useMantineTheme, useMantineColorScheme, ThemeIcon
+    useMantineTheme, useMantineColorScheme, ThemeIcon, ScrollArea, Container,
 } from '@mantine/core';
+
 import {useEffect} from 'react'
-import {FiTrendingUp, FiUsers, FiActivity, FiBox} from 'react-icons/fi';
+import {FiTrendingUp, FiUsers, FiActivity, FiBox, FiLayers} from 'react-icons/fi';
 import classes from './MainContent.module.css';
 import {observer} from "mobx-react-lite";
-import {useStores} from '@/stores/store.context.jsx';
+import {statsStore} from '@/stores/stats.js';
 
 const StatsGrid = observer(() => {
-    const {statsStore} = useStores();
 
     useEffect(() => {
         statsStore.fetchStats();
@@ -27,15 +28,15 @@ const StatsGrid = observer(() => {
     const stats = [
         {
             title: "Пользователи",
-            value: statsStore.stats.users.value,
-            diff: statsStore.stats.users.diff,
+            value: statsStore.stats.sales.value,
+            diff: statsStore.stats.sales.diff,
             icon: FiUsers,
             color: "blue"
         },
         {
             title: "Активность",
-            value: statsStore.stats.activity.value,
-            diff: statsStore.stats.activity.diff,
+            value: statsStore.stats.sales.value,
+            diff: statsStore.stats.sales.diff,
             icon: FiActivity,
             color: "green"
         },
@@ -56,10 +57,10 @@ const StatsGrid = observer(() => {
     ];
 
     return (
-        <Grid>
+        <Grid p="md">
             {stats.map((stat) => (
                 <Grid.Col key={stat.title} xs={12} sm={6} md={3}>
-                    <Card classes={classes.card} withBorder radius="md" p="xs">
+                    <Card className={classes.card} withBorder radius="md" p="xs">
                         <Group position="apart">
                             <div>
                                 <Text size="xs" color="dimmed">{stat.title}</Text>
@@ -69,10 +70,10 @@ const StatsGrid = observer(() => {
                         </Group>
                         <Group position="apart" mt="md">
                             <Badge
-                                color={stat.diff > 0 ? "green" : "red"}
+                                color={stat.color > 0 ? "green" : "red"}
                                 variant="light"
                             >
-                                {stat.diff > 0 ? "+" : ""}{stat.diff}%
+                                {stat.color > 0 ? "+" : ""}{stat.color}%
                             </Badge>
                             <Text size="xs" color="dimmed">За месяц</Text>
                         </Group>
@@ -87,15 +88,15 @@ const WelcomeSection = observer(() => {
     const {colorScheme} = useMantineColorScheme();
 
     return (
-        <Paper stylle={classes.paper} mb="xl">
+        <Paper className={classes.paper} mb="xl" p="md">
             <Group position="apart" align="flex-start" spacing="xl">
-                <div>
-                    <h2 style={classes.gradientText}
-                        component={Title}
-                        order={1}
+                <div p={2}>
+                    <Title className={classes.gradientText}
+                           component={Title}
+                           order={1}
                     >
                         Добро пожаловать!
-                    </h2>
+                    </Title>
                     <Text
                         size="lg"
                         color="dimmed"
@@ -110,14 +111,14 @@ const WelcomeSection = observer(() => {
                     </Text>
                     <Space h="xl"/>
                     <Group spacing="md">
-                        <Button style={classes.animatedButton}
+                        <Button className={classes.animatedButton}
                                 variant="gradient"
-                                gradient={{from: 'blue', to: 'cyan'}}
+                                gradient={{from: 'blue.1', to: 'cyan.2'}}
                                 size="lg"
                         >
                             Начать работу
                         </Button>
-                        <Button style={classes.animatedButton}
+                        <Button className={classes.animatedButton}
                                 variant="light"
                                 color={colorScheme === 'dark' ? 'gray' : 'dark'}
                                 size="lg"
@@ -146,10 +147,36 @@ const WelcomeSection = observer(() => {
 });
 
 export const MainContent = () => {
+    const {theme} = useMantineTheme();
     return (
-        <Container stylle={classes.container} size="xl">
+        <AppShell.Main>
+
             <WelcomeSection/>
+            <Container size="xl" px="md" py="xl" h="100">
+                <ScrollArea h="100">
+
+                    <h1 c="red.6">{JSON.stringify(theme)}</h1>
+
+                </ScrollArea>
+            </Container>
+            <Highlight
+                ta="center"
+                highlight={['highlighted', 'default']}
+                highlightStyles={{
+                    backgroundImage:
+                        'linear-gradient(45deg, var(--mantine-color-cyan-5), var(--mantine-color-indigo-5))',
+                    fontWeight: 700,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                }}
+            >
+                You can change styles of highlighted part if you do not like default styles
+            </Highlight>
+            <Button variant="gradient"
+                    gradient={{from: 'cyan', to: 'blue', deg: 90}}>Mantine button</Button>
+
+
             <StatsGrid/>
-        </Container>
+        </AppShell.Main>
     );
 };

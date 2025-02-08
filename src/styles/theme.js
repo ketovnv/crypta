@@ -1,6 +1,7 @@
-export const theme = {
-    fontFamily: 'Fira Mono for Powerline, sans-serif',
-    primaryColor: 'blue',
+import { createTheme } from '@mantine/core';
+export const theme = createTheme({
+    fontFamily: 'Martian Mono Nerd Font, sans-serif',
+    primaryColor: 'indigo',
 
     // Кастомные цвета для светлой и тёмной темы
     colors: {
@@ -183,4 +184,4 @@ export const theme = {
             },
         },
     })
-};
+});

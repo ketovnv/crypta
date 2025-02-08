@@ -1,33 +1,37 @@
 import '@mantine/core/styles.css';
 import {MantineProvider} from '@mantine/core';
-import {observer} from 'mobx-react-lite';
-import {StoreProvider} from './stores/store.context.jsx';
 import {Layout} from '@components/Layout';
 import {theme} from './styles/theme.js';
+import {createAppKit} from '@reown/appkit/react'
+import {WagmiProvider} from 'wagmi'
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {projectId, metadata, networks, wagmiAdapter} from './config'
+
+const queryClient = new QueryClient()
+
+//Web3 конфигурация
+createAppKit({
+    adapters: [wagmiAdapter],
+    projectId,
+    metadata,
+    networks
+})
 
 
-const AppContent = observer(() => {
 
-    return (
-        <MantineProvider
-            theme={theme}
-            withGlobalStyles
-            withNormalizeCSS
-            defaultColorScheme="dark"
-            forceColorScheme="dark"
-        >
-                <Layout/>
-        </MantineProvider>
-    );
-});
 
-const App = () => {
-    return (
-        <StoreProvider>
-            <AppContent/>
-        </StoreProvider>
-    )
-};
+
+const App = () => <MantineProvider
+    theme={theme}
+
+>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+        <QueryClientProvider client={queryClient}>
+            <Layout/>
+        </QueryClientProvider>
+    </WagmiProvider>
+</MantineProvider>
+
 
 export default App;
 

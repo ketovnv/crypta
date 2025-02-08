@@ -31,10 +31,13 @@
     }
   },
   "include": [
+    "**/*",
+    "**/.client/**/*",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.js",
-    "src/**/*.jsx"
+    "src/**/*.jsx",
+    ".react-router/types/**/*"
   ],
   "exclude": [
     "node_modules",

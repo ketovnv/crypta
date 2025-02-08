@@ -1,8 +1,22 @@
-.navbar{
-  background:  light-dark(var(--mantine-color-body), var(--mantine-color-dark-6));
-  border-right: 2px solid var(--mantine-color-gray-2);
-  border-right-color: dark(var(--mantine-color-dark-5));
+.navbar {
+    background: light-dark(var(--mantine-color-body), var(--mantine-color-dark-6));
+    border-right: 2px solid var(--mantine-color-gray-2);
+    @mixin dark {
+        border-right-color: var(--mantine-color-dark-5)
+    }
+    color: var(--mantine-color-indigo-5);
 }
+
+.link {
+    font-size: var(--mantine-font-size-lg);
+    font-weight: 700;
+    font-family: 'Inter';
+    @mixin hover {
+        color: var(--mantine-color-indigo-8)
+    }
+}
+
+
 
 
 

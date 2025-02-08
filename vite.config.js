@@ -1,6 +1,8 @@
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import svgr from "vite-plugin-svgr";
+
 
 // Плагин для анализа размера бандла
 import {visualizer} from 'rollup-plugin-visualizer';
@@ -26,6 +28,42 @@ export default defineConfig({
             gzipSize: true,
             brotliSize: true,
             filename: "analyze.html", // будет создан в папке dist
+        }),
+        svgr({
+            svgrOptions: {
+                plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx"],
+                svgoConfig: {
+                    plugins: [
+                        {
+                            name: 'preset-default',
+                            params: {
+                                overrides: {
+                                    cleanupIds: false,
+                                    inlineStyles: {onlyMatchedOnce: false},
+                                    removeViewBox: false, // Preserve viewBox
+                                }
+                            }
+                        },
+                        'convertColors', // Additional color optimization
+                        'prefixIds'],
+                    'floatPrecision': 2,
+                },
+                // esbuild options, to transform jsx to js
+                esbuildOptions: {
+                    // ...
+                },
+                exportType: "default",
+                ref: true,
+                svgo: true,
+                titleProp: true,
+
+                // A minimatch pattern, or array of patterns, which specifies the files in the build the plugin should include.
+                include: "**/*.svg",
+
+                //  A minimatch pattern, or array of patterns, which specifies the files in the build the plugin should ignore. By default no files are ignored.
+                exclude: "",
+            },
+            // ...
         })
     ],
 
