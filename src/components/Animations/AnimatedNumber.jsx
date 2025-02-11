@@ -31,7 +31,7 @@ const AnimatedNumber = ({ endValue, startFromPrevious = false }) => {
         }
     }, [endValue, startFromPrevious]);
 
-    return <span ref={countUpRef}></span>;
+    return <h3 style={{color:'red' }} ref={countUpRef}></h3>;
 };
 
 export default AnimatedNumber;

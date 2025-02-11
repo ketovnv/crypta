@@ -17,14 +17,15 @@ import {observer} from "mobx-react-lite";
 
 export const MainHeader = observer(() => {
 
-    const {setColorScheme,toggleColorScheme,colorScheme} = useMantineColorScheme();
-    // const computedColorScheme = useComputedColorScheme('light', {getInitialValueInEffect: true});
-     const dark = colorScheme === 'dark';
+    const {setColorScheme, toggleColorScheme, colorScheme} = useMantineColorScheme();
+    let dark = colorScheme === 'dark';
+
     return (
 
         <AppShell.Header className={classes.header} p="md">
             <Group position="apart" justify="space-between" h="100%" align="center">
                 <Group>
+
                     {/*<MediaQuery largerThan="sm" styles={{ display: 'none' }}>*/}
                     <Burger
                         opened={uiStore.isBurgerOpened}
@@ -33,9 +34,8 @@ export const MainHeader = observer(() => {
                         color="gray.4"
                     />
                     {/*</MediaQuery>*/}
-                    <Text size="xl" weight={700} color="brand">MyApp</Text>
+                    <Text size="xl" weight={700} c="lime.3">MyApp</Text>
                 </Group>
-                <Text size="xl" weight={700} color="brand">{colorScheme}</Text>
                 <Group>
                     <Button onClick={() => setColorScheme('light')}>Light</Button>
                     <Button onClick={() => setColorScheme('dark')}>Dark</Button>
@@ -49,7 +49,7 @@ export const MainHeader = observer(() => {
                     onClick={() => setColorScheme(colorScheme === 'light' ? 'dark' : 'light')}
                     title="Toggle color scheme"
                 >
-                    {dark ? <FiSun size={18}/> : <FiMoon size={18}/>}
+                    {!dark ? <FiSun size={18}/> : <FiMoon size={18}/>}
                 </ActionIcon>
             </Group>
         </AppShell.Header>

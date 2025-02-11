@@ -26,8 +26,6 @@ export const TexturesSection = () => {
             <Button variant="gradient" leftIcon={<img src="/assets/settings.svg" alt="React" style={{width: '50px', height: '50px'}}/>}
                     gradient={{from: 'cyan', to: 'blue', deg: 90}}>Mantine button</Button>
 
-
-
             <StatsGrid/>
         </ScrollArea.Autosize>
     );

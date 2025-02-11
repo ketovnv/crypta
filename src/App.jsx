@@ -1,5 +1,5 @@
 import '@mantine/core/styles.css';
-import {MantineProvider} from '@mantine/core';
+import {MantineProvider,ColorSchemeScript} from '@mantine/core';
 import {Layout} from '@components/Layout';
 import {theme} from './styles/theme.js';
 import {createAppKit} from '@reown/appkit/react'
@@ -16,21 +16,20 @@ createAppKit({
     metadata,
     networks
 })
+import AnimatedNumber from './components/Animations/AnimatedNumber.jsx'
 
+const App = () =>
+    <>
 
-
-
-
-const App = () => <MantineProvider
-    theme={theme}
-
->
-    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-            <Layout/>
-        </QueryClientProvider>
-    </WagmiProvider>
-</MantineProvider>
+        <ColorSchemeScript defaultColorScheme="dark"/>
+        <MantineProvider theme={theme}>
+            <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+                <QueryClientProvider client={queryClient}>
+                    <Layout/>
+                </QueryClientProvider>
+            </WagmiProvider>
+        </MantineProvider>
+    </>;
 
 
 export default App;

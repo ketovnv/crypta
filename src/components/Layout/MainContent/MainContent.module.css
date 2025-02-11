@@ -50,10 +50,10 @@
     transform: translateY(3px);
 }
 
-/* Стили для Paper */
-.paper {
+                                                        /* Стили для Paper */
+                                                        .paper {
 
-    padding: var(--mantine-spacing-lg);
+                                                            padding: var(--mantine-spacing-lg);
     border-radius: var(--mantine-radius-md);
     box-shadow: var(--mantine-shadow-md);
     background-color: light-dark(var(--mantine-color-dark-7), var(--mantine-color-gray-8));

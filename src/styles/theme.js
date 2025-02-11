@@ -2,7 +2,7 @@ import { createTheme } from '@mantine/core';
 export const theme = createTheme({
     fontFamily: 'Martian Mono Nerd Font, sans-serif',
     primaryColor: 'indigo',
-
+    scale: 1.2,
     // Кастомные цвета для светлой и тёмной темы
     colors: {
         brand: [
