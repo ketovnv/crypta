@@ -1,3 +1,4 @@
+import {routerStore} from "@/stores/router.ts";
 import {
     Text,
     Group,
@@ -7,7 +8,7 @@ import {
     Burger,
     useComputedColorScheme,
     Button
-} from '@mantine/core';
+}                    from '@mantine/core';
 import {FiSun, FiMoon} from 'react-icons/fi';
 import classes from './MainHeader.module.css';
 import {uiStore} from "@/stores/ui.js";
@@ -22,34 +23,25 @@ export const MainHeader = observer(() => {
 
     return (
 
-        <AppShell.Header className={classes.header} p="md">
+        <AppShell.Header className={classes.header} px="md">
             <Group position="apart" justify="space-between" h="100%" align="center">
                 <Group>
-
-                    {/*<MediaQuery largerThan="sm" styles={{ display: 'none' }}>*/}
-                    <Burger
-                        opened={uiStore.isBurgerOpened}
-                        onClick={uiStore.toggleBurger}
-                        size="lg"
-                        color="gray.4"
-                    />
-                    {/*</MediaQuery>*/}
-                    <Text size="xl" weight={700} c="lime.3">MyApp</Text>
+                    <img src="/assets/bitcoin.svg" alt="Bitcoin" className={classes.appIcon}/>
+                    <Text className={classes.appName}>Reown AppKit</Text>
                 </Group>
                 <Group>
-                    <Button onClick={() => setColorScheme('light')}>Light</Button>
-                    <Button onClick={() => setColorScheme('dark')}>Dark</Button>
-                    <Button onClick={() => setColorScheme('auto')}>Auto</Button>
-                    <Button onClick={() => toggleColorScheme()}>Toggle</Button>
+                    <Text size="xl" weight={500}>
+                        {routerStore.currentMeta.title}
+                    </Text>
                 </Group>
                 <ActionIcon
-                    size="lg"
+                    size="xl"
                     variant="outline"
                     color={dark ? 'yellow' : 'blue'}
                     onClick={() => setColorScheme(colorScheme === 'light' ? 'dark' : 'light')}
                     title="Toggle color scheme"
                 >
-                    {!dark ? <FiSun size={18}/> : <FiMoon size={18}/>}
+                    {!dark ? <FiSun size={32}/> : <FiMoon size={32}/>}
                 </ActionIcon>
             </Group>
         </AppShell.Header>

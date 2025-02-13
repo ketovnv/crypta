@@ -1,0 +1,52 @@
+.root {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.inner {
+    position: relative;
+}
+
+.image {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    opacity: .9;
+    color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-dark-3));
+    font-size: 500px;
+}
+
+.icon {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    opacity: 1;
+    color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-dark-3));
+    font-size: 800px;
+}
+
+
+
+.content {
+    padding-top: 220px;
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    font-family: "IosevkaTermSlab NFP ExtraBold", monospace;
+    color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-dark-0));
+    text-align: center;
+    font-weight: 900;
+    font-size: 5em;
+}
+
+.description {
+    color: var(--mantine-color-blue-9);
+    font-size: 1.5em;
+    font-family: Connie, monospace;
+    max-width: 540px;
+    margin: auto;
+    margin-top: var(--mantine-spacing-xl);
+    margin-bottom: calc(var(--mantine-spacing-xl) * 1.5);
+}

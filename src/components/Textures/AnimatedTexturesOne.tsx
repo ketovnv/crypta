@@ -126,4 +126,4 @@ const AnimatedTexturesOne = () => {
   );
 };
 
-export default AnimatedTextures;
+export default AnimatedTexturesOne;

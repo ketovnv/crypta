@@ -17,8 +17,8 @@ import {useEffect} from 'react'
 import {FiTrendingUp, FiUsers, FiActivity, FiBox, FiLayers} from 'react-icons/fi';
 import classes from './MainContent.module.css';
 import {observer} from "mobx-react-lite";
-import {statsStore} from '@/stores/stats.js';
-import AnimatedNumber from "@components/Animations/AnimatedNumber.jsx";
+import {statsStore} from '@/stores/stats';
+
 
 const StatsGrid = observer(() => {
 
@@ -151,29 +151,41 @@ export const MainContent = () => {
     const {theme} = useMantineTheme();
     return (
         <AppShell.Main>
-            <WelcomeSection/>
-                <AnimatedNumber endValue={1000}/>
-                <Highlight
-                    ta="center"
-                    highlight={['highlighted', 'default']}
-                    highlightStyles={{
-                        backgroundImage:
-                            'linear-gradient(45deg, var(--mantine-color-cyan-5), var(--mantine-color-indigo-5))',
-                        fontWeight: 700,
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                    }}
-                >
-                    You can change styles of highlighted part if you do not like default styles
-                </Highlight>
-            <ScrollArea h="calc(100vh - var(--app-shell-header-height, 0px) - 550px)">
-                <Button variant="gradient"
-                        gradient={{from: 'cyan', to: 'blue', deg: 90}}>Mantine button</Button>
+          <Outlet/>
+            {/*<WelcomeSection/>*/}
+            {/*    <AnimatedNumber endValue={1000}/>*/}
+            {/*    /!*<AnimatedText/>*!/*/}
+            {/*    <AnimatedTextures/>*/}
+            {/*    /!*<AnimatedTexturesOne/>*!/*/}
+            {/*    <DarkStaticTextures/>*/}
+            {/*    <NoiseTextures/>*/}
+            {/*    <StaticTextures/>*/}
+            {/*    <TextureEffects/>*/}
 
 
-                <StatsGrid/>
-                <StatsGrid/>
-            </ScrollArea>
+
+
+            {/*    <Highlight*/}
+            {/*        ta="center"*/}
+            {/*        highlight={['highlighted', 'default']}*/}
+            {/*        highlightStyles={{*/}
+            {/*            backgroundImage:*/}
+            {/*                'linear-gradient(45deg, var(--mantine-color-cyan-5), var(--mantine-color-indigo-5))',*/}
+            {/*            fontWeight: 700,*/}
+            {/*            WebkitBackgroundClip: 'text',*/}
+            {/*            WebkitTextFillColor: 'transparent',*/}
+            {/*        }}*/}
+            {/*    >*/}
+            {/*        You can change styles of highlighted part if you do not like default styles*/}
+            {/*    </Highlight>*/}
+            {/*<ScrollArea h="calc(100vh - var(--app-shell-header-height, 0px) - 550px)">*/}
+            {/*    <Button variant="gradient"*/}
+            {/*            gradient={{from: 'cyan', to: 'blue', deg: 90}}>Mantine button</Button>*/}
+
+
+            {/*    <StatsGrid/>*/}
+            {/*    <StatsGrid/>*/}
+            {/*</ScrollArea>*/}
         </AppShell.Main>
     );
 };

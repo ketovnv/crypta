@@ -2,6 +2,7 @@ import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import svgr from "vite-plugin-svgr";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 
 // Плагин для анализа размера бандла
@@ -22,6 +23,7 @@ export default defineConfig({
                 ]
             }
         }),
+        tsconfigPaths(),
         visualizer({
             template: "treemap", // или "sunburst"
             open: true,

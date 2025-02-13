@@ -5,3 +5,15 @@
     }
 }
 
+.appName {
+    font-size: 2rem;
+    font-weight: 700;
+    color: light-dark(var(--mantine-color-ocean-blue-9), var(--mantine-color-ocean-blue-3));
+    font-family: "MesloLGSDZ Nerd Font Propo", monospace;
+}
+
+.appIcon {
+    width: 50px;
+    height: 50px;
+}
+
