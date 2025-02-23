@@ -118,44 +118,6 @@ const AnimatedText = () => {
         </div>
       </section>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes blink {
-          from, to { opacity: 1; }
-          50% { opacity: 0; }
-        }
-
-        @keyframes gradientFlow {
-          0% { background-position: 0% 50%; }
-          100% { background-position: 200% 50%; }
-        }
-
-        @keyframes textShadowPulse {
-          0% { text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-          50% { text-shadow: 3px 3px 6px rgba(0,0,0,0.3); }
-          100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-        }
-
-        @keyframes glitchText {
-          0%, 100% { transform: none; }
-          20% { transform: skewX(-15deg); }
-          40% { transform: skewX(15deg); }
-          60% { transform: skewX(-10deg); }
-          80% { transform: skewX(10deg); }
-        }
-
-        @keyframes glitchOffset {
-          0%, 100% { clip-path: inset(0 0 0 0); }
-          20% { clip-path: inset(10% 0 0 0); }
-          40% { clip-path: inset(0 10% 0 0); }
-          60% { clip-path: inset(0 0 10% 0); }
-          80% { clip-path: inset(0 0 0 10%); }
-        }
-      `}</style>
     </div>
   );
 };

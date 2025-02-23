@@ -1,7 +1,7 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 
 class ErrorStore {
-    // Храним активные ошибки в виде Map, где ключ - это уникальный идентификатор ошибки
+     Храним активные ошибки в виде Map, где ключ - это уникальный идентификатор ошибки
     errors = new Map();
 
     // Настройки для разных типов ошибок
@@ -191,6 +191,6 @@ class ErrorStore {
 export const errorStore = new ErrorStore();
 
 // Добавляем глобальную ссылку для отладки
-if (process.env.NODE_ENV === 'development') {
-    window._errorStore = errorStore;
-}
+//if (process.env.NODE_ENV === 'development') {
+//    window._errorStore = errorStore;
+//}

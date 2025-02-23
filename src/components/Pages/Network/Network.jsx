@@ -15,7 +15,7 @@ const Network = observer(() => {
 
     return (
         <Container size="xl">
-            <Title order={2} mb="xl">Управление сетями</Title>
+            {/*<Title order={2} mb="xl">Управление сетями</Title>*/}
 
             <Grid>
                 {/* Текущая сеть */}

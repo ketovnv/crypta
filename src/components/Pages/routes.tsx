@@ -1,18 +1,18 @@
-import Layout             from '../Layout';
-import Home               from './Home';
-import Options            from './Options';
-import Network            from './Network';
-import Wallet             from './Wallet';
-import Transactions             from './Transactions';
+import Layout from '../Layout';
+import Home from './Home';
+import Options from './Options';
+import Network from './Network';
+import Tokens from './Tokens';
+import Transactions from './Transactions';
 import ErrorNotifications from './ErrorNotifications';
-import { IoHome,IoWallet,IoFileTrayFullSharp,IoSettings,IoLogoReact } from "react-icons/io5";// Замените на вашу
+import {IoApertureSharp, IoWallet, IoFileTrayFullSharp, IoSettings, IoLogoReact} from "react-icons/io5";// Замените на вашу
 
 
 export enum AppRoutes {
-    HOME = '/',
-    WALLET = '/wallet',
+    WALLET = '/',
+    TOKENS = '/tokens',
     TRANSACTIONS = '/transactions',
-    SETTINGS = '/settings',
+    // SETTINGS = '/settings',
     NETWORK = '/network'
 }
 
@@ -21,7 +21,9 @@ export interface RouteMeta {
     title: string;
     icon?: React.ReactNode;
     animation?: string;
+    animationDuration?: string;
 }
+
 // Тип для объекта маршрутов
 export type Routes = {
     [key in AppRoutes]: string;
@@ -33,41 +35,44 @@ export type RoutesMetadata = {
 };
 
 
-
 export const ROUTES: Routes = {
-    [AppRoutes.HOME]: '/',
-    [AppRoutes.WALLET]: '/wallet',
+    [AppRoutes.WALLET]: '/',
+    [AppRoutes.TOKENS]: '/tokens',
     [AppRoutes.TRANSACTIONS]: '/transactions',
-    [AppRoutes.SETTINGS]: '/settings',
+    // [AppRoutes.SETTINGS]: '/settings',
     [AppRoutes.NETWORK]: '/network'
 };
 
 // Метаданные маршрутов
 export const ROUTE_META: RoutesMetadata = {
-    [AppRoutes.HOME]: {
-        title: 'Главная',
-        icon: <IoHome size={24} />,
-        animation: 'slide-right'
-    },
     [AppRoutes.WALLET]: {
-        title: 'Кошелек',
+        title: 'Кошелёк',
         icon: <IoWallet size={24} />,
-        animation: 'slide-up'
+        animation: 'fade',
+        animationDuration: 'LONG_ANIMATION_DURATION'
+    },
+    [AppRoutes.TOKENS]: {
+        title: 'Токены',
+        icon: <IoApertureSharp size={24} />,
+        animation: 'slide-up',
+        animationDuration: 'LONG_ANIMATION_DURATION'
     },
     [AppRoutes.TRANSACTIONS]: {
         title: 'Транзакции',
-        icon: <IoFileTrayFullSharp  size={24} />,
-        animation: 'slide-left'
+        icon: <IoFileTrayFullSharp size={24} />,
+        animation: 'slide-left',
+        animationDuration: 'LONG_ANIMATION_DURATION'
     },
-    [AppRoutes.SETTINGS]: {
-        title: 'Настройки',
-        icon: <IoSettings size={24} />,
-        animation: 'fade'
-    },
+    // [AppRoutes.SETTINGS]: {
+    //     title: 'Настройки',
+    //     icon: <IoSettings size={24} />,
+    //     animation: 'fade'
+    // },
     [AppRoutes.NETWORK]: {
         title: 'Сеть',
         icon: <IoLogoReact size={24} />,
-        animation: 'slide-down'
+        animation: 'slide-down',
+        animationDuration: 'LONG_ANIMATION_DURATION'
     }
 };
 
@@ -83,12 +88,12 @@ export const routes = [
                 element: <Home />,
             },
             {
-                path: "options",
+                path: "settings",
                 element: <Options />,
             },
             {
-                path: "wallet",
-                element: <Wallet />,
+                path: "Tokens",
+                element: <Tokens/>,
             },
             {
                 path: "network",

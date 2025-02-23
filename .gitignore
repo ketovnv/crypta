@@ -13,6 +13,10 @@ dist
 dist-ssr
 *.local
 
+analyze.html
+desktop.ini
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

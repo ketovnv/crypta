@@ -1,7 +1,63 @@
 .title {
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  font-size: rem(100px);
-  font-weight: 900;
-  letter-spacing: rem(-2px);
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    font-size: rem(100px);
+    font-weight: 900;
+    letter-spacing: rem(-2px);
+}
+
+
+.card {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: light-dark(var(--mantine-color-dark-5), var(--mantine-color-dark-9));
+    border-width: 0;
+    shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+    background-color: var(--mantine-color-dark-4);
+}
+
+.walletName {
+    font-family: 'Inconsolata', monospace !important;
+    font-style: normal;
+    font-weight: 900;
+    color: #EEFF00;
+}
+
+.listText {
+    font-size: 1.1em;
+    font-family: 'Microsoft YaHei', monospace !important;
+    /*font-style: italic;*/
+    font-weight: 900;
+    color: #DDFF99;
+}
+
+
+.status {
+    position: relative;
+    top: -12px;
+    left: -7px;
+    font-size: 0.95em;
+    font-family: 'Cousine for Powerline', monospace !important;
+    font-weight: 900;
+    color: #DDFF99;
+}
+
+.walletAddress {
+    font-size: 0.8em
 
 }
+
+.arrowIcon {
+    position: relative;
+    top: 5px;
+    left: 7px;
+}
+
+/*.walletAddress {*/
+/*    font-family: 'Inter';*/
+/*    font-style*/
+/*}*/

@@ -1,5 +1,5 @@
 import {ScrollArea} from '@mantine/core';
-import AnimatedNumber from "@components/Animations/AnimatedNumber";
+// import AnimatedNumber from "@components/Animations/AnimatedNumber";
 import AnimatedText from "@components/Textures/AnimatedText";
 import AnimatedTextures from "@components/Textures/AnimatedTextures";
 import DarkStaticTextures from "@components/Textures/DarkStaticTextures";
@@ -12,11 +12,10 @@ import AnimatedTexturesOne from "@components/Textures/AnimatedTexturesOne";
 
 const Options = () => {
     return (
-            <ScrollArea h="calc(100vh - var(--app-shell-header-height, 0px))">
-                <AnimatedNumber endValue={1000}/>
-                {/*<AnimatedText/>*/}
+            <ScrollArea h="calc(100vh - var(--app-shell-header-height, 0px) - 150px)">
+                <AnimatedText/>
                 <AnimatedTextures/>
-                {/*<AnimatedTexturesOne/>*/}
+                <AnimatedTexturesOne/>
                 <DarkStaticTextures/>
                 <NoiseTextures/>
                 <StaticTextures/>

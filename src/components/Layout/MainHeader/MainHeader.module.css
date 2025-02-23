@@ -1,15 +1,16 @@
 .header {
-    border-bottom: 1px solid var(--mantine-color-gray-9);
+    border-bottom: none;
+    /*border-bottom: 1px solid var(--mantine-color-gray-9);*/
     @mixin dark {
         background: dark(var(--mantine-color-dark-5))
     }
 }
 
 .appName {
-    font-size: 2rem;
-    font-weight: 700;
-    color: light-dark(var(--mantine-color-ocean-blue-9), var(--mantine-color-ocean-blue-3));
-    font-family: "MesloLGSDZ Nerd Font Propo", monospace;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: light-dark(var(--mantine-color-ocean-blue-7), var(--mantine-color-ocean-blue-3));
+    font-family: "M+1NerdFontPropo", monospace;
 }
 
 .appIcon {

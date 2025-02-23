@@ -1,56 +1,63 @@
-import {
-    AppShell, ScrollArea, Text,
-} from '@mantine/core';
+import classes from "./Layout.module.css";
+import { motion, AnimatePresence } from "framer-motion";
 
-import {MainNavbar}                       from './MainNavbar';
-import {MainHeader}                       from './MainHeader';
-import {MainContent}                      from './MainContent';
-import classes                            from './Layout.module.css';
-import {uiStore}                          from "@/stores/ui";
-import {observer}                         from "mobx-react-lite";
-import {useNavigate, useLocation, Outlet} from 'react-router-dom';
-import {useEffect}                        from 'react';
+//import {PageTransition}      from "@components/Layout/PageTransition";
+import { AppShell } from "@mantine/core";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { MainNavbar } from "./MainNavbar";
+import { MainHeader } from "./MainHeader";
+import {loggerStore} from "@/stores/logger.js";
 
-import {routerStore}    from '@/stores/router.js';
-import {PageTransition} from './PageTransition';
-import {GlobalErrorDisplay}              from "../Pages/ErrorNotifications/GlobalErrorDisplay";
 
 const Layout = observer(() => {
-    const navigate = useNavigate();
-    const location = useLocation();
+  useEffect(() => {
+    loggerStore.debug('Layout mounted');
+    return () => console.log('Layout unmounted');
+  }, []);
+  // console.error('RENDER!!!');
 
-    // Инициализируем навигацию при монтировании
-    useEffect(() => {
-        routerStore.setNavigate(navigate);
-    }, [navigate]);
+  const animations = {
+    initial: { opacity: 0, y: 1000 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -1000 },
+  };
 
-    // Синхронизируем текущий путь при изменении location
-    useEffect(() => {
-        if (location.pathname !== routerStore.currentPath) {
-            routerStore.currentPath = location.pathname;
-        }
-    }, [location]);
+  const location = useLocation();
 
+  loggerStore.debug("Приложение запущено!!!");
+  const PageAnimation = ({children}) => (
+    <motion.div
+      variants={animations}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 1 }}
+    >
+      <AnimatePresence exitBeforeEnter>{children}
+      </AnimatePresence>
+    </motion.div>
+  );
 
-    return (
-        <AppShell
-            header={{height: 60}}
-            navbar={{
-                width: 300,
-                breakpoint: 'sm',
-                collapsed: {mobile: !uiStore.isBurgerOpened, desktop: !uiStore.isBurgerOpened},
-            }}
-            padding="md"
-        >
-            <MainHeader />
-            <MainNavbar />
-            {/*<AppShell.Main>*/}
-            {/*    <PageTransition>*/}
-            {/*        <Outlet />*/}
-            {/*    </PageTransition>*/}
-            {/*</AppShell.Main>*/}
-        </AppShell>
-    );
+  return (
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+      }}
+      padding="md"
+    >
+      <MainHeader />
+      <MainNavbar />
+      <AppShell.Main>
+        <PageAnimation>
+          <Outlet  location={location} key={location.pathname} />
+        </PageAnimation>
+      </AppShell.Main>
+    </AppShell>
+  );
 });
 
 export default Layout;

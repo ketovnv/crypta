@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { CountUp } from 'countup.js';
+import { Text } from '@mantine/core';
 
-const AnimatedNumber = ({ endValue, startFromPrevious = false }) => {
+const AnimatedNumber = ({ endValue, startFromPrevious = false , props}) => {
     const countUpRef = useRef(null);
     const countUpInstanceRef = useRef(null);
 
@@ -31,7 +32,7 @@ const AnimatedNumber = ({ endValue, startFromPrevious = false }) => {
         }
     }, [endValue, startFromPrevious]);
 
-    return <h3 style={{color:'red' }} ref={countUpRef}></h3>;
+    return <Text  ref={countUpRef} {...props}></Text>;
 };
 
 export default AnimatedNumber;

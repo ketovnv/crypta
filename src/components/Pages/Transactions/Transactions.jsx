@@ -91,7 +91,7 @@ const Transactions = observer(() => {
 
     return (
         <Container size="xl">
-            <Title order={2} mb="xl">Транзакции</Title>
+            {/*<Title order={2} mb="xl">Транзакции</Title>*/}
 
             <Grid>
                 {/* Активные транзакции */}

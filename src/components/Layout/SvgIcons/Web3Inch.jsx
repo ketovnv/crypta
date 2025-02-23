@@ -1,10 +1,10 @@
-export  function Web3Inch() {
+export  function Web3Inch({color1, color2}) {
    return(
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width='12em' height='12em'>
             <defs>
                 <linearGradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
-                    <stop offset="0%" stopColor="yellow" />
-                    <stop offset="100%" stopColor="red" />
+                    <stop offset="0%" stopColor={color1} />
+                    <stop offset="100%" stopColor={color2} />
                 </linearGradient>
             </defs>
     <path fill="url(#grad1)"

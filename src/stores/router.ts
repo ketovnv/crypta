@@ -1,57 +1,102 @@
-// src/stores/RouterStore.ts
-import { makeAutoObservable } from 'mobx';
-import { NavigateFunction } from 'react-router';
-import { AppRoutes, ROUTES, ROUTE_META, RouteMeta } from '../components/Pages/routes';
+import {flow, makeAutoObservable, runInAction} from 'mobx';
+import {RouteMeta, ROUTE_META, AppRoutes, routes} from '../components/Pages/routes';
+import React, {useState} from "react";
 
-// Определяем возможные маршруты как константы
-
-
-// Описываем мета-информацию для каждого маршрута
-
+const ROUTING_ANIMATIONS_DURATION = {
+    SHORT: 500,
+    MEDIUM: 800,
+    LONG: 1200,
+    VERY_LONG: 1700,
+    EXTRA_LONG: 2500,
+    EXTRA_LONG_XL: 3500,
+    EXTRA_LONG_XXL: 5000
+};
 
 class RouterStore {
-    currentPath = '/' as AppRoutes;
-    previousPath = '/' as AppRoutes;
-    isNavigating = false;
-    private navigate: NavigateFunction | null = null;
+    private isLocationInit = false
+    currentChildren = null
+    previousChildren = null
+    previousChildrenPath = '/'
+    currentChildrenPath = '/'
+    isAnimatingLong: number  = 0;
+
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this),
+            {setCurrentChildren: flow}
     }
 
-    // Инициализация с react-router
-    setNavigate(navigate: NavigateFunction) {
-        this.navigate = navigate;
+
+    get isLocationInitialized(): boolean {
+        return this.isLocationInit;
     }
 
-    // Переход на новый маршрут с анимацией
-    async navigateTo(path: AppRoutes) {
-        if (this.currentPath === path || !this.navigate) return;
-
-        this.isNavigating = true;
-        this.previousPath = this.currentPath;
-        this.currentPath = path;
-
-        // Выполняем переход
-        this.navigate(path);
-
-        // Имитируем задержку для анимации
-        await new Promise(resolve => setTimeout(resolve, 300));
-        this.isNavigating = false;
+    startAnimation() {
+        this.isAnimatingLong = ROUTING_ANIMATIONS_DURATION.EXTRA_LONG_XXL;
     }
 
-    // Получаем мета-информацию текущего маршрута
-    get currentMeta(): RouteMeta {
-        return ROUTE_META[this.currentPath];
+    setLocationInitialized() {
+        this.isLocationInit = true;
     }
 
-    // Получаем направление анимации
-    get transitionDirection(): 'forward' | 'backward' {
-        const routes = Object.values(AppRoutes);
-        const currentIndex = routes.indexOf(this.currentPath);
-        const previousIndex = routes.indexOf(this.previousPath);
-        return currentIndex > previousIndex ? 'forward' : 'backward';
+
+    get currentRoute(): RouteMeta {
+        return ROUTE_META[this.currentChildrenPath]
     }
+
+    get previousRoute(): RouteMeta {
+        return ROUTE_META[this.previousChildrenPath]
+    }
+
+    get isAnimating(): boolean {
+        return this.isAnimatingLong !== 0;
+    }
+
+
+
+    async setCurrentChildren(
+        children,
+        path: string
+    ) {
+
+        // this.previousChildren = React.cloneElement(this.currentChildren)
+        // this.currentChildren = children
+        this.previousChildrenPath= this.currentChildrenPath
+        this.currentChildrenPath = path
+
+        this.isAnimatingLong =
+            ROUTING_ANIMATIONS_DURATION[this.currentRoute.animationDuration]
+            ?? ROUTING_ANIMATIONS_DURATION.MEDIUM;
+        try {
+
+            // Имитация API запроса
+            await new Promise(resolve => setTimeout(resolve, this.isAnimatingLong));
+
+
+        } catch (error) {
+            error = error.message;
+            console.warn(`Error: ${error}`)
+
+        } finally {
+            console.warn(`конец анимации`)
+            runInAction(() => {
+                return this.isAnimatingLong = 0;
+            })
+        }
+
+
+    }
+
+
+    get currentPath(): string {
+        return this.currentChildren.path ?? '/';
+    }
+
+    get previousPath(): string {
+        return this.previousChildren.path ?? '/';
+    }
+
+
 }
 
 export const routerStore = new RouterStore();
