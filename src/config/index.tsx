@@ -2,15 +2,16 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { mainnet, arbitrum, base, scroll, polygon, sepolia } from '@reown/appkit/networks'
 import type { AppKitNetwork } from '@reown/appkit/networks'
 
-// Get projectId from https://cloud.reown.com
-// @ts-ignore
-// export const projectId = import.meta.env.VITE_PROJECT_ID
-export const projectId = "81fbff8584aa79a5251128f0d3ee3544"
+
+export const projectId =
+//projectId from https://cloud.reown.com
+"81fbff8584aa79a5251128f0d3ee3544"
+
+
 
 if (!projectId) {
   throw new Error('Project ID is not defined')
 }
-
 export const metadata = {
     name: 'AppKit',
     description: 'AppKit Example',
@@ -18,11 +19,7 @@ export const metadata = {
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-
-
 // for custom networks visit -> https://docs.reown.com/appkit/react/core/custom-networks
-
-
 export const networks = [sepolia, mainnet, arbitrum, base, scroll, polygon] as [AppKitNetwork, ...AppKitNetwork[]]
 
 //Set up the Wagmi Adapter (Config)
