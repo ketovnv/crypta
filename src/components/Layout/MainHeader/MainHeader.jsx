@@ -16,6 +16,7 @@ import {useLocation}       from "react-router-dom";
 import classes             from './MainHeader.module.css';
 import {routerStore}       from "@/stores/router.ts";
 import {useNavigate}       from "react-router";
+import {uiStore} from "@stores/ui.js";
 //import {observer} from "mobx-react-lite";
 //
 //
@@ -24,7 +25,7 @@ export const MainHeader = observer(
     () => {
 
 
-        const {setColorScheme, toggleColorScheme, colorScheme} = useMantineColorScheme();
+        const {setColorScheme,  colorScheme} = useMantineColorScheme();
         let dark = colorScheme === 'dark';
 
         return (

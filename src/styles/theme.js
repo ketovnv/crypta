@@ -1,6 +1,6 @@
 import { createTheme } from '@mantine/core';
 export const theme = createTheme({
-    fontFamily: 'SF Pro Rounded !important',
+    fontFamily: 'SF Pro Rounded',
     primaryColor: 'indigo',
     scale: 1.2,
     // Кастомные цвета для светлой и тёмной темы
@@ -55,7 +55,7 @@ export const theme = createTheme({
     },
 
     headings: {
-        fontFamily: 'JetBrainsMono NF, sans-serif',
+        // fontFamily: 'JetBrainsMono NF, sans-serif',
         sizes: {
             h1: {
                 fontSize: '2.5rem',

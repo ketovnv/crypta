@@ -172,11 +172,11 @@ class ErrorStore {
     handleErrorSideEffects(errorObject) {
         if (errorObject.type === 'ROUTING') {
             // Например, можем логировать ошибки навигации
-            if (process.env.NODE_ENV === 'development') {
+
                 console.group('Routing Error');
                 console.error(errorObject);
                 console.groupEnd();
-            }
+     
 
             // Можем выполнять специфичные действия для разных ошибок
             if (errorObject.message.includes('авторизация')) {

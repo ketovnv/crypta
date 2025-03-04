@@ -1,21 +1,23 @@
 // src/pages/Network.tsx
 import { observer } from 'mobx-react-lite';
 import { Container, Grid, Paper, Title, Text, Button, Group, Badge } from '@mantine/core';
-import { networks } from '@/config';
-import { walletStore } from '@/stores/wallet';
+// import { networks } from '@/config';
+// import { walletStore } from '@/stores/wallet';
 import { useEffect } from 'react';
+import {loggerStore} from "@/stores/logger.js";
+loggerStore.warning("🕸️ Компонент Сеть");
 
 const Network = observer(() => {
     // При монтировании получаем информацию о текущей сети
-    useEffect(() => {
-        if (walletStore.isConnected) {
-            walletStore.fetchNetworkInfo();
-        }
-    }, [walletStore.isConnected]);
+    // useEffect(() => {
+    //     if (walletStore.isConnected) {
+    //         walletStore.fetchNetworkInfo();
+    //     }
+    // }, [walletStore.isConnected]);
 
     return (
         <Container size="xl">
-            
+
 
 
 
@@ -24,12 +26,14 @@ const Network = observer(() => {
             {/*<Title order={2} mb="xl">Управление сетями</Title>*/}
 
             <Grid>
+
                 {/* Текущая сеть */}
                 <Grid.Col span={12}>
                     <Paper p="md" radius="md" shadow="sm" mb="xl">
+
                         <Group position="apart">
                             <div>
-                                <Text size="sm" color="dimmed">Текущая сеть</Text>
+                                <Text size="sm" color="dimmed">🕸️Текущая сеть🕸️</Text>
                                 <Title order={3}>{walletStore.activeChain}</Title>
                             </div>
                             <Badge size="lg" variant="filled">

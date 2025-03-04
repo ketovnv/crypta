@@ -24,12 +24,11 @@ export const GlobalErrorDisplay = observer(() => {
                     onClose={() => errorStore.removeError(error.id)}
                 >
                     {error.message}
-                    {error.details && process.env.NODE_ENV === 'development' && (
+
                         <div style={{ fontSize: '12px', marginTop: '8px', opacity: 0.7 }}>
                             {error.details}
                         </div>
-                    )}
-                </Notification>
+                         </Notification>
             ))}
         </Stack>
     );

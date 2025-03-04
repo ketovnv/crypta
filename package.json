@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "generate-fonts": "node src/styles/generateFontStyles.js",
+    "dev": "npm run generate-fonts && vite",
+    "build": "npm run generate-fonts && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "web-dev-server"
@@ -21,8 +22,9 @@
     "@reown/appkit": "^1.6.0",
     "@reown/appkit-adapter-wagmi": "^1.6.0",
     "@reown/appkit-common": "^1.6.8",
+    "@reown/appkit-utils": "^1.6.8",
     "@reown/appkit-wallet-button": "^1.6.8",
-    "@tanstack/react-query": "^5.66.0",
+    "@tanstack/react-query": "^5.66.11",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
@@ -43,9 +45,9 @@
     "react-parallax-tilt": "^1.7.283",
     "react-router-dom": "^7.1.5",
     "simple-parallax-js": "^6.0.1",
-    "viem": "^2.23.2",
+    "viem": "^2.23.5",
     "vite-tsconfig-paths": "^5.1.4",
-    "wagmi": "^2.14.11"
+    "wagmi": "^2.14.12"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.25.9",

@@ -92,3 +92,28 @@
 .card:hover .cardIcon {
     transform: scale(1.1);
 }
+
+/*Spring*/
+
+.content {
+    width: 400px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(rgba(25, 50, 100, 0.6), rgba(50, 150, 175, 0.6));
+    margin: 0;
+    padding: 0;
+}
+
+.content > div {
+    position: relative;
+    font-size: 5em;
+    display: inline-block;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}

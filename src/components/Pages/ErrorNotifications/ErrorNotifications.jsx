@@ -10,6 +10,22 @@ import {SVGIllustration404}         from "@components/Pages/ErrorNotifications/S
 import {useNavigate, useRouteError} from "react-router-dom";
 
 import classes from './ErrorNotifications.module.css';
+import {loggerStore} from "@/stores/logger.js";
+loggerStore
+
+window.onerror = (message, source, lineno, colno, error) => {
+    const runtimeError = {
+        message: String(message),
+        type: 'RUNTIME',
+        details: `${source} (${lineno}:${colno})`,
+        stack: error?.stack,
+        level: 'error'
+    }
+    loggerStore.error(runtimeError.message)
+    loggerStore.error(runtimeError.details)
+
+    return false;
+};
 
 const NotFoundError = ({message}) => {
     const navigate = useNavigate()

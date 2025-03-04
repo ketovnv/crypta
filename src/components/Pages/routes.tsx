@@ -1,11 +1,13 @@
 import Layout from '../Layout';
-import Home from './Home';
 import Options from './Options';
 import Network from './Network';
 import Tokens from './Tokens';
 import Transactions from './Transactions';
 import ErrorNotifications from './ErrorNotifications';
-import {IoApertureSharp, IoWallet, IoFileTrayFullSharp, IoSettings, IoLogoReact} from "react-icons/io5";// Замените на вашу
+import {IoApertureSharp, IoWallet, IoFileTrayFullSharp, IoSettings, IoLogoReact} from "react-icons/io5";
+import Home from "./Home/Home";
+
+// Замените на вашу
 
 
 export enum AppRoutes {
@@ -85,7 +87,7 @@ export const routes = [
         children: [
             {
                 index: true,
-                element: <Home />,
+                element: <Home/>,
             },
             {
                 path: "settings",
