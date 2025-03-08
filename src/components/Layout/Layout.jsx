@@ -7,17 +7,15 @@ import { MainHeader } from "./MainHeader";
 import { loggerStore } from "@/stores/logger.js";
 import { MainContent } from "./MainContent/index.js";
 import { AppKitObserver } from "./AppKitObserver.ts";
-import { useLocation } from "react-router-dom";
-import { useDisclosure } from "@mantine/hooks";
+import {uiStore} from "@stores/ui.js";
 
 const Layout = observer(() => {
   useEffect(() => {
-    // loggerStore.info("🍰 Layout mounted");
+    loggerStore.info("🍰", " Layout mounted");
     return () => console.log("Layout unmounted");
   }, []);
 
-  // loggerStore.warning("LAYOUT");
-
+  loggerStore.logRandomColors("LAYOUT", "mounted", 12);
   return (
     <AppShell
       header={{ height: 60 }}
@@ -27,10 +25,10 @@ const Layout = observer(() => {
       }}
       padding="md"
     >
-      {/*<AppKitObserver />*/}
+      <AppKitObserver />
       <MainHeader />
-     <MainNavbar />
-      <MainContent location={location} />
+      <MainNavbar />
+      <MainContent />
     </AppShell>
   );
 });

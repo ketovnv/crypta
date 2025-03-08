@@ -1,128 +1,197 @@
 // src/stores/WalletStore.ts
-import { makeAutoObservable, flow, reaction, runInAction, action } from "mobx";
+import {makeAutoObservable, flow, reaction, runInAction, action} from "mobx";
 import {loggerStore as logger} from "./logger";
-import type { CaipAddress, Balance } from "@reown/appkit-common";
-import type { Event } from "@reown/appkit/react";
-import { Account } from "viem";
+import type {CaipAddress, Balance, CaipNetwork, CaipNetworkId, AppKitNetwork} from "@reown/appkit-common";
+import type {Event} from "@reown/appkit/react";
+import { ethers } from 'ethers';
+import type {AccountType, AccountControllerState} from "@reown/appkit/react";
+import type {W3mFrameTypes} from "@reown/appkit-wallet";
 
 
 interface TokenBalance {
-  symbol: string;
-  balance: string;
-  address?: string;
+    symbol: string;
+    balance: string;
+    address?: string;
 }
 
 interface EventWithMetadata {
-  timestamp: number;
-  reportedErrors: Record<string, boolean>;
-  data: Event;
+    timestamp: number;
+    reportedErrors: Record<string, boolean>;
+    data: Event;
 }
 
 interface ConnectedWalletInfo {
-  name: string;
-  icon?: string;
-  type?: string;
-  [key: string]: unknown;
+    name: string;
+    icon?: string;
+    type?: string;
+
+    [key: string]: unknown;
+}
+
+interface Network {
+    caipNetwork: CaipNetwork | undefined;
+    chainId: number | string | undefined;
+    caipNetworkId: CaipNetworkId | undefined;
+    switchNetwork: (network: AppKitNetwork) => void;
+};
+
+interface AccountData {
+    allAccounts: AccountType[];
+    caipAddress: CaipAddress | undefined;
+    address: string | undefined;
+    isConnected: boolean;
+    embeddedWalletInfo?: {
+        user: AccountControllerState["user"];
+        authProvider: AccountControllerState["socialProvider"] | "email";
+        accountType: W3mFrameTypes.AccountType | undefined;
+        isSmartAccountDeployed: boolean;
+    };
+    status: AccountControllerState["status"];
 }
 
 const ERC20_ABI = [
-  {
-    inputs: [],
-    name: "decimals",
-    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [{ name: "_owner", type: "address" }],
-    name: "balanceOf",
-    outputs: [{ name: "balance", type: "uint256" }],
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      { name: "_spender", type: "address" },
-      { name: "_value", type: "uint256" }
-    ],
-    name: "approve",
-    outputs: [{ name: "", type: "bool" }],
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [
-      { name: "_owner", type: "address" },
-      { name: "_spender", type: "address" }
-    ],
-    name: "allowance",
-    outputs: [{ name: "", type: "uint256" }],
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "symbol",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function"
-  }
+    {
+        inputs: [],
+        name: "decimals",
+        outputs: [{internalType: "uint8", name: "", type: "uint8"}],
+        stateMutability: "view",
+        type: "function"
+    },
+    {
+        constant: true,
+        inputs: [{name: "_owner", type: "address"}],
+        name: "balanceOf",
+        outputs: [{name: "balance", type: "uint256"}],
+        type: "function"
+    },
+    {
+        constant: false,
+        inputs: [
+            {name: "_spender", type: "address"},
+            {name: "_value", type: "uint256"}
+        ],
+        name: "approve",
+        outputs: [{name: "", type: "bool"}],
+        type: "function"
+    },
+    {
+        constant: true,
+        inputs: [
+            {name: "_owner", type: "address"},
+            {name: "_spender", type: "address"}
+        ],
+        name: "allowance",
+        outputs: [{name: "", type: "uint256"}],
+        type: "function"
+    },
+    {
+        inputs: [],
+        name: "symbol",
+        outputs: [{internalType: "string", name: "", type: "string"}],
+        stateMutability: "view",
+        type: "function"
+    }
 ];
+
 
 class WalletStore {
 
 
-  constructor() {
-    makeAutoObservable(this, {
-      setAccountInformation: action
+    constructor() {
+        makeAutoObservable(this, {
+            setWalletInformation: action,
+            setAccountData: action,
+           setNetwork: action,
+        });
+    }
+
+    connectedWallet: ConnectedWalletInfo | null = null;
+    accountData: AccountData | null = null;
+    network : Network | null = null;
+
+    setNetwork(
+        network: Network) {
+        this.network = network;
+    }
+
+    setAccountData(
+        account: AccountData) {
+        this.accountData = account;
+    }
+
+
+
+    getAccountData = () => this.accountData && this.accountData?.isConnected ?
+        this.accountData : null;
+
+
+    setWalletInformation(
+        wallet: ConnectedWalletInfo) {
+        this.connectedWallet = wallet;
+    }
+
+
+    getNetwork = () => this.network;
+
+    getWalletInformation = () => this.connectedWallet;
+
+
+    fetchBalances = flow(function* (this: WalletStore, tokenAddresses: string[]) {
+        this.loading = true;
+        this.error = null;
+        try {
+            // ПРОВЕРЯЕМ, ЧТО КОШЕЛЕК ПОДКЛЮЧЕН
+            if (!this.address) {
+                throw new Error("Wallet is not connected"); // Или просто return;
+            }
+
+            // ПОЛУЧАЕМ ПРОВАЙДЕРА ИЗ ПОДКЛЮЧЕННОГО КОШЕЛЬКА (window.ethereum)
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+            const balances: Balance[] = [];
+
+            // Баланс нативного токена (ETH, BNB и т.д.)
+            const nativeBalance = yield provider.getBalance(this.address);
+            balances.push({
+                symbol: 'ETH', //  Замените на символ вашей сети!
+                balance: ethers.utils.formatEther(nativeBalance),
+                address: undefined,
+            });
+
+            // Балансы токенов ERC-20
+            for (const tokenAddress of tokenAddresses) {
+                const contract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+                const balance = yield contract.balanceOf(this.address);
+                const symbol = yield contract.symbol();
+                const decimals = yield contract.decimals();
+                balances.push({
+                    symbol,
+                    balance: ethers.utils.formatUnits(balance, decimals),
+                    address: tokenAddress,
+                });
+            }
+
+            runInAction(() => {
+                this.balances = balances;
+                this.tokenBalances.clear();
+                for (const b of balances) {
+                    if (b.address) {
+                        this.tokenBalances.set(b.address, b.balance);
+                    }
+                }
+            });
+        } catch (error: any) {
+            runInAction(() => {
+                this.error = error.message || 'Failed to fetch balances';
+            });
+            loggerStore.logError("Failed to fetch balances", error)
+        } finally {
+            runInAction(() => {
+                this.loading = false;
+            });
+        }
     });
-  }
 
-  address: string | null = null;
-  isConnected: boolean = false;
-  caipAddress: CaipAddress | undefined = undefined;
-  allAccounts: Account[] = [];
-  status: 'reconnecting' | 'connected' | 'disconnected' | 'connecting' | undefined = undefined;
-
-
-  // Данные аккаунта
-  public accauntAddress: string | null = null; // Сразу null, если адреса нет при инициализации
-
-  public isWalletConnected: boolean = false;
-
-  public activeChain: string | null = null;
-
-
-  caipAddress = "";
-  allAccounts: Account[] = [];
-  isAccountConnected: boolean = false;
-  embeddedWalletInfo = null;
-
-  error: string | null = null;
-
-
-  setAccountInformation(
-    address: string | undefined,
-    isConnected: boolean,
-    caipAddress: CaipAddress,
-    allAccounts: Account[]) {
-    this.address = address;
-    this.caipAddress = caipAddress;
-    this.isAccountConnected = isConnected;
-    this.allAccounts = allAccounts;
-  }
-
-  // Состояние сети
-
-
-  // Балансы
-  walletInfo: ConnectedWalletInfo | null = null;
-  balances: Balance[] = [];
-  tokenBalances = new Map<string, string>();
-  loading: boolean = false;
-
-  initialized = false;
-  events: EventWithMetadata[] = [];
 
 
 }

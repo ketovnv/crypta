@@ -4,7 +4,7 @@ import { Card, Text, Button, TextInput, Group, Stack, Alert, Loader } from '@man
 import { IoAlertCircleSharp } from "react-icons/io5"
 import { walletStore } from '../../../stores/wallet'
 import {loggerStore} from "../../../stores/logger";
-loggerStore.warning("🎖️ Компонент Токен");
+loggerStore.warning("🎖️ ", "Компонент Токен");
 const TokenOperations = observer(() => {
     const [spenderAddress, setSpenderAddress] = useState('');
     const [approveAmount, setApproveAmount] = useState('');
@@ -18,7 +18,7 @@ const TokenOperations = observer(() => {
         walletStore.approveToken(USDT_ADDRESS, spenderAddress, approveAmount);
     };
 
-    if (!walletStore.isConnected) {
+    if (!walletStore.getAccountData()) {
         return (
             <Alert icon={<IoAlertCircleSharp size={16} />} title="Not connected" color="orange">
                 Please connect your wallet first

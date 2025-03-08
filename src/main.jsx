@@ -34,7 +34,7 @@ createAppKit({
 
 // Создаем корневой компонент для лучшей организации провайдеров
 function Root() {
-    loggerStore.success("🖥️ Приложение запущено! 🖥️");
+    loggerStore.success("🖥️", "Приложение запущено! 🖥️");
   return (
     <MantineProvider theme={theme}>
       <WagmiProvider config={wagmiAdapter.wagmiConfig}>

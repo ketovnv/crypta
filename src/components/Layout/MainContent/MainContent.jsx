@@ -9,9 +9,8 @@ export const MainContent = () => {
 
   return (
     <AppShell.Main>
-        <Text>{uiStore.colorScheme}</Text>
-      <AnimatePresence mode="wait" initial={false}>
-        <PageAnimation key={location.pathname}>
+      <AnimatePresence mode="wait" initial={false} >
+        <PageAnimation key={location.key}>
           <Outlet/>
         </PageAnimation>
       </AnimatePresence>

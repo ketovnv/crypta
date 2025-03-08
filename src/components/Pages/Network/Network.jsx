@@ -5,7 +5,7 @@ import { Container, Grid, Paper, Title, Text, Button, Group, Badge } from '@mant
 // import { walletStore } from '@/stores/wallet';
 import { useEffect } from 'react';
 import {loggerStore} from "@/stores/logger.js";
-loggerStore.warning("🕸️ Компонент Сеть");
+loggerStore.warning("🕸️", " Компонент Сеть");
 
 const Network = observer(() => {
     // При монтировании получаем информацию о текущей сети
@@ -17,8 +17,6 @@ const Network = observer(() => {
 
     return (
         <Container size="xl">
-
-
 
 
 

@@ -12,662 +12,240 @@ import {
   Stack,
   Center,
   SimpleGrid,
+  ScrollArea,
+  Loader,
+  Anchor,
+  Box,
+  Accordion,
 } from "@mantine/core";
 import { IoArrowForwardSharp } from "react-icons/io5";
 import { useEffect } from "react";
 import classes from "./Home.module.css";
+import { Metamask } from "@components/Layout/SvgIcons/Metamask";
+import { Google } from "@components/Layout/SvgIcons/Google";
 
-// import {LogViewer} from "@/components/logger/LogViewer";
-
-// import {walletStore} from "@/stores/wallet";
-
-// import { loggerStore } from "@/stores/logger";
-// import { accountStore } from "@/stores/account";
-// import { eventsStore } from "@/stores/events.js";
-// import {LogJSON} from "@components/logger/LogJSON.jsx";
-// import {
-//   useAppKitEvents,
-//   useWalletInfo,
-//   useDisconnect,
-//   useAppKitState,
-// } from "@reown/appkit/react";
+import { walletStore } from "@/stores/wallet";
+import { loggerStore } from "@/stores/logger";
+import { eventsStore } from "@/stores/events.js";
 import { LogJSON } from "@components/logger/LogJSON.jsx";
+import AppearanceAnimation from "@animations/ReactSpring/AppearanceAnimation.jsx";
+import { animationStore } from "@stores/animation.js";
+import { useSpring, animated } from "@react-spring/web";
+import { uiStore } from "@stores/ui.js";
+import { useDisconnect } from "@reown/appkit/react";
+import { NavLink } from "react-router-dom";
+import { BlackCoilTexture } from "@animations/Textures/BlackCoilTexture.js";
+import { GrOpera } from "react-icons/gr";
+
 // import BalanceTracker from "@components/Pages/Home/components/BallanceTracker.js";
 
 const Home = observer(() => {
-  // loggerStore.warning("🏩 Компонент Home");
-  // const { disconnect } = useDisconnect();
+  // loggerStore.logWhiteRandom("🏩", " Компонент Home", 12);
+  const { disconnect } = useDisconnect();
+  const { navbarX } = animationStore;
+  const closedWidth = window.innerWidth * 0.96; // 98% от ширины окна, когда навбар закрыт.  Можно в px
+  const openWidth = window.innerWidth * 0.96 - 350; // 100% от ширины окна, когда навбар открыт.  Можно в px
 
-  // const {walletInfo} = useWalletInfo();
-
-
-
-  // useEffect(() => {
-  //     if (walletInfo) loggerStore.logJSON(walletInfo);
-  // }, [walletInfo]);
+  const springProps = useSpring({
+    x: navbarX + 10,
+    width: uiStore.isNavbarOpened ? openWidth : closedWidth, // Корректный calc
+    from: { x: -350 + 10, width: openWidth },
+    config: { mass: 1, tension: 280, friction: 60, delay: 200 },
+  });
 
   return (
-    <Container size="xl" w="75vw">
-      <appkit-button />
+    <animated.div style={{ ...springProps, height: "600px" }}>
+      <Group h="600px" mw={600} justify="center" align="flex-start">
+        <AppearanceAnimation condition={eventsStore.getState()?.loading}>
+          <Loader />
+        </AppearanceAnimation>
+        <AppearanceAnimation
+          condition={
+            !eventsStore.getState()?.open && !eventsStore.getState()?.loading
+          }
+        >
+          {walletStore.getAccountData() && (
+            <Center w={600} style={{ position: "relative", top: -25 }}>
+              <appkit-button balance="show" />
+            </Center>
+          )}
+          <BlackCoilTexture background="#010102">
+            <Stack>
+              <Group justify="space-between" align="center">
+                <Group align="center">
+                  {walletStore.getWalletInformation()?.social === "google" && (
+                    <Google />
+                  )}
+                  {walletStore.getWalletInformation()?.social && (
+                    <Box>
+                      <Text className={classes.label}>
+                        Социальный аккаунт&nbsp;
+                        {walletStore.getWalletInformation()?.social}
+                      </Text>
+                      <Text className={classes.walletName}>
+                        {walletStore.getWalletInformation()?.identifier}
+                      </Text>
+                    </Box>
+                  )}
+                  {walletStore.getWalletInformation()?.name ===
+                    "io.metamask" && <Metamask />}
+                  {walletStore.getWalletInformation()?.type === "injected" && (
+                    <Box>
+                      <Text className={classes.label}>Кошелёк</Text>
+                      <Text className={classes.walletName}>
+                        {walletStore.getWalletInformation()?.name}
+                      </Text>
+                    </Box>
+                  )}
+                </Group>
+                {walletStore.getAccountData() ? (
+                  <Button
+                    onClick={() => disconnect()}
+                    variant="outline"
+                    color="red"
+                  >
+                    Отключить
+                  </Button>
+                ) : (
+                  <Center w={600}>
+                    <appkit-button label="Подключить кошелёк" />
+                  </Center>
+                )}
+              </Group>
+              {walletStore.getNetwork() && (
+                <Group>
+                  <Text className={classes.label}>
+                    {
+                      walletStore.getNetwork().caipNetwork?.nativeCurrency
+                        ?.symbol
+                    }
+                  </Text>
+                  <appkit-network-button />
+                  {walletStore.getNetwork()?.caipNetwork.testnet && (
+                    <Text className={classes.testNetwork}>Тестовая сеть</Text>
+                  )}
+                </Group>
+              )}
+              {walletStore.getAccountData() && (
+                <Box>
+                  <Group justify="space-between">
+                    <Text className={classes.label}>Адресс</Text>
+                    <Text className={classes.walletAddress}>
+                      {walletStore.getAccountData().address}
+                    </Text>
+                  </Group>
+                  <Group justify="space-between">
+                    <Text className={classes.label}>Адресс caip</Text>
+                    <Text className={classes.walletAddress}>
+                      {walletStore.getAccountData().caipAddress}
+                    </Text>
+                  </Group>
+                </Box>
+              )}
 
-      <SimpleGrid
-        spacing="xl"
-        verticalSpacing="lg"
-        cols={2}
-        justify="space-between"
-      >
-        <Stack>
-          {/*<LogJSON label="state" json={eventsStore.getState()} />*/}
-            {/*<LogJSON label="state" json={networkStore.getState} />*/}
-        </Stack>
-        <Stack>
-          <Title>Аккаунт</Title>
-          {/*{accountStore.getAccount ? (*/}
-          {/*  <Stack>*/}
-          {/*    /!*<LogJSON label="account" json={accountStore.getAccount()} />*!/*/}
-          {/*    <Button onClick={() => disconnect()} variant="outline" color="red">*/}
-          {/*      Отключить*/}
-          {/*    </Button>*/}
-          {/*  </Stack>*/}
-          {/*) : (*/}
-          {/*  <Text>Процесс инициализации...</Text>*/}
-          {/*)}*/}
-        </Stack>
-        <Stack>
-          {/*<Title>Баланс</Title>*/}
+              {walletStore.getNetwork() && (
+                <Stack>
+                  <Group>
+                    <Anchor
+                      href={
+                        walletStore.getNetwork().caipNetwork?.rpcUrls?.default
+                          .http[0]
+                      }
+                      target="_blank"
+                    >
+                      RPC
+                    </Anchor>
+                    <Anchor
+                      href={
+                        walletStore.getNetwork().caipNetwork?.rpcUrls
+                          ?.chainDefault.http[0]
+                      }
+                      target="_blank"
+                    >
+                      RPC сети
+                    </Anchor>
+                    <Anchor
+                      href={
+                        walletStore.getNetwork()?.caipNetwork?.blockExplorers
+                          .default.url
+                      }
+                      target="_blank"
+                    >
+                      {
+                        walletStore.getNetwork()?.caipNetwork?.blockExplorers
+                          .default.name
+                      }
+                    </Anchor>
+                    <Anchor
+                      href={
+                        walletStore.getNetwork()?.caipNetwork?.blockExplorers
+                          .default.apiUrl
+                      }
+                      target="_blank"
+                    >
+                      {
+                        walletStore.getNetwork()?.caipNetwork?.blockExplorers
+                          .default.name
+                      }{" "}
+                      API
+                    </Anchor>
+                  </Group>
+                </Stack>
+              )}
+            </Stack>
+          </BlackCoilTexture>
+
+          {walletStore.getNetwork() && (
+            <Accordion w={600} mx="auto" variant="separated">
+              <Accordion.Item value="contracts">
+                <Accordion.Control>
+                  <Title order={4} className={classes.lable}>
+                    Контракты
+                  </Title>
+                </Accordion.Control>
+                <Accordion.Panel>
+                  {Object.entries(
+                    walletStore.getNetwork()?.caipNetwork.contracts,
+                  ).map(([key, val]) => (
+                    <Box key={key}>
+                      <Group>
+                        <Text
+                          style={{ fontSize: 14 }}
+                          className={classes.lable}
+                        >
+                          {key + " : "}
+                        </Text>
+                        <Text
+                          style={{ fontSize: 14 }}
+                          className={classes.walletAddress}
+                        >
+                          {val.address}
+                        </Text>
+                        {val.blockCreated && (
+                          <Text style={{ fontSize: 12 }}>
+                            Номер блока:{val.blockCreated}
+                          </Text>
+                        )}
+                      </Group>
+                    </Box>
+                  ))}
+
+                  <Group>
+                    <Text>Assets</Text>
+                    <Text>
+                      {JSON.stringify(
+                        walletStore.getNetwork().caipNetwork?.assets,
+                      )}
+                    </Text>
+                  </Group>
+                </Accordion.Panel>
+              </Accordion.Item>
+            </Accordion>
+          )}
           {/*<BalanceTracker />*/}
-        </Stack>
-      </SimpleGrid>
-    </Container>
+        </AppearanceAnimation>
+      </Group>
+    </animated.div>
   );
 });
-
 export default Home;
-
-{
-  /*<AnimatedFontDisplay text=" Компонент Home" />*/
-}
-
-{
-  /*<Grid>*/
-}
-{
-  /*    /!* Основная информация *!/*/
-}
-{
-  /*    <Grid.Col span={8}>*/
-}
-{
-  /*        <Paper p="md" radius="md" shadow="sm">*/
-}
-{
-  /*            <InfoList />*/
-}
-{
-  /*        </Paper>*/
-}
-{
-  /*    </Grid.Col>*/
-}
-{
-  /*    <List*/
-}
-{
-  /*      spacing="xs"*/
-}
-{
-  /*      size="sm"*/
-}
-{
-  /*      className={classes.card}*/
-}
-{
-  /*      center*/
-}
-{
-  /*      icon={*/
-}
-{
-  /*        <ThemeIcon*/
-}
-{
-  /*          color={isConnected ? "teal" : "gray"}*/
-}
-{
-  /*          className={classes.arrowIcon}*/
-}
-{
-  /*          size={15}*/
-}
-{
-  /*          radius="md"*/
-}
-{
-  /*          variant="outline"*/
-}
-{
-  /*        >*/
-}
-{
-  /*          {isConnected && <IoArrowForwardSharp />}*/
-}
-{
-  /*        </ThemeIcon>*/
-}
-{
-  /*      }*/
-}
-{
-  /*    >*/
-}
-{
-  /*      <List.Item>*/
-}
-{
-  /*        <Group>*/
-}
-{
-  /*          <Code>Выбранная сеть</Code>*/
-}
-{
-  /*          <appkit-network-button />*/
-}
-{
-  /*        </Group>*/
-}
-{
-  /*      </List.Item>*/
-}
-{
-  /*      <LogViewer />*/
-}
-{
-  /*      {isConnected && (*/
-}
-{
-  /*        <Group justify="space-between" align="center">*/
-}
-{
-  /*          <Stack>*/
-}
-{
-  /*            <List.Item>*/
-}
-{
-  /*              <Code>Адрес:</Code>{" "}*/
-}
-{
-  /*              <Text className={classes.listText} component="span">*/
-}
-{
-  /*                {address}*/
-}
-{
-  /*              </Text>*/
-}
-{
-  /*            </List.Item>*/
-}
-{
-  /*            <List.Item style={{ position: "relative", top: "-15px" }}>*/
-}
-{
-  /*              <Code>Адрес caip</Code>{" "}*/
-}
-{
-  /*              <Text className={classes.listText} component="span">*/
-}
-{
-  /*                {caipAddress}*/
-}
-{
-  /*              </Text>*/
-}
-{
-  /*            </List.Item>*/
-}
-{
-  /*          </Stack>*/
-}
-{
-  /*          <Button onClick={() => disconnect()} variant="outline" color="red">*/
-}
-{
-  /*            Отключить*/
-}
-{
-  /*          </Button>*/
-}
-{
-  /*        </Group>*/
-}
-{
-  /*      )}*/
-}
-{
-  /*    </List>*/
-}
-{
-  /*    /!* Быстрые действия *!/*/
-}
-{
-  /*    <Grid.Col span={4}>*/
-}
-{
-  /*        <Paper p="md" radius="md" shadow="sm">*/
-}
-{
-  /*            <Title order={3} mb="md">Действия</Title>*/
-}
-{
-  /*            <ActionButtonList />*/
-}
-{
-  /*        </Paper>*/
-}
-{
-  /*    </Grid.Col>*/
-}
-{
-  /*    /!*{isConnected ? (*!/*/
-}
-{
-  /*    /!*  <Group align="center">*!/*/
-}
-{
-  /*    /!*    <appkit-account-button />*!/*/
-}
-{
-  /*    /!* Статистика кошелька *!/*/
-}
-{
-  /*    {walletStore.isConnected && (*/
-}
-{
-  /*        <>*/
-}
-{
-  /*            <Grid.Col span={6}>*/
-}
-{
-  /*                <Paper p="md" radius="md" shadow="sm">*/
-}
-{
-  /*                    <Title order={3} mb="md">Балансы</Title>*/
-}
-{
-  /*                    <Group spacing="xl">*/
-}
-{
-  /*                        {Array.from(walletStore.balances.entries()).map(([key, balance]) => (*/
-}
-{
-  /*                            <RingProgress*/
-}
-{
-  /*                                key={key}*/
-}
-{
-  /*                                size={120}*/
-}
-{
-  /*                                roundCaps*/
-}
-{
-  /*                                thickness={8}*/
-}
-{
-  /*                                sections={[{ value: 100, color: 'blue' }]}*/
-}
-{
-  /*                                label={*/
-}
-{
-  /*                                    <Text size="xs" align="center">*/
-}
-{
-  /*                                        {balance.symbol}*/
-}
-{
-  /*                                        <br />*/
-}
-{
-  /*                                        {parseFloat(balance.balance).toFixed(4)}*/
-}
-{
-  /*                                    </Text>*/
-}
-{
-  /*                                }*/
-}
-{
-  /*                            />*/
-}
-{
-  /*                        ))}*/
-}
-{
-  /*                    </Group>*/
-}
-{
-  /*                </Paper>*/
-}
-{
-  /*            </Grid.Col>*/
-}
-{
-  /*                <Title>*/
-}
-{
-  /*                  /&nbsp;*/
-}
-{
-  /*                  <Text className={classes.walletName} component="span" inherit>*/
-}
-{
-  /*                    {walletInfo?.name}*/
-}
-{
-  /*                  </Text>*/
-}
-{
-  /*                </Title>*/
-}
-{
-  /*                <Code color="teal" className={classes.status}>*/
-}
-{
-  /*                  Подключён*/
-}
-{
-  /*                </Code>*/
-}
-{
-  /*              </Group>*/
-}
-{
-  /*            ) : (*/
-}
-{
-  /*              <Center>*/
-}
-{
-  /*                <appkit-connect-button />*/
-}
-{
-  /*              </Center>*/
-}
-{
-  /*            )}*/
-}
-{
-  /*            <Grid.Col span={6}>*/
-}
-{
-  /*                <Paper p="md" radius="md" shadow="sm">*/
-}
-{
-  /*                    <Title order={3} mb="md">Последние события</Title>*/
-}
-{
-  /*                    {walletStore.events.slice(-5).map((event, index) => (*/
-}
-{
-  /*                        <Text key={index} size="sm" mb="xs">*/
-}
-{
-  /*                            {event}*/
-}
-{
-  /*                        </Text>*/
-}
-{
-  /*                    ))}*/
-}
-{
-  /*                </Paper>*/
-}
-{
-  /*            </Grid.Col>*/
-}
-{
-  /*        </>*/
-}
-{
-  /*    )}*/
-}
-{
-  /*</Grid>*/
-}
-
-{
-  /*<appkit-wallet-button />*/
-}
-
-// useAppKitAccount();
-
-// console.log("useAppKitStaten", setState);
-
-// walletStore.setState = useAppKitState();
-
-// const { address, caipAddress, isConnected, status } =
-
-// loggerStore.logJSON("address"),
-// console.log(
-//   "caipAddress",
-//   JSON.stringify(caipAddress),
-//   "isConnected",
-//   JSON.stringify(isConnected),
-// );
-
-// useEffect(() => {
-// if (isConnected) {
-// loggerStore.success("Connected!!!");
-// }
-// console.log('Layout mounted');
-// return () => console.log('Layout unmounted');
-// }, [isConnected]);
-{
-  /*<BalanceTracker/>*/
-}
-{
-  /*<List*/
-}
-{
-  /*  spacing="xs"*/
-}
-{
-  /*  size="sm"*/
-}
-{
-  /*  className={classes.card}*/
-}
-{
-  /*  center*/
-}
-{
-  /*  icon={*/
-}
-{
-  /*    <ThemeIcon*/
-}
-{
-  /*      color={isConnected ? "teal" : "gray"}*/
-}
-{
-  /*      className={classes.arrowIcon}*/
-}
-{
-  /*      size={15}*/
-}
-{
-  /*      radius="md"*/
-}
-{
-  /*      variant="outline"*/
-}
-{
-  /*    >*/
-}
-{
-  /*      {isConnected && <IoArrowForwardSharp />}*/
-}
-{
-  /*    </ThemeIcon>*/
-}
-{
-  /*  }*/
-}
-{
-  /*>*/
-}
-{
-  /*  <List.Item>*/
-}
-{
-  /*    <Group>*/
-}
-{
-  /*      <Code>Выбранная сеть</Code>*/
-}
-{
-  /*      <appkit-network-button />*/
-}
-{
-  /*    </Group>*/
-}
-{
-  /*  </List.Item>*/
-}
-{
-  /*  <LogViewer />*/
-}
-{
-  /*  {isConnected && (*/
-}
-{
-  /*    <Group justify="space-between" align="center">*/
-}
-{
-  /*      <Stack>*/
-}
-{
-  /*        <List.Item>*/
-}
-{
-  /*          <Code>Адрес:</Code>{" "}*/
-}
-{
-  /*          <Text className={classes.listText} component="span">*/
-}
-{
-  /*            {address}*/
-}
-{
-  /*          </Text>*/
-}
-{
-  /*        </List.Item>*/
-}
-{
-  /*        <List.Item style={{ position: "relative", top: "-15px" }}>*/
-}
-{
-  /*          <Code>Адрес caip</Code>{" "}*/
-}
-{
-  /*          <Text className={classes.listText} component="span">*/
-}
-{
-  /*            {caipAddress}*/
-}
-{
-  /*          </Text>*/
-}
-{
-  /*        </List.Item>*/
-}
-{
-  /*      </Stack>*/
-}
-{
-  /*      <Button onClick={() => disconnect()} variant="outline" color="red">*/
-}
-{
-  /*        Отключить*/
-}
-{
-  /*      </Button>*/
-}
-{
-  /*    </Group>*/
-}
-{
-  /*  )}*/
-}
-{
-  /*</List>*/
-}
-
-{
-  /*{isConnected ? (*/
-}
-{
-  /*  <Group align="center">*/
-}
-{
-  /*    <appkit-account-button />*/
-}
-
-{
-  /*    <Title>*/
-}
-{
-  /*      /&nbsp;*/
-}
-{
-  /*      <Text className={classes.walletName} component="span" inherit>*/
-}
-{
-  /*        {walletInfo?.name}*/
-}
-{
-  /*      </Text>*/
-}
-{
-  /*    </Title>*/
-}
-{
-  /*    <Code color="teal" className={classes.status}>*/
-}
-{
-  /*      Подключён*/
-}
-{
-  /*    </Code>*/
-}
-{
-  /*  </Group>*/
-}
-{
-  /*) : (*/
-}
-{
-  /*  <Center>*/
-}
-{
-  /*    <appkit-connect-button />*/
-}
-{
-  /*  </Center>*/
-}
-{
-  /*)}*/
-}
-
-// }
-// </Container>
-// )
-// ;
-// })
-// ;

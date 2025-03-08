@@ -20,7 +20,7 @@ export const metadata = {
 }
 
 // for custom networks visit -> https://docs.reown.com/appkit/react/core/custom-networks
-export const networks = [sepolia, mainnet, arbitrum, base, scroll, polygon] as [AppKitNetwork, ...AppKitNetwork[]]
+export const networks = [sepolia, mainnet] as [AppKitNetwork, ...AppKitNetwork[]]
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({

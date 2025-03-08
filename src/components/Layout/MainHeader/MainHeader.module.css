@@ -7,11 +7,30 @@
 }
 
 .appName {
+
+}
+
+.content {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.content > div {
+    position: relative;
     font-size: 1.5rem;
     font-weight: 900;
     color: light-dark(var(--mantine-color-ocean-blue-7), var(--mantine-color-ocean-blue-3));
     font-family: "M+1NerdFontPropo", monospace;
+    display: inline-block;
 }
+
+.pressableGroup{
+    cursor: pointer;
+    }
 
 .appIcon {
     width: 50px;

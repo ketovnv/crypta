@@ -1,46 +1,42 @@
-import type { AccountType, AccountControllerState } from "@reown/appkit/react";
-import type { CaipAddress } from "@reown/appkit-common";
 import { action, makeAutoObservable } from "mobx";
 import { PublicStateControllerState } from "@reown/appkit";
 
-interface event {
+interface EventInterface {
   timestamp: number;
   reportedErrors: Record<string, boolean>;
   data: import("@reown/appkit-core").Event;
+  time?: string;
 }
 
 class EventsStore {
-  private events: event[] = [];
-
+  private readonly events: EventInterface[] = [];
   private state: PublicStateControllerState;
 
   constructor() {
     makeAutoObservable(this, {
       addEvent: action,
+      setCurrentState: action,
     });
   }
 
   get eventsList() {
-    return this.events.map((e) => {
-      e.timestamp = new Date(e.timestamp).getTime();
-      return e;
-    });
+    return this.events
   }
 
   getErrors() {
     return this.eventsList
       .filter((e) => e.reportedErrors !== undefined)
       .map((e) => {
-        e.timestamp = new Date(e.timestamp).getTime();
+        e.time = new Date(e.timestamp).toLocaleString();
         return e;
       });
   }
 
-  addEvent(event: event) {
+  addEvent(event: EventInterface) {
     this.events.push(event);
   }
 
-  addState(state: PublicStateControllerState) {
+  setCurrentState(state: PublicStateControllerState) {
     this.state = state;
   }
 

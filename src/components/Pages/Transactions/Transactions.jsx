@@ -22,15 +22,6 @@ import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import classes             from './Transactions.module.css';
 
-import {
-    useSpring,
-    useTransition,
-    useTrail,
-    // useKeyframes,
-    useChain,
-    animated,
-} from '@react-spring/web'
-
 
 
 // Вспомогательная функция для определения цвета статуса транзакции
@@ -67,31 +58,6 @@ const TransactionHash = ({ hash }) => {
 
 
 
-const Spring = () => {
-    console.clear()
-    console.log("useSpring: ", useSpring)
-    console.log("useTrail: ", useTrail)
-    console.log("useKeyFrames: ", useKeyframes)
-    console.log("useChain: ", useChain)
-    console.log('animated: ', animated)
-
-    return (
-        <div>Spring!</div>
-    )
-}
-
-const SpringApp = ({ children}) => {
-    const [up, set] = useState(true);
-    const chars = useMemo(() => children.split(''), [children]);
-    const trail = useTrail(chars.length, { x: up ? 0 : 50, opacity: up ? 1 : 0});
-    return (
-        <div className={classes.content} onClick={() => set(a => !a)}>
-            {trail.map(({ x, ...rest }, index) => (
-                <animated.div style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}>{chars[index]}</animated.div>
-            ))}
-        </div>
-    )
-}
 
 
 
@@ -100,7 +66,6 @@ const Transactions = observer(() => {
     const [selectedTx, setSelectedTx] = useState(null);
 
 
-   return( <SpringApp className="app">Spring</SpringApp>);
 });
 
 export default Transactions;

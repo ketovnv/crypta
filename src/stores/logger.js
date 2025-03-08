@@ -16,34 +16,34 @@ import { makeAutoObservable, runInAction, reaction, toJS } from "mobx";
 // Расширенные стили для разных типов логов
 const LOG_STYLES = {
   info: {
-    base: "color: #317FF3; font-weight: bold",
-    light: "color: #74B5F6; font-weight: bold",
-    dark: "color: #1036A2; font-weight: bold",
+    base: "#317FF3",
+    light: "#74B5F6",
+    dark: "#1036A2",
   },
   success: {
-    base: "color: #31B257; font-weight:bold;font-size:30px;font-style:italic",
-    light: "color: #81FF84; font-weight:bold;font-size:30px;font-style:italic",
-    dark: "color: #115222; font-weight:bold;font-size:30px;font-style:italic",
+    base: "#31B257;font-style:italic",
+    light: "#81FF84; font-style:italic",
+    dark: "#115222; font-style:italic",
   },
   warning: {
-    base: "color: #FFC107; font-weight: bold",
-    light: "color: #FFD54F; font-weight: bold",
-    dark: "color: #FFA000; font-weight: bold",
+    base: "#FFC107",
+    light: "#FFD54F",
+    dark: "#FFA000",
   },
   error: {
-    base: "color: #F44336; font-weight: bold",
-    light: "color: #E57373; font-weight: bold",
-    dark: "color: #D32F2F; font-weight: bold",
+    base: "#F44336",
+    light: "#E57373",
+    dark: "#D32F2F",
   },
   debug: {
-    base: "color: #9C27B0; font-weight: bold",
-    light: "color: #D868E8; font-weight: bold",
-    dark: "color: #5B1F72; font-weight: bold",
+    base: "#9C27B0",
+    light: "#D868E8",
+    dark: "#5B1F72",
   },
   system: {
-    base: "color: #607D8B; font-weight: bold",
-    light: "color: #90A4AE; font-weight: bold",
-    dark: "color: #344A54; font-weight: bold",
+    base: "#607D8B",
+    light: "#90A4AE",
+    dark: "#344A54",
   },
 };
 
@@ -222,53 +222,85 @@ class LoggerStore {
     });
   };
 
-  logJSON = (label, data) => {
+  logJSON = (label, data, fontSize = 20) => {
     this.warning("🥁" + label);
     Object.entries(data ?? { key: "null" }).forEach(([key, value]) => {
       console.log(
         "%c" + key + " : %c" + JSON.stringify(value ?? "null"),
-        "color:" + this.getRandomColor() + ";font-weight:bold;font-size:25px",
-        "color:white;font-weight:bold;font-size:20px",
+        "color:" +
+          this.getRandomColor() +
+          ";font-weight:bold;font-size:" +
+          fontSize +
+          "px",
+        "color:white;font-weight:bold;font-size:" + fontSize + "px",
       );
     });
   };
 
   // Расширенный метод логирования
-  log = (type, messageTemplate, data, ...args) => {
+  log = (type, message, data, fontSize=16,messageColor='white',valueColor='yellow') => {
     const timestamp = formatTime();
     // const { message, styles } = this.formatMessage(messageTemplate, ...args);
-    const message = messageTemplate + (data ?? "");
-    const styles = {};
-    const logEntry = {
-      id: Date.now(),
-      timestamp,
-      type,
-      message,
-      styles,
-      rawArgs: args,
-    };
 
-    runInAction(() => {
-      this.logs.push(logEntry);
-    });
+    // const styles = {};
+    // const logEntry = {
+    //   id: Date.now(),
+    //   timestamp,
+    //   type,
+    //   message,
+    //   styles,
+    //   rawArgs: args,
+    // };
+    //
+    // runInAction(() => {
+    //   this.logs.push(logEntry);
+    // });
+
+    const color = this.getRandomColor(16);
+
+
+    switch (type) {
+      case "random":
+        messageColor = color;
+        valueColor = this.getRandomColor(16);
+        break;
+      case "whiteRandom":
+        valueColor = color;
+        break;
+      case "sameRandom":
+        messageColor = color;
+        valueColor = color;
+        break;
+      case "userColors":
+        break;
+      default:
+        messageColor = LOG_STYLES[type].base;
+        valueColor = LOG_STYLES[type].light;
+    }
+
+    messageColor = "color : "+messageColor;
+    valueColor = "color : "+valueColor;
 
     // const tone=['light','dark','base'][Math.floor(Math.random() * 3)];
     const rgB = Math.floor(Math.random() * 75);
 
     const timeColor =
       `background: linear-gradient(#CCFF${rgB + 20}, #7799${rgB} );` +
-      "padding: 5px;margin-right: 5px;color: #1122" +
+      "padding: 2px;margin-right: 5px;color: #1122" +
       rgB +
-      ";display: block" +
+      ";font-size: 8px;display: block" +
       "box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 5px 3px -5px rgba(0, 0, 0, 0.5), 0 -13px 5px -10px rgba(255, 255, 255, 0.4) inset" +
       BL +
       IT;
 
     // Применяем все стили в консоли
     console.log(
-      "%c " + timestamp + ` %c${message}`,
-      timeColor,
-      LOG_STYLES[type].light + S20,
+      // "%c" + timestamp +
+        ` %c${message} : ` + ` %c${data}`,
+      // timeColor,
+
+      messageColor +";font-size:"+fontSize+"px;",
+      valueColor +";font-size:"+fontSize+"px;font-weight:bold;",
     );
   };
 
@@ -325,13 +357,16 @@ class LoggerStore {
     };
   };
 
-  colorLog = (message, data, color) =>
-    this.log("info", message, data, `color: ${color}; font-weight: bold;`);
-  info = (message, data) => this.log("info", message, data);
-  success = (message, data) => this.log("success", message, data);
-  warning = (message, data) => this.log("warning", message, data);
-  error = (message, data) => this.log("error", message, data);
-  debug = (message, data) => this.log("debug", message, data);
+  colorLog = (message, data, fontSize,messageColor,valueColor) =>
+    this.log("userColors", message, data, fontSize,messageColor,valueColor);
+  info = (message, data,fontSize) => this.log("info", message, data,fontSize);
+  success = (message, data,fontSize) => this.log("success", message, data,fontSize);
+  warning = (message, data,fontSize) => this.log("warning", message, data,fontSize);
+  error = (message, data,fontSize) => this.log("error", message, data,fontSize);
+  debug = (message, data,fontSize) => this.log("debug", message, data,fontSize);
+  logRandomColors = (message, data,fontSize) => this.log("random", message, data,fontSize);
+  logWhiteRandom = (message, data,fontSize) => this.log("whiteRandom", message, data,fontSize);
+  logSameRandom = (message, data,fontSize) => this.log("sameRandom", message, data,fontSize);
 
   // Форматированный вывод кода
   logCode = (code, language = "javascript") => {

@@ -33,6 +33,16 @@
 }
 
 
+.accordionItem {
+    padding: 0;
+    width: 300px;
+}
+
+
+.accordionItem span {
+    padding: 2px;
+    font-size: 12px !important;
+}
 
 
 

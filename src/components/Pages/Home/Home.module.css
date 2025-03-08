@@ -21,10 +21,11 @@
 }
 
 .walletName {
-    font-family: 'Inconsolata', monospace !important;
+    font-family: 'SF UI Display', monospace !important;
     font-style: normal;
     font-weight: 900;
     color: #EEFF00;
+    text-align: left !important;
 }
 
 .listText {
@@ -46,10 +47,29 @@
     color: #DDFF99;
 }
 
-.walletAddress {
-    font-size: 0.8em
-
+.label {
+    font-size: 1em;
+    font-family: 'SF Pro Rounded', monospace !important;
+    font-weight: 600;
+    text-align: left !important;
 }
+
+.testNetwork {
+    font-size: 1em;
+    font-family: 'IosevkaTerm Nerd Font', monospace !important;
+    font-style: italic;
+    color: #6dff85;
+}
+
+.walletAddress {
+    font-size: 1em;
+    font-family: 'SF UI Display', monospace !important;
+    font-weight: 600;
+    color: #DDFF99;
+    text-align: left !important;
+}
+
+
 
 .arrowIcon {
     position: relative;
