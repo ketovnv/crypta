@@ -122,6 +122,15 @@ export const theme = createTheme({
 
   // Кастомные стили компонентов
   components: {
+    Box: {
+      styles: () => ({
+        root: {
+          background: 'linear-gradient(135deg, #e8e8e8, #ffffff)',
+          backgroundImage: `url('data:image/svg+xml;base64,...')`,
+          backgroundBlendMode: 'overlay, soft-light',
+        },
+      }),
+    },
     Loader: Loader.extend({
       defaultProps: {
         loaders: { ...Loader.defaultLoaders, ring: RingLoader },

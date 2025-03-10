@@ -28,13 +28,13 @@ import { walletStore } from "@/stores/wallet";
 import { loggerStore } from "@/stores/logger";
 import { eventsStore } from "@/stores/events.js";
 import { LogJSON } from "@components/logger/LogJSON.jsx";
-import AppearanceAnimation from "@animations/ReactSpring/AppearanceAnimation.jsx";
+import AppearanceAnimation from "@animations/involved/AppearanceAnimation";
 import { animationStore } from "@stores/animation.js";
 import { useSpring, animated } from "@react-spring/web";
 import { uiStore } from "@stores/ui.js";
 import { useDisconnect } from "@reown/appkit/react";
 import { NavLink } from "react-router-dom";
-import { BlackCoilTexture } from "@animations/Textures/BlackCoilTexture.js";
+import { BlackCoilTexture } from "@animations/involved/textures/BlackCoilTexture.js";
 import { GrOpera } from "react-icons/gr";
 
 // import BalanceTracker from "@components/Pages/Home/components/BallanceTracker.js";

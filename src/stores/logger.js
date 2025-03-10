@@ -223,7 +223,10 @@ class LoggerStore {
   };
 
   logJSON = (label, data, fontSize = 20) => {
-    this.warning("🥁" + label);
+    if (!data || !data.length) return;
+
+    this.logWhiteRandom("🥷", "Сейчас будет JSON 🥷");
+    this.success("♠️♦️", label + "💘♣️");
     Object.entries(data ?? { key: "null" }).forEach(([key, value]) => {
       console.log(
         "%c" + key + " : %c" + JSON.stringify(value ?? "null"),
@@ -238,7 +241,14 @@ class LoggerStore {
   };
 
   // Расширенный метод логирования
-  log = (type, message, data, fontSize=16,messageColor='white',valueColor='yellow') => {
+  log = (
+    type,
+    message,
+    data,
+    fontSize = 16,
+    messageColor = "white",
+    valueColor = "yellow",
+  ) => {
     const timestamp = formatTime();
     // const { message, styles } = this.formatMessage(messageTemplate, ...args);
 
@@ -257,7 +267,6 @@ class LoggerStore {
     // });
 
     const color = this.getRandomColor(16);
-
 
     switch (type) {
       case "random":
@@ -278,8 +287,8 @@ class LoggerStore {
         valueColor = LOG_STYLES[type].light;
     }
 
-    messageColor = "color : "+messageColor;
-    valueColor = "color : "+valueColor;
+    messageColor = "color : " + messageColor;
+    valueColor = "color : " + valueColor;
 
     // const tone=['light','dark','base'][Math.floor(Math.random() * 3)];
     const rgB = Math.floor(Math.random() * 75);
@@ -296,11 +305,11 @@ class LoggerStore {
     // Применяем все стили в консоли
     console.log(
       // "%c" + timestamp +
-        ` %c${message} : ` + ` %c${data}`,
+      ` %c${message} : ` + ` %c${data}`,
       // timeColor,
 
-      messageColor +";font-size:"+fontSize+"px;",
-      valueColor +";font-size:"+fontSize+"px;font-weight:bold;",
+      messageColor + ";font-size:" + fontSize + "px;",
+      valueColor + ";font-size:" + fontSize + "px;font-weight:bold;",
     );
   };
 
@@ -357,16 +366,23 @@ class LoggerStore {
     };
   };
 
-  colorLog = (message, data, fontSize,messageColor,valueColor) =>
-    this.log("userColors", message, data, fontSize,messageColor,valueColor);
-  info = (message, data,fontSize) => this.log("info", message, data,fontSize);
-  success = (message, data,fontSize) => this.log("success", message, data,fontSize);
-  warning = (message, data,fontSize) => this.log("warning", message, data,fontSize);
-  error = (message, data,fontSize) => this.log("error", message, data,fontSize);
-  debug = (message, data,fontSize) => this.log("debug", message, data,fontSize);
-  logRandomColors = (message, data,fontSize) => this.log("random", message, data,fontSize);
-  logWhiteRandom = (message, data,fontSize) => this.log("whiteRandom", message, data,fontSize);
-  logSameRandom = (message, data,fontSize) => this.log("sameRandom", message, data,fontSize);
+  colorLog = (message, data, fontSize, messageColor, valueColor) =>
+    this.log("userColors", message, data, fontSize, messageColor, valueColor);
+  info = (message, data, fontSize) => this.log("info", message, data, fontSize);
+  success = (message, data, fontSize) =>
+    this.log("success", message, data, fontSize);
+  warning = (message, data, fontSize) =>
+    this.log("warning", message, data, fontSize);
+  error = (message, data, fontSize) =>
+    this.log("error", message, data, fontSize);
+  debug = (message, data, fontSize) =>
+    this.log("debug", message, data, fontSize);
+  logRandomColors = (message, data, fontSize) =>
+    this.log("random", message, data, fontSize);
+  logWhiteRandom = (message, data, fontSize) =>
+    this.log("whiteRandom", message, data, fontSize);
+  logSameRandom = (message, data, fontSize) =>
+    this.log("sameRandom", message, data, fontSize);
 
   // Форматированный вывод кода
   logCode = (code, language = "javascript") => {

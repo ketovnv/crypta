@@ -1,4 +1,5 @@
 "use client";
+import '@gfazioli/mantine-parallax/styles.css';
 import React, { Profiler } from "react";
 import ReactDOM from "react-dom/client";
 

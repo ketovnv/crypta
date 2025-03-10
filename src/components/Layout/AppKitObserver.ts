@@ -14,12 +14,11 @@ import { walletStore } from "../../stores/wallet.ts";
 
 export const AppKitObserver = observer(() => {
   const account = useAppKitAccount();
-  const event = useAppKitEvents();
   const state = useAppKitState();
-  const network  = useAppKitNetwork();
-  const {walletInfo} = useWalletInfo();
-  // loggerStore.warning("🥷", "AppKitObserver render");
-  // Отслеживаем изменения аккаунта
+  const network = useAppKitNetwork();
+  const { walletInfo } = useWalletInfo();
+  const event = useAppKitEvents();
+
   useEffect(() => {
     if (account.isConnected) {
       // console.log("Account: ", account);
@@ -30,8 +29,9 @@ export const AppKitObserver = observer(() => {
   }, [account.isConnected]);
 
   useEffect(() => {
-    if(event.reportedErrors){
-       console.warn(JSON.stringify(event.reportedErrors))
+    if (event.reportedErrors) {
+
+      // console.warn(JSON.stringify(event.reportedErrors));
        loggerStore.logJSON("reportedErrors", event.reportedErrors);
     }
     // loggerStore.logJSON("Новое событие", event.data);
@@ -39,7 +39,6 @@ export const AppKitObserver = observer(() => {
   }, [event]);
 
 
-  // Отслеживаем изменения сети
   useEffect(() => {
     // loggerStore.logJSON("state", state);
     eventsStore.setCurrentState(state);
@@ -52,7 +51,6 @@ export const AppKitObserver = observer(() => {
   useEffect(() => {
     walletStore.setNetwork(network);
   }, [network]);
-
 
   return null;
 });

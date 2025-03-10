@@ -85,6 +85,7 @@ export const MainNavbar = observer(() => {
               mx="auto"
             >
               <Accordion.Item
+                  key={event.data?.event}
                 className={classes.accordionItem}
                 value={event.data?.event}
               >

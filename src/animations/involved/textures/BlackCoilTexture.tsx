@@ -1,20 +1,23 @@
-import { createNoiseSVG } from "./effects/noiseSVG";
+// @ts-ignore
+import { createNoiseSVG } from "@animations/involved/effects/noiseSVG";
 import React from "react";
-import {Button} from "@mantine/core";
-import classes from "./effects/classes.module.css";
+import {  Card } from "@mantine/core";
+// @ts-ignore
+import classes from "@animations/involved/effects/textures.module.css";
 
-
-
-export const BlackCoilTexture = ({ children, background = "#202020", ...props }) => (
-  <Button
+export const BlackCoilTexture = ({
+  children,
+  background = "#202020",
+  ...props
+}) => (
+  <Card
     className={classes.cardHoverEffect}
-      style={{
+    style={{
       background,
       height: props.height || "300px",
       backgroundImage: `${createNoiseSVG(0.45, 3)}, 
                                linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0) 100%)`,
-      backgroundBlendMode: "soft-light, overlay"
-
+      backgroundBlendMode: "soft-light, overlay",
     }}
     onMouseEnter={(e) => {
       e.currentTarget.style.backgroundImage = `${createNoiseSVG(0.25, 4)}, 
@@ -30,5 +33,5 @@ export const BlackCoilTexture = ({ children, background = "#202020", ...props })
     }}
   >
     {children}
-  </Button>
+  </Card>
 );

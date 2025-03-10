@@ -76,7 +76,7 @@ export default defineConfig({
                                         '@styles': path.resolve(__dirname, './src/styles'),
                                         '@stores': path.resolve(__dirname, './src/stores'),
                                         '@components': path.resolve(__dirname, './src/components'),
-                                        '@animations': path.resolve(__dirname, './src/components/Animations'),
+                                        '@animations': path.resolve(__dirname, './src/animations'),
                                         '@assets': path.resolve(__dirname, './src/assets'),
                                     },
                                 },
@@ -100,7 +100,7 @@ export default defineConfig({
                                 },
 
                                 server: {
-                                    port: 5000,
+                                    port: 5500,
                                     strictPort: true,
                                     historyApiFallback: true,
                                     hmr: false,
@@ -112,7 +112,7 @@ export default defineConfig({
                                         strict: false   // Отключаем строгую проверку
                                     },
                                     cors: {
-                                        origin: 'http://localhost:5000',
+                                        origin: 'http://localhost:5500',
                                         credentials: true,
                                         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
                                         allowedHeaders: ['Content-Type', 'Authorization']

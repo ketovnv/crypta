@@ -27,7 +27,7 @@ import {
 const SpringApp = ({ children}) => {
   const [up, set] = useState(true);
   const chars = useMemo(() => children.split(''), [children]);
-  const trail = useTrail(chars.length, { x: up ? 0 : 50, opacity: up ? 1 : 0});
+  const trail = useTrail(chars.length, { x: up ? 0 : 25, opacity: up ? 1 : 0});
   return (
       <div className={classes.content} onClick={() => set(a => !a)}>
         {trail.map(({ x, ...rest }, index) => (

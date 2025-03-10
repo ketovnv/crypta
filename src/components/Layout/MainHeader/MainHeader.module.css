@@ -6,9 +6,7 @@
     }
 }
 
-.appName {
 
-}
 
 .content {
     height: 70px;
@@ -21,10 +19,10 @@
 
 .content > div {
     position: relative;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 900;
     color: light-dark(var(--mantine-color-ocean-blue-7), var(--mantine-color-ocean-blue-3));
-    font-family: "M+1NerdFontPropo", monospace;
+    font-family: "Tactic Round Bld", monospace;
     display: inline-block;
 }
 

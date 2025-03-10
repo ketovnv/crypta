@@ -1,13 +1,13 @@
 import {ScrollArea} from '@mantine/core';
-// import AnimatedNumber from "@components/Animations/AnimatedNumber";
-import AnimatedText from "@components/Animations/Textures/AnimatedText";
-import AnimatedTextures from "@components/Animations/Textures/AnimatedTextures";
-import DarkStaticTextures from "@components/Animations/Textures/DarkStaticTextures";
-import NoiseTextures from "@components/Animations/Textures/NoiseTextures";
-import StaticTextures from "@components/Animations/Textures/StaticTextures";
-import TextureEffects from "@components/Animations/Textures/TextureEffects";
-import AnimatedTexturesOne from "@components/Animations/Textures/AnimatedTexturesOne";
-import {FontTest} from "@components/Pages/Options/FontTest.jsx";
+// import AnimatedNumber from "@animations/AnimatedNumber";
+// import AnimatedText from "@animations/textures/AnimatedText.tsx";
+// import AnimatedTextures from "@animations/textures/AnimatedTextures";
+// import DarkStaticTextures from "@animations/textures/DarkStaticTextures";
+// import NoiseTextures from "@animations/textures/NoiseTextures";
+// import StaticTextures from "@animations/textures/StaticTextures";
+// import TextureEffects from "@animations/textures/TextureEffects";
+// import AnimatedTexturesOne from "@animations/textures/AnimatedTexturesOne";
+// import {FontTest} from "@components/Pages/Options/FontTest.jsx";
 
 
 
