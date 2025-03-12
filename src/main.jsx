@@ -1,8 +1,6 @@
 "use client";
-import '@gfazioli/mantine-parallax/styles.css';
-import React, { Profiler } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-
 
 import { createAppKit  } from "@reown/appkit/react";
 import "@mantine/core/styles.css";
@@ -13,14 +11,12 @@ import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { projectId, metadata, networks, wagmiAdapter } from "./config";
-import { routes } from "@components/Pages/routes.tsx";
-
 
 // Создаем экземпляры один раз вне компонента
 const queryClient = new QueryClient();
-const router = createBrowserRouter(routes);
 
 import { loggerStore } from "@/stores/logger";
+import Layout from "@components/Layout/index.js";
 
 // Инициализируем AppKit один раз
 createAppKit({
@@ -36,15 +32,12 @@ createAppKit({
 // Создаем корневой компонент для лучшей организации провайдеров
 function Root() {
     loggerStore.success("🖥️", "Приложение запущено! 🖥️");
+  console.log(1)  
   return (
     <MantineProvider theme={theme}>
       <WagmiProvider config={wagmiAdapter.wagmiConfig}>
         <QueryClientProvider client={queryClient}>
-          {/*<Profiler id="Layout" onRender={(id, phase, actualDuration) => {*/}
-          {/*    console.log(`${id} rendered in ${phase} phase for ${actualDuration}ms`);*/}
-          {/*}}>*/}
-          <RouterProvider router={router} />
-          {/*</Profiler>*/}
+          <Layout/>
         </QueryClientProvider>
       </WagmiProvider>
     </MantineProvider>

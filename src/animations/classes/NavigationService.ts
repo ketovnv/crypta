@@ -1,4 +1,4 @@
-/ types/animations.ts
+// typesanimations.ts
 import {useNavigate, useNavigation} from "react-router-dom";
 import {NavigateFunction} from "react-router";
 

@@ -100,7 +100,7 @@ export default defineConfig({
                                 },
 
                                 server: {
-                                    port: 5500,
+                                    port: 6500,
                                     strictPort: true,
                                     historyApiFallback: true,
                                     hmr: false,
@@ -112,7 +112,7 @@ export default defineConfig({
                                         strict: false   // Отключаем строгую проверку
                                     },
                                     cors: {
-                                        origin: 'http://localhost:5500',
+                                        origin: 'http://localhost:6500',
                                         credentials: true,
                                         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
                                         allowedHeaders: ['Content-Type', 'Authorization']

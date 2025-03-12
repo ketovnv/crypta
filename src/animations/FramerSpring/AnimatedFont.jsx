@@ -8,7 +8,7 @@ export const AnimatedFont = ({ text = "Пример текста" }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentFontIndex((prev) => 
+      setCurrentFontIndex((prev) =>
         (prev + 1) % fontFamilies.length
       );
     }, 2000);
@@ -22,16 +22,16 @@ export const AnimatedFont = ({ text = "Пример текста" }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ 
+        transition={{
           duration: 0.5,
           type: "spring",
           stiffness: 100,
           damping: 15
         }}
       >
-        <Text 
-          size="xl" 
-          style={{ 
+        <Text
+          size="xl"
+          style={{
             fontFamily: fontFamilies[currentFontIndex],
             textAlign: 'center'
           }}

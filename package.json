@@ -9,22 +9,21 @@
     "build": "npm run generate-fonts && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "web-dev-server"
+    "start": "web-dev-server",
+    "dev:tauri": "tauri:dev"
   },
   "dependencies": {
-    "@gfazioli/mantine-parallax": "^2.1.1",
-    "@gfazioli/mantine-reflection": "^1.1.2",
-    "@mantine/code-highlight": "^7.16.3",
     "@mantine/core": "^7.16.3",
     "@mantine/dates": "^7.16.3",
     "@mantine/hooks": "^7.16.3",
     "@react-spring/web": "^9.7.5",
     "@reown/appkit": "^1.6.0",
     "@reown/appkit-adapter-wagmi": "^1.6.0",
-    "@reown/appkit-common": "^1.6.8",
+    "@reown/appkit-common": "^1.6.9",
     "@reown/appkit-utils": "^1.6.8",
     "@reown/appkit-wallet-button": "^1.6.8",
     "@tanstack/react-query": "^5.66.11",
+    "@tauri-apps/api": "^2.3.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
@@ -45,10 +44,9 @@
     "react-icons": "^5.4.0",
     "react-parallax-tilt": "^1.7.283",
     "react-router-dom": "^7.1.5",
-    "simple-parallax-js": "^6.0.1",
     "viem": "^2.23.5",
     "vite-tsconfig-paths": "^5.1.4",
-    "wagmi": "^2.14.12"
+    "wagmi": "^2.14.13"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.25.9",

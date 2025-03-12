@@ -137,7 +137,7 @@ class WalletStore {
 
 
     fetchBalances = flow(function* (this: WalletStore, tokenAddresses: string[]) {
-        this.loading = true;
+        // this.loading = true;
         this.error = null;
         try {
             // ПРОВЕРЯЕМ, ЧТО КОШЕЛЕК ПОДКЛЮЧЕН

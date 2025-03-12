@@ -1,0 +1,17 @@
+{
+	"$schema": "https://unpkg.com/jsrepo@1.43.0/schemas/project-config.json",
+	"repos": [
+		"https://github.com/ieedan/std",
+		"https://reactbits.dev/ts/default"
+	],
+	"includeTests": false,
+	"watermark": true,
+	"configFiles": {},
+	"paths": {
+		"*": "./src/blocks",
+		"TextAnimations": "./src/animations/TextAnimations",
+		"Components": "./src/animations/Components",
+		"Backgrounds": "./src/animations/BackGrounds",
+		"Animations": "./src/animations/Animations"
+	}
+}

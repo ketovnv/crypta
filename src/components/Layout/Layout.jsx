@@ -1,18 +1,21 @@
-import classes from "./Layout.module.css";
-import { Text, AppShell } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { MainNavbar } from "./MainNavbar";
 import { MainHeader } from "./MainHeader";
 import { loggerStore } from "@/stores/logger.js";
-import { MainContent } from "./MainContent/index.js";
 import { AppKitObserver } from "./AppKitObserver.ts";
-import {uiStore} from "@stores/ui.js";
+import {routerStore} from "@stores/router.js";
+import { Suspense } from "react";
+import { ROUTES_LAZY, ROUTE_URLS } from "../pages/routes.jsx";
 
 const Layout = observer(() => {
+
+  const currentRoute =
+    ROUTES_LAZY[routerStore.currentPath] || ROUTES_LAZY.WALLET;
   useEffect(() => {
     loggerStore.info("🍰", " Layout mounted");
-    return () => console.log("Layout unmounted");
+    return () => console.log("Layout unmounte d");
   }, []);
 
   loggerStore.logRandomColors("LAYOUT", "mounted", 12);
@@ -28,7 +31,16 @@ const Layout = observer(() => {
       <AppKitObserver />
       <MainHeader />
       <MainNavbar />
-      <MainContent />
+
+      {routerStore.isTransitioning ? (
+        // Отображаем предыдущий компонент во время перехода
+        routerStore.previousComponent
+      ) : (
+        // Отображаем новый компонент с Suspense
+        <Suspense fallback={<div>Loading...</div>}>
+          <currentRoute.element />
+        </Suspense>
+      )}
     </AppShell>
   );
 });

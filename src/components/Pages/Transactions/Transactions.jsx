@@ -36,7 +36,7 @@ const getStatusColor = (status) => {
 };
 
 // Компонент для отображения хеша транзакции с возможностью копирования
-const TransactionHash = ({ hash }) => {
+const Transactions = ({ hash }) => {
     const handleCopy = () => {
         navigator.clipboard.writeText(hash);
     };
@@ -296,4 +296,3 @@ export default Transactions;
         // </Container>
 //     );
 // });
-

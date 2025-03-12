@@ -1,34 +1,45 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from "mobx";
 
 class AnimationStore {
-    scale = 1;
-    opacity = 1;
-    navbarX = -350;
-    currentAnimation = null; // Додаємо стан для керування анімаціями
+  scale = 1;
+  opacity = 1;
+  navbarX = -350;
+  currentAnimation = null; // Додаємо стан для керування анімаціями
 
-    constructor() {
-        makeAutoObservable(this);
-    }
+  ANIMATION_DURATION = {
+    VERY_SHORT: 300,
+    SHORT: 500,
+    MEDIUM: 800,
+    LONG: 1200,
+    VERY_LONG: 1700,
+    EXTRA_LONG: 2500,
+    EXTRA_LONG_XL: 3500,
+    EXTRA_LONG_XXL: 5000,
+  };
 
-    setScale(value: number) {
-        this.scale = value;
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    setOpacity(value: number) {
-        this.opacity = value;
-    }
+  setScale(value: number) {
+    this.scale = value;
+  }
 
-    setNavbarX(value: number)   {
-        this.navbarX = value;
-    }
+  setOpacity(value: number) {
+    this.opacity = value;
+  }
 
-    setCurrentAnimation(animationName) {
-        this.currentAnimation = animationName;
-    }
+  setNavbarX(value: number) {
+    this.navbarX = value;
+  }
 
-    clearCurrentAnimation() {
-        this.currentAnimation = null;
-    }
+  setCurrentAnimation(animationName) {
+    this.currentAnimation = animationName;
+  }
+
+  clearCurrentAnimation() {
+    this.currentAnimation = null;
+  }
 }
 
 export const animationStore = new AnimationStore();

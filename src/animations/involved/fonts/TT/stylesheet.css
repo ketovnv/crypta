@@ -1,0 +1,216 @@
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-Black.eot');
+    src: local('TT Rounds Neue Black'), local('TTRoundsNeue-Black'),
+        url('TTRoundsNeue-Black.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-Black.woff2') format('woff2'),
+        url('TTRoundsNeue-Black.woff') format('woff'),
+        url('TTRoundsNeue-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-BlackItalic.eot');
+    src: local('TT Rounds Neue Black Italic'), local('TTRoundsNeue-BlackItalic'),
+        url('TTRoundsNeue-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-BlackItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-BlackItalic.woff') format('woff'),
+        url('TTRoundsNeue-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-BoldItalic.eot');
+    src: local('TT Rounds Neue Bold Italic'), local('TTRoundsNeue-BoldItalic'),
+        url('TTRoundsNeue-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-BoldItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-BoldItalic.woff') format('woff'),
+        url('TTRoundsNeue-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-Thin.eot');
+    src: local('TT Rounds Neue Thin'), local('TTRoundsNeue-Thin'),
+        url('TTRoundsNeue-Thin.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-Thin.woff2') format('woff2'),
+        url('TTRoundsNeue-Thin.woff') format('woff'),
+        url('TTRoundsNeue-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-Medium.eot');
+    src: local('TT Rounds Neue Medium'), local('TTRoundsNeue-Medium'),
+        url('TTRoundsNeue-Medium.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-Medium.woff2') format('woff2'),
+        url('TTRoundsNeue-Medium.woff') format('woff'),
+        url('TTRoundsNeue-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-MediumItalic.eot');
+    src: local('TT Rounds Neue Medium Italic'), local('TTRoundsNeue-MediumItalic'),
+        url('TTRoundsNeue-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-MediumItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-MediumItalic.woff') format('woff'),
+        url('TTRoundsNeue-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-ExtraLight.eot');
+    src: local('TT Rounds Neue ExtraLight'), local('TTRoundsNeue-ExtraLight'),
+        url('TTRoundsNeue-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-ExtraLight.woff2') format('woff2'),
+        url('TTRoundsNeue-ExtraLight.woff') format('woff'),
+        url('TTRoundsNeue-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-Light.eot');
+    src: local('TT Rounds Neue Light'), local('TTRoundsNeue-Light'),
+        url('TTRoundsNeue-Light.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-Light.woff2') format('woff2'),
+        url('TTRoundsNeue-Light.woff') format('woff'),
+        url('TTRoundsNeue-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-ExtraBoldItalic.eot');
+    src: local('TT Rounds Neue ExtraBold Italic'), local('TTRoundsNeue-ExtraBoldItalic'),
+        url('TTRoundsNeue-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-ExtraBoldItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-ExtraBoldItalic.woff') format('woff'),
+        url('TTRoundsNeue-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-ExtraBold.eot');
+    src: local('TT Rounds Neue ExtraBold'), local('TTRoundsNeue-ExtraBold'),
+        url('TTRoundsNeue-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-ExtraBold.woff2') format('woff2'),
+        url('TTRoundsNeue-ExtraBold.woff') format('woff'),
+        url('TTRoundsNeue-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-DemiBoldItalic.eot');
+    src: local('TT Rounds Neue DemiBold Italic'), local('TTRoundsNeue-DemiBoldItalic'),
+        url('TTRoundsNeue-DemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-DemiBoldItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-DemiBoldItalic.woff') format('woff'),
+        url('TTRoundsNeue-DemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-ExtraLightItalic.eot');
+    src: local('TT Rounds Neue ExtraLight Italic'), local('TTRoundsNeue-ExtraLightItalic'),
+        url('TTRoundsNeue-ExtraLightItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-ExtraLightItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-ExtraLightItalic.woff') format('woff'),
+        url('TTRoundsNeue-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-LightItalic.eot');
+    src: local('TT Rounds Neue Light Italic'), local('TTRoundsNeue-LightItalic'),
+        url('TTRoundsNeue-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-LightItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-LightItalic.woff') format('woff'),
+        url('TTRoundsNeue-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-Bold.eot');
+    src: local('TT Rounds Neue Bold'), local('TTRoundsNeue-Bold'),
+        url('TTRoundsNeue-Bold.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-Bold.woff2') format('woff2'),
+        url('TTRoundsNeue-Bold.woff') format('woff'),
+        url('TTRoundsNeue-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-ThinItalic.eot');
+    src: local('TT Rounds Neue Thin Italic'), local('TTRoundsNeue-ThinItalic'),
+        url('TTRoundsNeue-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-ThinItalic.woff2') format('woff2'),
+        url('TTRoundsNeue-ThinItalic.woff') format('woff'),
+        url('TTRoundsNeue-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-Italic.eot');
+    src: local('TT Rounds Neue Italic'), local('TTRoundsNeue-Italic'),
+        url('TTRoundsNeue-Italic.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-Italic.woff2') format('woff2'),
+        url('TTRoundsNeue-Italic.woff') format('woff'),
+        url('TTRoundsNeue-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-Regular.eot');
+    src: local('TT Rounds Neue Regular'), local('TTRoundsNeue-Regular'),
+        url('TTRoundsNeue-Regular.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-Regular.woff2') format('woff2'),
+        url('TTRoundsNeue-Regular.woff') format('woff'),
+        url('TTRoundsNeue-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TT Rounds Neue';
+    src: url('TTRoundsNeue-DemiBold.eot');
+    src: local('TT Rounds Neue DemiBold'), local('TTRoundsNeue-DemiBold'),
+        url('TTRoundsNeue-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('TTRoundsNeue-DemiBold.woff2') format('woff2'),
+        url('TTRoundsNeue-DemiBold.woff') format('woff'),
+        url('TTRoundsNeue-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
