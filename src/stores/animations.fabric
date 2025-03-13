@@ -1,4 +1,4 @@
-// stores/animationFactory.ts
+ stores/animationFactory.ts
 import {makeAutoObservable} from "mobx";
 import {observer} from "mobx-react-lite";
 
@@ -11,7 +11,7 @@ class AnimationStore {
 
     *startAnimation(id: string) {
         this.activeAnimationIds.add(id)
-        // Запускаем анимацию через фабрику
+         Запускаем анимацию через фабрику
         yield AnimationFactory.process(id)
         this.activeAnimationIds.delete(id)
     }
@@ -21,20 +21,20 @@ class AnimationStore {
     }
 }
 
-// animations/AnimationFactory.ts
+ animations/AnimationFactory.ts
 
 
 
-// Использование:
+ Использование:
 const Navigation = observer(() => {
     useEffect(() => {
         animationStore.startAnimation('pageTransition')
     }, [location.pathname])
 
     return (
-        // <div className={
+         <div className={
             animationStore.isAnimationActive('pageTransition') ? 'animating' : ''
-        // }>
+         }>
             {/* контент */}
             </div>
     )

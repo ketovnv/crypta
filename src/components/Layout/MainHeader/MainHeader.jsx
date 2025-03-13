@@ -14,7 +14,7 @@ import {useEffect, useMemo, useState} from "react";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import classes from "./MainHeader.module.css";
-import { routerStore } from "@/stores/router.ts";
+import { routerStore } from "@/stores/router.tsx";
 import { useNavigate } from "react-router";
 import { uiStore } from "@stores/ui.js";
 import { motion } from "framer-motion";

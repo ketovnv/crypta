@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+			import React, { lazy, Suspense } from "react";
 
 const Home = lazy(() => import("./Home")); // Относительные пути к вашим компонентам
 const Balance = lazy(() => import("./Balance"));
@@ -23,29 +23,25 @@ export const ROUTE_URLS = {
 
 export const ROUTES = {
   WALLET: {
-    title: "Кошелёк",
-    element: <Home />, // Оставляем пока так
+    title: "Кошелёк",  
     icon: <IoWallet size={24} />,
     animation: "fade",
     animationDuration: "LONG_ANIMATION_DURATION", // Замените на реальные значения
   },
   BALANCE: {
     title: "Токены",
-    element: <Balance />, // Оставляем пока так
     icon: <IoApertureSharp size={24} />,
     animation: "slide-up",
     animationDuration: "LONG_ANIMATION_DURATION",
   },
   APPROVE: {
-    title: "Одобрение",
-    element: <Approve />,
+    title: "Одобрение", 
     icon: <IoLogoReact size={24} />,
     animation: "slide-down",
     animationDuration: "LONG_ANIMATION_DURATION",
   },
   TRANSACTIONS: {
-    title: "Транзакции",
-    element: <Transactions />,
+    title: "Транзакции", 
     icon: <IoFileTrayFullSharp size={24} />,
     animation: "slide-left",
     animationDuration: "LONG_ANIMATION_DURATION",

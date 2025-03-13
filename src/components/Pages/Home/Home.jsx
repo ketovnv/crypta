@@ -46,19 +46,8 @@ const Home = observer(({isLeaving}) => {
     });
     // loggerStore.logWhiteRandom("🏩", " Компонент Home", 12);
     const {disconnect} = useDisconnect();
-    const {navbarX} = animationStore;
-    const closedWidth = window.innerWidth * 0.96; // 98% от ширины окна, когда навбар закрыт.  Можно в px
-    const openWidth = window.innerWidth * 0.96 - 350; // 100% от ширины окна, когда навбар открыт.  Можно в px
-
-    const springProps = useSpring({
-        x: navbarX + 10,
-        width: uiStore.isNavbarOpened ? openWidth : closedWidth, // Корректный calc
-        from: {x: -350 + 10, width: openWidth},
-        config: {mass: 1, tension: 280, friction: 60, delay: 200},
-    });
 
     return (
-        <animated.div style={{...springProps, height: "600px"}}>
             <Group h="600px" mw={600} justify="center" align="flex-start">
                 <AppearanceAnimation condition={eventsStore.getState()?.loading}>
                     <Loader/>
@@ -249,6 +238,5 @@ const Home = observer(({isLeaving}) => {
                     {/*<BalanceTracker />*/}
                 </AppearanceAnimation>
             </Group>
-        </animated.div>
     )})
 export    default  Home

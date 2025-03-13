@@ -1,17 +1,17 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 
 class ErrorStore {
-     //Храним активные ошибки в виде Map, где ключ - это уникальный идентификатор ошибки
+     Храним активные ошибки в виде Map, где ключ - это уникальный идентификатор ошибки
     errors = new Map();
 
-    // Настройки для разных типов ошибок
+     Настройки для разных типов ошибок
     errorConfig = {
         NETWORK: {timeout: 5000, level: 'error'},
         VALIDATION: {timeout: 3000, level: 'warning'},
-        AUTH: {timeout: null, level: 'error'}, // null означает, что ошибка не исчезнет автоматически
+        AUTH: {timeout: null, level: 'error'},  null означает, что ошибка не исчезнет автоматически
         BUSINESS: {timeout: 4000, level: 'info'},
         ROUTING: {
-            timeout: null, // Ошибки маршрутизации не исчезают автоматически
+            timeout: null,  Ошибки маршрутизации не исчезают автоматически
             level: 'error',
         },
         RUNTIME: { timeout: 5000, level: 'error' },
@@ -20,12 +20,12 @@ class ErrorStore {
     };
 
     setupGlobalErrorHandlers() {
-        // Перехватываем все ошибки в консоли
+         Перехватываем все ошибки в консоли
         const originalConsoleError = console.error;
         console.error = (...args) => {
             const errorMessage = args.join(' ');
 
-            // Проверяем различные типы ошибок
+             Проверяем различные типы ошибок
             if (errorMessage.includes('Lockdown failed')) {
                 this.addError({
                                   message: 'Система безопасности: предупреждение',
@@ -56,11 +56,11 @@ class ErrorStore {
                               });
             }
 
-            // Вызываем оригинальный console.error
+             Вызываем оригинальный console.error
             originalConsoleError.apply(console, args);
         };
 
-        // Добавляем обработчик необработанных ошибок
+         Добавляем обработчик необработанных ошибок
         window.onerror = (message, source, lineno, colno, error) => {
             this.addError({
                               message: String(message),
@@ -72,7 +72,7 @@ class ErrorStore {
             return false;
         };
 
-        // Добавляем обработчик для Promise
+         Добавляем обработчик для Promise
         window.onunhandledrejection = (event) => {
             this.addError({
                               message: event.reason?.message || 'Необработанная ошибка Promise',
@@ -94,9 +94,9 @@ class ErrorStore {
 
 
 
-    // Метод для добавления новой ошибки
+     Метод для добавления новой ошибки
     addError = (error) => {
-        console.log('Adding error:', error);  // Отладка
+        console.log('Adding error:', error);   Отладка
         const errorId = Date.now().toString();
 
         try {
@@ -106,7 +106,7 @@ class ErrorStore {
                     id: errorId,
                     timestamp: new Date()
                 });
-                console.log('Current errors after adding:', this.errors);  // Отладка
+                console.log('Current errors after adding:', this.errors);   Отладка
             });
         } catch (e) {
             console.error('Failed to add error to store:', e);
@@ -116,9 +116,9 @@ class ErrorStore {
     };
 
 
-    // Метод для определения типа ошибки
+     Метод для определения типа ошибки
     determineErrorType(error) {
-        if (error.type) return error.type; // Если тип уже определен
+        if (error.type) return error.type;  Если тип уже определен
         if (error.name === 'LockdownError' || error.message?.includes('Lockdown')) {
             return 'SYSTEM';
         }
@@ -137,50 +137,50 @@ class ErrorStore {
         return 'BUSINESS';
     }
 
-    // Форматирование сообщения об ошибке
+     Форматирование сообщения об ошибке
     formatErrorMessage(error) {
         if (typeof error === 'string') return error;
         return error.message||'An unexpected error occurred';
     }
 
-    // Удаление ошибки
+     Удаление ошибки
     removeError = (errorId) => {
         runInAction(() => {
             this.errors.delete(errorId);
-            console.log('Error removed:', errorId);  // Отладка
+            console.log('Error removed:', errorId);   Отладка
         });
     };
 
-    // Очистка всех ошибок
+     Очистка всех ошибок
     clearAllErrors() {
         runInAction(() => {
             this.errors.clear();
         });
     }
 
-    // Геттер для получения массива активных ошибок
+     Геттер для получения массива активных ошибок
 
     get activeErrors() {
         const errors = Array.from(this.errors.values());
-        console.log('Getting active errors:', errors);  // Отладка
+        console.log('Getting active errors:', errors);   Отладка
         return errors;
     }
 
-    // Геттер для проверки наличия критических ошибок
+     Геттер для проверки наличия критических ошибок
 
 
     handleErrorSideEffects(errorObject) {
         if (errorObject.type === 'ROUTING') {
-            // Например, можем логировать ошибки навигации
+             Например, можем логировать ошибки навигации
 
                 console.group('Routing Error');
                 console.error(errorObject);
                 console.groupEnd();
      
 
-            // Можем выполнять специфичные действия для разных ошибок
+             Можем выполнять специфичные действия для разных ошибок
             if (errorObject.message.includes('авторизация')) {
-                // Например, перенаправлять на страницу входа
+                 Например, перенаправлять на страницу входа
                 window.location.href = '/login';
             }
         }
@@ -190,7 +190,7 @@ class ErrorStore {
 
 export const errorStore = new ErrorStore();
 
-// Добавляем глобальную ссылку для отладки
-//if (process.env.NODE_ENV === 'development') {
-//    window._errorStore = errorStore;
-//}
+ Добавляем глобальную ссылку для отладки
+if (process.env.NODE_ENV === 'development') {
+    window._errorStore = errorStore;
+}

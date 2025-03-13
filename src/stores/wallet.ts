@@ -49,6 +49,15 @@ interface AccountData {
     status: AccountControllerState["status"];
 }
 
+ const USDT_ADDRESSES = {
+     // Основная сеть Ethereum
+     '1': '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+     // Тестовая сеть Sepolia (пример адреса, нужно заменить на реальный)
+     '11155111': '0x7169D38820dfd117C3FA1f22a697dBA58d90BA06'
+ } as const;
+
+
+
 const ERC20_ABI = [
     {
         inputs: [],
@@ -95,8 +104,11 @@ const ERC20_ABI = [
 
 
 class WalletStore {
-
-
+loading:boolean =false;
+error:string | null = null;
+balances: Balance[] = [];
+tokenBalances: Map<string, string> = new Map();
+ addressForBalance: string | null = null;
     constructor() {
         makeAutoObservable(this, {
             setWalletInformation: action,
@@ -137,13 +149,13 @@ class WalletStore {
 
 
     fetchBalances = flow(function* (this: WalletStore, tokenAddresses: string[]) {
-        // this.loading = true;
-        this.error = null;
+         this.loading = true;
+         this.error = null;
+         return
         try {
-            // ПРОВЕРЯЕМ, ЧТО КОШЕЛЕК ПОДКЛЮЧЕН
-            if (!this.address) {
-                throw new Error("Wallet is not connected"); // Или просто return;
-            }
+            // if (!this.addressForBalance) {
+            //     throw new Error("Wallet is not connected");
+            // }
 
             // ПОЛУЧАЕМ ПРОВАЙДЕРА ИЗ ПОДКЛЮЧЕННОГО КОШЕЛЬКА (window.ethereum)
             const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -201,20 +213,20 @@ export const walletStore = new WalletStore();
 
 /*
 
-// Обработка события инициализации
+ Обработка события инициализации
 
 
-// Approved суммы
-approvals: Map<string, Map<string, string>> = new Map(); // tokenAddress -> (spenderAddress -> amount)
+ Approved суммы
+approvals: Map<string, Map<string, string>> = new Map();  tokenAddress -> (spenderAddress -> amount)
 
-// constructor() {
-//     makeAutoObservable(this, {
-//         initialize: flow,
-//         disconnect: flow,
-//         switchNetwork: flow,
-//         fetchBalances: flow
-//     });
-//     // Реакция на изменение подключения
+ constructor() {
+     makeAutoObservable(this, {
+         initialize: flow,
+         disconnect: flow,
+         switchNetwork: flow,
+         fetchBalances: flow
+     });
+      Реакция на изменение подключения
 //     reaction(
 //         () => this.isConnected,
 //         (connected) => {

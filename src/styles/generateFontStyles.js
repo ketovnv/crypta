@@ -1,10 +1,10 @@
-// scripts/generateFontStyles.js
+ //scripts/generateFontStyles.js
 import fs from "fs";
 import path from 'path';
 
 import {fontFamilies} from './fontFamilies.js';
 
-// Базовые стили для контейнера и текста
+ //Базовые стили для контейнера и текста
 const baseStyles = `
 .container {
   padding: 16px;
@@ -13,17 +13,17 @@ const baseStyles = `
   border-radius: 8px;
 }`;
 
-// Генерация стилей для каждого шрифта
+ //Генерация стилей для каждого шрифта
 const fontStyles = fontFamilies.map((font, index) =>
     `.font${index} {
   font-family: "${font}" !important;
 }`
 ).join('\n');
 
-// Объединяем базовые и шрифтовые стили
+ //Объединяем базовые и шрифтовые стили
 const cssContent = baseStyles + '\n' + fontStyles;
 
-// Исправленный путь - записываем файл в тот же каталог, где находится скрипт
+ //Исправленный путь - записываем файл в тот же каталог, где находится скрипт
 
 
 const outputPath = path.resolve('./src/styles/fonts.module.css')

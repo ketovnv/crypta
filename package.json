@@ -46,7 +46,8 @@
     "react-router-dom": "^7.1.5",
     "viem": "^2.23.5",
     "vite-tsconfig-paths": "^5.1.4",
-    "wagmi": "^2.14.13"
+    "wagmi": "^2.14.13",
+    "@react-buddy/ide-toolbox": "^2.4.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.25.9",

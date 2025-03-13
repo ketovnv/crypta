@@ -29,7 +29,10 @@ import {ScrollArea} from '@mantine/core';
 const Options = () => {
     return (
             <ScrollArea h="calc(100vh - var(--app-shell-header-height, 0px) - 150px)">
-                    ... to open the manual#20272F<FontShowcase />
+                <Text>
+                    Текст
+                </Text>
+             {/* <FontShowcase /> */}
             </ScrollArea>
     );
 };

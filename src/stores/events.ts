@@ -20,7 +20,7 @@ class EventsStore {
   }
 
   get eventsList() {
-    return this.events
+    return this.events;
   }
 
   getErrors() {

@@ -4,7 +4,7 @@ class AnimationStore {
   scale = 1;
   opacity = 1;
   navbarX = -350;
-  currentAnimation = null; // Додаємо стан для керування анімаціями
+  currentAnimation = null;
 
   ANIMATION_DURATION = {
     VERY_SHORT: 300,

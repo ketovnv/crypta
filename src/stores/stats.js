@@ -15,7 +15,7 @@ export const statsStore = makeAutoObservable({
         statsStore.error = null;
 
             try {
-                // Имитация API запроса
+                 Имитация API запроса
                 yield new Promise(resolve => setTimeout(resolve, 1000));
 
                 statsStore.stats = {
@@ -32,7 +32,3 @@ export const statsStore = makeAutoObservable({
         }
     )
 })
-
-
-
-
