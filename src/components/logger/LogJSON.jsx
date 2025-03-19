@@ -1,4 +1,4 @@
-import { loggerStore as logger } from "@stores/logger";
+import { logger } from "@stores/logger";
 import {
   Group,
   Text,

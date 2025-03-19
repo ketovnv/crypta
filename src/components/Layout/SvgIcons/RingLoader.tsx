@@ -6,16 +6,16 @@ export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others
         {...others}
         ref={ref}
         style={{
-            width: 250,
-            height: 250,
+            width: 300,
+            height: 300,
             stroke: 'var(--mantine-color-indigo-6)',
             ...style,
         }}
         viewBox="0 0 45 45"
         xmlns="http://www.w3.org/2000/svg"
-        stroke="#fff"
+        stroke="#000"
     >
-        <g fill="none" fillRule="evenodd" transform="translate(1 1)" strokeWidth="2">
+        <g fill="none" fillRule="evenodd" transform="translate(1 1)" strokeWidth="3">
             <circle cx="22" cy="22" r="6" strokeOpacity="0">
                 <animate
                     attributeName="r"

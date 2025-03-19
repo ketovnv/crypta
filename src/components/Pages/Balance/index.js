@@ -1,1 +1,1 @@
-export { default } from './Tokens.jsx';
+export { default } from './Balance';

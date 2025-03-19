@@ -10,8 +10,8 @@ import {SVGIllustration404}         from "@components/pages/ErrorNotification/SV
 import {useNavigate, useRouteError} from "react-router-dom";
 
 import classes from './ErrorNotifications.module.css';
-import {loggerStore} from "@/stores/logger.js";
-loggerStore
+import {logger} from "@/stores/logger.js";
+logger
 
 window.onerror = (message, source, lineno, colno, error) => {
     const runtimeError = {
@@ -21,8 +21,8 @@ window.onerror = (message, source, lineno, colno, error) => {
         stack: error?.stack,
         level: 'error'
     }
-    loggerStore.error(runtimeError.message)
-    loggerStore.error(runtimeError.details)
+    logger.error(runtimeError.message)
+    logger.error(runtimeError.details)
 
     return false;
 };

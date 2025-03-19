@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite';
 import { Card, Text, Button, TextInput, Group, Stack, Alert, Loader } from '@mantine/core';
 import { IoAlertCircleSharp } from "react-icons/io5"
 import { walletStore } from '../../../stores/wallet'
-import {loggerStore} from "../../../stores/logger";
-loggerStore.warning("🎖️ ", "Компонент Токен");
+import {logger} from "../../../stores/logger";
+logger.warning("🎖️ ", "Компонент Токен");
 const ApproveOperations = observer(() => {
     const [spenderAddress, setSpenderAddress] = useState('');
     const [approveAmount, setApproveAmount] = useState('');

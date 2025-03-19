@@ -1,48 +1,36 @@
 // import AnimatedNumber      from "@components/Animations/AnimatedNumber.jsx";
-import {
-  Text,
-  Group,
-  ActionIcon,
-  useMantineColorScheme,
-  AppShell,
-  Burger,
-  Image,
-  Button,
-} from "@mantine/core";
-import { observer } from "mobx-react-lite";
-import {useEffect, useMemo, useState} from "react";
-import { FiSun, FiMoon } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import {AppShell, Group, Image} from "@mantine/core";
+import {observer} from "mobx-react-lite";
+import {useMemo, useState} from "react";
 import classes from "./MainHeader.module.css";
-import { routerStore } from "@/stores/router.tsx";
-import { useNavigate } from "react-router";
-import { uiStore } from "@stores/ui.js";
-import { motion } from "framer-motion";
-import { useEventListener } from "@mantine/hooks";
-import {
-  useTrail,
-  animated,
-} from '@react-spring/web'
+import  "./border.css";
+import {useEventListener} from "@mantine/hooks";
+import {animated, useTrail} from "@react-spring/web";
+import {uiStore} from "@stores/ui";
+import {motion} from "framer-motion";
+import ThemeToggle from "./ThemeToggle.jsx";
 
-const SpringApp = ({ children}) => {
+const SpringApp = ({children}) => {
   const [up, set] = useState(true);
-  const chars = useMemo(() => children.split(''), [children]);
-  const trail = useTrail(chars.length, { x: up ? 0 : 25, opacity: up ? 1 : 0});
+  const chars = useMemo(() => children.split(""), [children]);
+  const trail = useTrail(chars.length, {x: up ? 0 : 25, opacity: up ? 1 : 0});
   return (
-      <div className={classes.content} onClick={() => set(a => !a)}>
-        {trail.map(({ x, ...rest }, index) => (
-            <animated.div key={x+index} style={{ ...rest, transform: x.to(x => `translate3d(0,${x}px,0)`) }}>{chars[index]}</animated.div>
+      <div className={classes.content} onClick={() => set((a) => !a)}>
+        {trail.map(({x, ...rest}, index) => (
+            <animated.div
+                key={x + index}
+                style={{...rest, transform: x.to((x) => `translate3d(0,${x / 2}px,0)`)}}
+            >
+              {chars[index]}
+            </animated.div>
         ))}
       </div>
-  )
-}//
+  );
+};
 
-//
-//
 export const MainHeader = observer(() => {
-  const { setColorScheme, colorScheme } = useMantineColorScheme();
-  let dark = colorScheme === "dark";
-  const ref = useEventListener("click", ()=>uiStore.toggleNavbarOpened());
+
+  const ref = useEventListener("click", () => uiStore.toggleNavbarOpened());
   if (!uiStore.navbarInterval) {
     uiStore.setNavbarInterval(
       setTimeout(() => {
@@ -53,37 +41,35 @@ export const MainHeader = observer(() => {
 
   return (
     <AppShell.Header className={classes.header} px="md" align="center">
+      
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
       >
-        <Group
-          position="apart"
-          justify="space-between"
-          h="100%"
-          align="center"
-        >
+      <Group position="apart" justify="space-between" h="100%" align="center">  
           <Group ref={ref} className={classes.pressableGroup}>
+            <motion.button
+                style={{background: 'none', borderWidth: 0,cursor:'pointer',borderRadius:100}}
+                whileHover={{
+                  scale: 1.2,
+                  transition: {duration: 1},}}
+                  whileTap= {{scale: 0.8}}
+                >
             <Image
               src="/assets/bitcoin.svg"
               alt="Bitcoin"
               className={classes.appIcon}
             />
-            <SpringApp className={classes.appName}>React AppKit Reown</SpringApp>
-          </Group>
-          <ActionIcon
-            size="lg"
-            variant="outline"
-            color={dark ? "yellow" : "blue"}
-            onClick={() =>
-              setColorScheme(colorScheme === "light" ? "dark" : "light")
-            }
-            title="Toggle color scheme"
-          >
-            {!dark ? <FiSun size={32} /> : <FiMoon size={32} />}
-          </ActionIcon>
-        </Group>
+            </motion.button>
+       
+          <SpringApp className={classes.appName}>
+            ReactAppKit
+       </SpringApp>
+       </Group>
+       <ThemeToggle/>
+     </Group>
+     
       </motion.div>
     </AppShell.Header>
   );

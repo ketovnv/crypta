@@ -111,7 +111,7 @@ const formatTime = () => {
   });
 };
 
-class LoggerStore {
+class loggerStore {
   logs = [];
   // groupStack = [];
   storeWatchers = new Map();
@@ -309,7 +309,7 @@ class LoggerStore {
       // timeColor,
 
       messageColor + ";font-size:" + fontSize + "px;",
-      valueColor + ";font-size:" + fontSize + "px;font-weight:bold;",
+      valueColor + "text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);font-size:" + fontSize + "px;font-weight:bold;",
     );
   };
 
@@ -442,4 +442,4 @@ class LoggerStore {
   // (group, groupEnd, time, timeEnd, clearLogs, setEnabled, setLogLevel, etc.)
 }
 
-export const loggerStore = new LoggerStore();
+export const logger = new loggerStore();

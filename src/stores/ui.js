@@ -1,4 +1,4 @@
-import { makeAutoObservable, action } from "mobx";
+import { action, makeAutoObservable } from "mobx";
 
 class UiStore {
   constructor() {
@@ -6,8 +6,25 @@ class UiStore {
       toggleNavbarOpened: action,
       setFontSearch: action,
       setNavbarInterval: action,
+      toggleColorScheme: action,
     });
   }
+
+  colorScheme = localStorage.getItem("my-app-color-scheme") || "dark"; // Начальное значение
+
+  setColorScheme(scheme) {
+    this.colorScheme = scheme;
+    localStorage.setItem("my-app-color-scheme", scheme);
+  }
+
+  get themeIsDark() {
+   return this.colorScheme === "dark"
+  }
+
+  toggleColorScheme = () => {
+    // Добавляем метод для переключения
+    this.setColorScheme(this.colorScheme === "dark" ? "light" : "dark");
+  };
 
   isNavbarOpened = true;
   fontSearch = "";
@@ -15,7 +32,7 @@ class UiStore {
   searchFontFamilies = [];
   navbarInterval = null;
 
- setNavbarInterval = (value) => {
+  setNavbarInterval = (value) => {
     this.navbarInterval = value;
   };
 

@@ -1,8 +1,40 @@
-import { action, makeAutoObservable } from "mobx";
-import React, { Suspense } from "react";
+import {action, makeAutoObservable} from "mobx";
+import React from "react";
+
+import {ANIMATION_DURATION} from "./animation.ts";
 // @ts-ignore
-import { ROUTE_URLS, ROUTES_LAZY } from "@components/pages/routes";
-import { loggerStore } from "./logger";
+
+const ROUTES = {
+  "/": {
+    title: "Кошелёк",
+    element: 'Home',
+    animation: "fade",
+    animationDuration: ANIMATION_DURATION.LONG // Замените на реальные значения
+  },
+  "/balance": {
+    title: "Баланс",
+    element: 'Balance',
+    animation: "slide-up",
+    animationDuration: ANIMATION_DURATION.LONG
+  },
+  "/approve": {
+    title: "Одобрение",
+    element: 'Approve',
+    animation: "slide-down",
+    animationDuration:  ANIMATION_DURATION.LONG,
+  },
+  "/transactions": {
+    title: "Транзакции",
+    element: 'Transactions',
+    animation: "slide-left",
+   animationDuration:  ANIMATION_DURATION.LONG,
+  },
+  "/options": {
+    title: "Настройки",
+    element: 'Options',
+    animation: "fade",
+  },
+}
 
 class RouterStore {
   currentPath: string = "/";
@@ -20,7 +52,7 @@ class RouterStore {
     if (this.currentPath === path) return;
 
     this.isTransitioning = true;
-    const CurrentComponent = ROUTES_LAZY[this.currentPath]?.element;
+    const CurrentComponent = ROUTES[this.currentPath]?.element;
     this.previousComponent = CurrentComponent ?? null;
 
     setTimeout(
@@ -33,30 +65,15 @@ class RouterStore {
     );
   }
 
-  getComponent = () => {
-    const Component = ROUTES_LAZY[ROUTE_URLS[this.currentPath]]?.element;
-    loggerStore.logWhiteRandom("Component", Component);
-    return (
-        <Suspense fallback={<div>Загрузка...</div>}>
-          {Component ? <Component /> : null}
-        </Suspense>
-    );
+  getPages =() =>  Object.entries(ROUTES)
+
+  get getPageElement() {
+    return ROUTES[this.currentPath].element;
   };
 
-
-  getComponent = () => {
-    const Component = ROUTES_LAZY[ROUTE_URLS[this.currentPath]]?.element;
-    loggerStore.logWhiteRandom("Component", Component);
-    return (
-      <Suspense fallback={<div>Загрузка...</div>}>
-        {Component ? <Component /> : null}
-      </Suspense>
-    );
-  };
-
-  async preloadPage(path: string) {
-    if (ROUTES_LAZY[ROUTE_URLS[path]]) {
-      await ROUTES_LAZY[ROUTE_URLS[path]].element();
+  async preloadPage() {
+    if (ROUTES[this.currentPath]) {
+      await ROUTES[this.currentPath].element();
     }
   }
 }

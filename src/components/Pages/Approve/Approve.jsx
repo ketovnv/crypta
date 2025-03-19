@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite';
 import { Container, Grid, Paper, Title, Text, Button, Group, Badge } from '@mantine/core';
 
 import { useEffect } from 'react';
-import {loggerStore} from "@/stores/logger.js";
-loggerStore.warning("🕸️", " Компонент Сеть");
+import {logger} from "@/stores/logger.js";
+logger.warning("🕸️", " Компонент Сеть");
 
 const Approve = observer(() => {
     // При монтировании получаем информацию о текущей сети

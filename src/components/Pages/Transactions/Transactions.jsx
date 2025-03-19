@@ -36,7 +36,7 @@ const getStatusColor = (status) => {
 };
 
 // Компонент для отображения хеша транзакции с возможностью копирования
-const Transactions = ({ hash }) => {
+ const Transactions = ({ hash }) => {
     const handleCopy = () => {
         navigator.clipboard.writeText(hash);
     };
@@ -55,20 +55,21 @@ const Transactions = ({ hash }) => {
     );
 };
 
-
-
-
-
-
-
-const Transactions = observer(() => {
-    const [opened, { open, close }] = useDisclosure(false);
-    const [selectedTx, setSelectedTx] = useState(null);
-
-
-});
-
 export default Transactions;
+
+
+
+
+
+
+// const Transactions = observer(() => {
+//     const [opened, { open, close }] = useDisclosure(false);
+//     const [selectedTx, setSelectedTx] = useState(null);
+
+
+// });
+
+// export default Transactions;
 
     // Загружаем историю транзакций при монтировании
     // useEffect(() => {

@@ -1,4 +1,4 @@
-import { loggerStore as logger } from "@stores/logger.js";
+import { logger } from "@stores/logger.js";
 import { uiStore as ui } from "@stores/ui.js";
 import {
   Text,
@@ -21,7 +21,6 @@ export const FontGrid = observer(() => {
   const colorEng = logger.getRandomColor(brightness);
   const colorRus = logger.getRandomColor(brightness);
   const fontWeights = [500, 800];
-
 
 
   return (

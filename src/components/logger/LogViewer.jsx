@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import { loggerStore } from './loggerStore';
+import { logger } from './logger';
 
 export const LogViewer = observer(() => {
     const [filter, setFilter] = useState('all');
 
-    const filteredLogs = loggerStore.logs.filter(log =>
+    const filteredLogs = logger.logs.filter(log =>
         filter === 'all' || log.type === filter
     );
 
@@ -19,7 +19,7 @@ export const LogViewer = observer(() => {
                     <option value="error">Ошибки</option>
                     <option value="debug">Отладка</option>
                 </select>
-                <button onClick={() => loggerStore.clearLogs()}>
+                <button onClick={() => logger.clearLogs()}>
                     Очистить
                 </button>
             </div>

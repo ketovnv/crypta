@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { loggerStore as logger } from "@stores/logger.js";
+import { logger } from "@stores/logger.js";
 import { List } from "@mantine/core";
 
 function FontScanner() {
