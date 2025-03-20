@@ -366,23 +366,27 @@ class loggerStore {
     };
   };
 
+
+  getLogMessage=(message) => this.whatIs(message) === 'Object' ?  Object.keys(message)[0] : message
+  getLogData=(message,data) => this.whatIs(message) === 'Object' ?  message[Object.keys(message)[0]] : data
+
   colorLog = (message, data, fontSize, messageColor, valueColor) =>
-    this.log("userColors", message, data, fontSize, messageColor, valueColor);
+    this.log("userColors", this.getLogMessage(message), this.getLogData(message,data), fontSize, messageColor, valueColor);
   info = (message, data, fontSize) => this.log("info", message, data, fontSize);
   success = (message, data, fontSize) =>
-    this.log("success", message, data, fontSize);
+    this.log("success", this.getLogMessage(message), this.getLogData(message,data), fontSize);
   warning = (message, data, fontSize) =>
-    this.log("warning", message, data, fontSize);
+    this.log("warning", this.getLogMessage(message), this.getLogData(message,data), fontSize);
   error = (message, data, fontSize) =>
-    this.log("error", message, data, fontSize);
+    this.log("error", this.getLogMessage(message), this.getLogData(message,data), fontSize);
   debug = (message, data, fontSize) =>
-    this.log("debug", message, data, fontSize);
+    this.log("debug", this.getLogMessage(message), this.getLogData(message,data), fontSize);
   logRandomColors = (message, data, fontSize) =>
-    this.log("random", message, data, fontSize);
+    this.log("random", this.getLogMessage(message), this.getLogData(message,data),fontSize);
   logWhiteRandom = (message, data, fontSize) =>
-    this.log("whiteRandom", message, data, fontSize);
+    this.log("whiteRandom", this.getLogMessage(message), this.getLogData(message,data),fontSize);
   logSameRandom = (message, data, fontSize) =>
-    this.log("sameRandom", message, data, fontSize);
+    this.log("sameRandom", this.getLogMessage(message), this.getLogData(message,data),fontSize);
 
   // Форматированный вывод кода
   logCode = (code, language = "javascript") => {

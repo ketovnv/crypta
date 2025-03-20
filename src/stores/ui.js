@@ -10,7 +10,10 @@ class UiStore {
     });
   }
 
-  colorScheme = localStorage.getItem("my-app-color-scheme") || "dark"; // Начальное значение
+  colorScheme = "dark"; // Начальное значение
+
+
+
 
   setColorScheme(scheme) {
     this.colorScheme = scheme;

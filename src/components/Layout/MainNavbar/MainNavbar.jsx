@@ -5,29 +5,24 @@ import {observer} from "mobx-react-lite";
 import {uiStore} from "@stores/ui.js";
 import {animationStore} from "@stores/animation.js";
 import {useEffect} from "react";
-import {motion, useAnimation} from "framer-motion";
-
+import {motion, useAnimation} from "motion/react";
 import {AwesomeButton} from "@animations/involved/AwesomeButton";
 import GradientText from "@animations/involved/GradientText";
-import {routerStore} from "@stores/router.js";
-import {
-  IoApertureSharp,
-  IoArrowForwardSharp,
-  IoFileTrayFullSharp,
-  IoLogoReact,
-  IoSettings,
-  IoWallet
-} from "react-icons/io5";
+import {router} from "@stores/router.js";
+import {IoApertureSharp, IoFileTrayFullSharp, IoLogoReact, IoSettings, IoWallet} from "react-icons/io5";
+
 
 export const MainNavbar = observer(() => {
 
   const icons = {
-    Home: <IoWallet color="#000 !important" size={24}/>,
-    Balance: <IoApertureSharp size={24}/>,
-    Approve: <IoLogoReact size={24}/>,
-    Transactions: <IoFileTrayFullSharp size={24}/>,
-    Options: <IoSettings size={24}/>,
+    Home: <IoWallet size={30}/>,
+    Balance: <IoApertureSharp size={30}/>,
+    Approve: <IoLogoReact size={30}/>,
+    Transactions: <IoFileTrayFullSharp size={32}/>,
+    Options: <IoSettings size={30}/>,
   };
+
+
   const controls = useAnimation();
 
   useEffect(() => {
@@ -36,11 +31,12 @@ export const MainNavbar = observer(() => {
       animationStore.setNavbarX(0);
     } else {
       controls.start("hidden");
-      animationStore.setNavbarX(-350);
+      animationStore.setNavbarX(-385);
     }
   }, [uiStore.isNavbarOpened]);
+
   const navbarVariants = {
-    hidden: {x: -350, opacity: .5},
+    hidden: {x: -385, opacity: .2},
     visible: {x: 0, opacity: 1},
   };
 
@@ -49,31 +45,36 @@ export const MainNavbar = observer(() => {
           variants={navbarVariants}
           initial="hidden"
           animate={controls}
-          transition={{duration: 0.5, ease: "easeInOut"}}
+          transition={{duration: 1.2, ease: "easeInOut"}}
       >
         <AppShell.Navbar className={classes.navbar} p="md" width={{base: 300}}>
+          <h1>{JSON.stringify(uiStore.themeIsDark)}</h1>
           <Center>
-            <Web3Inch color1="yellow" color2="red"/>
+            <Web3Inch color1="yellow" color2="red" isDark={!uiStore.themeIsDark}/>
           </Center>
 
-          {routerStore.getPages().map(([path, route]) => (
-              <Center p={3} key={path}>
-                <AwesomeButton
-                    onClick={() => alert('')}
-                    type="instagram"
-                    before={icons[route.element]}
-                    after={<IoArrowForwardSharp pr={3} size={20}/>}
-                >
-                  <GradientText
-                      animationSpeed={3}
-                      showBorder={false}
-                      className="custom-class"
-                  >
-                    {route.title}
-                  </GradientText>
-                </AwesomeButton>
-              </Center>
-          ))}
+          {router.getPages().map(([path, route]) => {
+            const active = route.element === router.getPageElement
+            return   (<AwesomeButton
+                style={{scale: active ? 1 : .95, color: active ? "blue" : 'white', padding: 3}}
+                active={active}
+                onPress={() => router.goTo(path)}
+                whileTap={{scale: .95}}
+                type="instagram"
+                before={icons[route.element]}
+                buttonKey={path}
+                key={path}
+            >
+              <GradientText
+                  animationSpeed={active ? 20 : 3}
+                  showBorder={false}
+                  className="custom-class"
+              >
+                {route.title}
+              </GradientText>
+            </AwesomeButton>)
+
+          })}
       </AppShell.Navbar>
       </motion.div>
   );

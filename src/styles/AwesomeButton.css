@@ -104,6 +104,7 @@
           #333 90%
   );
 }
+
 .aws-btn--progress .aws-btn__content:after,
 .aws-btn--progress .aws-btn__progress,
 .aws-btn .aws-btn__content:after,
@@ -117,7 +118,7 @@
   left: 0;
 }
 .aws-btn--instagram .aws-btn__content{
-  width: 275px;
+  width: 295px;
   color: var(--mantine-color-indigo-6) !important;
     background: radial-gradient(
         circle at 25% 110%,
@@ -227,6 +228,8 @@ button.aws-btn .aws-btn__wrapper {
     background var(--transform-speed) ease-out,
     color var(--transform-speed) ease-out;
 }
+
+
 .aws-btn .aws-btn__content > span:nth-child(1) {
   display: flex;
   align-items: center;
@@ -263,11 +266,11 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--facebook .aws-btn__content {
   background: #4868ad;
-  color: #fff;
+  /*color: #fff;*/
 }
-.aws-btn--facebook .aws-btn__content path {
-  fill: #fff;
-}
+/*.aws-btn--facebook .aws-btn__content path {*/
+/*  /*fill: #fff;*/
+/*}*/
 .aws-btn--facebook.aws-btn--progress .aws-btn__content > span {
   display: flex;
   height: 100%;
@@ -276,19 +279,18 @@ button.aws-btn .aws-btn__wrapper {
   justify-content: center;
 }
 .aws-btn--facebook.aws-btn--progress .aws-btn__progress:before,
-.aws-btn--facebook.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
-}
+/*.aws-btn--facebook.aws-btn--progress .aws-btn__progress:after {*/
+/*  /*color: #fff;*//*}*/
 .aws-btn--messenger .aws-btn__wrapper:before {
   background: #0960d1;
 }
 .aws-btn--messenger .aws-btn__content {
   background: #3186f6;
-  color: #fff;
+  /*color: #fff;*/
 }
-.aws-btn--messenger .aws-btn__content path {
-  fill: #fff;
-}
+/*.aws-btn--messenger .aws-btn__content path {*/
+/*  /*fill: #fff;*/
+/*}*/
 .aws-btn--messenger.aws-btn--progress .aws-btn__content > span {
   display: flex;
   height: 100%;
@@ -297,18 +299,18 @@ button.aws-btn .aws-btn__wrapper {
   justify-content: center;
 }
 .aws-btn--messenger.aws-btn--progress .aws-btn__progress:before,
-.aws-btn--messenger.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
-}
+/*.aws-btn--messenger.aws-btn--progress .aws-btn__progress:after {*/
+/*  /*color: #fff;*/
+/*}*/
 .aws-btn--twitter .aws-btn__wrapper:before {
   background: #0074a1;
 }
 .aws-btn--twitter .aws-btn__content {
   background: #00aced;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--twitter .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--twitter.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -319,17 +321,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--twitter.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--twitter.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--linkedin .aws-btn__wrapper:before {
   background: #004569;
 }
 .aws-btn--linkedin .aws-btn__content {
   background: #0077b5;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--linkedin .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--linkedin.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -340,17 +342,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--linkedin.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--linkedin.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--whatsapp .aws-btn__wrapper:before {
   background: #1a9247;
 }
 .aws-btn--whatsapp .aws-btn__content {
   background: #25d366;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--whatsapp .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--whatsapp.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -361,17 +363,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--whatsapp.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--whatsapp.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--github .aws-btn__wrapper:before {
   background: #030304;
 }
 .aws-btn--github .aws-btn__content {
   background: #25292e;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--github .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--github.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -382,17 +384,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--github.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--github.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--reddit .aws-btn__wrapper:before {
   background: #cb2703;
 }
 .aws-btn--reddit .aws-btn__content {
   background: #fc461e;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--reddit .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--reddit.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -403,17 +405,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--reddit.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--reddit.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--pinterest .aws-btn__wrapper:before {
   background: #740611;
 }
 .aws-btn--pinterest .aws-btn__content {
   background: #bd091c;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--pinterest .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--pinterest.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -424,17 +426,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--pinterest.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--pinterest.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--gplus .aws-btn__wrapper:before {
   background: #a3392d;
 }
 .aws-btn--gplus .aws-btn__content {
   background: #ce5b4e;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--gplus .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--gplus.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -445,17 +447,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--gplus.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--gplus.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--youtube .aws-btn__wrapper:before {
   background: #881014;
 }
 .aws-btn--youtube .aws-btn__content {
   background: #cc181e;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--youtube .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--youtube.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -466,17 +468,17 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--youtube.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--youtube.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--mail .aws-btn__wrapper:before {
   background: #9c9c9c;
 }
 .aws-btn--mail .aws-btn__content {
   background: #cfcfcf;
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--mail .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--mail.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -487,7 +489,7 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--mail.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--mail.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--instagram .aws-btn__wrapper:before {
   background: radial-gradient(
@@ -508,10 +510,10 @@ button.aws-btn .aws-btn__wrapper {
     #d6249f 60%,
     #285aeb 90%
   );
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--instagram .aws-btn__content path {
-  fill: #fff;
+  /*fill: #fff;*/
 }
 .aws-btn--instagram.aws-btn--progress .aws-btn__content > span {
   display: flex;
@@ -522,7 +524,7 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--instagram.aws-btn--progress .aws-btn__progress:before,
 .aws-btn--instagram.aws-btn--progress .aws-btn__progress:after {
-  color: #fff;
+  /*color: #fff;*/
 }
 .aws-btn--primary .aws-btn__wrapper:before {
   background: var(--button-primary-color-dark);
@@ -752,6 +754,10 @@ button.aws-btn .aws-btn__wrapper {
     0
   );
 }
+
+.aws-btn--active svg {
+  fill: white
+}
 .aws-btn--active .aws-btn__content {
   will-change: transform;
   transition:
@@ -770,6 +776,7 @@ button.aws-btn .aws-btn__wrapper {
 }
 .aws-btn--off:hover .aws-btn__wrapper:before {
   background-color: #2d2d2d;
+  color: #3b3b3b;
 }
 .aws-btn--off:hover .aws-btn__content {
   background-color: #313131;

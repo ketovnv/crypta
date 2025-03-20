@@ -1,7 +1,7 @@
 import {AppShell, Text} from "@mantine/core";
 import { Outlet, useLocation } from "react-router-dom";
 import { PageAnimation } from "@animations/involved/PageAnimation.jsx";
-import {AnimatePresence} from "framer-motion";
+import {AnimatePresence} from "motion/react";
 import {uiStore} from "@stores/ui.js";
 
 export const MainContent = () => {

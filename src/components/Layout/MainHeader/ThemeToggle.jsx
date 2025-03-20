@@ -3,7 +3,7 @@ import { FiMoon, FiSun } from 'react-icons/fi';
 import { observer } from 'mobx-react-lite';
 import { animated, useSpring, config } from '@react-spring/web';
 import { uiStore } from "@stores/ui";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 const  SliderToggle = ({ setSelected }) => {
     const  isDark = uiStore.themeIsDark
@@ -26,7 +26,7 @@ const  SliderToggle = ({ setSelected }) => {
         color: !isDark ?  '#000':'#777',
         stroke: !isDark ?  '#000':'#777',
         filter: !isDark ? 'drop-shadow(0 1px 1px rgba(0, 0, 0, 1))' : 'drop-shadow(0 0 0 rgba(255, 196, 0, 0))',
-        config: config.gentle
+        config: config.molasses,
     }) 
     const lightIconAnimation = useSpring({
         scale: !isDark ? .65 : 1.2,
@@ -34,7 +34,7 @@ const  SliderToggle = ({ setSelected }) => {
         opacity: !isDark ? 0 : 1,
         color: isDark ? '#FFC' : '#333',
         filter: isDark ? 'drop-shadow(0 0 0 rgba(255, 196, 0, 0))' : 'drop-shadow(0 0 30px rgba(255, 196, 0, 1))',
-        config: config.gentle,
+        config: config.molasses,
         onRest: async (result, ctrl, item) => {
             const animationConfig = { duration: 500 };    
             if (uiStore.themeIsDark) {

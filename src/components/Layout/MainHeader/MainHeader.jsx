@@ -3,11 +3,11 @@ import {AppShell, Group, Image} from "@mantine/core";
 import {observer} from "mobx-react-lite";
 import {useMemo, useState} from "react";
 import classes from "./MainHeader.module.css";
-import  "./border.css";
+import "./border.css";
 import {useEventListener} from "@mantine/hooks";
 import {animated, useTrail} from "@react-spring/web";
 import {uiStore} from "@stores/ui";
-import {motion} from "framer-motion";
+import {motion} from "motion/react";
 import ThemeToggle from "./ThemeToggle.jsx";
 
 const SpringApp = ({children}) => {
@@ -31,30 +31,33 @@ const SpringApp = ({children}) => {
 export const MainHeader = observer(() => {
 
   const ref = useEventListener("click", () => uiStore.toggleNavbarOpened());
-  if (!uiStore.navbarInterval) {
-    uiStore.setNavbarInterval(
-      setTimeout(() => {
-        uiStore.toggleNavbarOpened();
-      }, 3000),
-    );
-  }
+  // if (!uiStore.navbarInterval) {
+  //   uiStore.setNavbarInterval(
+  //     setTimeout(() => {
+  //       uiStore.toggleNavbarOpened();
+  //     }, 3000),
+  //   );
+  // }
 
   return (
     <AppShell.Header className={classes.header} px="md" align="center">
       
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+          initial={{opacity: 0, y: -20}}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{duration: 1.5, delay: 0.3, ease: "easeInOut"}}
       >
       <Group position="apart" justify="space-between" h="100%" align="center">  
           <Group ref={ref} className={classes.pressableGroup}>
             <motion.button
                 style={{background: 'none', borderWidth: 0,cursor:'pointer',borderRadius:100}}
+                initial={{scale: 0}}
+                animate={{scale: 1, transition: {duration: 2}}}
                 whileHover={{
-                  scale: 1.2,
-                  transition: {duration: 1},}}
-                  whileTap= {{scale: 0.8}}
+                    scale: [1.2, .8, 1.2],
+                    transition: {duration: 1}
+                }}
+                whileTap={{scale: 0.8}}
                 >
             <Image
               src="/assets/bitcoin.svg"

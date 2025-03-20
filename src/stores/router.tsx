@@ -48,21 +48,20 @@ class RouterStore {
   @action
   goTo(path: string, options?: { delay?: number }) {
     const { delay = 500 } = options || {};
-
     if (this.currentPath === path) return;
-
-    this.isTransitioning = true;
-    const CurrentComponent = ROUTES[this.currentPath]?.element;
-    this.previousComponent = CurrentComponent ?? null;
-
-    setTimeout(
-      action(() => {
-        this.currentPath = path;
-        this.isTransitioning = false;
-        this.previousComponent = null;
-      }),
-      delay,
-    );
+      this.currentPath =path
+    // this.isTransitioning = true;
+    // const CurrentComponent = ROUTES[this.currentPath]?.element;
+    // this.previousComponent = CurrentComponent ?? null;
+    //
+    // setTimeout(
+    //   action(() => {
+    //     this.currentPath = path;
+    //     this.isTransitioning = false;
+    //     this.previousComponent = null;
+    //   }),
+    //   delay
+    // );
   }
 
   getPages =() =>  Object.entries(ROUTES)
@@ -78,4 +77,4 @@ class RouterStore {
   }
 }
 
-export const routerStore = new RouterStore();
+export const router = new RouterStore();

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {animationStore} from '@stores/animation.js';
 import {useLayoutEffect} from "react";
 

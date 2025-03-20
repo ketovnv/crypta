@@ -1,4 +1,6 @@
 import React from 'react';
+import {Center, Flex} from "@mantine/core";
+import {motion} from 'motion/react';
 
 function setCssEndEvent(
     element: HTMLElement,
@@ -196,13 +198,15 @@ export type ButtonType = {
   size?: string;
   style?: any;
   type?: string;
+  buttonKey?: string;
   visible?: Boolean;
 };
 
 export const AwesomeButton = ({
-  active = false,
   after = null,
-  before = null,
+   active = false,
+  buttonKey = '',
+ before = null,
   between = false,
   children = null,
   className = null,
@@ -491,8 +495,12 @@ export const AwesomeButton = ({
   };
 
   return (
-    <RenderComponent
-      style={style}
+      <motion.button
+          key={buttonKey}
+          whileHover={{opacity: 1}}
+
+          transition={{duration: .2}}
+          style={{...style}}
       className={getRootClassName()}
       role="button"
       ref={container}
@@ -502,15 +510,18 @@ export const AwesomeButton = ({
       <span
         ref={button}
         className={getClassName(`${rootElement}__wrapper`, cssModule)}>
-        <span
+        <Flex align="center"
+              justify="flex-start"
           ref={content}
           className={getClassName(`${rootElement}__content`, cssModule)}>
+          <Center mr={6}>
           {before}
-          <span ref={child}>{children}</span>
+            </Center>
+          <Center ref={child}>{children}</Center>
           {after}
-        </span>
+        </Flex>
         {extra}
       </span>
-    </RenderComponent>
+      </motion.button>
   );
 };

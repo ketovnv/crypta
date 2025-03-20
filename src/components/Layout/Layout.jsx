@@ -1,24 +1,22 @@
-import {AppShell, Loader, Center} from "@mantine/core";
-import { observer } from "mobx-react-lite";
-import React from "react";
-import { useEffect } from "react";
-import { MainNavbar } from "./MainNavbar";
-import { MainHeader } from "./MainHeader";
-import { MainFooter } from "./MainFooter";
-import { logger } from "@/stores/logger.js";
-import { AppKitObserver } from "./AppKitObserver";
-import { routerStore } from "@stores/router.js";
+import {AppShell, Center, Loader} from "@mantine/core";
+import {observer} from "mobx-react-lite";
+import React, {useEffect} from "react";
+import {MainNavbar} from "./MainNavbar";
+import {MainHeader} from "./MainHeader";
+import {MainFooter} from "./MainFooter";
+import {logger} from "@/stores/logger.js";
+import {AppKitObserver} from "./AppKitObserver";
+import {router} from "@stores/router.js";
 import loadable from '@loadable/component'
- const AsyncPage = loadable(props => import(`../pages/${props.page}`), {
+import {useSpring} from "@react-spring/web";
+import {uiStore} from "@stores/ui.js";
+import {animationStore} from "@stores/animation.js";
+import {ErrorBoundary} from "@components/pages/ErrorNotification/ErrorBoundary.jsx";
+
+const AsyncPage = loadable(props => import(`../pages/${props.page}`), {
    cacheKey: props => props.page,
  })
 
-import {IoApertureSharp, IoFileTrayFullSharp, IoLogoReact, IoWallet} from "react-icons/io5";
-
-
-import { animated, useSpring } from "@react-spring/web";
-import { uiStore } from "@stores/ui.js";
-import { animationStore } from "@stores/animation.js";
 
 const Layout = observer(() => {
 
@@ -48,6 +46,7 @@ const Layout = observer(() => {
 
   logger.logRandomColors("LAYOUT", "mounted", 12);
   return (
+      <ErrorBoundary>
     <AppShell
       header={{ height: 60 }}
       navbar={{
@@ -61,8 +60,7 @@ const Layout = observer(() => {
       <MainNavbar />
       <AppShell.Main>
 
-        <AsyncPage page={routerStore.getPageElement} fallback={<Center><Loader/></Center>}/>
-
+        <AsyncPage page={router.getPageElement} fallback={<Center><Loader/></Center>}/>
 
         {/*{routerStore.getPage&& <AsyncPage page={routerStore.getPage}/>}         /!*<animated.div style={{ ...springProps, height: "600px" }}>*!/*/}
          {/*  {routerStore.isTransitioning ? (*/}
@@ -85,6 +83,7 @@ const Layout = observer(() => {
       </AppShell.Main>
       <MainFooter />
      </AppShell>
+      </ErrorBoundary>
    );
 });
 
