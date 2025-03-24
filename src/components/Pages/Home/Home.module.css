@@ -1,72 +1,63 @@
 .card {
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: light-dark(var(--mantine-color-dark-5), var(--mantine-color-dark-9));
-    border-width: 0;
-    shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.card:hover {
-    background-color: var(--mantine-color-dark-4);
+  padding: 10px;
+  border-radius: 20px;
+  background-color: light-dark(var(--mantine-color-dark-5), var(--mantine-color-dark-9));
+  border-width: 0;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.7);
 }
 
 .walletName {
-    font-family: 'SF UI Display', monospace !important;
-    font-style: normal;
-    font-weight: 900;
-    color: #EEFF00;
-    text-align: left !important;
+  font-family: 'SF UI Display', monospace !important;
+  font-style: normal;
+  font-weight: 900;
+  color: #EEFF00;
+  text-align: left !important;
 }
 
 .listText {
-    font-size: 1.1em;
-    font-family: 'Microsoft YaHei', monospace !important;
-    /*font-style: italic;*/
-    font-weight: 900;
-    color: #DDFF99;
+  font-size: 1.1em;
+  font-family: 'Microsoft YaHei', monospace !important;
+  /*font-style: italic;*/
+  font-weight: 900;
+  color: #DDFF99;
 }
 
-
 .status {
-    position: relative;
-    top: -12px;
-    left: -7px;
-    font-size: 0.95em;
-    font-family: 'Cousine for Powerline', monospace !important;
-    font-weight: 900;
-    color: #DDFF99;
+  position: relative;
+  top: -12px;
+  left: -7px;
+  font-size: 0.95em;
+  font-family: 'Cousine for Powerline', monospace !important;
+  font-weight: 900;
+  color: #DDFF99;
 }
 
 .label {
-    font-size: 1em;
-    font-family: 'SF Pro Rounded', monospace !important;
-    font-weight: 600;
-    text-align: left !important;
+  font-size: 1em;
+  font-family: 'SF Pro Rounded', monospace !important;
+  font-weight: 600;
+  text-align: left !important;
 }
 
 .testNetwork {
-    font-size: 1em;
-    font-family: 'IosevkaTerm Nerd Font', monospace !important;
-    font-style: italic;
-    color: #6dff85;
+  font-size: 1em;
+  font-family: 'IosevkaTerm Nerd Font', monospace !important;
+  font-style: italic;
+  color: #6dff85;
 }
 
 .walletAddress {
-    font-size: 1em;
-    font-family: 'SF UI Display', monospace !important;
-    font-weight: 600;
-    color: #DDFF99;
-    text-align: left !important;
+  font-size: 1em;
+  font-family: 'SF UI Display', monospace !important;
+  font-weight: 600;
+  color: #DDFF99;
+  text-align: left !important;
 }
 
-
-
 .arrowIcon {
-    position: relative;
-    top: 5px;
-    left: 7px;
+  position: relative;
+  top: 5px;
+  left: 7px;
 }
 
 /*.walletAddress {*/

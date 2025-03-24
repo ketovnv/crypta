@@ -1,40 +1,40 @@
-import {action, makeAutoObservable} from "mobx";
+import { action, makeAutoObservable } from "mobx";
 import React from "react";
 
-import {ANIMATION_DURATION} from "./animation.ts";
+import { ANIMATION_DURATION } from "./animation.ts";
 // @ts-ignore
 
 const ROUTES = {
   "/": {
     title: "Кошелёк",
-    element: 'Home',
+    element: "Home",
     animation: "fade",
-    animationDuration: ANIMATION_DURATION.LONG // Замените на реальные значения
+    animationDuration: ANIMATION_DURATION.LONG, // Замените на реальные значения
   },
   "/balance": {
     title: "Баланс",
-    element: 'Balance',
+    element: "Balance",
     animation: "slide-up",
-    animationDuration: ANIMATION_DURATION.LONG
+    animationDuration: ANIMATION_DURATION.LONG,
   },
   "/approve": {
     title: "Одобрение",
-    element: 'Approve',
+    element: "Approve",
     animation: "slide-down",
-    animationDuration:  ANIMATION_DURATION.LONG,
+    animationDuration: ANIMATION_DURATION.LONG,
   },
   "/transactions": {
     title: "Транзакции",
-    element: 'Transactions',
+    element: "Transactions",
     animation: "slide-left",
-   animationDuration:  ANIMATION_DURATION.LONG,
+    animationDuration: ANIMATION_DURATION.LONG,
   },
   "/options": {
     title: "Настройки",
-    element: 'Options',
+    element: "Options",
     animation: "fade",
   },
-}
+};
 
 class RouterStore {
   currentPath: string = "/";
@@ -45,11 +45,15 @@ class RouterStore {
     makeAutoObservable(this);
   }
 
+  get getPageElement() {
+    return ROUTES[this.currentPath].element;
+  }
+
   @action
   goTo(path: string, options?: { delay?: number }) {
     const { delay = 500 } = options || {};
     if (this.currentPath === path) return;
-      this.currentPath =path
+    this.currentPath = path;
     // this.isTransitioning = true;
     // const CurrentComponent = ROUTES[this.currentPath]?.element;
     // this.previousComponent = CurrentComponent ?? null;
@@ -64,11 +68,7 @@ class RouterStore {
     // );
   }
 
-  getPages =() =>  Object.entries(ROUTES)
-
-  get getPageElement() {
-    return ROUTES[this.currentPath].element;
-  };
+  getPages = () => Object.entries(ROUTES);
 
   async preloadPage() {
     if (ROUTES[this.currentPath]) {

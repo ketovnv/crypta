@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, reaction, toJS } from "mobx";
+import { action, makeAutoObservable, reaction, toJS } from "mobx"; // console.log('%c a spicy log message ?',
 
 // console.log('%c a spicy log message ?',
 //     [
@@ -116,15 +116,29 @@ class loggerStore {
   // groupStack = [];
   storeWatchers = new Map();
   promiseStack = new Map();
+  bounds = {};
+  rusLetters = "абвгдеёжзиклмнопрстуфхцчшщьъэюя";
+  engLetters = "abcdefghijklmnopqrstuvwxyz";
+  digits = "0123456789{}[]()<>";
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  /**
-   * Intercepts the console methods to capture the logs.
-   * @private
-   */
+  get getBounds() {
+    return this.bounds;
+  }
+
+  @action
+  setBounds = (bounds) => (this.bounds = bounds);
+  @action
+  setBoundsMouse = (clientX, clientY) => {
+    this.bounds.mouseX = Math.round(clientX - this.bounds.left);
+    this.bounds.mouseY = Math.round(clientY - this.bounds.top);
+  };
+
+  @action
+  setBoundsMouseHover = (isHover) => (this.bounds.isMouseHover = isHover);
 
   // Форматирование значений разных типов
   formatValue = (value, type = null) => {
@@ -240,6 +254,24 @@ class loggerStore {
     });
   };
 
+  returnJSON = (label, data, fontSize = 20) => {
+    // if (!data || !data.length) return;
+    let text = "🥷" + "Сейчас будет JSON 🥷";
+    text += "♠️♦️" + label + "💘♣️\n";
+    return text;
+    Object.entries(data ?? { key: "null" }).forEach(([key, value]) => {
+      console.log(
+        "%c" + key + " : %c" + JSON.stringify(value ?? "null"),
+        "color:" +
+          this.getRandomColor() +
+          ";font-weight:bold;font-size:" +
+          fontSize +
+          "px",
+        "color:white;font-weight:bold;font-size:" + fontSize + "px",
+      );
+    });
+  };
+
   // Расширенный метод логирования
   log = (
     type,
@@ -309,7 +341,10 @@ class loggerStore {
       // timeColor,
 
       messageColor + ";font-size:" + fontSize + "px;",
-      valueColor + "text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);font-size:" + fontSize + "px;font-weight:bold;",
+      valueColor +
+        "text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);font-size:" +
+        fontSize +
+        "px;font-weight:bold;",
     );
   };
 
@@ -366,27 +401,79 @@ class loggerStore {
     };
   };
 
+  getLogMessage = (message) =>
+    this.whatIs(message) === "Object" ? Object.keys(message)[0] : message;
 
-  getLogMessage=(message) => this.whatIs(message) === 'Object' ?  Object.keys(message)[0] : message
-  getLogData=(message,data) => this.whatIs(message) === 'Object' ?  message[Object.keys(message)[0]] : data
+  getLogData = (message, data) =>
+    this.whatIs(message) === "Object" ? message[Object.keys(message)[0]] : data;
 
   colorLog = (message, data, fontSize, messageColor, valueColor) =>
-    this.log("userColors", this.getLogMessage(message), this.getLogData(message,data), fontSize, messageColor, valueColor);
+    this.log(
+      "userColors",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+      messageColor,
+      valueColor,
+    );
+
   info = (message, data, fontSize) => this.log("info", message, data, fontSize);
+
   success = (message, data, fontSize) =>
-    this.log("success", this.getLogMessage(message), this.getLogData(message,data), fontSize);
+    this.log(
+      "success",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+    );
+
   warning = (message, data, fontSize) =>
-    this.log("warning", this.getLogMessage(message), this.getLogData(message,data), fontSize);
+    this.log(
+      "warning",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+    );
+
   error = (message, data, fontSize) =>
-    this.log("error", this.getLogMessage(message), this.getLogData(message,data), fontSize);
+    this.log(
+      "error",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+    );
+
   debug = (message, data, fontSize) =>
-    this.log("debug", this.getLogMessage(message), this.getLogData(message,data), fontSize);
+    this.log(
+      "debug",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+    );
+
   logRandomColors = (message, data, fontSize) =>
-    this.log("random", this.getLogMessage(message), this.getLogData(message,data),fontSize);
+    this.log(
+      "random",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+    );
+
   logWhiteRandom = (message, data, fontSize) =>
-    this.log("whiteRandom", this.getLogMessage(message), this.getLogData(message,data),fontSize);
+    this.log(
+      "whiteRandom",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+    );
+
   logSameRandom = (message, data, fontSize) =>
-    this.log("sameRandom", this.getLogMessage(message), this.getLogData(message,data),fontSize);
+    this.log(
+      "sameRandom",
+      this.getLogMessage(message),
+      this.getLogData(message, data),
+      fontSize,
+    );
 
   // Форматированный вывод кода
   logCode = (code, language = "javascript") => {
@@ -437,10 +524,6 @@ class loggerStore {
     console.timeEnd(label);
     this.log("system", `Конец замера времени: ${label}`);
   };
-
-  rusLetters = "абвгдеёжзиклмнопрстуфхцчшщьъэюя";
-  engLetters = "abcdefghijklmnopqrstuvwxyz";
-  digits = "0123456789{}[]()<>";
 
   // Остальные методы остаются без изменений...
   // (group, groupEnd, time, timeEnd, clearLogs, setEnabled, setLogLevel, etc.)

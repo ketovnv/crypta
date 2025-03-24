@@ -1,9 +1,10 @@
-import { createTheme,Loader } from "@mantine/core";
+import { createTheme, Loader } from "@mantine/core";
 import { RingLoader } from "@components/Layout/SvgIcons/RingLoader";
 
 export const theme = createTheme({
   fontFamily: "SF Pro Rounded",
-  primaryColor: "indigo",
+  primaryColor: "dark",
+  primaryShade: 1,
   scale: 1.2,
   // Кастомные цвета для светлой и тёмной темы
   colors: {
@@ -97,10 +98,10 @@ export const theme = createTheme({
 
   // Улучшенные тени для обеих тем
   shadows: {
-    sm: "rgba(0, 0, 0, 0.05) 0px 1px 2px, rgba(0, 0, 0, 0.05) 0px 1px 4px",
-    md: "rgba(0, 0, 0, 0.05) 0px 4px 8px, rgba(0, 0, 0, 0.05) 0px 2px 4px",
-    lg: "rgba(0, 0, 0, 0.05) 0px 8px 16px, rgba(0, 0, 0, 0.05) 0px 4px 8px",
-    xl: "rgba(0, 0, 0, 0.05) 0px 16px 32px, rgba(0, 0, 0, 0.05) 0px 8px 16px",
+    sm: "rgba(0, 0, 0, 0.05) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 1px 4px",
+    md: "rgba(0, 0, 0, 0.05) 0px 4px 8px, rgba(0, 0, 0, 0.3) 0px 2px 4px",
+    lg: "rgba(0, 0, 0, 0.05) 0px 8px 16px, rgba(0, 0, 0, 0.3) 0px 4px 8px",
+    xl: "rgba(0, 0, 0, 0.05) 0px 16px 32px, rgba(0, 0, 0, 0.3) 0px 8px 16px",
   },
 
   // Тени для тёмной темы
@@ -125,9 +126,9 @@ export const theme = createTheme({
     Box: {
       styles: () => ({
         root: {
-          background: 'linear-gradient(135deg, #e8e8e8, #ffffff)',
+          background: "linear-gradient(135deg, #e8e8e8, #ffffff)",
           backgroundImage: `url('data:image/svg+xml;base64,...')`,
-          backgroundBlendMode: 'overlay, soft-light',
+          backgroundBlendMode: "overlay, soft-light",
         },
       }),
     },

@@ -1,0 +1,59 @@
+import { observer } from "mobx-react-lite";
+import { router } from "@stores/router";
+import loadable from "@loadable/component";
+import { AnimatePresence, motion } from "motion/react";
+import { logger } from "@stores/logger.js";
+
+const AsyncPage = loadable(
+  (props) => import(`../../../components/pages/${props.page}`),
+  {
+    cacheKey: (props) => props.page,
+  },
+);
+logger.logWhiteRandom("📺", " Компонент PageTransition", 12);
+
+export const PageTransition = observer(() => {
+  const variants = {
+    hidden: {
+      opacity: 0,
+      x: -200,
+      rotateX: -90,
+      transition: { delay: 0.75, duration: 0.75 },
+    },
+    visible: {
+      opacity: 1,
+      x: -45,
+      rotateX: 0,
+      transition: { delay: 0.5, duration: 1 },
+    },
+    exit: {
+      opacity: 0,
+      rotateX: -200,
+      x: -90,
+    },
+  };
+
+  return (
+    <AnimatePresence style={{ width: "100%", height: "100%" }}>
+      <motion.div
+        layout
+        key={router.getPageElement}
+        // layoutId="container"
+        variants={variants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: 575,
+        }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+      >
+        <AsyncPage page={router.getPageElement} />
+      </motion.div>
+    </AnimatePresence>
+  );
+});

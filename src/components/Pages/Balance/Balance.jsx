@@ -1,20 +1,45 @@
-import { observer } from 'mobx-react-lite';
-import { Container, Title } from '@mantine/core';
-import { BalanceTracker } from './BalanceTracker';
-import { walletStore  }  from '@/stores/wallet';
+import { observer } from "mobx-react-lite";
+import { Center, TextInput } from "@mantine/core";
+import { BlackCoilTexture } from "@animations/involved/textures/BlackCoilTexture.js";
+import { useState } from "react";
+import { animationStore } from "@stores/animation.js";
 
 const Balance = observer(() => {
+  const [focused, setFocused] = useState(false);
+  const [value, setValue] = useState("");
+  const floating = focused || value.length > 0 || undefined;
+  return (
+    <Center
+      style={{
+        borderRadius: 20,
+        height: 575,
+        // background: "linear-gradient(#1050FF,#4079ff,#1050FF,#1050FF)",
+      }}
+    >
+      {/*<Title order={2} mb="xl">*/}
+      {/*  Управление токенами*/}
+      {/*</Title>*/}
 
-    return (
-        <Container size="xl" w="75vw">
-            <Title order={2} mb="xl">Управление токенами</Title>
-            {/*{walletStore.getAccountData() ? (*/}
-            {/*    <TokenOperations />*/}
-            {/*) : (*/}
-            {/*    <Title order={3} c="dimmed">Подключите кошелёк для управления токенами</Title>*/}
-            {/*)}*/}
-        </Container>
-    );
+      <BlackCoilTexture themeBackGround={animationStore.getThemeBackGround}>
+        <h1>BalanceTracker</h1>
+        <TextInput
+          label="Floating label input"
+          labelProps={{ "data-floating": floating }}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          value={value}
+          onChange={(event) => setValue(event.currentTarget.value)}
+        />
+        {/*<BalanceTracker />*/}
+      </BlackCoilTexture>
+      {/*{walletStore.getAccountData() ? (*/}
+
+      {/*    <TokenOperations />*/}
+      {/*) : (*/}
+      {/*    <Title order={3} c="dimmed">Подключите кошелёк для управления токенами</Title>*/}
+      {/*)}*/}
+    </Center>
+  );
 });
 
 export default Balance;
