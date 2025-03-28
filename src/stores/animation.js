@@ -98,4 +98,4 @@ class AnimationStore {
   }
 }
 
-export const animationStore = new AnimationStore();
+export const animation = new AnimationStore();

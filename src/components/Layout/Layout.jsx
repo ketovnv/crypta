@@ -8,7 +8,7 @@ import { AppKitObserver } from "./AppKitObserver";
 import { ErrorBoundary } from "@components/pages/ErrorNotification/ErrorBoundary.jsx"; // import PageTransition from "@animations/current/PageTransitions/Gpt(Gilmor)";
 import { MainContent } from "@components/Layout/MainContent/index.js";
 import { useSpring } from "@react-spring/web";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 import { toJS } from "mobx";
 import { theme } from "@styles/theme.js";
 
@@ -19,7 +19,7 @@ const Layout = () => {
   }));
 
   useEffect(() => {
-    animationStore.setSpringApi(toJS(api)); // Передаём API в MobX
+    animation.setSpringApi(toJS(api)); // Передаём API в MobX
   }, [api]);
 
   useEffect(() => {

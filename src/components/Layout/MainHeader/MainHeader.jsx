@@ -3,13 +3,11 @@ import { AppShell, Group, Image } from "@mantine/core";
 import { observer } from "mobx-react-lite";
 import { useMemo, useState } from "react";
 import classes from "./MainHeader.module.css";
-import "./border.css";
 import { useEventListener } from "@mantine/hooks";
 import { animated, useTrail } from "@react-spring/web";
 import { uiStore } from "@stores/ui";
 import { motion } from "motion/react";
 import ThemeToggle from "./ThemeToggle.jsx";
-import { animationStore } from "@stores/animation.js";
 
 const SpringApp = ({ children }) => {
   const [up, set] = useState(true);
@@ -45,7 +43,7 @@ export const MainHeader = observer(() => {
   return (
     <AppShell.Header
       className={classes.header}
-      style={{ background: animationStore.getThemeBackGround }}
+      style={{ background: animation.getThemeBackGround }}
       px="md"
       align="center"
     >

@@ -19,7 +19,7 @@ import { useDisconnect } from "@reown/appkit/react";
 import { logger } from "@stores/logger.js";
 import React from "react";
 import { motion } from "motion/react";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 
 const Home = observer(() => {
   // const props = useSpring({
@@ -60,7 +60,7 @@ const Home = observer(() => {
       {/*  }*/}
       {/*>*/}
 
-      <BlackCoilTexture themeBackGround={animationStore.getThemeBackGround}>
+      <BlackCoilTexture themeBackGround={animation.getThemeBackGround}>
         {walletStore.getAccountData() && (
           <motion.div w={550} style={{ position: "relative", top: -25 }} layout>
             <appkit-button balance="show" />
@@ -71,7 +71,7 @@ const Home = observer(() => {
           justify="flex-start"
           // layoutId="homeCardElement"
         >
-          <Text>{animationStore.getThemeBackGround}</Text>
+          <Text>{animation.getThemeBackGround}</Text>
           <Group justify="space-between" align="center">
             {walletStore.getWalletInformation()?.social === "google" && (
               <Google />

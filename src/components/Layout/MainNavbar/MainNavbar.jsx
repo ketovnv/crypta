@@ -3,7 +3,7 @@ import classes from "./MainNavbar.module.css";
 import { Web3Inch } from "../SvgIcons/Web3Inch.jsx";
 import { observer } from "mobx-react-lite";
 import { uiStore } from "@stores/ui.js";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 import { useEffect } from "react";
 import { motion, useAnimation } from "motion/react";
 import { AwesomeButton } from "@animations/involved/AwesomeButton";
@@ -31,10 +31,10 @@ export const MainNavbar = observer(() => {
   useEffect(() => {
     if (uiStore.isNavbarOpened) {
       controls.start("visible");
-      animationStore.setNavbarX(0);
+      animation.setNavbarX(0);
     } else {
       controls.start("hidden");
-      animationStore.setNavbarX(-385);
+      animation.setNavbarX(-385);
     }
   }, [uiStore.isNavbarOpened]);
 

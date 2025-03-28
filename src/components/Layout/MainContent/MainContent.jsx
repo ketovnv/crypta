@@ -1,12 +1,12 @@
 import { AppShell, Text } from "@mantine/core";
 import { PageTransition } from "@animations/current/PageTransitions/PageTransition";
 import { uiStore } from "@stores/ui.js";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 import { animated, useSpring } from "@react-spring/web";
 import { observer } from "mobx-react-lite";
 
 export const MainContent = observer(() => {
-  const { navbarX } = animationStore;
+  const { navbarX } = animation;
   const closedWidth = window.innerWidth * 0.8;
   const openWidth = window.innerWidth * 0.9 - 350;
 
@@ -27,7 +27,7 @@ export const MainContent = observer(() => {
     <AppShell.Main
     // style={{ overflow: "hidden", background: getThemeBackGround }}
     >
-      <Text>{animationStore.getThemeBackGround}</Text>
+      <Text>{animation.getThemeBackGround}</Text>
       <animated.div
         style={{
           ...springProps,

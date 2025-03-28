@@ -10,7 +10,7 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { observer } from "mobx-react-lite";
-import classes from "./MainFooter.module.css";
+// import classes from "./MainFooter.module.css";
 import { motion } from "motion/react";
 import { walletStore } from "@stores/wallet";
 import React from "react";
