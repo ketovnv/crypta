@@ -8,9 +8,6 @@ import { AppKitObserver } from "./AppKitObserver";
 import { ErrorBoundary } from "@components/pages/ErrorNotification/ErrorBoundary.jsx"; // import PageTransition from "@animations/current/PageTransitions/Gpt(Gilmor)";
 import { MainContent } from "@components/Layout/MainContent/index.js";
 import { useSpring } from "@react-spring/web";
-import { animationStore } from "@stores/animation.js";
-import { toJS } from "mobx";
-import { theme } from "@styles/theme.js";
 
 const Layout = () => {
   const [styles, api] = useSpring(() => ({
@@ -18,9 +15,9 @@ const Layout = () => {
     config: { tension: 200, friction: 30 },
   }));
 
-  useEffect(() => {
-    animationStore.setSpringApi(toJS(api)); // Передаём API в MobX
-  }, [api]);
+  // useEffect(() => {
+  //   animation.setSpringApi(toJS(api)); // Передаём API в MobX
+  // }, [api]);
 
   useEffect(() => {
     console.log("Layout mounted");
@@ -34,15 +31,21 @@ const Layout = () => {
   return (
     <ErrorBoundary>
       <ColorSchemeScript defaultColorScheme="dark" forceColorScheme="dark" />
-      <MantineProvider theme={theme}>
+      <MantineProvider classNamesPrefix="app">
         <AppShell
-          // layout="alt"
           header={{ height: 60 }}
           navbar={{
             width: 300,
             breakpoint: "sm",
           }}
-          style={{ overflow: "hidden" }}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: "100vw",
+            overflow: "hidden",
+            background: "green",
+          }}
           padding="md"
         >
           <AppKitObserver />

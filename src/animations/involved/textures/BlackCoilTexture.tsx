@@ -16,6 +16,7 @@ export const BlackCoilTexture: React.FC<{
         padding: 0,
         minWidth: 450,
         height: props.height || "300px",
+
         // backgroundImage: `${createNoiseSVG(0.45, 3)},
         //                          linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0) 100%)`,
         // backgroundBlendMode: "soft-light, overlay",
@@ -38,6 +39,7 @@ export const BlackCoilTexture: React.FC<{
       {/*  transition={{ duration: 2 }}*/}
       {/*></motion.div>*/}
       <motion.div
+        layoutId="pageCard"
         animate={{ background: props.themeBackGround }}
         variants={{ background: props.themeBackGround }}
         transition={{ duration: 3, ease: "easeInOut" }}

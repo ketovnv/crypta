@@ -1,4 +1,8 @@
-*{
-    font-family: "SF Pro Rounded" , rounded-ui;
+* {
 }
 
+[class^=mantine] {
+  color: red;
+  font-family: "SF Pro Rounded", "Segoe UI", sans-serif;
+  border-radius: 20px
+}

@@ -1,6 +1,6 @@
  import {observer} from "mobx-react-lite";
 
- class AnimationStore {
+ class animation {
      activeAnimationIds = new Set<string>()
 
      constructor() {
@@ -26,12 +26,12 @@
   Использование:
  const Navigation = observer(() => {
      useEffect(() => {
-         animationStore.startAnimation('pageTransition')
+         animation.startAnimation('pageTransition')
      }, [location.pathname])
 
      return (
           <div className={
-             animationStore.isAnimationActive('pageTransition') ? 'animating' : ''
+             animation.isAnimationActive('pageTransition') ? 'animating' : ''
 //         // }>
 //             {/* контент */}
 //             </div>

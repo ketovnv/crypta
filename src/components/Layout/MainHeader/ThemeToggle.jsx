@@ -3,7 +3,7 @@ import { FiMoon, FiSun } from "react-icons/fi";
 import { observer } from "mobx-react-lite";
 import { animated, config, useSpring } from "@react-spring/web";
 import { uiStore } from "@stores/ui";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 
 const SliderToggle = ({ setSelected }) => {
   const isDark = uiStore.themeIsDark;
@@ -164,30 +164,16 @@ const ThemeToggle = observer(() => {
     uiStore.colorScheme,
   );
 
-  const containerAnimation = useSpring({
-    config: {
-      duration: 300,
-    },
-  });
-
   return (
-    <animated.div
-      style={{
-        ...containerAnimation,
-        display: "grid",
-        placeContent: "center",
+    <SliderToggle
+      selected={colorScheme}
+      setSelected={() => {
+        animation.toggleTheme();
+        animation.changeOptionsTransitionsTestState();
+        toggleColorScheme();
+        uiStore.toggleColorScheme();
       }}
-    >
-      <SliderToggle
-        selected={colorScheme}
-        setSelected={() => {
-          animationStore.toggleTheme();
-          animationStore.changeOptionsTransitionsTestState();
-          toggleColorScheme();
-          uiStore.toggleColorScheme();
-        }}
-      />
-    </animated.div>
+    />
   );
 });
 

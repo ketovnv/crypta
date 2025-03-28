@@ -1,10 +1,9 @@
-import { AppShell, Center, Text } from "@mantine/core";
+  import {useEffect} from
+import { AppShell, Center } from "@mantine/core";
 import classes from "./MainNavbar.module.css";
 import { Web3Inch } from "../SvgIcons/Web3Inch.jsx";
 import { observer } from "mobx-react-lite";
 import { uiStore } from "@stores/ui.js";
-import { animationStore } from "@stores/animation.js";
-import { useEffect } from "react";
 import { motion, useAnimation } from "motion/react";
 import { AwesomeButton } from "@animations/involved/AwesomeButton";
 import GradientText from "@animations/involved/GradientText";
@@ -31,10 +30,10 @@ export const MainNavbar = observer(() => {
   useEffect(() => {
     if (uiStore.isNavbarOpened) {
       controls.start("visible");
-      animationStore.setNavbarX(0);
+      animation.setNavbarX(0);
     } else {
       controls.start("hidden");
-      animationStore.setNavbarX(-385);
+      animation.setNavbarX(-385);
     }
   }, [uiStore.isNavbarOpened]);
 
@@ -45,7 +44,7 @@ export const MainNavbar = observer(() => {
   return (
     <motion.div
       variants={navbarVariants}
-      initial="hidden"
+      // initial="hidden"
       animate={controls}
       transition={{ duration: 1.2, ease: "easeInOut" }}
     >
@@ -55,7 +54,6 @@ export const MainNavbar = observer(() => {
         p="md"
         width={{ base: 300 }}
       >
-        <Text>{JSON.stringify(uiStore.themeIsDark)}</Text>
         <Center>
           <Web3Inch
             color1="yellow"

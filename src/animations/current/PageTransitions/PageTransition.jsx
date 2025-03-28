@@ -16,20 +16,21 @@ export const PageTransition = observer(() => {
   const variants = {
     hidden: {
       opacity: 0,
-      x: -200,
       rotateX: -90,
+      scale: 0.01,
       transition: { delay: 0.75, duration: 0.75 },
     },
     visible: {
       opacity: 1,
-      x: -45,
       rotateX: 0,
+      scale: 1,
       transition: { delay: 0.5, duration: 1 },
     },
     exit: {
-      opacity: 0,
+      opacity: 0.3,
       rotateX: -200,
-      x: -90,
+      // x: 200,
+      scale: 1.5,
     },
   };
 

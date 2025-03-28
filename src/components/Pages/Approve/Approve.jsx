@@ -3,7 +3,7 @@ import { logger } from "@/stores/logger.js";
 import { Center } from "@mantine/core";
 import { BlackCoilTexture } from "@animations/involved/textures/BlackCoilTexture.js";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation";
 
 logger.warning("🕸️", " Компонент Одобрение");
 
@@ -28,7 +28,7 @@ const Approve = observer(() => {
         // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
       }}
     >
-      <BlackCoilTexture themeBackGround={animationStore.getThemeBackGround}>
+      <BlackCoilTexture themeBackGround={animation.getThemeBackGround}>
         <AppearingText text="Страница находится в разработке..." />
       </BlackCoilTexture>
     </Center>

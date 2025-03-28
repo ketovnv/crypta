@@ -7,7 +7,28 @@ import {logger} from "@stores/logger.js";
 import {Center} from "@mantine/core";
 import {BlackCoilTexture} from "@animations/involved/textures/BlackCoilTexture.js";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
-import {animationStore} from "@stores/animation.js";
+import {animation} from "@stores/animation.js";
+import {motion} from "framer-motion";
+
+const StrokeAnimation = () => {
+    return (
+        <svg width="200" height="200" viewBox="0 0 200 200">
+            <motion.circle
+                cx="100"
+                cy="100"
+                r="80"
+                stroke="black"
+                strokeWidth="5"
+                fill="transparent"
+                strokeDasharray="500"
+                strokeDashoffset="500"
+                animate={{strokeDashoffset: 0}}
+                transition={{duration: 2, ease: "easeInOut"}}
+            />
+        </svg>
+    );
+};
+
 
 logger.warning("🕸️", " Компонент Транзакции");
 const getStatusColor = (status) => {
@@ -36,8 +57,9 @@ const Transactions = ({}) => {
                 // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
             }}
         >
-            <BlackCoilTexture themeBackGround={animationStore.getThemeBackGround}>
+            <BlackCoilTexture themeBackGround={animation.getThemeBackGround}>
                 <AppearingText text="Страница находится в разработке..."/>
+                <StrokeAnimation/>
             </BlackCoilTexture>
         </Center>
     )

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Center, TextInput } from "@mantine/core";
 import { BlackCoilTexture } from "@animations/involved/textures/BlackCoilTexture.js";
 import { useState } from "react";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 
 const Balance = observer(() => {
   const [focused, setFocused] = useState(false);
@@ -20,7 +20,7 @@ const Balance = observer(() => {
       {/*  Управление токенами*/}
       {/*</Title>*/}
 
-      <BlackCoilTexture themeBackGround={animationStore.getThemeBackGround}>
+      <BlackCoilTexture themeBackGround={animation.getThemeBackGround}>
         <h1>BalanceTracker</h1>
         <TextInput
           label="Floating label input"

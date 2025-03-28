@@ -10,7 +10,7 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { observer } from "mobx-react-lite";
-import classes from "./MainFooter.module.css";
+// import classes from "./MainFooter.module.css";
 import { motion } from "motion/react";
 import { walletStore } from "@stores/wallet";
 import React from "react";
@@ -20,7 +20,11 @@ export const MainFooter = observer(() => {
   const gradient =
     "linear-gradient(45deg, var(--mantine-color-pink-filled) 0%, var(--mantine-color-orange-filled) 50%, var(--mantine-color-yellow-filled) 100%)";
   return (
-    <AppShell.Footer className={classes.footer} px="md" align="center">
+    <AppShell.Footer
+      // className={classes.footer}
+      px="md"
+      align="center"
+    >
       <motion.div
         initial={{
           opacity: 0,

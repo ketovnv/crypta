@@ -1,12 +1,12 @@
-import { AppShell, Text } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { PageTransition } from "@animations/current/PageTransitions/PageTransition";
-import { uiStore } from "@stores/ui.js";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 import { animated, useSpring } from "@react-spring/web";
 import { observer } from "mobx-react-lite";
+import classes from "./MainContent.module.css";
 
 export const MainContent = observer(() => {
-  const { navbarX } = animationStore;
+  const { navbarX } = animation;
   const closedWidth = window.innerWidth * 0.8;
   const openWidth = window.innerWidth * 0.9 - 350;
 
@@ -17,22 +17,18 @@ export const MainContent = observer(() => {
   // };
 
   const springProps = useSpring({
-    x: navbarX + 75,
-    width: uiStore.isNavbarOpened ? openWidth : closedWidth,
-    from: { x: -350, width: openWidth },
-    config: { mass: 50, tension: 280, friction: 120, delay: 50 },
+    x: navbarX + 100,
+    // from: { width: openWidth, y: -75 },
+    // to: { width: closedWidth, y: +75 },
+    config: { mass: 75, tension: 280, friction: 120, delay: 100 },
   });
 
   return (
-    <AppShell.Main
-    // style={{ overflow: "hidden", background: getThemeBackGround }}
-    >
-      <Text>{animationStore.getThemeBackGround}</Text>
+    <AppShell.Main className={classes.mainContent}>
       <animated.div
         style={{
           ...springProps,
-          position: "absolute",
-          top: 75,
+          width: openWidth,
         }}
       >
         <PageTransition />

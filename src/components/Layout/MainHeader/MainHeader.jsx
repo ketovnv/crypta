@@ -3,13 +3,13 @@ import { AppShell, Group, Image } from "@mantine/core";
 import { observer } from "mobx-react-lite";
 import { useMemo, useState } from "react";
 import classes from "./MainHeader.module.css";
-import "./border.css";
 import { useEventListener } from "@mantine/hooks";
-import { animated, useTrail } from "@react-spring/web";
+import { animated, config, useTrail, useTransition } from "@react-spring/web";
 import { uiStore } from "@stores/ui";
 import { motion } from "motion/react";
-import ThemeToggle from "./ThemeToggle.jsx";
-import { animationStore } from "@stores/animation.js";
+
+import { walletStore } from "@stores/wallet.js";
+import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 
 const SpringApp = ({ children }) => {
   const [up, set] = useState(true);
@@ -42,10 +42,18 @@ export const MainHeader = observer(() => {
   //   );
   // }
 
+  const transitions = useTransition(!!walletStore.getAccountData(), {
+    from: { opacity: 0, transform: "translateY(-20px)", scale: 0 }, // Входящая (начало)
+    enter: { opacity: 1, transform: "translateY(0px)", scale: 1 }, // Входящая (конец)
+    leave: { opacity: 0, transform: "translateY(20px)", scale: 0 }, // УХОДЯЩАЯ АНИМАЦИЯ
+    config: { ...config.molasses }, // Настройки пружины
+    keys: null,
+  });
+
   return (
     <AppShell.Header
       className={classes.header}
-      style={{ background: animationStore.getThemeBackGround }}
+      // style={{ background: animation.getThemeBackGround }}
       px="md"
       align="center"
     >
@@ -80,8 +88,20 @@ export const MainHeader = observer(() => {
 
             <SpringApp className={classes.appName}>ReactAppKit</SpringApp>
           </Group>
-          <ThemeToggle />
+
+          {transitions((style, item) =>
+            item ? (
+              <animated.div style={style}>
+                <div
+                  style={{ width: 300, height: 60, backgroundColor: "yellow" }}
+                >
+                  <appkit-button balance="show" />
+                </div>
+              </animated.div>
+            ) : null,
+          )}
         </Group>
+        <ThemeToggle />
       </motion.div>
     </AppShell.Header>
   );

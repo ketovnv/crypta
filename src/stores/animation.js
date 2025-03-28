@@ -77,15 +77,15 @@ class AnimationStore {
     );
   }
 
-  setScale(value: number) {
+  setScale(value) {
     this.scale = value;
   }
 
-  setOpacity(value: number) {
+  setOpacity(value) {
     this.opacity = value;
   }
 
-  setNavbarX(value: number) {
+  setNavbarX(value) {
     this.navbarX = value;
   }
 
@@ -98,4 +98,4 @@ class AnimationStore {
   }
 }
 
-export const animationStore = new AnimationStore();
+export const animation = new AnimationStore();

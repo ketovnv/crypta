@@ -18,8 +18,7 @@ import { walletStore } from "@/stores/wallet";
 import { useDisconnect } from "@reown/appkit/react";
 import { logger } from "@stores/logger.js";
 import React from "react";
-import { motion } from "motion/react";
-import { animationStore } from "@stores/animation.js";
+import { animation } from "@stores/animation.js";
 
 const Home = observer(() => {
   // const props = useSpring({
@@ -43,35 +42,14 @@ const Home = observer(() => {
         width: "100%",
         borderRadius: 20,
         height: 575,
-        // background: "linear-gradient(135deg,#1050CC,#4079ff,#1050CC,#1050CC)",
       }}
-      // onMouseEnter={() => logger.setBoundsMouseHover(true)}
-      // onMouseLeave={() => logger.setBoundsMouseHover(false)}
-      // onMouseMove={({ clientX, clientY }) =>
-      //   logger.setBoundsMouse(clientX, clientY)
-      // }
     >
-      {/*<AppearanceAnimation condition={eventsStore.getState()?.loading}>*/}
-      {/*  <Loader />*/}
-      {/*/!*</AppearanceAnimation>*!/*/}
-      {/*<AppearanceAnimation*/}
-      {/*  condition={*/}
-      {/*    !eventsStore.getState()?.open && !eventsStore.getState()?.loading*/}
-      {/*  }*/}
-      {/*>*/}
-
-      <BlackCoilTexture themeBackGround={animationStore.getThemeBackGround}>
-        {walletStore.getAccountData() && (
-          <motion.div w={550} style={{ position: "relative", top: -25 }} layout>
-            <appkit-button balance="show" />
-          </motion.div>
-        )}
+      <BlackCoilTexture themeBackGround={animation.getThemeBackGround}>
         <Stack
           align="flex-start"
           justify="flex-start"
           // layoutId="homeCardElement"
         >
-          <Text>{animationStore.getThemeBackGround}</Text>
           <Group justify="space-between" align="center">
             {walletStore.getWalletInformation()?.social === "google" && (
               <Google />

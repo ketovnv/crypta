@@ -1,7 +1,7 @@
 import { action, makeAutoObservable } from "mobx";
 import React from "react";
 
-import { ANIMATION_DURATION } from "./animation.ts";
+import { ANIMATION_DURATION } from "./animation";
 // @ts-ignore
 
 const ROUTES = {
