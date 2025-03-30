@@ -6,3 +6,23 @@
   font-family: "SF Pro Rounded", "Segoe UI", sans-serif;
   border-radius: 20px
 }
+
+.pageWrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 20px;
+  height: 575px
+}
+
+.pageCard {
+  border-radius: 20px;
+  min-width: 450px;
+  min-height: 300px;
+  padding: 20px;
+}

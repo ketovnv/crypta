@@ -11,7 +11,7 @@ import {
 import { useEffect } from "react";
 import { eventsStore } from "../../stores/events";
 import { walletStore } from "../../stores/wallet.ts";
-import { Notifications, notifications } from "@mantine/notifications";
+import { notifications } from "@mantine/notifications";
 import { logger } from "stores/logger.js";
 import { LogJSON } from "components/logger/LogJSON.jsx";
 
@@ -32,6 +32,11 @@ export const AppKitObserver = observer(() => {
   }, [account.isConnected]);
 
   useEffect(() => {
+    // const element = document.getElementById("external-container");
+    // setExternalElement(element);
+  }, []);
+
+  useEffect(() => {
     // f (event.reportedErrors) {
     //   // console.warn(JSON.stringify(event.reportedErrors));
     //   logger.logJSON("reportedErrors", event.reportedErrors);
@@ -41,6 +46,7 @@ export const AppKitObserver = observer(() => {
       "INITIALIZE" === event?.data?.event
         ? "Добро пожаловать!"
         : event?.data?.event;
+    console.log("🚀 ~  ~ event?.data?.event: ", event?.data?.event);
 
     const message =
       "INITIALIZE" === event?.data?.event
@@ -48,10 +54,7 @@ export const AppKitObserver = observer(() => {
         : JSON.stringify(event?.data?.properties);
 
     if (event.reportedErrors) {
-      logger.logJSON(
-        "☠️reportedErrors☠️",
-        event.reportedErrors,
-      );
+      logger.logJSON("☠️reportedErrors☠️", event.reportedErrors);
     }
 
     setTimeout(

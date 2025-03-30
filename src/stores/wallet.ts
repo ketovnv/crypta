@@ -1,17 +1,24 @@
 // src/stores/WalletStore.ts
-import {makeAutoObservable, flow, reaction, runInAction, action} from "mobx";
-import {logger} from "./logger";
-import type {CaipAddress, Balance, CaipNetwork, CaipNetworkId, AppKitNetwork} from "@reown/appkit-common";
-import type {Event} from "@reown/appkit/react";
+import { action, makeAutoObservable } from "mobx";
+import type {
+  AppKitNetwork,
+  Balance,
+  CaipAddress,
+  CaipNetwork,
+  CaipNetworkId,
+} from "@reown/appkit-common";
 // import { ethers } from 'ethers';
-import type {AccountType, AccountControllerState} from "@reown/appkit/react";
-import type {W3mFrameTypes} from "@reown/appkit-wallet";
-
+import type {
+  AccountControllerState,
+  AccountType,
+  Event,
+} from "@reown/appkit/react";
+import type { W3mFrameTypes } from "@reown/appkit-wallet";
 
 interface TokenBalance {
-    symbol: string;
-    balance: string;
-    address?: string;
+  symbol: string;
+  balance: string;
+  address?: string;
 }
 
 interface EventWithMetadata {
@@ -33,7 +40,7 @@ interface Network {
     chainId: number | string | undefined;
     caipNetworkId: CaipNetworkId | undefined;
     switchNetwork: (network: AppKitNetwork) => void;
-};
+}
 
 interface AccountData {
     allAccounts: AccountType[];
@@ -49,13 +56,12 @@ interface AccountData {
     status: AccountControllerState["status"];
 }
 
- const USDT_ADDRESSES = {
-     // Основная сеть Ethereum
-     '1': '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-     // Тестовая сеть Sepolia (пример адреса, нужно заменить на реальный)
-     '11155111': '0x7169D38820dfd117C3FA1f22a697dBA58d90BA06'
- } as const;
-
+const USDT_ADDRESSES = {
+    // Основная сеть Ethereum
+    '1': '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    // Тестовая сеть Sepolia (пример адреса, нужно заменить на реальный)
+    '11155111': '0x7169D38820dfd117C3FA1f22a697dBA58d90BA06'
+} as const;
 
 
 const ERC20_ABI = [
@@ -104,22 +110,26 @@ const ERC20_ABI = [
 
 
 class WalletStore {
-loading:boolean =false;
-error:string | null = null;
-balances: Balance[] = [];
-tokenBalances: Map<string, string> = new Map();
- addressForBalance: string | null = null;
+    loading: boolean = false;
+    error: string | null = null;
+    balances: Balance[] = [];
+    tokenBalances: Map<string, string> = new Map();
+    addressForBalance: string | null = null;
+    connectedWallet: ConnectedWalletInfo | null = null;
+    accountData: AccountData | null = null;
+    network: Network | null = null;
+
     constructor() {
         makeAutoObservable(this, {
             setWalletInformation: action,
             setAccountData: action,
-           setNetwork: action,
+            setNetwork: action,
         });
     }
 
-    connectedWallet: ConnectedWalletInfo | null = null;
-    accountData: AccountData | null = null;
-    network : Network | null = null;
+    get isConnected() {
+        return this.accountData?.isConnected
+    }
 
     setNetwork(
         network: Network) {
@@ -130,8 +140,6 @@ tokenBalances: Map<string, string> = new Map();
         account: AccountData) {
         this.accountData = account;
     }
-
-
 
     getAccountData = () => this.accountData && this.accountData?.isConnected ?
         this.accountData : null;
@@ -203,7 +211,6 @@ tokenBalances: Map<string, string> = new Map();
     //         });
     //     }
     // });
-
 
 
 }

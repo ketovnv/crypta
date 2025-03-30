@@ -19,11 +19,11 @@
      }
  }
 
-  animations/AnimationFactory.ts
 
 
 
-  Использование:
+
+
  const Navigation = observer(() => {
      useEffect(() => {
          animation.startAnimation('pageTransition')

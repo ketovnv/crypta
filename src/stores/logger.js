@@ -238,6 +238,7 @@ class loggerStore {
 
   logJSON = (label, data, fontSize = 20) => {
     if (!data || !data.length) return;
+    if (this.whatIs(data) === "String") data = JSON.parse(data);
 
     this.logWhiteRandom("🥷", "Сейчас будет JSON 🥷");
     this.success("♠️♦️", label + "💘♣️");

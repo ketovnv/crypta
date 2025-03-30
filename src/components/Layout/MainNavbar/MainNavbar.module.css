@@ -1,45 +1,40 @@
 .navbar {
-    /*background: light-dark(var(--mantine-color-body), #000001);*/
-    border-right: none;
-    color: var(--mantine-color-indigo-6)
+  background: rgba(0, 0, 0, 0);
+  border-right: none;
+  color: var(--mantine-color-indigo-6)
 }
 
-
 .link {
-    width: 90%;
-    border-radius: 10px;
-    @mixin hover {
-        color: var(--mantine-color-indigo-6)
-    }
+  width: 90%;
+  border-radius: 10px;
+  @mixin hover {
+    color: var(--mantine-color-indigo-6)
+  }
 }
 
 .link span {
-    font-weight: 900;
-    font-size: 1.5em;
-    font-family: 'Anka/Coder', monospace;
-    background: none;
-
-    /*&:where([data-active], [aria-current='page']) {*/
-    /*    color: var(--mantine-color-green-2)*/
-    /*}*/
-    @mixin hover {
-        color: var(--mantine-color-indigo-5)        /*}*/
-    }
-
+  font-weight: 900;
+  font-size: 1.5em;
+  font-family: 'Anka/Coder', monospace;
+  background: none;
+  /*&:where([data-active], [aria-current='page']) {*/
+  /*    color: var(--mantine-color-green-2)*/
+  /*}*/
+  @mixin hover {
+    color: var(--mantine-color-indigo-5)        /*}*/
+  }
 }
 
 .navbar a:active {
-    color: var(--mantine-color-green-2) !important
+  color: var(--mantine-color-green-2) !important
 }
-
 
 .accordionItem {
-    padding: 0;
-    width: 300px;
+  padding: 0;
+  width: 300px;
 }
 
-
 .accordionItem span {
-    padding: 2px;
-    font-size: 12px !important;
+  padding: 2px;
+  font-size: 12px !important;
 }
