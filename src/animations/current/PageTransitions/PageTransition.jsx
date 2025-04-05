@@ -18,6 +18,7 @@ export const PageTransition = observer(() => {
             opacity: 0,
             rotateX: -90,
             scale: 0.01,
+
             // transition: {delay: 0.75},
         },
         visible: {
@@ -38,7 +39,7 @@ export const PageTransition = observer(() => {
         <AnimatePresence style={{width: "100%", height: "100%"}}>
             <motion.div
                 layout
-                key={router.getPageElement}
+                key={router.getCurrentPage}
                 // layoutId="container"
                 variants={variants}
                 initial="hidden"
@@ -51,9 +52,9 @@ export const PageTransition = observer(() => {
                     width: "100%",
                     height: 575,
                 }}
-                transition={{type: "spring", stiffness: 100, damping: 20, mass: 7}}
+                transition={{type: "spring", stiffness: 100, damping: 20, mass: 5}}
             >
-                <AsyncPage page={router.getPageElement}/>
+                <AsyncPage page={router.getCurrentPage}/>
             </motion.div>
         </AnimatePresence>
     );

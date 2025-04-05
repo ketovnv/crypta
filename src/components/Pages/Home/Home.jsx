@@ -1,6 +1,6 @@
 import "@reown/appkit-wallet-button/react";
 import {observer} from "mobx-react-lite";
-import {Accordion, Box, Button, Center, Group, Stack, Text, Title} from "@mantine/core";
+import {Box, Button, Center, Group, Stack, Text} from "@mantine/core";
 import classes from "./Home.module.css";
 import {Metamask} from "@components/Layout/SvgIcons/Metamask";
 import {Google} from "@components/Layout/SvgIcons/Google";
@@ -28,7 +28,7 @@ const Home = observer(() => {
             // ref={ref}
             className="pageWrapper"
         >
-            <motion.div class="pageCard" animate={{background: animation.getThemeBackGround}}
+            <motion.div className="pageCard" animate={{background: animation.getThemeColors.background}}
                         transition={{duration: 3, ease: "easeInOut"}}>
                 <Stack
                     align="flex-start"
@@ -106,49 +106,48 @@ const Home = observer(() => {
                     )}
                 </Stack>
             </motion.div>
+            {/*{false && walletStore.getNetwork() && (*/}
+            {/*    <Accordion w={550} mx="auto" variant="separated">*/}
+            {/*        <Accordion.Item value="contracts">*/}
+            {/*            <Accordion.Control>*/}
+            {/*                <Title order={4} className={classes.lable}>*/}
+            {/*                    Контракты*/}
+            {/*                </Title>*/}
+            {/*            </Accordion.Control>*/}
+            {/*            <Accordion.Panel>*/}
+            {/*                {Object.entries(*/}
+            {/*                    walletStore.getNetwork()?.caipNetwork.contracts,*/}
+            {/*                ).map(([key, val]) => (*/}
+            {/*                    <Box key={key}>*/}
+            {/*                        <Group>*/}
+            {/*                            <Text style={{fontSize: 14}} className={classes.lable}>*/}
+            {/*                                {key + " : "}*/}
+            {/*                            </Text>*/}
+            {/*                            <Text*/}
+            {/*                                style={{fontSize: 14}}*/}
+            {/*                                className={classes.walletAddress}*/}
+            {/*                            >*/}
+            {/*                                {val.address}*/}
+            {/*                            </Text>*/}
+            {/*                            {val.blockCreated && (*/}
+            {/*                                <Text style={{fontSize: 12}}>*/}
+            {/*                                    Номер блока:{val.blockCreated}*/}
+            {/*                                </Text>*/}
+            {/*                            )}*/}
+            {/*                        </Group>*/}
+            {/*                    </Box>*/}
+            {/*                ))}*/}
 
-            {false && walletStore.getNetwork() && (
-                <Accordion w={550} mx="auto" variant="separated">
-                    <Accordion.Item value="contracts">
-                        <Accordion.Control>
-                            <Title order={4} className={classes.lable}>
-                                Контракты
-                            </Title>
-                        </Accordion.Control>
-                        <Accordion.Panel>
-                            {Object.entries(
-                                walletStore.getNetwork()?.caipNetwork.contracts,
-                            ).map(([key, val]) => (
-                                <Box key={key}>
-                                    <Group>
-                                        <Text style={{fontSize: 14}} className={classes.lable}>
-                                            {key + " : "}
-                                        </Text>
-                                        <Text
-                                            style={{fontSize: 14}}
-                                            className={classes.walletAddress}
-                                        >
-                                            {val.address}
-                                        </Text>
-                                        {val.blockCreated && (
-                                            <Text style={{fontSize: 12}}>
-                                                Номер блока:{val.blockCreated}
-                                            </Text>
-                                        )}
-                                    </Group>
-                                </Box>
-                            ))}
-
-                            <Group>
-                                <Text>Assets</Text>
-                                <Text>
-                                    {JSON.stringify(walletStore.getNetwork().caipNetwork?.assets)}
-                                </Text>
-                            </Group>
-                        </Accordion.Panel>
-                    </Accordion.Item>
-                </Accordion>
-            )}
+            {/*                <Group>*/}
+            {/*                    <Text>Assets</Text>*/}
+            {/*                    <Text>*/}
+            {/*                        {JSON.stringify(walletStore.getNetwork().caipNetwork?.assets)}*/}
+            {/*                    </Text>*/}
+            {/*                </Group>*/}
+            {/*            </Accordion.Panel>*/}
+            {/*        </Accordion.Item>*/}
+            {/*    </Accordion>*/}
+            {/*)}*/}
             {/*<BalanceTracker />*/}
             {/*</AppearanceAnimation>*/}
         </Center>

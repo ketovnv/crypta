@@ -1,80 +1,34 @@
 import {action, makeAutoObservable} from "mobx";
-import React from "react";
-
-import {ANIMATION_DURATION} from "./animation";
-// @ts-ignore
 
 const ROUTES = {
-    "Home": {
-        title: "Кошелёк",
-        element: "Home",
-        animation: "fade",
-        animationDuration: ANIMATION_DURATION.LONG, // Замените на реальные значения
-    },
-    "balance": {
-        title: "Баланс",
-        element: "Balance",
-        animation: "slide-up",
-        animationDuration: ANIMATION_DURATION.LONG,
-    },
-    "approve": {
-        title: "Одобрение",
-        element: "Approve",
-        animation: "slide-down",
-        animationDuration: ANIMATION_DURATION.LONG,
-    },
-    "transactions": {
-        title: "Транзакции",
-        element: "Transactions",
-        animation: "slide-left",
-        animationDuration: ANIMATION_DURATION.LONG,
-    },
-    "options": {
-        title: "Настройки",
-        element: "Options",
-        animation: "fade",
-    },
-};
+    "Home": "Кошелёк",
+    "Balance": "Баланс",
+    "Approve": "Approve",
+    "Transactions": "Транзакции",
+    // "Options": "Настройки"
+}
 
 class RouterStore {
-    currentPath: string = "Home";
-    previousComponent: React.ReactNode | null = null;
-    isTransitioning: boolean = false;
+    currentPath: string = "Home"
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    get getPageElement() {
-        return ROUTES[this.currentPath].element;
+    get getCurrentPage() {
+        return this.currentPath;
+    }
+
+    get getPages() {
+        return Object.entries(ROUTES);
     }
 
     @action
-    goTo(path: string, options?: { delay?: number }) {
-        const {delay = 500} = options || {};
+    goTo(path: string) {
         if (this.currentPath === path) return;
         this.currentPath = path;
-        // this.isTransitioning = true;
-        // const CurrentComponent = ROUTES[this.currentPath]?.element;
-        // this.previousComponent = CurrentComponent ?? null;
-        //
-        // setTimeout(
-        //   action(() => {
-        //     this.currentPath = path;
-        //     this.isTransitioning = false;
-        //     this.previousComponent = null;
-        //   }),
-        //   delay
-        // );
     }
 
-    getPages = () => Object.entries(ROUTES);
-
-    async preloadPage() {
-        if (ROUTES[this.currentPath]) {
-            await ROUTES[this.currentPath].element();
-        }
-    }
 }
 
 export const router = new RouterStore();

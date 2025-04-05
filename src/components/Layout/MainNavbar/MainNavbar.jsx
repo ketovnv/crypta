@@ -1,11 +1,11 @@
-import {AppShell, Center} from "@mantine/core";
+import {AppShell} from "@mantine/core";
 import React, {useEffect} from 'react';
 import classes from "./MainNavbar.module.css";
 import {Web3Inch} from "../SvgIcons/Web3Inch.jsx";
 import {observer} from "mobx-react-lite";
 import {uiStore} from "@stores/ui.js";
 import {motion} from "motion/react";
-import {AwesomeButton} from "@animations/involved/AwesomeButton";
+import {AwesomeButton} from "@animations/current/AwesomeButton/AwesomeButton";
 import GradientText from "@animations/involved/GradientText";
 import {router} from "@stores/router";
 import {IoApertureSharp, IoFileTrayFullSharp, IoLogoReact, IoSettings, IoWallet,} from "react-icons/io5";
@@ -28,10 +28,7 @@ export const MainNavbar = observer(() => {
     return (
         <motion.div
             animate={navBarMoving.control}
-            variants={{
-                hidden: {x: 0},
-                show: {x: 1}
-            }}
+            variants={navBarMoving.variants}
             transition={{
                 ...navBarMoving.transition, transition: {
                     staggerChildren: 0.1
@@ -46,40 +43,40 @@ export const MainNavbar = observer(() => {
                 p="md"
                 width={{base: 300}}
             >
-                <Center>
-                    <Web3Inch
-                        animate={navBarMoving.control}
-                        color1="yellow"
-                        color2="orange"
-                        isDark={uiStore.themeIsDark}
-                    />
-                </Center>
 
-                {router.getPages().map(([path, route]) => {
-                    const active = route.element === router.getPageElement;
-                    console.log("%c 9 --> Line: 50||MainNavbar.jsx\n router: ", "color:#acf;", router);
-                    console.log("%c 6 --> Line: 50||MainNavbar.jsx\n route.element: ", "color:#00f;", route.element);
+                <Web3Inch
+                    animate={navBarMoving.control}
+                    color1="#fff50d"
+                    color2="#ffc317"
+                    isDark={uiStore.themeIsDark}
+                />
 
+
+                {router.getPages.map(([path, name]) => {
+                    const active = path === router.getCurrentPage
+
+                    // logger.info('path', path + ' ' + JSON.stringify(active))
                     return (
                         <AwesomeButton
                             animate={navBarMoving.control}
                             variants={navBarMoving.variants}
                             transition={{
                                 ...navBarMoving.transition, transition: {
-                                    staggerChildren: 0.1
+                                    staggerChildren: 0.5
                                 }
                             }}
                             initial="hidden"
                             style={{
-                                scale: active ? 1 : 0.95,
-                                color: active ? "blue" : "white",
-                                padding: 3,
+                                scale: !active ? 1 : 0.95,
+                                color: active ? "white" : "#1050CC",
+                                padding: 1,
+                                width: 295
                             }}
                             active={active}
                             onPress={() => router.goTo(path)}
-                            whileTap={{scale: 0.95}}
+                            whileTap={{scale: 0.97}}
                             type="instagram"
-                            before={icons[route.element]}
+                            before={icons[path]}
                             buttonKey={path}
                             key={path}
                         >
@@ -89,7 +86,7 @@ export const MainNavbar = observer(() => {
                                 showBorder={false}
                                 className="custom-class"
                             >
-                                {route.title}
+                                {name}
                             </GradientText>
                         </AwesomeButton>
                     );

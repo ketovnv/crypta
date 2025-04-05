@@ -1,0 +1,20 @@
+{
+  "transition": {
+    "duration": 1.2,
+    "ease": "easeInOut"
+  },
+  "variants": {
+    "hidden": {
+      "x": -385,
+      "rotateZ": -25,
+      "rotateY": -110,
+      "opacity": 0.2
+    },
+    "visible": {
+      "x": 0,
+      "rotateZ": 0,
+      "rotateY": 0,
+      "opacity": 1
+    }
+  }
+}

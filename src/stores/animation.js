@@ -1,52 +1,14 @@
 import {action, makeAutoObservable, observable} from "mobx";
-import {logger} from "./logger";
 import {uiStore} from "@stores/ui.js";
+import {gradientStore} from "@stores/gradient";
+import{Controller} from "@react-spring/web"
 
-export const ANIMATION_DURATION = {
-    VERY_SHORT: 300,
-    SHORT: 500,
-    MEDIUM: 800,
-    LONG: 1200,
-    VERY_LONG: 1700,
-    EXTRA_LONG: 2500,
-    EXTRA_LONG_XL: 3500,
-    EXTRA_LONG_XXL: 5000,
-};
-
-const animations = {
-    dark: {
-        // color: "FFF"
-        background: "radial-gradient(\n" +
-            "          circle at -25% -270%,\n" +
-            "          #888888 0%,\n" +
-            "          #777777 5%,\n" +
-            "          #555555 45%,\n" +
-            "          #333333 60%,\n" +
-            "          #222222 70%,\n" +
-            "          #111111 80%,\n" +
-            "          #151515 90%\n" +
-            "  )",
-    },
-    light: {
-        background: "radial-gradient(\n" +
-            "          circle at 25% 270%,\n" +
-            "          #FFFFFF 0%,\n" +
-            "          #EEEEEE 5%,\n" +
-            "          #DDDDDD 45%,\n" +
-            "          #CCCCCC 60%,\n" +
-            "          #BBBBBB 70%,\n" +
-            "          #AAAAAA 80%,\n" +
-            "          #999999 90%\n" +
-            "  )",
-    },
-};
+const APP_NAME = "ReactApproveAppkit";
+const appNameArray = APP_NAME.split("");
 
 class AnimationStore {
 
-    currentAnimation = null;
-    optionsTransitionsTestState = 0;
-    themeGradient = "linear-gradient(135deg,#111111,#222222,#333333,#444444)";
-    springApi = null;
+    appNameIsHover = false
     mantineControlAnimations = {};
     springAnimations = {};
 
@@ -57,15 +19,37 @@ class AnimationStore {
                 springAnimations: observable.ref,
                 setMantineControlAnimation: action,
                 setSpringAnimation: action,
+                setAppNameIsHover: action,
             }
         )
     }
 
-    get getThemeBackGround() {
-        return uiStore.themeIsDark
-            ? animations.dark.background
-            : animations.light.background;
+    get getAppNameArray() {
+        return appNameArray
     }
+
+    get getAppNameIsHover() {
+        return this.appNameIsHover;
+    }
+
+
+    themeController = new Controller({
+        backgroundColor: '#ffffff',
+        textColor: '#000000',
+        primaryColor: '#3498db',
+        secondaryColor: '#2ecc71',
+        gradientStart: '#f5f7fa',
+        gradientEnd: '#c3cfe2'
+      });
+
+    get getThemeColors() {
+        const themeGradients = gradientStore.themeGradients
+        return uiStore.themeIsDark ?
+            {color: '#FFFFFF', background: themeGradients.darkMode} :
+            {color: '#000000 ', background: themeGradients.lightMode}
+    }
+
+    setAppNameIsHover = (isHover) => this.appNameIsHover = isHover
 
     getMCAnimation = (name) => this.mantineControlAnimations[name]
 
@@ -77,45 +61,18 @@ class AnimationStore {
     @action
     setSpringAnimation = (newAnimation) => this.springAnimations = newAnimation
 
-    toggleTheme() {
-        logger.logJSON("метод start?", this.springApi);
-        if (this.springApi?.start) {
-            // Проверяем, есть ли `start`
-            this.springApi.start({
-                background: this.themeGradient.includes("#222222")
-                    ? "linear-gradient(135deg,#111111,#222222,#333333,#444444)"
-                    : "linear-gradient(135deg,#FFFFFF,#EEEEEE,#DDDDDD,#CCCCCC)",
-            });
-        } else {
-            console.error("springApi не содержит метод start!", this.springApi);
-        }
-    }
-
-    @action
-    changeOptionsTransitionsTestState() {
-        logger.logRandomColors(
-            "optionsTransitionsTestState до",
-            this.optionsTransitionsTestState,
-        );
-        this.optionsTransitionsTestState =
-            (this.optionsTransitionsTestState + 1) % 3;
-        logger.logRandomColors(
-            "optionsTransitionsTestState после",
-            this.optionsTransitionsTestState,
-        );
-    }
-
-    //
-    // get getMCAnimationNB() {
-    //     console.log('getMCAnimationNB');
-    //     console.log(this.mantineControlAnimationNB.control);
-    //     //Proxy(Object) {…}
-    //     return this.mantineControlAnimationNB;
-    // };
-
-    // const control = useAnimation();
-    // setMantineControlAnimationNB(newAnimation) {
-    //     this.mantineControlAnimationNB = newAnimation;
+    // toggleTheme() {
+    //     logger.logJSON("метод start?", this.springApi);
+    //     if (this.springApi?.start) {
+    //         // Проверяем, есть ли `start`
+    //         this.springApi.start({
+    //             background: this.themeGradient.includes("#222222")
+    //                 ? "linear-gradient(135deg,#111111,#222222,#333333,#444444)"
+    //                 : "linear-gradient(135deg,#FFFFFF,#EEEEEE,#DDDDDD,#CCCCCC)",
+    //         });
+    //     } else {
+    //         console.error("springApi не содержит метод start!", this.springApi);
+    //     }
     // }
 
 

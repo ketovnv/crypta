@@ -1,8 +1,9 @@
 import React from 'react';
 import {Center, Flex} from "@mantine/core";
 import {motion} from 'motion/react';
-import {observer} from 'mobx-react-lite';
-import {logger} from "../../stores/logger";
+import classes from './AwesomeButton.module.css';
+import {a} from "@react-spring/web";
+
 
 function setCssEndEvent(
     element: HTMLElement,
@@ -131,7 +132,7 @@ export function toggleMoveClasses({
     return true;
 }
 
-export const createRippleEffect = observer(({event, button, content, className}: any) => {
+export const createRippleEffect = ({event, button, content, className}: any) => {
     const bounds = button.getBoundingClientRect();
     const top = window.pageYOffset || document.documentElement.scrollTop || 0;
     const bubble = document.createElement('span');
@@ -160,7 +161,7 @@ export const createRippleEffect = observer(({event, button, content, className}:
     window.requestAnimationFrame(() => {
         content.appendChild(bubble);
     });
-})
+}
 
 const ROOT_ELEMENT = 'aws-btn';
 const IS_WINDOW = typeof window !== 'undefined';
@@ -182,14 +183,12 @@ export type ButtonType = {
     between?: boolean;
     children?: React.ReactNode;
     className?: string;
-    containerProps?: any;
     cssModule?: any;
     disabled?: Boolean;
     element?: React.ForwardRefExoticComponent<
         React.RefAttributes<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>
     >;
     extra?: React.ReactNode;
-    href?: string;
     moveEvents?: Boolean;
     onMouseDown?: any;
     onMouseUp?: (event: React.MouseEvent | React.TouchEvent) => void;
@@ -218,12 +217,10 @@ export const AwesomeButton = ({
                                   between = false,
                                   children = null,
                                   className = null,
-                                  containerProps = {},
                                   cssModule = null,
                                   disabled = false,
                                   element = null,
                                   extra = null,
-                                  href = null,
                                   moveEvents = true,
                                   onMouseDown = null,
                                   onMouseUp = null,
@@ -248,12 +245,9 @@ export const AwesomeButton = ({
     const timer = React.useRef(null);
     const touchScreen = React.useRef(0);
     const RenderComponent: React.ForwardRefExoticComponent<
-        React.RefAttributes<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>
-    > = element || (href ? Anchor : Button);
+        React.RefAttributes<HTMLDivElement | HTMLButtonElement>
+    > = element || Button;
 
-    const extraProps = {
-        href,
-    };
 
     const isDisabled = React.useMemo(() => {
         if (placeholder === true && !children) {
@@ -285,9 +279,7 @@ export const AwesomeButton = ({
                 (placeholder && !children && `${rootElement}--placeholder`) || null,
             ];
 
-            if (isDisabled === true) {
-                classList.push(`${rootElement}--disabled`);
-            }
+
             if (pressPosition) {
                 classList.push(pressPosition);
             }
@@ -314,6 +306,7 @@ export const AwesomeButton = ({
         ]);
 
     const checkActive = () => {
+        console.warn(buttonKey, active)
         if (pressPosition !== null && active === false) {
             clearPress({force: true});
         }
@@ -340,9 +333,9 @@ export const AwesomeButton = ({
 
         let nextPressPosition = active && !force ? `${rootElement}--active` : null;
 
-        if (content?.current?.clearCssEvent) {
-            content.current.clearCssEvent();
-        }
+        // if (content?.current?.clearCssEvent) {
+        //     content.current.clearCssEvent();
+        // }
 
         if (nextPressPosition === null && pressPosition?.match(/active/gim)) {
             setCssEndEvent(content.current, 'transition', {
@@ -411,9 +404,6 @@ export const AwesomeButton = ({
     const getMoveEvents: any = () => {
         const events: any = {
             onClick: (event: React.MouseEvent) => {
-                if (href && isDisabled) {
-                    event.preventDefault();
-                }
             },
         };
 
@@ -501,21 +491,19 @@ export const AwesomeButton = ({
 
         return events;
     };
-    logger.logRandomColors(buttonKey, '', 42)
     return (
         <motion.button
+            layout
+            layoutId="awesomeButton"
+            active={active}
             key={buttonKey}
-            whileHover={{opacity: 1}}
             animate={animate}
             variants={variants}
             transition={transition}
             initial={initial}
             style={{...style}}
-            className={getRootClassName()}
-            role="button"
+            className={classes.awsBtn + ' ' + getRootClassName()}
             ref={container}
-            {...containerProps}
-            {...extraProps}
             {...getMoveEvents()}>
       <span
           ref={button}

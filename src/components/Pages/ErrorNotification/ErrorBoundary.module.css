@@ -1,4 +1,6 @@
 .root {
+    position: absolute;
+    z-index: 150;
     padding-top: 35px;
 }
 
@@ -44,7 +46,7 @@
 
 .title {
     font-family: "IosevkaTermSlab NFP ExtraBold", monospace;
-    color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-dark-0));
+    /*color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-dark-0));*/
     text-align: center;
     font-weight: 900;
     font-size: 4em;
@@ -58,7 +60,7 @@
 
 .description {
     z-index: 1;
-    color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-yellow-2));
+    /*color: var(--mantine-color-dark-9),*/
     text-align: center;
     font-size: 1.5em;
     line-height: 1.33;

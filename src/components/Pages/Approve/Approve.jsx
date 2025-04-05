@@ -1,38 +1,39 @@
-import { observer } from "mobx-react-lite";
-import { logger } from "@/stores/logger.js";
-import { Center } from "@mantine/core";
-import { BlackCoilTexture } from "@animations/involved/textures/BlackCoilTexture.js";
+import {observer} from "mobx-react-lite";
+import {logger} from "@/stores/logger.js";
+import {Center} from "@mantine/core";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
-import { animation } from "@stores/animation";
+import {animation} from "@stores/animation";
+import {motion} from "motion/react";
 
 logger.warning("🕸️", " Компонент Одобрение");
 
 const Approve = observer(() => {
-  // При монтировании получаем информацию о текущей сети
-  // useEffect(() => {
-  //     if (walletStore.isConnected) {
-  //         walletStore.fetchNetworkInfo();
-  //     }
-  // }, [walletStore.isConnected]);
+    // При монтировании получаем информацию о текущей сети
+    // useEffect(() => {
+    //     if (walletStore.isConnected) {
+    //         walletStore.fetchNetworkInfo();
+    //     }
+    // }, [walletStore.isConnected]);
 
-  return (
-    <Center
-      m={0}
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        borderRadius: 20,
-        height: 575,
-        // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
-      }}
-    >
-      <BlackCoilTexture themeBackGround={animation.getThemeBackGround}>
-        <AppearingText text="Страница находится в разработке..." />
-      </BlackCoilTexture>
-    </Center>
-  );
+    return (
+        <Center
+            m={0}
+            style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                borderRadius: 20,
+                height: 575,
+                // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
+            }}
+        >
+            <motion.div className="pageCard" animate={{background: animation.getThemeColors.background}}
+                        transition={{duration: 3, ease: "easeInOut"}}>
+                <AppearingText text="Страница находится в разработке..."/>
+            </motion.div>
+        </Center>
+    );
 });
 // <Container size="xl">
 //   {/*<Title order={2} mb="xl">Управление сетями</Title>*/}
@@ -56,7 +57,7 @@ const Approve = observer(() => {
 //     </Grid.Col>
 
 {
-  /* Список доступных сетей */
+    /* Список доступных сетей */
 }
 // {/*<Grid.Col span={12}>*/}
 // {/*  <Paper p="md" radius="md" shadow="sm">*/}

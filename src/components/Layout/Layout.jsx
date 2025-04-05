@@ -5,7 +5,6 @@ import {MainHeader} from "./MainHeader";
 import {MainFooter} from "./MainFooter";
 import {logger} from "@/stores/logger.js";
 import {AppKitObserver} from "./AppKitObserver";
-import {ErrorBoundary} from "@components/pages/ErrorNotification/ErrorBoundary.jsx"; // import PageTransition from "@animations/current/PageTransitions/Gpt(Gilmor)";
 import {MainContent} from "@components/Layout/MainContent/index.js";
 import {AnimationObserver} from "@animations/involved/AnimationObserver.jsx";
 
@@ -19,32 +18,32 @@ const Layout = () => {
 
     logger.logRandomColors("LAYOUT", "mounted", 12);
     return (
-        <ErrorBoundary>
-            <MantineProvider>
-                <AppShell
-                    header={{height: 60}}
-                    navbar={{
-                        width: 300,
-                        breakpoint: "sm",
-                    }}
-                    style={{
-                        position: "absolute",
-                        left: 0,
-                        top: 0,
-                        width: "100vw",
-                        overflow: "hidden",
-                    }}
-                    padding={0}
-                >
-                    <AnimationObserver/>
-                    <AppKitObserver/>
-                    <MainHeader/>
-                    <MainNavbar/>
-                    <MainContent/>
-                    <MainFooter/>
-                </AppShell>
-            </MantineProvider>
-        </ErrorBoundary>
+        // <ErrorBoundary>
+        <MantineProvider>
+            <AppShell
+                header={{height: 60}}
+                navbar={{
+                    width: 300,
+                    breakpoint: "sm",
+                }}
+                style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: "100vw",
+                    overflow: "hidden",
+                }}
+                padding={0}
+            >
+                <AnimationObserver/>
+                <AppKitObserver/>
+                <MainHeader/>
+                <MainNavbar/>
+                <MainContent/>
+                <MainFooter/>
+            </AppShell>
+        </MantineProvider>
+        // </ErrorBoundary>
     );
 };
 

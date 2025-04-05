@@ -1,24 +1,15 @@
 // src/stores/WalletStore.ts
-import { action, makeAutoObservable } from "mobx";
-import type {
-  AppKitNetwork,
-  Balance,
-  CaipAddress,
-  CaipNetwork,
-  CaipNetworkId,
-} from "@reown/appkit-common";
+import {action, flow, makeAutoObservable} from "mobx";
+import {ethers} from "ethers";
+import type {AppKitNetwork, Balance, CaipAddress, CaipNetwork, CaipNetworkId,} from "@reown/appkit-common";
 // import { ethers } from 'ethers';
-import type {
-  AccountControllerState,
-  AccountType,
-  Event,
-} from "@reown/appkit/react";
-import type { W3mFrameTypes } from "@reown/appkit-wallet";
+import type {AccountControllerState, AccountType, Event,} from "@reown/appkit/react";
+import type {W3mFrameTypes} from "@reown/appkit-wallet";
 
 interface TokenBalance {
-  symbol: string;
-  balance: string;
-  address?: string;
+    symbol: string;
+    balance: string;
+    address?: string;
 }
 
 interface EventWithMetadata {
@@ -118,6 +109,61 @@ class WalletStore {
     connectedWallet: ConnectedWalletInfo | null = null;
     accountData: AccountData | null = null;
     network: Network | null = null;
+    fetchBalances = flow(function* (this: WalletStore, tokenAddresses: string[]) {
+        this.loading = true;
+        this.error = null;
+        return
+        try {
+            // if (!this.addressForBalance) {
+            //     throw new Error("Wallet is not connected");
+            // }
+
+            // ПОЛУЧАЕМ ПРОВАЙДЕРА ИЗ ПОДКЛЮЧЕННОГО КОШЕЛЬКА (window.ethereum)
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+            const balances: Balance[] = [];
+
+            // Баланс нативного токена (ETH, BNB и т.д.)
+            const nativeBalance = yield provider.getBalance(this.address);
+            balances.push({
+                symbol: 'ETH', //  Замените на символ вашей сети!
+                balance: ethers.utils.formatEther(nativeBalance),
+                address: undefined,
+            });
+
+            // Балансы токенов ERC-20
+            for (const tokenAddress of tokenAddresses) {
+                const contract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+                const balance = yield contract.balanceOf(this.address);
+                const symbol = yield contract.symbol();
+                const decimals = yield contract.decimals();
+                balances.push({
+                    symbol,
+                    balance: ethers.utils.formatUnits(balance, decimals),
+                    address: tokenAddress,
+                });
+            }
+
+            runInAction(() => {
+                this.balances = balances;
+                this.tokenBalances.clear();
+                for (const b of balances) {
+                    if (b.address) {
+                        this.tokenBalances.set(b.address, b.balance);
+                    }
+                }
+            });
+        } catch (error: any) {
+            runInAction(() => {
+                this.error = error.message || 'Failed to fetch balances';
+            });
+            logger.logError("Failed to fetch balances", error)
+        } finally {
+            runInAction(() => {
+                this.loading = false;
+            });
+        }
+    });
 
     constructor() {
         makeAutoObservable(this, {
@@ -144,73 +190,14 @@ class WalletStore {
     getAccountData = () => this.accountData && this.accountData?.isConnected ?
         this.accountData : null;
 
-
     setWalletInformation(
         wallet: ConnectedWalletInfo) {
         this.connectedWallet = wallet;
     }
 
-
     getNetwork = () => this.network;
 
     getWalletInformation = () => this.connectedWallet;
-
-
-    // fetchBalances = flow(function* (this: WalletStore, tokenAddresses: string[]) {
-    //      this.loading = true;
-    //      this.error = null;
-    //      return
-    //     try {
-    //         // if (!this.addressForBalance) {
-    //         //     throw new Error("Wallet is not connected");
-    //         // }
-    //
-    //         // ПОЛУЧАЕМ ПРОВАЙДЕРА ИЗ ПОДКЛЮЧЕННОГО КОШЕЛЬКА (window.ethereum)
-    //         const provider = new ethers.providers.Web3Provider(window.ethereum);
-    //
-    //         const balances: Balance[] = [];
-    //
-    //         // Баланс нативного токена (ETH, BNB и т.д.)
-    //         const nativeBalance = yield provider.getBalance(this.address);
-    //         balances.push({
-    //             symbol: 'ETH', //  Замените на символ вашей сети!
-    //             balance: ethers.utils.formatEther(nativeBalance),
-    //             address: undefined,
-    //         });
-    //
-    //         // Балансы токенов ERC-20
-    //         for (const tokenAddress of tokenAddresses) {
-    //             const contract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
-    //             const balance = yield contract.balanceOf(this.address);
-    //             const symbol = yield contract.symbol();
-    //             const decimals = yield contract.decimals();
-    //             balances.push({
-    //                 symbol,
-    //                 balance: ethers.utils.formatUnits(balance, decimals),
-    //                 address: tokenAddress,
-    //             });
-    //         }
-    //
-    //         runInAction(() => {
-    //             this.balances = balances;
-    //             this.tokenBalances.clear();
-    //             for (const b of balances) {
-    //                 if (b.address) {
-    //                     this.tokenBalances.set(b.address, b.balance);
-    //                 }
-    //             }
-    //         });
-    //     } catch (error: any) {
-    //         runInAction(() => {
-    //             this.error = error.message || 'Failed to fetch balances';
-    //         });
-    //         logger.logError("Failed to fetch balances", error)
-    //     } finally {
-    //         runInAction(() => {
-    //             this.loading = false;
-    //         });
-    //     }
-    // });
 
 
 }

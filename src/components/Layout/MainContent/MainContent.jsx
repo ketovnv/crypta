@@ -17,7 +17,9 @@ export const MainContent = observer(() => {
     return (
         <AppShell.Main className={classes.mainContent}>
             <motion.div style={{height: '100vh', width: '100vw', position: "absolute", top: 0, left: 0}}
-                        animate={{background: animation.getThemeBackGround}} transition={{duration: 3.5}}>
+                        animate={{background: animation.getThemeColors.background}} 
+                        transition={{duration: 3.5}}
+                        >
                 <animated.div
                     style={{
                         ...animation.getSpringAnimation('PageWithNavBarMoving')

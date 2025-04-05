@@ -1,0 +1,26 @@
+.awsBtn {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  height: var(--button-default-height);
+  position: relative;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 32px;
+  line-height: var(--button-default-line-height);
+  /*font-weight: bold;*/
+  font-family: 'Inter Variable Text !important';
+  font-style: var(--button-font-style);
+  letter-spacing: var(--button-letter-spacing);
+  text-rendering: auto;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.1s ease-out;
+  border: none;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}

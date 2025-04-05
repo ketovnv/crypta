@@ -1,14 +1,8 @@
-// src/pages/Transactions.tsx
-// import { walletStore } from '@/stores/wallet';
-
-
-// Вспомогательная функция для определения цвета статуса транзакции
 import {logger} from "@stores/logger.js";
 import {Center} from "@mantine/core";
-import {BlackCoilTexture} from "@animations/involved/textures/BlackCoilTexture.js";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import {animation} from "@stores/animation.js";
-import {motion} from "framer-motion";
+import {motion} from "motion/react";
 
 const StrokeAnimation = () => {
     return (
@@ -57,10 +51,11 @@ const Transactions = ({}) => {
                 // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
             }}
         >
-            <BlackCoilTexture themeBackGround={animation.getThemeBackGround}>
+            <motion.div className="pageCard" animate={{background: animation.getThemeColors.background}}
+                        transition={{duration: 3, ease: "easeInOut"}}>
                 <AppearingText text="Страница находится в разработке..."/>
-                <StrokeAnimation/>
-            </BlackCoilTexture>
+                {/*<StrokeAnimation/>*/}
+            </motion.div>
         </Center>
     )
 }
