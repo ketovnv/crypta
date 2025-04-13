@@ -1,6 +1,6 @@
 import "@reown/appkit-wallet-button/react";
 import {observer} from "mobx-react-lite";
-import {Box, Button, Center, Group, Stack, Text} from "@mantine/core";
+import {Box, Button, Center, Group, Stack, Text} from "@mantine/core";5
 import classes from "./Home.module.css";
 import {Metamask} from "@components/Layout/SvgIcons/Metamask";
 import {Google} from "@components/Layout/SvgIcons/Google";

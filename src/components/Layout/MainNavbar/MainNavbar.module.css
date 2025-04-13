@@ -1,6 +1,7 @@
 .navbar {
-  position: absolute;
-  top: 60;
+  position: fixed;
+  height: 600px;
+  top: 60px;
   left: 0;
   z-index: 101;
   display: flex;
@@ -9,15 +10,10 @@
   justify-content: space-between;
   background: rgba(0, 0, 0, 0);
   border-right: none;
-  color: var(--mantine-color-indigo-6)
-}
-
-.link {
-  width: 90%;
-  border-radius: 10px;
-  @mixin hover {
-    color: var(--mantine-color-indigo-6)
-  }
+  color: var(--mantine-color-indigo-6);
+  width: 300px;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
 }
 
 .link span {

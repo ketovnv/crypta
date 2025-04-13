@@ -1,5 +1,3 @@
-* {
-}
 
 [class^=mantine] {
   color: red;
@@ -19,7 +17,13 @@
   border-radius: 20px;
   height: 575px
 }
-
+/**
+ * CSS code for the page card.
+ * 
+ * Applies a border radius of 20px to the card.
+ * Sets the minimum width to 450px and the minimum height to 300px.
+ * Adds a padding of 20px to the card.
+ */
 .pageCard {
   border-radius: 20px;
   min-width: 450px;

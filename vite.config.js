@@ -2,12 +2,14 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
+import tauri from "vite-plugin-tauri";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // Плагин для анализа размера бандла
 import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
-  base: './',
+  base: "./",
   plugins: [
     react({
       // Настраиваем Babel для работы с декораторами
@@ -25,6 +27,12 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+    tauri(),
+    viteStaticCopy({
+      targets: [
+        { src: "src-tauri/tauri.conf.json", dest: "." }, // Копируем конфиг Tauri
+      ],
+    }),
     visualizer({
       template: "treemap", // или "sunburst"
       open: true,
@@ -46,21 +54,19 @@ export default defineConfig({
     },
   },
 
-  build: {    
-    target: "esnext", 
-    minify: "esbuild",
+  build: {
+    target: "esnext",
+    minify: "terser",
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ["react", "react-dom"],
+          vendor: ["react", "react-dom", "mobx", "mobx-react-lite"],
           mantine: ["@mantine/core", "@mantine/hooks"],
+          tauri: ["@tauri-apps/api"], // Выносим Tauri API
         },
       },
     },
-    
-    sourcemap: false,
-    // Оптимизируем размер
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
   },
 
   server: {
@@ -68,14 +74,16 @@ export default defineConfig({
     strictPort: true,
     historyApiFallback: true,
     fs: {
-      allow: [".."], 
-      strict: false, 
-    }
-  },
-  optimizeDeps: {   
-    include: ["react", "react-dom", "@mantine/core", "@mantine/hooks", "@loadable/component"],
-    esbuildOptions: {
-      target: "esnext",
+      allow: [".."],
+      strict: false,
     },
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom", "@tauri-apps/api", "@mantine/core", "mobx"],
+    exclude: ["@babel/__generator__"],
+  },
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || "0.0.1"),
+    __IS_TAURI__: JSON.stringify(true), // Флаг для Tauri
   },
 });

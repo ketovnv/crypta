@@ -1,11 +1,13 @@
 import ReactDOM from "react-dom"
-import React, { Fragment, useState } from "react"
-import useMeasure from 're'
-import { Global, Box, ScrollArea, ScrollContent } from "./styles"
-import { useMeasure } from "react-use";
-export function MeasuredBox({ color }) {
+import React, {Fragment, useState} from "react"
+import {Box, Global} from "./styles"
+import {useMeasure} from "react-use";
+import {DevSupport} from "@react-buddy/ide-toolbox";
+import {ComponentPreviews, useInitial} from "../../dev/index.js";
+
+export function MeasuredBox({color}) {
     // This line is all you need ...
-    const [ref, bounds] = useMeasure({ scroll: true})
+    const [ref, bounds] = useMeasure({scroll: true})
     // The rest is just for hover and mouse tracking
     const [big, setBig] = useState(false)
     const [hovered, setHover] = useState(false)
@@ -16,7 +18,7 @@ export function MeasuredBox({ color }) {
             ref={ref}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onMouseMove={({ clientX, clientY }) => setXY([clientX, clientY])}
+            onMouseMove={({clientX, clientY}) => setXY([clientX, clientY])}
             onClick={() => setBig(!big)}
             size={big ? 270 : 235}
             color={color}>
@@ -58,11 +60,11 @@ export function MeasuredBox({ color }) {
 function Example() {
     return (
         <>
-            <Global color="white" />
-            <div style={{ width: "150vw", height: "150vh", marginLeft: "-25vw", paddingTop: "20vh" }}>
+            <Global color="white"/>
+            <div style={{width: "150vw", height: "150vh", marginLeft: "-25vw", paddingTop: "20vh"}}>
                 <ScrollBox size="60vh" color="#272730">
                     <ScrollBox size="50vh" color="#676770">
-                        <MeasuredBox color="#F7567C" />
+                        <MeasuredBox color="#F7567C"/>
                     </ScrollBox>
                 </ScrollBox>
             </div>
@@ -70,4 +72,8 @@ function Example() {
     )
 }
 
-ReactDOM.render(<Example />, document.getElementById("root"))
+ReactDOM.render(<DevSupport ComponentPreviews={ComponentPreviews}
+                            useInitialHook={useInitial}
+>
+    <Example/>
+</DevSupport>, document.getElementById("root"))

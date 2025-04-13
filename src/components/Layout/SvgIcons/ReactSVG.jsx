@@ -1,4 +1,4 @@
-export function ReactSVG({color1, color2, isDark = true,size}) {
+export function ReactSVG({color1, color2, isDark = true, size}) {
     const dx = isDark ? 0.3 : 0.5;
 
     const animations = {
@@ -20,7 +20,7 @@ export function ReactSVG({color1, color2, isDark = true,size}) {
         },
     };
 
-    return (<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    return (<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
                  aria-hidden="true" role="img" className="iconify iconify--logos" width={size}
                  preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228">
         <path fill="#00D8FF"

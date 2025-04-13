@@ -1,20 +1,39 @@
 {
-  "transition": {
-    "duration": 1.2,
-    "ease": "easeInOut"
-  },
   "variants": {
     "hidden": {
       "x": -385,
-      "rotateZ": -25,
+      "rotateZ": -10,
       "rotateY": -110,
-      "opacity": 0.2
+      "opacity": 0
     },
     "visible": {
       "x": 0,
       "rotateZ": 0,
       "rotateY": 0,
-      "opacity": 1
+      "opacity": 1,
+      "transition": {
+        "duration": 2,
+        "ease": "easeInOut"
+      }
+    }
+  },
+  "frameVariants": {
+    "hidden": {
+      "x": -385,
+      "rotateZ": -10,
+      "rotateY": -110,
+      "opacity": 0
+    },
+    "visible": {
+      "x": 0,
+      "rotateZ": 0,
+      "rotateY": 0,
+      "opacity": 1,
+      "transition": {
+        "duration": 2,
+        "staggerChildren": 0.5,
+        "ease": "easeInOut"
+      }
     }
   }
 }

@@ -1,19 +1,9 @@
 import React, { useEffect } from "react";
 import { animated, useSpringRef, useTransition } from "@react-spring/web";
 import { Center } from "@mantine/core";
-import classes from "./Options.module.css";
 import { animation } from "@stores/animation.js";
 import { observer } from "mobx-react-lite";
 import { logger } from "@stores/logger.js"; // import AnimatedNumber from "@animations/AnimatedNumber";
-// import AnimatedNumber from "@animations/AnimatedNumber";
-// import AnimatedText from "@animations/textures/AnimatedText.tsx";
-// import AnimatedTextures from "@animations/textures/AnimatedTextures";
-// import DarkStaticTextures from "@animations/textures/DarkStaticTextures";
-// import NoiseTextures from "@animations/textures/NoiseTextures";
-// import StaticTextures from "@animations/textures/StaticTextures";
-// import TextureEffects from "@animations/textures/TextureEffects";
-// import AnimatedTexturesOne from "@animations/textures/AnimatedTexturesOne";
-// import {FontTest} from "@components/Pages/Options/FontTest.jsx";
 
 const pages = [
   ({ style }) => (
@@ -64,19 +54,7 @@ const Options = observer(() => {
     transRef.start();
   }, [animation.optionsTransitionsTestState]);
   return (
-    <Center
-      m={0}
-      className={classes.container}
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        borderRadius: 20,
-        height: 575,
-        // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
-      }}
-    >
+    <Center m={0} className="pageWrapper">
       {transitions((style, i) => {
         const Page = pages[i];
         return <Page style={style} key={style.color} />;
