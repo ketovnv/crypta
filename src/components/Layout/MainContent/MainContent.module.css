@@ -5,21 +5,19 @@
   }
 }
 
-.mainContent p {
-  color: #fff000
-}
-
+/*.mainContent p {*/
+/*  color: #fff000*/
+/*}*/
 /* Стили для градиентного текста */
-.gradientText {
-  background: light-dark(
-          linear-gradient(45deg, var(--mantine-color-blue-4) 0%, var(--mantine-color-blue-6) 100%),
-          linear-gradient(45deg, #4DABF7 0%, #228BE6 100%)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-}
-
+/*.gradientText {*/
+/*  background: light-dark(*/
+/*          linear-gradient(45deg, var(--mantine-color-blue-4) 0%, var(--mantine-color-blue-6) 100%),*/
+/*          linear-gradient(45deg, #4DABF7 0%, #228BE6 100%)*/
+/*  );*/
+/*  -webkit-background-clip: text;*/
+/*  -webkit-text-fill-color: transparent;*/
+/*  font-weight: bold;*/
+/*}*/
 /* Стили для анимированной кнопки */
 .animatedButton {
   transition: all 0.2s ease;

@@ -1,5 +1,7 @@
 import { action, makeAutoObservable, observable } from "mobx";
+
 import { uiStore } from "@stores/ui.js";
+
 import { gradientStore } from "@stores/gradient";
 import { Controller } from "@react-spring/web";
 
@@ -12,14 +14,16 @@ class AnimationStore {
   springAnimations = {};
 
   themeController = new Controller({
-    progress: uiStore.themeIsDark === "dark" ? 1 : 0,
-    config: { tension: 170, friction: 26 },
+    ...gradientStore.darkMode,
+    color: "oklch(0.95 0 0)",
+    pageCardShadow: "2px 3px oklch(0 0 0 / 30%)",
   });
 
   constructor() {
     makeAutoObservable(this, {
       mantineControlAnimations: observable.ref,
       springAnimations: observable.ref,
+      themeController: observable.ref,
       setMantineControlAnimation: action,
       setSpringAnimation: action,
       setAppNameIsHover: action,
@@ -34,11 +38,18 @@ class AnimationStore {
     return this.appNameIsHover;
   }
 
-  get getThemeColors() {
-    const themeGradients = gradientStore.themeGradients;
+  get theme() {
     return uiStore.themeIsDark
-      ? { color: "#FFFFFF", background: themeGradients.darkMode }
-      : { color: "#000000 ", background: themeGradients.lightMode };
+      ? {
+          ...gradientStore.darkMode,
+          color: "oklch(0.95 0 0)",
+          pageCardShadow: "2px 3px oklch(0 0 0 / 30%)",
+        }
+      : {
+          ...gradientStore.lightMode,
+          color: "oklch(0.05 0 0)",
+          pageCardShadow: "2px 3px oklch(0 0 0 / 70%)",
+        };
   }
 
   setAppNameIsHover = (isHover) => (this.appNameIsHover = isHover);
@@ -47,7 +58,9 @@ class AnimationStore {
 
   @action
   setMantineControlAnimation = (newAnimation) =>
-    (this.mantineControlAnimations = { ...newAnimation });
+    (this.mantineControlAnimations = {
+      ...newAnimation,
+    });
 
   getSpringAnimation = (name) => this.springAnimations[name];
 

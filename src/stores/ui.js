@@ -1,19 +1,6 @@
 import { action, makeAutoObservable } from "mobx";
 import { animation } from "@stores/animation.js";
 
-const darkTheme = [
-  "#C1C2C5", // 0
-  "#A6A7AB", // 1
-  "#909296", // 2
-  "#5C5F66", // 3
-  "#373A40", // 4
-  "#2C2E33", // 5
-  "#25262B", // 6
-  "#1A1B1E", // 7
-  "#141517", // 8
-  "#101113", // 9
-];
-
 class UiStore {
   colorScheme = "dark"; // Начальное значение
   isNavbarOpened = false;
@@ -37,6 +24,10 @@ class UiStore {
 
   setColorScheme = (theme) => {
     this.colorScheme = theme;
+
+    animation.themeController.start({
+      ...animation.theme,
+    });
     localStorage.setItem("my-app-color-scheme", theme);
   };
 

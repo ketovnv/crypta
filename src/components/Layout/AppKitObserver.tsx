@@ -55,8 +55,8 @@ export const AppKitObserver = observer(() => {
           title,
           message: JSON.stringify(message),
           style: {
-            background: animation.getThemeColors.background,
-            color: animation.getThemeColors.color,
+            background: animation.theme.mainBackground,
+            color: animation.theme.color,
           },
         }),
       1000,
@@ -64,7 +64,7 @@ export const AppKitObserver = observer(() => {
   }, [event]);
 
   useEffect(() => {
-    // logger.logJSON("state", state);
+    // console.log("state", state);
     eventsStore.setCurrentState(state);
   }, [state]);
 
@@ -76,5 +76,5 @@ export const AppKitObserver = observer(() => {
     walletStore.setNetwork(network);
   }, [network]);
 
-  return <Notifications position="top-right" />;
+  return <Notifications position="bottom-right" />;
 });

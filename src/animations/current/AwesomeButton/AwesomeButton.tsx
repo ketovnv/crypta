@@ -27,6 +27,7 @@ export type ButtonType = {
   >;
   extra?: React.ReactNode;
   moveEvents?: boolean;
+  background?: any;
   onMouseDown?: any;
   onMouseUp?: (event: React.MouseEvent | React.TouchEvent) => void;
   onPress?: any;
@@ -47,6 +48,7 @@ export const AwesomeButton = ({
   isActive = false,
   animate = null,
   variants = null,
+  background = null,
   initial = null,
   whileTap = null,
   whileHover = null,
@@ -88,11 +90,16 @@ export const AwesomeButton = ({
         <motion.div
           initial={{ transform: "translate3d(0, 0, 0 )" }}
           layout
-          transition={{ type: "tween", duration: 0.5, delay: 0.1 }}
+          transition={{
+            type: "tween",
+            duration: 0.2,
+            background: { duration: 5 },
+          }}
           animate={{
             transform: isActive
-              ? "translate3d(0, 4px, 0)"
+              ? "translate3d(0, 3px, 0)"
               : "translate3d(0, 0, 0)",
+            background: background,
           }}
           ref={content}
           className={`${classes.mainNavBtnContent}  aws-btn__content`}

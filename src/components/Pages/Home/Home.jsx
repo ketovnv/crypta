@@ -1,156 +1,159 @@
 import "@reown/appkit-wallet-button/react";
-import {observer} from "mobx-react-lite";
-import {Box, Button, Center, Group, Stack, Text} from "@mantine/core";5
-import classes from "./Home.module.css";
-import {Metamask} from "@components/Layout/SvgIcons/Metamask";
-import {Google} from "@components/Layout/SvgIcons/Google";
-import {walletStore} from "@/stores/wallet";
-import {useDisconnect} from "@reown/appkit/react";
-import {logger} from "@stores/logger.js";
+import { observer } from "mobx-react-lite";
+import { Center } from "@mantine/core";
+import { useDisconnect } from "@reown/appkit/react";
+import { logger } from "@stores/logger.js";
 import React from "react";
-import {motion} from "motion/react";
-import {animation} from "@stores/animation.js";
+import { motion, MotionConfig } from "motion/react";
+import { animation } from "@stores/animation.js";
+import { uiStore } from "@stores/ui.js";
+import { walletStore } from "@stores/wallet.js";
+import classes from "./Home.module.css";
+import chroma from "chroma-js";
+import { AwesomeButton } from "@animations/current/AwesomeButton/AwesomeButton.js";
 
 const Home = observer(() => {
-    // const props = useSpring({
-    //   opacity: isLeaving ? 0 : 1,
-    //   transform: isLeaving ? "translate3d(0,-40px,0)" : "translate3d(0,0px,0)",
-    //   config: { duration: isLeaving ? 500 : undefined }, // Different duration for exit
-    // });
-    logger.logWhiteRandom("🏩", " Компонент Home", 12);
-    const {disconnect} = useDisconnect();
-    // const [ref, bounds, setBounds] = useMeasure({ scroll: true });
+  logger.logWhiteRandom("🏩", " Компонент Home", 12);
+  const { disconnect } = useDisconnect();
+  // const [ref, bounds, setBounds] = useMeasure({ scroll: true });
+  // logger.setBounds(bounds);
 
-    // logger.setBounds(bounds);
-    return (
-        <Center
-            m={0}
-            // ref={ref}
-            className="pageWrapper"
+  logger.logJSON("gradients", JSON.stringify(animation.theme));
+
+  const { background, color, pageCardShadow } = { ...animation.theme };
+
+  return (
+    <Center
+      // ref={ref}
+      className="pageWrapper"
+    >
+      <MotionConfig
+        transition={{
+          type: "spring",
+          visualDuration: 5,
+          bounce: 0.1,
+        }}
+      >
+        <motion.div
+          layout
+          className="pageCard"
+          animate={{
+            background,
+            color,
+            boxShadow: pageCardShadow,
+          }}
         >
-            <motion.div className="pageCard" animate={{background: animation.getThemeColors.background}}
-                        transition={{duration: 3, ease: "easeInOut"}}>
-                <Stack
-                    align="flex-start"
-                    justify="flex-start"
-                    // layoutId="homeCardElement"
+          {Object.keys(animation.theme).map((key) => {
+            return (
+              <motion.div
+                layout
+                key={key}
+                animate={{
+                  color: "rgba(" + chroma.random()._rgb + ")",
+                  background: animation.theme[key],
+                  width: 450,
+                  borderRadius: 20,
+                }}
+                m={1}
+              >
+                {/*{JSON.stringify(chroma.random()._rgb)}*/}
+                {animation.theme[key]}
+              </motion.div>
+            );
+          })}
+          <motion.div
+            style={{ display: "flex", flexDirection: "row" }}
+            justify="space-between"
+            align="center"
+          >
+            {walletStore.getWalletInformation()?.social === "google" && (
+              <Google />
+            )}
+            {walletStore.getWalletInformation()?.social && (
+              <motion.div display="inline">
+                <motion.span className={classes.label}>
+                  Социальный аккаунт&nbsp;
+                  {walletStore.getWalletInformation()?.social}
+                </motion.span>
+                <motion.span className={classes.walletName} animate={{ color }}>
+                  {walletStore.getWalletInformation()?.identifier}
+                </motion.span>
+              </motion.div>
+            )}
+            {walletStore.getWalletInformation()?.name === "io.metamask" && (
+              <Metamask />
+            )}
+            {walletStore.getWalletInformation()?.type === "injected" && (
+              <animated.div>
+                <motion.span animate={{ color }} className={classes.label}>
+                  Кошелёк
+                </motion.span>
+                <motion.span animate={{ color }} className={classes.walletName}>
+                  `{walletStore.getWalletInformation()?.name}
+                </motion.span>
+              </animated.div>
+            )}
+
+            {walletStore.getAccountData() ? (
+              <AwesomeButton
+                onPress={() => disconnect()}
+                style={{
+                  padding: 2,
+                  width: 295,
+                  color: "red",
+                }}
+                whileTap={{ scale: 0.99 }}
+                whileHover={{ scale: 1.01 }}
+                type="disconnectButton"
+                buttonKey={"disconnected" + walletStore.isConnected}
+                key={"disconnected" + walletStore.isConnected}
+              >
+                Отключить
+              </AwesomeButton>
+            ) : (
+              <motion.div style={{ width: 550 }}>
+                <appkit-button label="Подключить кошелёк" />
+              </motion.div>
+            )}
+          </motion.div>
+          {walletStore.getNetwork() && (
+            <motion.div style={{ display: "flex", flexDirection: "row" }}>
+              <motion.span className={classes.label}>
+                {walletStore.getNetwork().caipNetwork?.nativeCurrency?.symbol}
+              </motion.span>
+              <appkit-network-button />
+              {walletStore.getNetwork()?.caipNetwork.testnet && (
+                <motion.span
+                  animate={{
+                    color: `oklch(${uiStore.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`,
+                  }}
+                  transition={{ duration: 5 }}
+                  className={classes.testNetwork}
                 >
-                    <Group justify="space-between" align="center">
-                        {walletStore.getWalletInformation()?.social === "google" && (
-                            <Google/>
-                        )}
-                        {walletStore.getWalletInformation()?.social && (
-                            <Box display="inline">
-                                <Text className={classes.label}>
-                                    Социальный аккаунт&nbsp;
-                                    {walletStore.getWalletInformation()?.social}
-                                </Text>
-                                <Text className={classes.walletName}>
-                                    {walletStore.getWalletInformation()?.identifier}
-                                </Text>
-                            </Box>
-                        )}
-                        {walletStore.getWalletInformation()?.name === "io.metamask" && (
-                            <Metamask/>
-                        )}
-                        {walletStore.getWalletInformation()?.type === "injected" && (
-                            <Box>
-                                <Text className={classes.label}>Кошелёк</Text>
-                                <Text className={classes.walletName}>
-                                    `{walletStore.getWalletInformation()?.name}
-                                </Text>
-                            </Box>
-                        )}
-
-                        {walletStore.getAccountData() ? (
-                            <Button
-                                display="inline"
-                                onClick={() => disconnect()}
-                                variant="outline"
-                                color="red"
-                            >
-                                Отключить
-                            </Button>
-                        ) : (
-                            <Center w={550}>
-                                <appkit-button label="Подключить кошелёк"/>
-                            </Center>
-                        )}
-                    </Group>
-                    {walletStore.getNetwork() && (
-                        <Group>
-                            <Text className={classes.label}>
-                                {walletStore.getNetwork().caipNetwork?.nativeCurrency?.symbol}
-                            </Text>
-                            <appkit-network-button/>
-                            {walletStore.getNetwork()?.caipNetwork.testnet && (
-                                <Text className={classes.testNetwork}>Тестовая сеть</Text>
-                            )}
-                        </Group>
-                    )}
-                    {walletStore.getAccountData() && (
-                        <Box>
-                            <Group justify="space-between">
-                                <Text className={classes.label}>Адресс</Text>
-                                <Text className={classes.walletAddress}>
-                                    {walletStore.getAccountData().address}
-                                </Text>
-                            </Group>
-                            <Group justify="space-between">
-                                <Text className={classes.label}>Адресс caip</Text>
-                                <Text className={classes.walletAddress}>
-                                    {walletStore.getAccountData().caipAddress}
-                                </Text>
-                            </Group>
-                        </Box>
-                    )}
-                </Stack>
+                  Тестовая сеть
+                </motion.span>
+              )}
             </motion.div>
-            {/*{false && walletStore.getNetwork() && (*/}
-            {/*    <Accordion w={550} mx="auto" variant="separated">*/}
-            {/*        <Accordion.Item value="contracts">*/}
-            {/*            <Accordion.Control>*/}
-            {/*                <Title order={4} className={classes.lable}>*/}
-            {/*                    Контракты*/}
-            {/*                </Title>*/}
-            {/*            </Accordion.Control>*/}
-            {/*            <Accordion.Panel>*/}
-            {/*                {Object.entries(*/}
-            {/*                    walletStore.getNetwork()?.caipNetwork.contracts,*/}
-            {/*                ).map(([key, val]) => (*/}
-            {/*                    <Box key={key}>*/}
-            {/*                        <Group>*/}
-            {/*                            <Text style={{fontSize: 14}} className={classes.lable}>*/}
-            {/*                                {key + " : "}*/}
-            {/*                            </Text>*/}
-            {/*                            <Text*/}
-            {/*                                style={{fontSize: 14}}*/}
-            {/*                                className={classes.walletAddress}*/}
-            {/*                            >*/}
-            {/*                                {val.address}*/}
-            {/*                            </Text>*/}
-            {/*                            {val.blockCreated && (*/}
-            {/*                                <Text style={{fontSize: 12}}>*/}
-            {/*                                    Номер блока:{val.blockCreated}*/}
-            {/*                                </Text>*/}
-            {/*                            )}*/}
-            {/*                        </Group>*/}
-            {/*                    </Box>*/}
-            {/*                ))}*/}
-
-            {/*                <Group>*/}
-            {/*                    <Text>Assets</Text>*/}
-            {/*                    <Text>*/}
-            {/*                        {JSON.stringify(walletStore.getNetwork().caipNetwork?.assets)}*/}
-            {/*                    </Text>*/}
-            {/*                </Group>*/}
-            {/*            </Accordion.Panel>*/}
-            {/*        </Accordion.Item>*/}
-            {/*    </Accordion>*/}
-            {/*)}*/}
-            {/*<BalanceTracker />*/}
-            {/*</AppearanceAnimation>*/}
-        </Center>
-    );
+          )}
+          {walletStore.getAccountData() && (
+            <motion.div>
+              <motion.div>
+                <motion.span className={classes.label}>Адресс</motion.span>
+                <motion.span className={classes.walletAddress}>
+                  {walletStore.getAccountData().address}
+                </motion.span>
+              </motion.div>
+              <motion.div>
+                <motion.span className={classes.label}>Адресс caip</motion.span>
+                <motion.span className={classes.walletAddress}>
+                  {walletStore.getAccountData().caipAddress}
+                </motion.span>
+              </motion.div>
+            </motion.div>
+          )}
+        </motion.div>
+      </MotionConfig>
+    </Center>
+  );
 });
 export default Home;

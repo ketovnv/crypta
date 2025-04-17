@@ -1,6 +1,5 @@
 
 [class^=mantine] {
-  color: red;
   font-family: "SF Pro Rounded", "Segoe UI", sans-serif;
   border-radius: 20px
 }
@@ -17,6 +16,7 @@
   border-radius: 20px;
   height: 575px
 }
+
 /**
  * CSS code for the page card.
  * 
@@ -29,4 +29,5 @@
   min-width: 450px;
   min-height: 300px;
   padding: 20px;
+  box-shadow: 3px 3px #000000;
 }

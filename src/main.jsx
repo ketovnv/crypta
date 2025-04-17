@@ -12,8 +12,6 @@ import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { metadata, networks, projectId, wagmiAdapter } from "./config";
 import Layout from "@components/Layout/index.js";
-import { logger } from "@stores/logger.js";
-import { uiStore } from "@stores/ui.js";
 // import {uiStore} from "@stores/ui.js";
 
 const queryClient = new QueryClient();
@@ -27,7 +25,7 @@ createAppKit({
     analytics: true,
   },
 });
-logger.info(uiStore.colorScheme);
+
 // @ts-ignore
 ReactDOM.createRoot(document.getElementById("root")).render(
   <WagmiProvider config={wagmiAdapter.wagmiConfig}>

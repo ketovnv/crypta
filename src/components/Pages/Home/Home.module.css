@@ -1,7 +1,7 @@
 .card {
   padding: 10px;
   border-radius: 20px;
-  background-color: light-dark(var(--mantine-color-dark-5), var(--mantine-color-dark-9));
+  /*background-color: light-dark(var(--mantine-color-dark-5), var(--mantine-color-dark-9));*/
   border-width: 0;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.7);
 }
@@ -9,8 +9,7 @@
 .walletName {
   font-family: 'SF UI Display', monospace !important;
   font-style: normal;
-  font-weight: 900;
-  color: #EEFF00;
+  font-weight: 900; /*color: #EEFF00;*/
   text-align: left !important;
 }
 
@@ -19,7 +18,7 @@
   font-family: 'Microsoft YaHei', monospace !important;
   /*font-style: italic;*/
   font-weight: 900;
-  color: #DDFF99;
+  /*color: #DDFF99;*/
 }
 
 .status {
@@ -29,7 +28,7 @@
   font-size: 0.95em;
   font-family: 'Cousine for Powerline', monospace !important;
   font-weight: 900;
-  color: #DDFF99;
+  /*color: #DDFF99;*/
 }
 
 .label {
@@ -43,14 +42,13 @@
   font-size: 1em;
   font-family: 'IosevkaTerm Nerd Font', monospace !important;
   font-style: italic;
-  color: #6dff85;
 }
 
 .walletAddress {
   font-size: 1em;
   font-family: 'SF UI Display', monospace !important;
   font-weight: 600;
-  color: #DDFF99;
+  /*color: #DDFF99;*/
   text-align: left !important;
 }
 

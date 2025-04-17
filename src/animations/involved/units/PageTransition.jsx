@@ -5,38 +5,42 @@ import { AnimatePresence, motion } from "motion/react";
 import { logger } from "@stores/logger.js";
 
 const AsyncPage = loadable(
-  (props) => import(`../../../components/pages/${props.page}`),
+  (props) =>
+    import(
+      /* @vite-ignore */
+      `../../../components/pages/${props.page}`
+    ),
   {
     cacheKey: (props) => props.page,
   },
 );
+
 logger.logWhiteRandom("📺", " Компонент PageTransition", 12);
 
 export const PageTransition = observer(() => {
   const variants = {
     hidden: {
       opacity: 0,
-      rotateX: -90,
+      rotateX: -225,
       scale: 0.01,
-
       // transition: {delay: 0.75},
     },
     visible: {
       opacity: 1,
       rotateX: 0,
       scale: 1,
-      // transition: {duration: 1},
     },
     exit: {
-      opacity: 0,
+      opacity: -0.5,
       rotateX: -200,
-      // x: 200,
-      scale: 3,
+      scale: 1.5,
     },
   };
 
   return (
-    <AnimatePresence style={{ width: "100%", height: "100%" }}>
+    <AnimatePresence
+      style={{ width: "100%", height: "100%", perspective: 2000 }}
+    >
       <motion.div
         layout
         key={router.getCurrentPage}
@@ -52,7 +56,14 @@ export const PageTransition = observer(() => {
           width: "100%",
           height: 575,
         }}
-        transition={{ type: "spring", stiffness: 100, damping: 20, mass: 5 }}
+        transition={{
+          delay: 0.1,
+          type: "spring",
+          stiffness: 200,
+          damping: 100,
+          mass: 5,
+          friction: 20,
+        }}
       >
         <AsyncPage page={router.getCurrentPage} />
       </motion.div>

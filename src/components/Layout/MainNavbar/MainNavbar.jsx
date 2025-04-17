@@ -14,6 +14,7 @@ import { router } from "@stores/router.js";
 import { AwesomeButton } from "@animations/current/AwesomeButton/AwesomeButton";
 import { Web3Inch } from "@components/Layout/SvgIcons/Web3Inch";
 import GradientText from "@animations/involved/GradientText";
+import { uiStore } from "@stores/ui.js";
 
 export const MainNavbar = observer(() => {
   const icons = {
@@ -38,7 +39,7 @@ export const MainNavbar = observer(() => {
           // opacity: 0,
           transition: {
             type: "tween",
-            staggerChildren: 0.3,
+            staggerChildren: 0.2,
             staggerDirection: -1,
           },
         },
@@ -66,7 +67,7 @@ export const MainNavbar = observer(() => {
             opacity: 0.9,
             transition: {
               type: "tween",
-              duration: 1.2,
+              duration: 1,
               ease: "easeInOut",
             },
           },
@@ -87,26 +88,25 @@ export const MainNavbar = observer(() => {
         }}
         color1="#fff50d"
         color2="#ffc317"
-        // isDark={uiStore.themeIsDark}
+        isDark={uiStore.themeIsDark}
       />
       {/*<ChromaInterpolationExample />*/}
       {/*<FixedImperativeLoopAnimation />*/}
-
       {router.getPages.map(([path, name]) => {
         const isActive = path === router.getCurrentPage;
         // logger.info('path', path + ' ' + JSON.stringify(active))
         return (
           <AwesomeButton
+            background={animation.theme.navBarButtonBackground}
             variants={{
               hidden: {
                 x: -450,
                 // rotateZ: -180,
                 y: 100,
                 rotateY: -360,
-                // opacity: 0,
                 transition: {
                   type: "tween",
-                  duration: 1.2,
+                  duration: 0.5,
                   ease: "easeInOut",
                 },
               },
