@@ -1,4 +1,4 @@
-export function Etherium({color1, color2, isDark = true, animate}) {
+export function Etherium({width = '2em', height = '2em', color1, color2, isDark = true, animate,...props}) {
     const dx = isDark ? 0.3 : 0.5;
 
     const animations = {
@@ -20,7 +20,11 @@ export function Etherium({color1, color2, isDark = true, animate}) {
         },
     };
 
-    return (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.3699951171875 1277.3800048828125">
+    return (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.3699951171875 1277.3800048828125"
+                 width={width}
+                 height={height}
+                 {...props}
+        >
         <g xmlns="http://www.w3.org/2000/svg" id="_1421394342400">
             <g>
                 <polygon fill="#343434" fillRule="nonzero"

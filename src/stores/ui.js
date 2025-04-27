@@ -7,6 +7,7 @@ class UiStore {
   fontSearch = "";
   fontFamilies = [];
   searchFontFamilies = [];
+  appkitMethods = {};
 
   constructor() {
     makeAutoObservable(this, {
@@ -21,10 +22,23 @@ class UiStore {
   get themeIsDark() {
     return this.colorScheme === "dark";
   }
+  get themeStyle() {
+    return {...animation.themeController.springs};
+  }
+
+  setAppkitMethods = (appkitMethods) => {
+    this.appkitMethods = appkitMethods;
+    appkitMethods.setThemeMode(this.themeIsDark ? "dark" : "light");
+    appkitMethods.setThemeVariables({
+      "--w3m-font-family": "SF Pro Rounded",
+      "--w3m-accent": "oklch(0.55 0.2506 263.2047 /100)",
+      "--w3m-color-mix-strength": 300,
+    });
+  };
 
   setColorScheme = (theme) => {
     this.colorScheme = theme;
-
+    this.appkitMethods.setThemeMode(theme);
     animation.themeController.start({
       ...animation.theme,
     });

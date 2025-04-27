@@ -1,8 +1,15 @@
+import {useQueries, useQuery} from '@tanstack/react-query'
+import {observer} from "mobx-react-lite";
 import {logger} from "@stores/logger.js";
+import {useEffect} from "react";
 import {Center} from "@mantine/core";
+import {motion, useAnimate} from "motion/react";
+import {uiStore} from "@stores/ui.js";
+import {animated} from "@react-spring/web";
+import {walletStore} from "@stores/wallet.js";
+import GradientText from "@animations/involved/GradientText.jsx";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
-import {animation} from "@stores/animation.js";
-import {motion} from "motion/react";
+import {etherStore} from "@stores/ether.js";
 
 const StrokeAnimation = () => {
     return (
@@ -36,29 +43,109 @@ const getStatusColor = (status) => {
 };
 
 // Компонент для отображения хеша транзакции с возможностью копирования
-const Transactions = ({}) => {
+const Transactions = observer(({}) => {
 
+// Конфигурация
+    const chains = [42161, 8453, 10, 534352, 81457]
+    const address = "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511"
+
+
+// Функция для получения баланса для одной цепи
+    const fetchBalance = async (chainId) => {
+        const url = `https://api.etherscan.io/v2/api?chainid=${chainId}&module=account&action=balance&address=${address}&tag=latest&apikey=${etherStore.apiKey}`
+
+        const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error(`Ошибка API для цепи ${chainId}: ${response.status}`)
+        }
+
+        return response.json()
+    }
+
+// Хук для одной цепи
+    function useBalanceQuery(chainId) {
+        return useQuery({
+            queryKey: ['balance', chainId],
+            queryFn: () => fetchBalance(chainId),
+            staleTime: 60000, // 1 минута до устаревания данных
+        })
+    }
+
+// Хук для запроса балансов по всем цепям сразу
+    const useAllBalances = () => {
+        logger.info('useAllBalances', JSON.stringify(chains))
+        return useQueries({
+            queries: chains.map(chainId => ({
+                queryKey: ['balance', chainId],
+                queryFn: () => fetchBalance(chainId),
+                staleTime: 60000,
+            })),
+        })
+    }
+
+// Пример использования в компоненте
+
+    // Вариант 1: Запрос для всех цепей сразу
+    const results = useAllBalances()
+
+    // Проверка загрузки всех запросов
+    const isLoading = results.some(result => result.isLoading)
+
+    // Проверка ошибок
+    const isError = results.some(result => result.isError)
+
+    // Извлечение данных
+    const balances = results.map((result, index) => ({
+        chainId: chains[index],
+        data: result.data,
+        isLoading: result.isLoading,
+        error: result.error
+    }))
+
+    const [scope, animate] = useAnimate()
+
+    useEffect(() => {
+        const controls = animate([
+            [scope.current, {y: ["100%", 0]}],
+            ["li", {
+                scale: [0.5, 1, 0.5, 1], color: [
+                    logger.getRandomColor(uiStore.themeIsDark ? 16 : 5),
+                    logger.getRandomColor(uiStore.themeIsDark ? 16 : 5),
+                    logger.getRandomColor(uiStore.themeIsDark ? 16 : 5),
+                    logger.getRandomColor(uiStore.themeIsDark ? 16 : 5)]
+            }]
+        ])
+
+        controls.speed = 0.8
+
+        return () => controls.stop()
+    }, [])
     return (
-        <Center
-            m={0}
-            style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                borderRadius: 20,
-                height: 575,
-                // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
-            }}
+        <main
+            className="pageWrapper"
         >
-            <motion.div className="pageCard" animate={{background: animation.getThemeColors.background}}
-                        transition={{duration: 3, ease: "easeInOut"}}>
-                <AppearingText text="Страница находится в разработке..."/>
-                {/*<StrokeAnimation/>*/}
-            </motion.div>
-        </Center>
+            <animated.section className="pageCard" style={uiStore.themeStyle}>
+
+                <div>
+                    <h3 style={{color: logger.getRandomColor(uiStore.themeIsDark ? 16 : 5)}}>Балансы по всем цепям</h3>
+                    {isLoading && <p>Загрузка данных...</p>}
+                    {isError && <p>Произошла ошибка при загрузке</p>}
+                    <ul ref={scope} layout>
+                        {balances.map(item => (
+                            <li key={item.chainId}>
+                                Цепь {item.chainId}:
+                                {item.isLoading ? ' загрузка...' :
+                                    item.error ? ` ошибка: ${item.error.message}` :
+                                        <GradientText><AppearingText text={item.data?.result || 'н/д'}/></GradientText>}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </animated.section>
+        </main>
     )
-}
+})
+export default Transactions;
 
 // Transaction
 // <Text
@@ -72,8 +159,6 @@ const Transactions = ({}) => {
 // </Tooltip>
 
 // };
-
-export default Transactions;
 
 
 // const Transactions = observer(() => {

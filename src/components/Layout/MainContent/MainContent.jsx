@@ -25,9 +25,6 @@ export const MainContent = observer(() => {
           left: 0,
         }}
       >
-        <h2 style={{ position: "absolute", left: 150, top: 150 }}>
-          {JSON.stringify(themeStyle)}
-        </h2>
         <animated.div
           style={{
             ...animation.getSpringAnimation("PageWithNavBarMoving"),

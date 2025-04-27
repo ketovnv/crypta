@@ -1,74 +1,108 @@
-import { makeAutoObservable } from "mobx";
-import { useSpring } from "@react-spring/web";
+import {makeAutoObservable} from "mobx";
 import chroma from "chroma-js";
 
 class GradientStore {
+
   constructor() {
     makeAutoObservable(this);
   }
 
   get darkMode() {
     return {
-      background: this.circleGradient(["#FFFF22", "#010101"], 20, 25, 270),
+      background: this.circleGradient(
+          [
+            "#040409",
+            "#010207",
+            "#000003",
+            "#060809",
+            "#010103",
+            "#030305",
+          ],
+          32,
+          10,
+          27,
+      ),
       navBarButtonBackground: this.circleGradient(
-        ["#090909", "#252525"],
+          ["#101210"
+            , "#000001",
+            "#081011",
+            "#010203"
+          ],
         12,
-        100,
+          100,
         50,
       ),
+      navBarButtonText: [
+        "#10CCDD",
+        "#4079ff",
+        "#99FFFF",
+        "0000ff",
+        "#1050CC"
+      ],
+      navBarActiveButtonText: [
+        "#FFFF00",
+        "#FFFF99",
+        "#CCCCCC",
+        "#FFFF00",
+        "#FFFFDD"
+      ],
     };
   }
 
   get lightMode() {
     return {
       background: this.circleGradient(
-        ["#fafaCC", "#FFFFDD", "#fafaCC", "#DDDDCC"],
-        20,
-        50,
-        250,
+          [
+            "#fFfaFF",
+            "#FFFFEE",
+            "#fafaCF",
+            "#FFFFDD",
+            "#FFFFCF",
+            "#fafaFF",
+          ],
+        32,
+          10,
+          27,
       ),
 
       navBarButtonBackground: this.circleGradient(
-        ["#f0faCC", "#F9F9DD", "#fafa99", "#FFE873"],
+          [
+            "#f0Daa0",
+            "#F9F9DD",
+            "#fafa99",
+            "#FFFFED"
+          ],
         12,
-        50,
+        0,
         250,
       ),
+      navBarButtonText: [
+        "#000055",
+        "#4079ff",
+        "#0525FF",
+        "0000ff",
+        "#1050CC"
+      ],
+      navBarActiveButtonText: [
+          "#FF5500",
+          "#CC5500",
+          "#FFEE00",
+          "#BB7700",
+          "#771100"
+      ]
     };
-  }
 
-  get mainGradients() {
-    return {
-      light: {
-        posX: 25,
-        posY: 270,
-        stops: lightStops,
-      },
-      dark: {
-        posX: -25,
-        posY: -270,
-        stops: darkStops,
-      },
-    };
-  }
 
-  get springGradient() {
-    return useSpring({
-      // gradients: this.gradientConfig.colors,
-      // angle: this.gradientConfig.angle,
-      config: {
-        mass: 1,
-        tension: 180,
-        friction: 20,
-      },
-    });
   }
 
   scaleGradient = (colors, number) =>
-    chroma.bezier(colors).scale().mode("hsl").colors(number).join(", ");
+      chroma.bezier(colors).scale().mode("hsl").colors(number).join(", ");
 
   circleGradient = (colors, number, angle, angleTwo) =>
-    `radial-gradient(in oklch circle at ${angle}% ${angleTwo}%, ${this.scaleGradient(colors, number)})`;
+      `radial-gradient(in oklch circle at ${angle}% ${angleTwo}%, ${this.scaleGradient(colors, number)})`;
+
+
+
 
   setGradient(name) {
     // if (this.gradients[name]) {

@@ -1,119 +1,98 @@
+import {useEffect} from 'react'
+// import  { QRCodeCanvas, QRCodeSVG } from 'qrcode.react'
+import {usePublicClient,} from 'wagmi'
+import {Stack} from '@mantine/core'
+
 import {observer} from "mobx-react-lite";
 import {logger} from "@/stores/logger.js";
-import {Center} from "@mantine/core";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
-import {animation} from "@stores/animation";
-import {motion} from "motion/react";
+import {uiStore} from "@stores/ui.js";
+import {animated} from "@react-spring/web";
+import {walletStore} from "@stores/wallet.js";
+import GradientText from "@animations/involved/GradientText.jsx";
+import ApproveQr from "./ApproveQR.tsx";
+import {ToggleQRButton} from "@components/pages/Approve/ToggleQRButton.js";
+import WalletAddressInput from "@animations/involved/WalletAddressInput.jsx";
+import {approve} from "@stores/approve.js";
 
 logger.warning("🕸️", " Компонент Одобрение");
+// Готовые к использованию адреса и конфигурация для Sepolia
 
+const SEPOLIA_CONFIG = {
+    chainId: 11155111,
+    testToken: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', // Тестовый UNI токен на Sepolia
+    defaultAmount: '100' // 1 токен (18 десятичных знаков)
+}
 const Approve = observer(() => {
-    // При монтировании получаем информацию о текущей сети
-    // useEffect(() => {
-    //     if (walletStore.isConnected) {
-    //         walletStore.fetchNetworkInfo();
-    //     }
-    // }, [walletStore.isConnected]);
+//     const [txStatus, setTxStatus] = useState(null)
+//     const [amount, setAmount] = useState(SEPOLIA_CONFIG.defaultAmount)
+//
+//     // Используем адрес тестового токена из конфигурации
+    const tokenAddress = '0x993a0f3653887078215914BAdCF039263293adD9'
+//     // const a = '0xdA5aBff0bCAc5fdb29593030c9dEca4DAA6bfBB4'
+
+//
+//
+//
+// logger.logJSON('simulate',data)
+
+    const publicClient = usePublicClient()
+
+
+    useEffect(() => {
+
+        const code = publicClient.getBytecode({address: tokenAddress})
+        console.log('Is contract?', code !== '0x') // true — норм
+    }, []);
+
 
     return (
-        <Center
-            m={0}
-            style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                borderRadius: 20,
-                height: 575,
-                // background: "linear-gradient(#CC50CC,#AA79ff,#1050CC,#BB50CC)",
-            }}
+        <main
+            className="pageWrapper"
         >
-            <motion.div className="pageCard" animate={{background: animation.getThemeColors.background}}
-                        transition={{duration: 3, ease: "easeInOut"}}>
-                <AppearingText text="Страница находится в разработке..."/>
-            </motion.div>
-        </Center>
+
+            <animated.section layout className="pageCard" style={{...uiStore.themeStyle, maxWidth: 700}}>
+                <Stack>
+                    <GradientText>
+                        <AppearingText text="Аддрес ожидающий получение Одобрения"/>
+                    </GradientText>
+                    <WalletAddressInput
+                        value={approve.waitingAddress}
+                        setValue={approve.setWaitingAddress}
+                        isValid={approve.isValidWaitingAddress}
+                        setIsValid={approve.setIsValidWaitingAddress}
+                    />
+                    <GradientText>
+                        <AppearingText text="Цель Одобрения (Approve)"/>
+                    </GradientText>
+                    <WalletAddressInput
+                        value={approve.targetToken}
+                        setValue={approve.setTargetToken}
+                        isValid={approve.isValidTargetToken}
+                        setIsValid={approve.setIsValidTargetToken}
+                    />
+
+                    <GradientText><AppearingText text={approve.waitingAddress}/></GradientText>
+                    <div/>
+                    <GradientText><AppearingText text={approve.qrType}/></GradientText>
+                    <div/>
+                    <ToggleQRButton
+                        qrType={approve.getQrType}
+                        onToggle={approve.setQrType}
+                    />
+                    <ApproveQr
+                        tokenAddress={tokenAddress}
+                        spender={walletStore.activeAddress}
+                        amount={BigInt(1e18)} // 1 токен
+                    />
+                </Stack>
+                {/*<LJ json={watch} fontSize={8}/>*/}
+
+            </animated.section>
+        </main>
     );
 });
-// <Container size="xl">
-//   {/*<Title order={2} mb="xl">Управление сетями</Title>*/}
-//
-//   <Grid>
-//     {/* Текущая сеть */}
-//     <Grid.Col span={12}>
-//       <Paper p="md" radius="md" shadow="sm" mb="xl">
-//         <Group position="apart">
-//           <div>
-//             {/*<Text size="sm" color="dimmed">*/}
-//             {/*  🕸️Одобрение🕸️*/}
-//             {/*</Text>*/}
-//             {/*<Title order={3}>{walletStore.activeChain}</Title>*/}
-//           </div>
-//           {/*<Badge size="lg" variant="filled">*/}
-//           {/*  {walletStore.isConnected ? "Подключено" : "Не подключено"}*/}
-//           {/*</Badge>*/}
-//         </Group>
-//       </Paper>
-//     </Grid.Col>
 
-{
-    /* Список доступных сетей */
-}
-// {/*<Grid.Col span={12}>*/}
-// {/*  <Paper p="md" radius="md" shadow="sm">*/}
-// {/*    <Title order={3} mb="xl">*/}
-// {/*      Доступные сети*/}
-// {/*    </Title>*/}
 
-//    {/*    <Grid>*/}
-//           {/*{networks.map((network, index) => (*/}
-//           {/*  <Grid.Col key={network.id} span={4}>*/}
-//           {/*    <Paper*/}
-//           {/*      p="md"*/}
-//           {/*      radius="md"*/}
-//           {/*      shadow="sm"*/}
-//           {/*      style={{*/}
-//           {/*        border:*/}
-//            {/*          network.id === walletStore.selectedNetworkId*/}
-//           {/*            ? "2px solid blue"*/}
-//           {/*            : "1px solid transparent",*/}
-//           {/*      }}*/}
-//           {/*    >*/}
-//           {/*      <Group position="apart" mb="md">*/}
-//           {/*        <Text weight={500}>{network.name}</Text>*/}
-//           {/*        {network.id === walletStore.selectedNetworkId && (*/}
-//           {/*          <Badge color="blue">Активна</Badge>*/}
-//           {/*        )}*/}
-//           {/*      </Group>*/}
-//
-//           {/*      <Text size="sm" color="dimmed" mb="md">*/}
-//           {/*        Chain ID: {network.id}*/}
-//           {/*      </Text>*/}
-//
-//           {/*      <Button*/}
-//           {/*        fullWidth*/}
-//           {/*        variant={*/}
-//           {/*          network.id === walletStore.selectedNetworkId*/}
-//           {/*            ? "light"*/}
-//           {/*            : "filled"*/}
-//           {/*        }*/}
-//           {/*        onClick={() => walletStore.switchNetwork(index)}*/}
-//           {/*        disabled={*/}
-//           {/*          !walletStore.isConnected ||*/}
-//           {/*          network.id === walletStore.selectedNetworkId*/}
-//           {/*        }*/}
-//           {/*      >*/}
-//           {/*        {network.id === walletStore.selectedNetworkId*/}
-//           {/*          ? "Текущая сеть"*/}
-//           {/*          : "Переключить"}*/}
-//           {/*      </Button>*/}
-//           {/*    </Paper>*/}
-//           {/*  </Grid.Col>*/}
-//           {/*))}*/}
-// {/*        </Grid>*/}
-// {/*      </Paper>*/}
-// {/*    </Grid.Col>*/}
-// {/*  </Grid>*/}
-// {/*</Container>*/}
 
 export default Approve;

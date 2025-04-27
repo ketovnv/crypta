@@ -1,4 +1,5 @@
-import { action, makeAutoObservable, reaction, toJS } from "mobx"; // console.log('%c a spicy log message ?',
+import {action, makeAutoObservable, reaction, toJS} from "mobx";
+import {uiStore} from "@stores/ui.js"; // console.log('%c a spicy log message ?',
 
 // console.log('%c a spicy log message ?',
 //     [
@@ -298,12 +299,16 @@ class loggerStore {
     });
   };
 
+
+
+
   logJSON = (label, data, fontSize = 20) => {
-    if (!data || !data.length) return;
+    if (!data || data==={}) return;
     if (this.whatIs(data) === "String") data = JSON.parse(data);
 
     this.logWhiteRandom("🥷", "Сейчас будет JSON 🥷");
     this.success("♠️♦️", label + "💘♣️");
+
     Object.entries(data ?? { key: "null" }).forEach(([key, value]) => {
       console.log(
         "%c" + key + " : %c" + JSON.stringify(value ?? "null"),

@@ -17,7 +17,7 @@ import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 export const MainHeader = observer(() => {
   const ref = useEventListener("click", () => uiStore.toggleNavbarOpened());
 
-  const transitions = useTransition(!!walletStore.getAccountData(), {
+  const transitions = useTransition(!!walletStore.getAccountData, {
     from: {
       opacity: 0,
       transform: "translateY(-50px)",
@@ -68,13 +68,13 @@ export const MainHeader = observer(() => {
               cursor: "pointer",
               borderRadius: 100,
             }}
+            transition={{ type: "spring", stiffness: 100, friction: 15, mass: 15, damping: 10 }}
             initial={{ scale: 0 }}
-            animate={{ scale: 1, transition: { duration: 3 } }}
-            whileHover={{
-              scale: 1.2,
-              transition: { duration: 3 },
+            animate={{ scale: 1,}}
+            whileHover={{              scale: 1.2,
+
             }}
-            whileTap={{ scale: 0.8 }}
+            whileTap={{ scale: 0.7,}}
           >
             <HeaderBitcoin />
           </motion.button>

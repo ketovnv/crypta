@@ -1,7 +1,6 @@
 
 [class^=mantine] {
   font-family: "SF Pro Rounded", "Segoe UI", sans-serif;
-  border-radius: 20px
 }
 
 .pageWrapper {
@@ -14,20 +13,14 @@
   left: 0;
   width: 100%;
   border-radius: 20px;
-  height: 575px
+  min-height: 700px;
 }
 
-/**
- * CSS code for the page card.
- * 
- * Applies a border radius of 20px to the card.
- * Sets the minimum width to 450px and the minimum height to 300px.
- * Adds a padding of 20px to the card.
- */
 .pageCard {
+  overflow: hidden;
+  font-family: "SF Pro Rounded", "Segoe UI", sans-serif;
   border-radius: 20px;
-  min-width: 450px;
+  min-width: 525px;
   min-height: 300px;
   padding: 20px;
-  box-shadow: 3px 3px #000000;
 }

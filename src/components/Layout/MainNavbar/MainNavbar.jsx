@@ -1,28 +1,22 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import classes from "./MainNavbar.module.css";
-import { observer } from "mobx-react-lite";
-import { motion } from "motion/react";
-import {
-  IoApertureSharp,
-  IoFileTrayFullSharp,
-  IoLogoReact,
-  IoSettings,
-  IoWallet,
-} from "react-icons/io5";
-import { animation } from "@stores/animation.js";
-import { router } from "@stores/router.js";
-import { AwesomeButton } from "@animations/current/AwesomeButton/AwesomeButton";
-import { Web3Inch } from "@components/Layout/SvgIcons/Web3Inch";
+import {observer} from "mobx-react-lite";
+import {LayoutGroup, motion} from "motion/react";
+import {IoApertureSharp, IoFileTrayFullSharp, IoLogoReact, IoSettings, IoWallet,} from "react-icons/io5";
+import {animation} from "@stores/animation.js";
+import {router} from "@stores/router.js";
+import {AwesomeButton} from "@animations/current/AwesomeButton/AwesomeButton";
+import {Web3Inch} from "@components/Layout/SvgIcons/Web3Inch";
 import GradientText from "@animations/involved/GradientText";
-import { uiStore } from "@stores/ui.js";
+import {uiStore} from "@stores/ui.js";
 
 export const MainNavbar = observer(() => {
   const icons = {
-    Home: <IoWallet size={30} />,
-    Balance: <IoApertureSharp size={30} />,
-    Approve: <IoLogoReact size={30} />,
-    Transactions: <IoFileTrayFullSharp size={32} />,
-    Options: <IoSettings size={30} />,
+    Home: <IoWallet size={34}/>,
+    Balance: <IoApertureSharp size={34}/>,
+    Approve: <IoLogoReact size={34}/>,
+    Transactions: <IoFileTrayFullSharp size={36}/>,
+    Options: <IoSettings size={34}/>,
   };
 
   useEffect(() => {
@@ -32,21 +26,25 @@ export const MainNavbar = observer(() => {
 
   return (
     <motion.nav
-      // layout="position"
+        layout
       animate={animation.getMCAnimation("NavBarMoving").control}
       variants={{
         hidden: {
           // opacity: 0,
           transition: {
-            type: "tween",
+            type: "spring",
+            visualDuration: 2,
+            bounce: 0.5,
             staggerChildren: 0.2,
             staggerDirection: -1,
           },
         },
         visible: {
-          // opacity: 1,
+          opacity: 1,
           transition: {
-            type: "tween",
+            type: "spring",
+            visualDuration: 2,
+            bounce: 0.5,
             staggerChildren: 0.3,
             staggerDirection: 1,
           },
@@ -55,6 +53,7 @@ export const MainNavbar = observer(() => {
       className={classes.navbar}
       initial="hidden"
     >
+      <LayoutGroup path={router.getCurrentPage} layout>
       <Web3Inch
         variants={{
           hidden: {
@@ -63,13 +62,7 @@ export const MainNavbar = observer(() => {
             y: -200,
             scale: 0.1,
             rotateY: -360,
-            filter: "blur(10px)",
-            opacity: 0.9,
-            transition: {
-              type: "tween",
-              duration: 1,
-              ease: "easeInOut",
-            },
+            opacity: 0.5,
           },
           visible: {
             x: 0,
@@ -78,23 +71,16 @@ export const MainNavbar = observer(() => {
             scale: 1,
             rotateY: 0,
             opacity: 1,
-            filter: "blur(0px)",
-            transition: {
-              type: "tween",
-              duration: 1,
-              ease: "easeInOut",
-            },
           },
         }}
-        color1="#fff50d"
-        color2="#ffc317"
         isDark={uiStore.themeIsDark}
       />
       {/*<ChromaInterpolationExample />*/}
       {/*<FixedImperativeLoopAnimation />*/}
+
       {router.getPages.map(([path, name]) => {
         const isActive = path === router.getCurrentPage;
-        // logger.info('path', path + ' ' + JSON.stringify(active))
+        // logger.info('path', path + ' ' + JSON.stringify(isActive))
         return (
           <AwesomeButton
             background={animation.theme.navBarButtonBackground}
@@ -104,11 +90,7 @@ export const MainNavbar = observer(() => {
                 // rotateZ: -180,
                 y: 100,
                 rotateY: -360,
-                transition: {
-                  type: "tween",
-                  duration: 0.5,
-                  ease: "easeInOut",
-                },
+
               },
               visible: {
                 x: 0,
@@ -116,20 +98,23 @@ export const MainNavbar = observer(() => {
                 // rotateZ: 0,
                 rotateY: 0,
                 opacity: 1,
-                transition: {
-                  type: "tween",
-                  duration: 1,
-                  ease: "easeInOut",
-                },
               },
             }}
             style={{
+              marginTop: 0,
               padding: 2,
-              width: 295,
+              width: 275,
+              height: 64,
             }}
             animate={{
               scale: !isActive ? 1 : 0.99,
-              color: isActive ? "#FFFF55" : "#1050CC",
+              color: isActive
+                  ? uiStore.themeIsDark
+                      ? "hsl(59.77 94% 75.99%)"
+                      : "hsl(34.94 100% 49%)"
+                  : uiStore.themeIsDark
+                      ? "hsl(217.9 100% 66%)"
+                      : "hsl(219.64 87% 33%)",
             }}
             isActive={isActive}
             onPress={() => router.goTo(path)}
@@ -141,17 +126,20 @@ export const MainNavbar = observer(() => {
             key={path}
           >
             <GradientText
-              isActive={isActive}
-              showBorder={false}
-              className="custom-class"
-            >
+                colors={
+                  isActive ?
+                      animation.theme.navBarActiveButtonText :
+                      animation.theme.navBarButtonText
+                }
+                fontSize={32}>
               {name}
             </GradientText>
           </AwesomeButton>
         );
+
       })}
+      </LayoutGroup>
+
     </motion.nav>
   );
 });
-
-console.log(`[MainNavbar.jsx] :☎️`);

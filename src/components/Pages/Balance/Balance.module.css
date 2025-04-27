@@ -1,9 +1,51 @@
-/* Адаптивность через медиа-запросы */
-@media (max-width: var(--mantine-breakpoint-sm)) {
-    .container {
-        padding: var(--mantine-spacing-md);
+.root {
+    position: relative;
+}
+
+.label {
+    position: absolute;
+    z-index: 2;
+    top: 7px;
+    left: var(--mantine-spacing-sm);
+    pointer-events: none;
+    color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));
+    transition:
+            transform 150ms ease,
+            font-size 150ms ease,
+            color 150ms ease;
+
+    &[data-floating] {
+        transform: translate(calc(var(--mantine-spacing-sm) * -1), -28px);
+        font-size: var(--mantine-font-size-xs);
+        font-weight: 500;
+        color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     }
 }
+
+.required {
+    transition: opacity 150ms ease;
+    opacity: 0;
+
+    [data-floating] & {
+        opacity: 1;
+    }
+}
+
+.input {
+    &::placeholder {
+        transition: color 150ms ease;
+        color: transparent;
+    }
+
+    &[data-floating] {
+        &::placeholder {
+            color: var(--mantine-color-placeholder);
+        }
+    }
+}
+
+
+
 
 
 /* Стили для градиентного текста */
@@ -48,47 +90,4 @@
 
 .animatedButton:active {
     transform: translateY(3px);
-}
-
-                                                        /* Стили для Paper */
-                                                        .paper {
-
-                                                            padding: var(--mantine-spacing-lg);
-    border-radius: var(--mantine-radius-md);
-    box-shadow: var(--mantine-shadow-md);
-    background-color: light-dark(var(--mantine-color-dark-7), var(--mantine-color-gray-8));
-    border: 1px solid light-dark(var(--mantine-color-gray-2))
-}
-
-
-/* Стили для карточки */
-.card {
-    background:   linear-gradient(45deg, var(--mantine-color-dark-2) 0%, var(--mantine-color-indigo-6) 100%);
-
-    border: 3px solid var(--mantine-color-gray-2);
-    @mixin dark {
-        border-color: var(--mantine-color-dark-4)
-    }
-
-    @mixin hover {
-        border: 1px solid var(--mantine-color-gray-7);
-
-    }
-
-}
-
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: light-dark(var(--mantine-shadow-md), var(--mantine-shadow-lg));
-    border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-3));
-}
-
-
-.cardIcon {
-    transition: transform 0.2s ease;
-}
-
-.card:hover .cardIcon {
-    transform: scale(1.1);
 }

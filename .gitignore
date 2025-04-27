@@ -14,6 +14,7 @@ dist
 dist-ssr
 *.local
 assets
+assets*
 analyze.html
 desktop.ini
 package-lock.json
@@ -28,3 +29,4 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw?
+desktop.ini

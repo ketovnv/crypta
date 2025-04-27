@@ -39,9 +39,10 @@
 }
 
 .testNetwork {
-  font-size: 1em;
-  font-family: 'IosevkaTerm Nerd Font', monospace !important;
-  font-style: italic;
+  font-size: 1.5em;
+  padding-left: 30px;
+  font-family:  'Arial Rounded MT Pro Cyr',fantasy;
+
 }
 
 .walletAddress {

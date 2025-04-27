@@ -1,17 +1,23 @@
-import { motion } from "motion/react";
+import {motion} from "motion/react";
+import {gradientStore} from "@stores/gradient.js";
 import classes from "./GradientText.module.css";
+import {uiStore} from "@stores/ui.js";
 
 export default function GradientText({
   children,
   className = "",
-  colors = ["#10CCDD", "#4079ff", "#1088DD", "#4079ff", "#1050CC"], // Default colors
-  animationSpeed = 2, // Default animation speed in seconds
-  showBorder = false, // Default overlay visibility
-  isActive = false,
+                                         colors =
+                                         uiStore.themeIsDark ?
+                                             ["#00FF00", "#FFFF00", "#FF00FF", "#FF0000", "#0000FF"] :
+                                             ["#007700", "#777700", "#770077", "#990000", "#000088"], // Default colors
+                                         animationDuration = 3,
+                                         fontSize = 20,
+                                         fontWeight = 500,
+                                         isActive = false,
+                                         ...props
+
 }) {
-  if (isActive) {
-    colors = ["#FF9900", "#FFDD00", "#FFCC00", "#FFEE00", "#FFFF99"];
-  }
+
 
   return (
     <motion.span
@@ -20,10 +26,12 @@ export default function GradientText({
         duration: 0.5,
         ease: "linear",
       }}
+      style={{fontSize, fontWeight}}
       animate={{
-        backgroundImage: `linear-gradient( in oklch ${isActive ? "to left" : "to right"}, ${colors.join(", ")})`,
-        animationDuration: `${animationSpeed}s`,
+          backgroundImage: `linear-gradient( in oklch ${isActive ? "to left" : "to right"}, ${gradientStore.scaleGradient(colors, 10)})`,
+          animationDuration: `${animationDuration}s`,
       }}
+      {...props}
     >
       {children}
     </motion.span>

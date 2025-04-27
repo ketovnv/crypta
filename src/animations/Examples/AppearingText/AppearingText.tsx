@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text } from "@mantine/core";
 
-const AppearingText = ({ text, props }) => {
+const AppearingText = ({ text,fontSize=20, speed=10,...props }) => {
   // Состояние для текста с эффектом печатания
   const [appearingText, setAppearingText] = useState("");
   const fullText = text;
@@ -19,13 +19,13 @@ const AppearingText = ({ text, props }) => {
       const timer = setTimeout(() => {
         setAppearingText((prev) => prev + fullText[charIndex]);
         setCharIndex(charIndex + 1);
-      }, 100);
+      }, 1000/speed);
       return () => clearTimeout(timer);
     }
   }, [charIndex]);
 
   return (
-    <Text fz={20} {...props}>
+    <Text fz={fontSize} {...props}>
       {appearingText}
     </Text>
   );

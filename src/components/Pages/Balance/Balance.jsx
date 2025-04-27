@@ -1,64 +1,64 @@
-import { observer } from "mobx-react-lite";
-import { Center, TextInput } from "@mantine/core";
-import { useState } from "react";
-import { animation } from "@stores/animation.js";
-import { motion, MotionConfig } from "motion/react";
+import {observer} from "mobx-react-lite";
+import {Center} from "@mantine/core";
+import {useEffect, useMemo} from "react";
+import {animated} from "@react-spring/web";
+import {motion} from "motion/react";
+import {uiStore} from "@stores/ui.js";
+import {walletStore} from "@stores/wallet.js";
+import {useBalance} from "wagmi";
+import GradientText from "@animations/involved/GradientText.jsx";
+import VeryAdvancedWeb3Input from "@animations/involved/VeryAdvancedWeb3Input.jsx";
+
+
+console.log(`[Balance.jsx] :`);
+
+// Отдельный компонент для каждого chainId
+function SingleBalance({chainId}) {
+    const {data: balance, isLoading, error} = useBalance({
+        address: walletStore.getAddressForBalance,
+        chainId
+    });
+
+    const safeBalance = useMemo(() => {
+        if (!balance?.formatted) return null;
+        return [balance.formatted, balance.symbol];
+    }, [balance?.formatted, balance?.symbol]);
+
+    useEffect(() => {
+        if (!safeBalance) return;
+        const old = walletStore.getBalance?.(chainId);
+        if (old?.[0] === safeBalance[0] && old?.[1] === safeBalance[1]) return;
+
+        walletStore.addAddressBalance({chainId, balance: safeBalance});
+    }, [safeBalance]);
+
+    return null;
+}
 
 const Balance = observer(() => {
-  const [focused, setFocused] = useState(false);
-  const [value, setValue] = useState("");
-  const floating = focused || value.length > 0 || undefined;
-
-  const { background, color, pageCardShadow } = animation.theme;
-
   return (
-    <Center
-      className="pageWrapper"
-      style={
-        {
-          // background: "linear-gradient(#1050FF,#4079ff,#1050FF,#1050FF)",
-        }
-      }
-    >
-      {/*<Title order={2} mb="xl">*/}
-      {/*  Управление токенами*/}
-      {/*</Title>*/}
+      <main className="pageWrapper">
+          <animated.div className="pageCard" style={uiStore.themeStyle}>
+              <VeryAdvancedWeb3Input/>
+              {walletStore.getAddressForBalance && walletStore.getChains?.map(chainId => (
+                  <SingleBalance key={chainId} chainId={chainId}/>
+              ))}
+              <motion.ul>
+                  {
+                      walletStore.getAddressForBalance && walletStore?.getAllBalances && Object.entries(walletStore?.getAllBalances).map(([key, [amount, symbol]]) =>
+                          <li
+                              key={key}>
+                              {key}:
+                              <GradientText style={{padding:3}}>{amount}</GradientText>
+                              {symbol}
+                          </li>
+                      )}
+              </motion.ul>
+              {/*<WalletAddressInput/>*/}
+              {/*<AdvancedWeb3Input/>*/}
+          </animated.div>
 
-      <MotionConfig
-        transition={{
-          type: "spring",
-          visualDuration: 4,
-          bounce: 0.5,
-        }}
-      >
-        <motion.div
-          layout
-          className="pageCard"
-          animate={{
-            background,
-            color,
-            boxShadow: pageCardShadow,
-          }}
-        >
-          <h1>BalanceTracker</h1>
-          <TextInput
-            label="Floating label input"
-            labelProps={{ "data-floating": floating }}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            value={value}
-            onChange={(event) => setValue(event.currentTarget.value)}
-          />
-          {/*<BalanceTracker />*/}
-        </motion.div>
-      </MotionConfig>
-      {/*{walletStore.getAccountData() ? (*/}
-
-      {/*    <TokenOperations />*/}
-      {/*) : (*/}
-      {/*    <Title order={3} c="dimmed">Подключите кошелёк для управления токенами</Title>*/}
-      {/*)}*/}
-    </Center>
+    </main>
   );
 });
 

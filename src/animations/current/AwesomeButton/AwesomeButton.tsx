@@ -14,6 +14,7 @@ export type ButtonType = {
   isActive?: boolean;
   after?: React.ReactNode;
   animate?: any;
+  layoutId?: any;
   variants?: any;
   initial?: any;
   before?: React.ReactNode;
@@ -45,6 +46,7 @@ export type ButtonType = {
 
 export const AwesomeButton = ({
   after = null,
+  layoutId = null,
   isActive = false,
   animate = null,
   variants = null,
@@ -65,7 +67,7 @@ export const AwesomeButton = ({
   const child = useRef(null);
   const handlePress = (onPress: any) => {
     if (onPress) onPress();
-    return null;
+    // return null;
   };
 
   return (
@@ -74,11 +76,11 @@ export const AwesomeButton = ({
       whileTap={whileTap}
       animate={animate}
       onClick={() => handlePress(onPress)}
-      layout
-      layoutId="awesomeButton"
+layout
+      layoutId={layoutId}
       key={buttonKey}
       variants={variants}
-      transition={{ type: "tween", duration: 0.2 }}
+      transition={{ type: "tween", duration: 0.5 }}
       style={{ ...style }}
       className={`${classes.awsBtn}  aws-btn`}
       ref={container}
@@ -89,11 +91,10 @@ export const AwesomeButton = ({
       >
         <motion.div
           initial={{ transform: "translate3d(0, 0, 0 )" }}
-          layout
           transition={{
             type: "tween",
             duration: 0.2,
-            background: { duration: 5 },
+            background: { duration: 3 },
           }}
           animate={{
             transform: isActive
@@ -104,7 +105,7 @@ export const AwesomeButton = ({
           ref={content}
           className={`${classes.mainNavBtnContent}  aws-btn__content`}
         >
-          <Center mr={6}>{before}</Center>
+          <Center mr={before? 6 :0}>{before}</Center>
           <Center ref={child}>{children}</Center>
           {after}
         </motion.div>

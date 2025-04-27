@@ -1,12 +1,12 @@
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tauri from "vite-plugin-tauri";
-import { viteStaticCopy } from "vite-plugin-static-copy";
+import {viteStaticCopy} from "vite-plugin-static-copy";
 
 // Плагин для анализа размера бандла
-import { visualizer } from "rollup-plugin-visualizer";
+import {visualizer} from "rollup-plugin-visualizer";
 
 export default defineConfig({
   base: "./",
@@ -41,7 +41,10 @@ export default defineConfig({
       filename: "analyze.html", // будет создан в папке dist
     }),
   ],
-
+  test: {
+    globals: true,
+    environment: 'jsdom'
+  },
   resolve: {
     alias: {
       // Добавляем алиасы для удобства импортов

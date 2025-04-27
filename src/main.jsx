@@ -10,17 +10,19 @@ import "@styles/AwesomeButton.css";
 
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { metadata, networks, projectId, wagmiAdapter } from "./config";
+import {ethersAdapter, metadata, networks, projectId, wagmiAdapter} from "./config";
 import Layout from "@components/Layout/index.js";
+import {EthersAdapter} from "@reown/appkit-adapter-ethers";
 // import {uiStore} from "@stores/ui.js";
 
 const queryClient = new QueryClient();
 
 createAppKit({
-  adapters: [wagmiAdapter],
+  adapters: [wagmiAdapter,ethersAdapter],
   projectId,
   metadata,
   networks,
+  debug: true,
   features: {
     analytics: true,
   },

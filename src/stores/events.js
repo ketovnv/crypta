@@ -1,5 +1,6 @@
 import { action, makeAutoObservable } from "mobx";
 import { logger } from "@stores/logger.js";
+import {walletStore} from "@stores/wallet.js";
 
 const EVENTS = {
   INITIALIZE: {
@@ -56,7 +57,9 @@ class EventsStore {
   }
 
   addEvent(event) {
-    console.log(event?.data?.event, event?.data?.properties);
+    console.log(event?.data?.event, JSON.stringify(event?.data?.properties));
+    if(event?.data?.event === "INITIALIZE") walletStore.setChains(event?.data?.properties?.networks)
+
     if (EVENTS[event?.data?.event] === "empty")
       return { title: null, message: null };
 

@@ -1,9 +1,9 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import {action, makeAutoObservable, observable} from "mobx";
 
-import { uiStore } from "@stores/ui.js";
+import {uiStore} from "@stores/ui.js";
 
-import { gradientStore } from "@stores/gradient";
-import { Controller } from "@react-spring/web";
+import {gradientStore} from "@stores/gradient";
+import {Controller} from "@react-spring/web";
 
 const APP_NAME = "ReactApproveAppkit";
 const appNameArray = APP_NAME.split("");
@@ -16,7 +16,14 @@ class AnimationStore {
   themeController = new Controller({
     ...gradientStore.darkMode,
     color: "oklch(0.95 0 0)",
-    pageCardShadow: "2px 3px oklch(0 0 0 / 30%)",
+    boxShadow: "2px 1px rgba(0, 150, 150, 0.05)",
+    config: {
+      tension: 50,
+      friction: 50,
+      mass: 10,
+      damping: 10,
+      precision: 0.0001,
+    },
   });
 
   constructor() {
@@ -38,17 +45,18 @@ class AnimationStore {
     return this.appNameIsHover;
   }
 
+
   get theme() {
     return uiStore.themeIsDark
       ? {
           ...gradientStore.darkMode,
-          color: "oklch(0.95 0 0)",
-          pageCardShadow: "2px 3px oklch(0 0 0 / 30%)",
+          color: "oklch(0.99 0 0)",
+          boxShadow: "2px 1px rgba(150, 150, 0, 0.05)",
         }
       : {
           ...gradientStore.lightMode,
-          color: "oklch(0.05 0 0)",
-          pageCardShadow: "2px 3px oklch(0 0 0 / 70%)",
+          color: "oklch(0.01 0 0)",
+          boxShadow: "2px 3px rgba(0, 0, 0, 0.7)",
         };
   }
 
@@ -67,19 +75,6 @@ class AnimationStore {
   @action
   setSpringAnimation = (newAnimation) => (this.springAnimations = newAnimation);
 
-  // toggleTheme() {
-  //     logger.logJSON("метод start?", this.springApi);
-  //     if (this.springApi?.start) {
-  //         // Проверяем, есть ли `start`
-  //         this.springApi.start({
-  //             background: this.themeGradient.includes("#222222")
-  //                 ? "linear-gradient(135deg,#111111,#222222,#333333,#444444)"
-  //                 : "linear-gradient(135deg,#FFFFFF,#EEEEEE,#DDDDDD,#CCCCCC)",
-  //         });
-  //     } else {
-  //         console.error("springApi не содержит метод start!", this.springApi);
-  //     }
-  // }
 
   setCurrentAnimation(animationName) {
     this.currentAnimation = animationName;
