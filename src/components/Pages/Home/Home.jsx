@@ -17,6 +17,7 @@ import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import {eventsStore} from "@stores/events.js";
 
 
+
 const Home = observer(() => {
   logger.logWhiteRandom("🏩", " Компонент Home", 12);
   const { disconnect } = useDisconnect();
@@ -36,7 +37,7 @@ const Home = observer(() => {
         }}
       >
 
-          <animated.div className="pageCard" style={uiStore.themeStyle}>
+          <animated.section className="pageCard" style={uiStore.themeStyle}>
               <AwesomeButton
                   onPress={() => disconnect()}
                   style={{
@@ -68,6 +69,7 @@ const Home = observer(() => {
                           margin: 20
                       }}
                   >
+                      <AppearingText key={walletStore.getNetwork?.id} text={walletStore.getNetwork?.id??''}/>
                       <motion.span
                           whileHover={{scale: 1.03}}
                           whileTap={{scale: 0.96}}
@@ -149,7 +151,7 @@ const Home = observer(() => {
                                          text={walletStore.getAccountData.address}/>
                       </motion.div>)}
               </AnimatePresence>
-          </animated.div>
+          </animated.section>
       </MotionConfig>
       </main>
   );

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TextInput } from '@mantine/core';
+import {animation} from "@stores/animation.js";
+import {uiStore} from "@stores/ui.js";
 
-const WalletAddressInput = ({value, setValue,isValid,setIsValid}) => {
+const WalletAddressInput = ({value, setValue,isValid,setIsValid,inputName ='Название инпута!'}) => {
+
     const [focused, setFocused] = useState(false);
     const [animateError, setAnimateError] = useState(false);
     const floating = focused || value.length > 0;
@@ -26,7 +29,7 @@ const WalletAddressInput = ({value, setValue,isValid,setIsValid}) => {
             // Запускаем анимацию ошибки, если адрес неверный
             if (valid === false) {
                 setAnimateError(true);
-                const timer = setTimeout(() => setAnimateError(false), 500);
+                const timer = setTimeout(() => setAnimateError(false), 2000);
                 return () => clearTimeout(timer);
             }
         } else {
@@ -43,7 +46,7 @@ const WalletAddressInput = ({value, setValue,isValid,setIsValid}) => {
             transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
         },
         floating: {
-            y: -30,
+            y: -27,
             scale: 0.85,
             color: isValid === true ? 'var(--mantine-primary-color-6)' :
                 isValid === false ? 'var(--mantine-color-red-6)' :
@@ -56,41 +59,43 @@ const WalletAddressInput = ({value, setValue,isValid,setIsValid}) => {
     const inputStyles = {
         root: {
             position: 'relative',
-            marginTop: '24px',
-            marginBottom: '8px',
+            marginBottom: 0,
+            marginTop: '20px',
         },
         wrapper: {
             position: 'relative',
         },
         input: {
-            height: '48px',
+            color:animation.theme.color,
+            height: '25px',
             background: 'transparent',
             border: 'none',
             borderBottom: `2px solid ${
-                isValid === true ? 'var(--mantine-primary-color-6)' :
-                    isValid === false ? 'var(--mantine-color-red-6)' :
+                isValid === true ? animation.theme.accentColor :
+                    isValid === false ? 'oklch(0.73 0.2577 29.23)' :
                         'var(--mantine-color-gray-3)'
             }`,
             borderRadius: '0',
             paddingLeft: '0',
             paddingRight: '0',
             fontSize: 'var(--mantine-font-size-sm)',
-            transition: 'border-color 0.2s ease',
+            transition: 'border-color 0.5s ease',
             '&:focus': {
                 boxShadow: 'none',
                 outline: 'none',
             },
             '&::placeholder': {
                 color: floating ? 'var(--mantine-color-gray-5)' : 'transparent',
-                transition: 'color 0.15s ease',
+                transition: 'color 0.5s ease',
             },
         }
     };
 
     return (
-        <div style={{ position: 'relative', maxWidth: '400px', margin: '0 auto' }}>
+        <div style={{ position: 'relative', width: '385px', margin: '0 auto' }}>
             <div style={{ position: 'relative' }}>
                 <TextInput
+                    height={32}
                     placeholder={floating &&"0x000...000"}
                     value={value}
                     onChange={(event) => setValue(event.currentTarget.value)}
@@ -111,16 +116,19 @@ const WalletAddressInput = ({value, setValue,isValid,setIsValid}) => {
                                 >
                                     {isValid === true && (
                                         <motion.div
-                                            style={{ color: 'var(--mantine-color-green-6)', fontSize: '16px' }}
+                                            style={{ color: `oklch(${uiStore.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`, fontSize: '16px' }}
                                         >
                                             ✓
                                         </motion.div>
                                     )}
                                     {isValid === false && (
                                         <motion.div
-                                            style={{ color: 'var(--mantine-color-red-6)', fontSize: '16px' }}
+                                            style={{ cursor:'pointer',color: 'var(--mantine-color-red-6)', fontSize: '16px' }}
+                                            whileHover={{ scale: 1.2 }}
+                                            whileTap={{ scale: 0.9 }}
                                             animate={animateError ? { x: [0, -4, 4, -4, 4, 0] } : {}}
-                                            transition={{ duration: 0.4 }}
+                                            transition={{ duration: 0.3, repeat: Infinity, repeatType: 'reverse' }}
+                                            onClick={() => setValue('0x') }
                                         >
                                             ✗
                                         </motion.div>
@@ -146,7 +154,7 @@ const WalletAddressInput = ({value, setValue,isValid,setIsValid}) => {
                     animate={floating ? "floating" : "default"}
                 >
           <span style={{ fontWeight: floating ? '500' : '400' }}>
-            Адрес кошелька
+            {inputName}
           </span>
                     <motion.span
                         style={{
@@ -212,7 +220,7 @@ const WalletAddressInput = ({value, setValue,isValid,setIsValid}) => {
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
                         style={{
-                            color: 'var(--mantine-color-green-6)',
+                            color: `oklch(${uiStore.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`,
                             fontSize: 'var(--mantine-font-size-xs)',
                             marginTop: '4px'
                         }}

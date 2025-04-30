@@ -2,10 +2,10 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "ReactAppKit",
   "version": "0.1.0",
-  "identifier": "com.appkit.tauri.dev",
+  "identifier": "appkitreakt.com.tauri.dev",
   "build": {
     "frontendDist": "../dist",
-    "devUrl": "http://localhost:9222"
+    "devUrl": "http://localhost:3000"
   },
   "app": {
     "windows": [

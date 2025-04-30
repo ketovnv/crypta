@@ -12,6 +12,10 @@
       "DOM.Iterable",
       "ESNext"
     ],
+    "types": [
+      "motions/react",        // Типы для Framer Motion (встроены в библиотеку)
+      "@react-spring/web"     // Типы для react-spring (если используются)
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",

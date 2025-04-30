@@ -1,29 +1,44 @@
-import { logger } from "@stores/logger";
-import {
-  Group,
-  Text,
-} from "@mantine/core";
+import {logger} from "@stores/logger";
+import {motion} from "motion/react";
+import {Text,} from "@mantine/core";
 
 const renderString = (key, val, color,fontSize =16) => {
   if (logger.whatIs(val) === "Array") return val.map((item) => renderJSON(key, item))
   return (
-    <div key={val} style={{marginBottom: fontSize*1.5}}>
-      <Text style={{ color,fontSize}}>{key}</Text>
+      <motion.div layout key={val} style={{marginBottom: fontSize * 1.5, maxWidth: 500, overflow: "hidden"}}>
+          <motion.div style={{color, fontSize, maxWidth:500}}>{key}</motion.div>
       {/*<Text style={{ color,fontSize}}>&nbsp;:&nbsp;</Text>*/}
-      <Text style={{ color: logger.getRandomColor(16), fontSize}}>{val}</Text>
-    </div>
+          <motion.div style={{color: logger.getRandomColor(16), fontSize, maxWidth:500}}>{val}</motion.div>
+      </motion.div>
 
   );
 };
 
-const renderJSON = (label ='', json,fontSize =16) => {
+const renderJSON = (label = '', json, fontSize = 10) => {
 
   return (
-    <div className="log-list">
-      <Text style={{ color: "#a24294",fontSize: fontSize+4,fontWeight: "bold"}}>{label}</Text>
+      <motion.div layout
+                  initial={{opacity: 0}}
+                  animate={{opacity: 1}}
+                  transition={{duration: 2}}
+      >
+      {/*<Text style={{ color: "#a24294",fontSize: fontSize+4,fontWeight: "bold"}}>{label}</Text>*/}
+          <motion.div
+              animate={{width:500 }}
+              style={{
+              display: "flex",
+                  flexWrap: "wrap",
+              flexDirection: "row",
+              gap: "10px"
+          }}layout>
+
       {logger.whatIs(json) === "Object"
         ? Object.entries(json).map(([key, val]) => (
-            <div key={key}>
+              <motion.div
+                  transition={{ type: 'spring', stiffness: 150, damping:125 }}
+                style={{height:50,background:'rgba(0,100,100,0.02)',borderRadius:10,padding:3,maxWidth:245,overflow:"hidden"}}
+                  animate={{ opacity: 1,height:60}}
+                  layout key={key}>
               {logger.whatIs(val) === "Object"
                 ?  renderJSON(key, val,fontSize)
                 : renderString(
@@ -32,10 +47,11 @@ const renderJSON = (label ='', json,fontSize =16) => {
                     logger.getRandomColor(16),
                     fontSize
                   )}
-            </div>
+              </motion.div>
           ))
         : renderString(label, JSON.stringify(json), logger.getRandomColor(16),fontSize)}
-    </div>
+          </motion.div>
+      </motion.div>
   );
 };
 

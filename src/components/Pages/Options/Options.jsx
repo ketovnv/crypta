@@ -4,7 +4,9 @@ import { Center } from "@mantine/core";
 import { animation } from "@stores/animation.js";
 import { observer } from "mobx-react-lite";
 import { logger } from "@stores/logger.js";
-import {uiStore} from "@stores/ui.js"; // import AnimatedNumber from "@animations/AnimatedNumber";
+import {uiStore} from "@stores/ui.js";
+import {LJ} from "@components/logger/LJ.jsx";
+import {walletStore} from "@stores/wallet.js"; // import AnimatedNumber from "@animations/AnimatedNumber";
 
 const pages = [
   ({ style }) => (
@@ -57,10 +59,11 @@ const Options = observer(() => {
   return (
     <main className="pageWrapper">
       <animated.section className="pageCard" style={uiStore.themeStyle}>
-      {transitions((style, i) => {
-        const Page = pages[i];
-        return <Page style={style} key={style.color} />;
-      })}
+        <LJ json={walletStore.getNetwork?.caipNetwork}/>
+      {/*{transitions((style, i) => {*/}
+      {/*  const Page = pages[i];*/}
+      {/*  return <Page style={style} key={style.color} />;*/}
+      {/*})}*/}
       </animated.section>
     </main>)
   //     <Container size="xl">

@@ -9,6 +9,9 @@ class GradientStore {
 
   get darkMode() {
     return {
+      color: "oklch(0.99 0 0)",
+      accentColor: "oklch(0.71 0.2086 263.9)",
+      boxShadow: "2px 1px rgba(0, 150, 150, 0.05)",
       background: this.circleGradient(
           [
             "#040409",
@@ -51,6 +54,9 @@ class GradientStore {
 
   get lightMode() {
     return {
+        color: "oklch(0.01 0 0)",
+        accentColor: "oklch(0.42 0.2086 263.9)",
+        boxShadow: "2px 1px rgba(0, 0, 0, 0.15)",
       background: this.circleGradient(
           [
             "#fFfaFF",

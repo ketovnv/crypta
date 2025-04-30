@@ -621,7 +621,7 @@ const VeryAdvancedWeb3Input = () => {
                 {/* Основное поле ввода */}
                 <TextInput
                     placeholder={floating ? getPlaceholder() : ''}
-                    value={getDisplayValue()}
+                    value={getDisplayValue}
                     onChange={(event) => {
                         setValue(event.target.value);
                         if (showingShortAddress) setShowingShortAddress(false);

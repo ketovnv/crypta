@@ -41,6 +41,13 @@ class UiStore {
     this.appkitMethods.setThemeMode(theme);
     animation.themeController.start({
       ...animation.theme,
+      config: {
+        tension: 50,
+        friction: 75,
+        mass: 10,
+        damping: 75,
+        precision: 0.0001,
+      },
     });
     localStorage.setItem("my-app-color-scheme", theme);
   };

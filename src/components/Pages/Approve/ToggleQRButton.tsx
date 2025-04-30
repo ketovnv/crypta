@@ -1,20 +1,42 @@
-import { motion } from 'framer-motion'
+import {motion} from 'framer-motion'
+// @ts-ignore
+import classes from './ToggleQRButton.module.css'
 
 interface ToggleButtonProps {
   qrType: 'walletconnect' | 'erc681'
-  onToggle: () => void
+    onToggle: () => void,
+    navBarButtonBackground: string,
+    color: string,
+    accentColor: string
 }
 
-export function ToggleQRButton({ qrType, onToggle }: ToggleButtonProps) {
+
+export function ToggleQRButton({qrType, onToggle, navBarButtonBackground, color, accentColor}: ToggleButtonProps) {
   return (
-      <motion.button
-          whileHover={{ scale: 1.1, rotate: [0, 2, -2, 2, 0] }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
-          onClick={onToggle}
-          className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md focus:outline-none focus:ring focus:ring-blue-300"
+      <motion.div layout
+                  style={{
+                      width: '95%',
+                      display: 'flex',
+                      justifyContent: qrType === 'walletconnect' ? 'flex-start' : 'flex-end'
+                  }}
       >
-        {qrType === 'walletconnect' ? 'Switch to ERC681' : 'Switch to WalletConnect'}
-      </motion.button>
+          <div className={classes.beforeButton}>
+              <motion.button
+                  className={classes.typeButton}
+                  layout
+                  animate={{width: 'fit-content', background:navBarButtonBackground, color:accentColor, borderColor: color,opacity:[0,0,1]}}
+                  whileHover={{scale: 1.05, borderRadius: 10 ,color}}
+                  whileTap={{scale: 0.97}}
+                  transition={{
+                      duration: 0.7, ease: 'easeInOut',
+                      background: {type: 'spring', visualDuration: 3, bounce: 0.1},
+                      color: {type: 'spring', visualDuration: 5, bounce: 0.1},
+                  }}
+                  onClick={onToggle}
+              >
+                  {qrType === 'walletconnect' ? 'Переключить на формат ERC681' : 'Переключить на формат WalletConnect'}
+              </motion.button>
+          </div>
+      </motion.div>
   )
 }

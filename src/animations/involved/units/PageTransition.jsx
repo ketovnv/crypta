@@ -23,7 +23,7 @@ export const PageTransition = observer(() => {
       opacity: 0,
       height: 0,
       rotateX: -225,
-      y:450,
+      y:600,
       // transition: {delay: 0.75},
     },
     visible: {
@@ -36,7 +36,7 @@ export const PageTransition = observer(() => {
       height: 0,
       opacity: -0.5,
       rotateX: -200,
-      y: 450,
+      y: 600,
     },
   };
 

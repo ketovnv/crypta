@@ -5,22 +5,22 @@
 
 .pageWrapper {
   position: absolute;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
   top: 0;
   left: 0;
   width: 100%;
-  border-radius: 20px;
   min-height: 700px;
 }
 
 .pageCard {
+  top: 100px;
+  margin-top: 125px;
+  margin-left: 485px;
+  max-height: 75vh;
   overflow: hidden;
   font-family: "SF Pro Rounded", "Segoe UI", sans-serif;
   border-radius: 20px;
-  min-width: 525px;
+  width: 550px;
   min-height: 300px;
   padding: 20px;
 }

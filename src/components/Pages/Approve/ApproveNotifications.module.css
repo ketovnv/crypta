@@ -1,0 +1,18 @@
+.root {
+  /*background: linear-gradient(rgba(100, 100, 225, .75) 0%, rgba(75, 100, 175, .75) 50%, rgba(100, 100, 225, .75) 100%);*/
+  /*&::before {*/
+  /*  background-color: linear-gradient(rgba(100, 255, 255, 1) 0%, rgba(255, 100, 255, 1) 50%, rgba(255, 100, 255, 1) 100%);*/
+  /*}*/
+}
+
+.description,
+.message {
+  color: oklch(0.57 0.2577 29.23)
+}
+
+.closeButton {
+ color: oklch(0.57 0.2577 29.23);
+  @mixin hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}

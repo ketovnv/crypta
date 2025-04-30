@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tauri from "vite-plugin-tauri";
-import {viteStaticCopy} from "vite-plugin-static-copy";
+
 
 // Плагин для анализа размера бандла
 import {visualizer} from "rollup-plugin-visualizer";
@@ -28,11 +28,6 @@ export default defineConfig({
     }),
     tsconfigPaths(),
     tauri(),
-    viteStaticCopy({
-      targets: [
-        { src: "src-tauri/tauri.conf.json", dest: "." }, // Копируем конфиг Tauri
-      ],
-    }),
     visualizer({
       template: "treemap", // или "sunburst"
       open: true,
@@ -69,11 +64,11 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 1750,
   },
 
   server: {
-    port: 9222,
+    port: 3000,
     strictPort: true,
     historyApiFallback: true,
     fs: {

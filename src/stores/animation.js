@@ -13,18 +13,7 @@ class AnimationStore {
   mantineControlAnimations = {};
   springAnimations = {};
 
-  themeController = new Controller({
-    ...gradientStore.darkMode,
-    color: "oklch(0.95 0 0)",
-    boxShadow: "2px 1px rgba(0, 150, 150, 0.05)",
-    config: {
-      tension: 50,
-      friction: 50,
-      mass: 10,
-      damping: 10,
-      precision: 0.0001,
-    },
-  });
+  themeController = new Controller({...gradientStore.darkMode});
 
   constructor() {
     makeAutoObservable(this, {
@@ -47,17 +36,9 @@ class AnimationStore {
 
 
   get theme() {
-    return uiStore.themeIsDark
-      ? {
-          ...gradientStore.darkMode,
-          color: "oklch(0.99 0 0)",
-          boxShadow: "2px 1px rgba(150, 150, 0, 0.05)",
-        }
-      : {
-          ...gradientStore.lightMode,
-          color: "oklch(0.01 0 0)",
-          boxShadow: "2px 3px rgba(0, 0, 0, 0.7)",
-        };
+    return uiStore.themeIsDark ?
+        {...gradientStore.darkMode} :
+        {...gradientStore.lightMode}
   }
 
   setAppNameIsHover = (isHover) => (this.appNameIsHover = isHover);
