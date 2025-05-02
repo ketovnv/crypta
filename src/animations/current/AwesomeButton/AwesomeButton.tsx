@@ -81,7 +81,7 @@ layout
       key={buttonKey}
       variants={variants}
       transition={{ type: "tween", duration: 0.5 }}
-      style={{ ...style }}
+      style={{ ...style , fontFamily: 'Core Sans DS55 Bold'}}
       className={`${classes.awsBtn}  aws-btn`}
       ref={container}
     >

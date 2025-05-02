@@ -1,3 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Tactic Round Bld';
+  src: url('/fonts/TacticRound-Bld.ttf')
+}
+
+
+@font-face {
+  font-family: 'CoreSans DS55 Medium Italic';
+  src: url('/fonts/CoreSansDS45MediumItalic.woff2')
+}
+
+
+@font-face {
+  font-family: 'CoreSans DS55 Medium';
+  src: url('/fonts/CoreSansDS45Medium.ttf');
+}
+
+@font-face {
+  font-family: 'CoreSans DS55 Medium Italic';
+  src: url('/fonts/CoreSansDS45Medium.ttf');
+}
+
+@font-face {
+  font-family: 'CoreSans DS55 Medium';
+  src: url('/fonts/CoreSansDS45Medium.woff2')
+}
+
+
+@font-face {
+  font-family: 'Inter Variable Italic';
+  src: url('/fonts/InterVariable-Italic.woff2')
+}
+
+@font-face {
+  font-family: 'Inter Variable';
+  src: url('/fonts/InterVariable.woff2');
+
+}
+
+@font-face {
+  font-family: 'Tactic Round Blk';
+  src: url("/fonts/TacticRound-Blk.woff2")
+}
+
+@font-face {
+  font-family: 'Tactic Round Thn';
+  src: url('/fonts/TacticRound-Thn.woff2')
+}
+
+
+
+@font-face {
+  font-family: 'Tactic Round Med';
+  src: url('/fonts/TacticRound-Med.woff2');
+}
+
+@font-face {
+  font-family: 'Tactic Round Lgt';
+  src: url('/fonts/TacticRound-Lgt.woff2');
+}
+
+@font-face {
+  font-family: 'Volte Rounded Bold';
+  src: url('/fonts/Volte Rounded Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Volte Rounded Medium';
+  src: url('/fonts/MartianMonoNerdFontMono-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'NVIDIA Sans Medium';
+ src:url('/fonts/MartianMonoNerdFontMono-Medium.ttf');
+}
+@font-face {
+  font-family: 'MartianMono NFM Med';
+  src: url('/fonts/MartianMonoNerdFontMono-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'SF Pro Rounded';
+  src: url('/fonts/SF-Pro-Rounded-Black.otf');
+  src: url('/fonts/SF-Pro-Rounded-Medium.otf')
+}
+
+
 
 [class^=mantine] {
   font-family: "SF Pro Rounded", "Segoe UI", sans-serif;

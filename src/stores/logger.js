@@ -229,6 +229,19 @@ class loggerStore {
     return uniqueElementsInfo.join(", ");
   }
 
+   getFontSizeLog(length) {
+     const minSize = 1.7;   // для очень длинного текста
+     const maxSize =7;     // для супер-короткого текста
+     const maxLen  = 200;   // длина, при которой уже сразу minSize
+
+     // нормализуем длину: от 0 (коротко) до 1 (длиннее maxLen)
+     const t = Math.min(length / maxLen, 1);
+
+     // размер = от maxSize (t=0) до minSize (t=1)
+     const size = minSize + (maxSize - minSize) * (1 - t);
+     return size + 'em';
+  }
+
   whatIs = (object) => {
     const stringConstructor = "test".constructor;
     const arrayConstructor = [].constructor;

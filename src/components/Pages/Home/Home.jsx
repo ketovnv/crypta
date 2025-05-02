@@ -15,6 +15,8 @@ import classes from "./Home.module.css";
 import {AwesomeButton} from "@animations/current/AwesomeButton/AwesomeButton.js";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import {eventsStore} from "@stores/events.js";
+import {LJ} from "@components/logger/LJ.jsx";
+import {gradientStore} from "@stores/gradient.js";
 
 
 
@@ -23,12 +25,13 @@ const Home = observer(() => {
   const { disconnect } = useDisconnect();
   // const [ref, bounds, setBounds] = useMeasure({ scroll: true });
   // logger.setBounds(bounds);
-
+// return(<main><div style={{color: 'oklch(0.71 0.2086 263.9'}}>🏩 Hello Home!</div></main>    );
 
   return (
       <main
       className="pageWrapper"
     >
+
       <MotionConfig
         transition={{
           type: "spring",
@@ -36,7 +39,6 @@ const Home = observer(() => {
             bounce: 0.33,
         }}
       >
-
           <animated.section className="pageCard" style={uiStore.themeStyle}>
               <AwesomeButton
                   onPress={() => disconnect()}
@@ -92,6 +94,7 @@ const Home = observer(() => {
                       )}
                   </motion.div>
               )}
+              {/*<LJ json={av}/>*/}
               <AnimatePresence>
               <motion.div
                   layout
@@ -118,12 +121,12 @@ const Home = observer(() => {
                           key="wallet-info"
                           layout
                           animate={{display: "flex", flexDirection: "row", alignItems: "center", space: 10}}>
-                          {walletStore.getWalletInformation?.type !== "injected" ?
+                          {walletStore.getWalletInformation?.type !== "WALLET_CONNECT" ?
                               <Google/> :
                               <Metamask/>
                           }
-                          <motion.div layout>
-                              {walletStore.getWalletInformation?.type !== "injected"
+                          <motion.div layout animate={{paddingLeft: 10, paddingRight: 10, display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center"}}>
+                              {walletStore.getWalletInformation?.type !== "WALLET_CONNECT"
                                   ?
                                   <Text className={classes.label}>
                                       Социальный аккаунт&nbsp;

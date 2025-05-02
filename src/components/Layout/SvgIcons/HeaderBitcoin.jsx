@@ -3,7 +3,9 @@ import {motion} from 'motion/react';
 import {ReactSVG} from './ReactSVG.jsx';
 
 
-const FrontCoinSVG = ({width = '1em', height = '1em'}) => (
+const FrontCoinSVG = ({width = '1em', height = '1em', isDark=true
+
+}) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={width} height={height}>
         <g fill="none">
             <circle cx="24" cy="24" r="20" fill="#2F88FF" stroke="#000" strokeLinecap="round"
@@ -21,7 +23,7 @@ const FrontCoinSVG = ({width = '1em', height = '1em'}) => (
 
 
 // Компонент вращающейся монеты
-const HeaderBitcoin = ({size = 50}) => { // size - размер монеты в px
+const HeaderBitcoin = ({size = 50,isDark=true}) => { // size - размер монеты в px
 
     return (
         // Контейнер для задания перспективы
@@ -54,7 +56,7 @@ const HeaderBitcoin = ({size = 50}) => { // size - размер монеты в 
                         alignItems: 'center',
                     }}
                 >
-                    <FrontCoinSVG width={size * 0.9} height={size * 0.9}/> {/* Немного уменьшаем SVG для отступов */}
+                    <FrontCoinSVG width={size * 0.9} height={size * 0.9} isDark={isDark}/> {/* Немного уменьшаем SVG для отступов */}
                 </motion.div>
 
                 {/* Обратная сторона */}
@@ -71,7 +73,7 @@ const HeaderBitcoin = ({size = 50}) => { // size - размер монеты в 
                     }}
                 >
 
-                    <ReactSVG width={size * 0.9} height={size * 0.9}/>
+                    <ReactSVG width={size * 0.9} height={size * 0.9} isDark={isDark}/>
                 </motion.div>
             </motion.div>
         </div>

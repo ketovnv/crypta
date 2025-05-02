@@ -1,9 +1,8 @@
 import {action, makeAutoObservable, observable} from "mobx";
-
 import {uiStore} from "@stores/ui.js";
-
 import {gradientStore} from "@stores/gradient";
 import {Controller} from "@react-spring/web";
+import {DARK, LIGHT} from "./gradientColors.js";
 
 const APP_NAME = "ReactApproveAppkit";
 const appNameArray = APP_NAME.split("");
@@ -13,7 +12,7 @@ class AnimationStore {
   mantineControlAnimations = {};
   springAnimations = {};
 
-  themeController = new Controller({...gradientStore.darkMode});
+  themeController = new Controller({...gradientStore.getTheme(DARK)});
 
   constructor() {
     makeAutoObservable(this, {
@@ -36,10 +35,9 @@ class AnimationStore {
 
 
   get theme() {
-    return uiStore.themeIsDark ?
-        {...gradientStore.darkMode} :
-        {...gradientStore.lightMode}
+    return {...gradientStore.getTheme(uiStore.themeIsDark ? DARK : LIGHT)}
   }
+
 
   setAppNameIsHover = (isHover) => (this.appNameIsHover = isHover);
 

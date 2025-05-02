@@ -76,7 +76,7 @@ export const MainHeader = observer(() => {
             }}
             whileTap={{ scale: 0.7,}}
           >
-            <HeaderBitcoin />
+            <HeaderBitcoin  isDark={uiStore.themeIsDark}/>
           </motion.button>
           <SpringAppName />
         </Group>

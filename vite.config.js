@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tauri from "vite-plugin-tauri";
+import tailwindcssPlugin from 'vite-plugin-tailwindcss'
 
 
 // Плагин для анализа размера бандла
@@ -26,6 +27,7 @@ export default defineConfig({
         ],
       },
     }),
+    tailwindcssPlugin(),
     tsconfigPaths(),
     tauri(),
     visualizer({

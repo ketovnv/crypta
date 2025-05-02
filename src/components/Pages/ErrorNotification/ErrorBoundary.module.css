@@ -1,73 +1,44 @@
-.root {
-    position: absolute;
-    z-index: 150;
-    padding-top: 35px;
-}
-
-.inner {
-    position: relative;
-}
 
 .image {
     position: absolute;
     z-index: 0;
     inset: 0;
     opacity: .9;
-    color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-dark-3));
 }
 
 .icon {
-    position: absolute;
+    overflow: hidden;
+    display: flex;
     z-index: 0;
     opacity: 1;
-    inset:0;
-    100:20px;
-    font-size: 650px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
+    height: 0;
+    font-size: 65px;
     text-align: center;
-    @media (max-width: $mantine-breakpoint-md) {
-        font-size: 600px;
-    }
-    @media (max-width: $mantine-breakpoint-sm) {
-        font-size: 300px;
-    }
+    width: 700px;
 }
 
 
-
 .content {
-    padding-top: 220px;
-    position: relative;
+    padding-top: 20px;
     z-index: 1;
 }
 
 .title {
-    font-family: "IosevkaTermSlab NFP ExtraBold", monospace;
+    font-family: "Tactic Round Bld", monospace;
     /*color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-dark-0));*/
     text-align: center;
-    font-weight: 900;
-    font-size: 4em;
-    @media (max-width: $mantine-breakpoint-md) {
-        font-size: 3em;
-    }
-    @media (max-width: $mantine-breakpoint-sm) {
-        font-size: 2em;
-    }
+    font-weight: 700;
+    font-size: 3em;
 }
 
 .description {
-    z-index: 1;
-    /*color: var(--mantine-color-dark-9),*/
+    color: oklch(0.3 0.0001 100.1);
+    font-family: "Volte Rounded", monospace;
+    height: fit-content;
+    opacity: 0;
     text-align: center;
-    font-size: 1.5em;
-    line-height: 1.33;
-    font-weight: 800;
-    font-family: "Ubuntu Nerd Font Propo Med", monospace;
-    max-width: 600px;
+    line-height: 1.2;
+    font-weight: 600;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 275px;
 }

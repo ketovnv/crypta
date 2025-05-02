@@ -1,10 +1,12 @@
 import React from 'react'
-import {Button, Center, Container, Text, Title,} from '@mantine/core';
+import {Button, Center, Container, Text,} from '@mantine/core';
 import {SVGIllustration404} from "@components/pages/ErrorNotification/SVGIllustration404.jsx";
 import {useNavigate} from "react-router-dom";
+import {motion} from "motion/react";
 
 import classes from './ErrorBoundary.module.css';
 import {logger} from "@stores/logger.js";
+import {animation} from "@stores/animation.js";
 
 
 const NotFoundError = ({message}) => {
@@ -26,22 +28,56 @@ const NotFoundError = ({message}) => {
     )
 }
 const DefaultError = ({message}) => {
+
     return (
-        <Container className={classes.root}>
-            <div className={classes.icon}>🛑</div>
-            <div className={classes.inner}>
-                <Title c="orange.5" className={classes.title}>Что-то пошло не так...</Title>
-                <Text
-                    color="yellow.3"
-                    size="lg"
-                    align="center"
+        <main className="pageWrapper" style={{paddingLeft: 0}}>
+            <motion.section
+                className="pageCard"
+                layout animate={{height: 'fit-content'}}
+                transition={{duration: 1.5}}
+                style={{background: animation.theme.background, height: 0, width: 700}}>
+                <motion.div
+                    layout
+                    animate={{
+                        height: 'fit-content', paddingLeft: 65,
+                        filter: 'drop-shadow(0px 0px 10px oklch(0.65 0.2236 29.65))'
+                    }}
+                    transition={{duration: 1.5}}
+                    className={classes.icon}>
+                    💥💥💥💥💥💥
+                </motion.div>
+                <motion.div
+                    layout
+                    animate={{
+                        opacity: 1,
+                        fontSize: logger.getFontSizeLog(message.length),
+                        color: animation.theme.accentColor
+                    }}
+                    transition={{duration: 15,fontSize: {type: 'spring', visualDuration: 5, bounce: 0.2}}}
+
                     className={classes.description}
                 >
                     {message}
+                </motion.div>
+                <motion.div layout style={{color: 'oklch(0.65 0.2236 29.65)'}}
+                            animate={{
+                                filter: 'drop-shadow(0px 2px 1px oklch(0.65 0.2236 29.65))'
+                            }}
+                            className={classes.title}>Что-то пошло не так...
+                </motion.div>
+                {/*<motion.div*/}
+                {/*    layout*/}
+                {/*    animate={{*/}
+                {/*        height: 'fit-content',paddingLeft:65,*/}
+                {/*        filter: 'drop-shadow(0px 0px 10px oklch(0.65 0.2236 29.65))'*/}
+                {/*    }}*/}
+                {/*    transition={{duration: 1.5}}*/}
+                {/*    className={classes.icon}>*/}
+                {/*    ⛔👻💥☠🛑*/}
+                {/*</motion.div>*/}
+            </motion.section>
 
-                </Text>
-            </div>
-        </Container>
+        </main>
     );
 }
 

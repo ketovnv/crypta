@@ -1,7 +1,6 @@
 import {useEffect} from 'react'
 import {notifications} from '@mantine/notifications' // import  { QRCodeCanvas, QRCodeSVG } from 'qrcode.react'
 import {usePublicClient,} from 'wagmi'
-import {Stack} from '@mantine/core'
 
 import {observer} from "mobx-react-lite";
 import {logger} from "@/stores/logger.js";
@@ -47,7 +46,7 @@ const Approve = observer(() => {
             className="pageWrapper"
         >
 
-            <animated.section layout className="pageCard" style={{...uiStore.themeStyle, maxWidth: 700}}>
+            <animated.section  className="pageCard" style={{...uiStore.themeStyle, maxWidth: 700}}>
                 <motion.div layout>
                     <WalletAddressInput
                         inputName="Адрес ожидающий получение Одобрения"
@@ -66,10 +65,12 @@ const Approve = observer(() => {
                     <AnimatePresence>
                         {approve.isValidTargetToken && approve.isValidWaitingAddress &&
                             <motion.div
+                                layout
+                                key={approve.getQrType+approve.isValidTargetToken+ approve.isValidWaitingAddress}
                                 transition={{type: 'spring', stiffness: 100, damping: 75}}
                                 initial={{height: 0}}
                                 animate={{height: 'fit-content'}}
-                                exit={{height: 0, padding: 0, margin: 0, opacity: 0, scale: 0.99, y: 300}}
+                                exit={{height: 0, padding: 0, margin: 0, opacity: 0, scale: 0, y: 300}}
                             >
                     <ApproveQr
                         tokenAddress={approve.targetToken}

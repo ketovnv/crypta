@@ -36,7 +36,7 @@ export const Web3Inch = ({isDark = true, variants}) => {
         width="200%"
         height="200%"
         floodOpacity="0.5"
-      >\
+      >
           <motion.feDropShadow
           dx="0.3"
           dy="0.3"

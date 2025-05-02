@@ -11,7 +11,7 @@ export default function GradientText({
                                              ["#00FF00", "#FFFF00", "#FF00FF", "#FF0000", "#0000FF"] :
                                              ["#007700", "#777700", "#770077", "#990000", "#000088"], // Default colors
                                          animationDuration = 3,
-                                         fontSize = 20,
+                                         fontSize = 14,
                                          fontWeight = 500,
                                          isActive = false,
                                          ...props
@@ -26,7 +26,7 @@ export default function GradientText({
         duration: 0.5,
         ease: "linear",
       }}
-      style={{fontSize, fontWeight}}
+      style={{fontSize, fontWeight, minWidth: children.length *12}}
       animate={{
           backgroundImage: `linear-gradient( in oklch ${isActive ? "to left" : "to right"}, ${gradientStore.scaleGradient(colors, 10)})`,
           animationDuration: `${animationDuration}s`,

@@ -6,7 +6,6 @@
   z-index: 1;
   background-color: rgba(0, 0, 0, 0);
   line-height: var(--button-default-line-height); /*font-weight: bold;*/
-  font-family: 'Inter Variable Text !important';
   font-style: var(--button-font-style);
   letter-spacing: var(--button-letter-spacing);
   text-rendering: auto;

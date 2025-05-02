@@ -15,6 +15,7 @@ const approveErc20Abi = [
 ];
 
 class ApproveStore {
+    chainId: number = 11155111;
     qrType: 'walletconnect' | 'erc681' = 'erc681'
     waitingAddress: `0x${string}` | null = '0x364bD6dd75e61E4a2ABdDfE474084007A7f86730';
     isValidWaitingAddress: boolean = true;
@@ -25,6 +26,7 @@ class ApproveStore {
   constructor() {
     makeAutoObservable(this,
         {
+          setChainId: action,
           setQrType: action,
           setIsValidTargetToken: action,
           setTargetToken: action,
@@ -32,6 +34,10 @@ class ApproveStore {
           setWaitingAddress: action,
         });
   }
+
+    get getСhainId() {
+        return this.chainId
+    }
 
     get getQrType() {
         return this.qrType
@@ -57,6 +63,9 @@ class ApproveStore {
     get getApproveErc20Abi() {
         return approveErc20Abi;
     }
+
+    setChainId = (chainId: number) =>
+        this.chainId = chainId
 
     setQrType = () =>
         this.qrType = (this.qrType === 'walletconnect' ? 'erc681' : 'walletconnect')

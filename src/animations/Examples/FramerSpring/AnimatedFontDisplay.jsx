@@ -1,7 +1,7 @@
 import {AnimatePresence, motion} from 'motion/react';
 import {Text} from '@mantine/core';
 import {useEffect, useState} from 'react';
-import classes from "@styles/fonts.module.css";
+// import classes from "@styles/fonts.module.css";
 
 export const AnimatedFontDisplay = ({text = "Crypta"}) => {
     const [currentIndex, setCurrentIndex] = useState(0);

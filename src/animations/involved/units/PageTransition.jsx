@@ -1,19 +1,28 @@
-import { observer } from "mobx-react-lite";
-import { router } from "@stores/router";
-import loadable from "@loadable/component";
-import { AnimatePresence, motion } from "motion/react";
+import {observer} from "mobx-react-lite";
+import {router} from "@stores/router";
+import {Suspense} from "react";
+import {AnimatePresence, motion} from "motion/react";
 // import { logger } from "@stores/logger.js";
 
-const AsyncPage = loadable(
-  (props) =>
-    import(
-      /* @vite-ignore */
-      `../../../components/pages/${props.page}`
-    ),
-  {
-    cacheKey: (props) => props.page,
-  },
-);
+
+const AsyncPage = ({page}) => {
+  const PageComponent = router.getPageComponent(page);
+  return (
+      <Suspense fallback={<div>''</div>}>
+        <PageComponent/>
+      </Suspense>
+  );
+}
+
+// const AsyncPage = loadable(
+//   (props) =>
+//     import(
+//       `../../../components/pages/${props.page}`
+//     ),
+//   {
+//     cacheKey: (props) => props.page,
+//   },
+// );
 
 // logger.logWhiteRandom("📺", " Компонент PageTransition", 12);
 
@@ -39,6 +48,7 @@ export const PageTransition = observer(() => {
       y: 600,
     },
   };
+
 
   return (
     <AnimatePresence
@@ -69,7 +79,9 @@ export const PageTransition = observer(() => {
           visible:{delay: 0.1},
         }}
       >
-        <AsyncPage page={router.getCurrentPage} />
+        {/*<main><div style={{color: 'oklch(0.71 0.2086 263.9'}}>🏩 Hello Page!</div></main>*/}
+        <AsyncPage page={router.getCurrentPage} key={router.getCurrentPage}/>
+
       </motion.div>
     </AnimatePresence>
   );

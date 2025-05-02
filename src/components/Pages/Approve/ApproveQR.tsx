@@ -20,6 +20,8 @@ const ApproveQr = observer(({
                                 amount,
                             }: ApproveQrProps) => {
     const qrValue = useMemo(() => {
+        if (!tokenAddress || !spender || !amount) return ''
+
         const calldata = encodeFunctionData({
             abi: approve.getApproveErc20Abi,
             functionName: 'approve',

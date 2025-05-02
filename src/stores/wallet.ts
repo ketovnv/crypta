@@ -112,9 +112,6 @@ class WalletStore {
     }
 
 
-
-
-
     addAddressBalance({chainId, balance}) {
         this.addressBalances[chainId] = balance;
     }

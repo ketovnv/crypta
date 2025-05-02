@@ -9,13 +9,14 @@ import {AwesomeButton} from "@animations/current/AwesomeButton/AwesomeButton";
 import {Web3Inch} from "@components/Layout/SvgIcons/Web3Inch";
 import GradientText from "@animations/involved/GradientText";
 import {uiStore} from "@stores/ui.js";
+import {Etherium} from "@components/Layout/SvgIcons/Etherium.jsx";
 
 export const MainNavbar = observer(() => {
   const icons = {
+    Transactions: <Etherium/>,
     Home: <IoWallet size={34}/>,
-    Balance: <IoApertureSharp size={34}/>,
     Approve: <IoLogoReact size={34}/>,
-    Transactions: <IoFileTrayFullSharp size={36}/>,
+    Balance: <IoApertureSharp size={34}/>,
     Options: <IoSettings size={34}/>,
   };
 

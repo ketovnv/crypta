@@ -10,6 +10,8 @@ import {walletStore} from "@stores/wallet.js";
 import GradientText from "@animations/involved/GradientText.jsx";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import {etherStore} from "@stores/ether.js";
+import {ethersAdapter} from "@/config/index.js";
+import {LJ} from "@components/logger/LJ.jsx";
 
 const StrokeAnimation = () => {
     return (
@@ -45,7 +47,20 @@ const getStatusColor = (status) => {
 // Компонент для отображения хеша транзакции с возможностью копирования
 const Transactions = observer(({}) => {
 
-// Конфигурация
+    useEffect(() => {
+        etherStore.setEthPrice()
+    }, []);
+
+
+    // export const useEthPrice = () => {
+    //     return useQuery({
+    //         queryKey: ['ethPrice'],
+    //         queryFn: etherStore.setEthPrice,
+    //         refetchInterval: 60000, // обновление каждую минуту
+    //     });
+    // }
+
+
     const chains = [42161, 8453, 10, 534352, 81457]
     const address = "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511"
 
@@ -61,6 +76,8 @@ const Transactions = observer(({}) => {
 
         return response.json()
     }
+
+
 
 // Хук для одной цепи
     function useBalanceQuery(chainId) {
@@ -126,6 +143,8 @@ const Transactions = observer(({}) => {
         >
             <animated.section className="pageCard" style={uiStore.themeStyle}>
 
+                <LJ json={etherStore.ethPrice}/>
+
                 <div>
                     <h3 style={{color: logger.getRandomColor(uiStore.themeIsDark ? 16 : 5)}}>Балансы по всем цепям</h3>
                     {isLoading && <p>Загрузка данных...</p>}
@@ -136,7 +155,7 @@ const Transactions = observer(({}) => {
                                 Цепь {item.chainId}:
                                 {item.isLoading ? ' загрузка...' :
                                     item.error ? ` ошибка: ${item.error.message}` :
-                                        <GradientText><AppearingText text={item.data?.result || 'н/д'}/></GradientText>}
+                                        <GradientText><AppearingText style={{fontFamily:'Tactic Round Bld',paddingLeft:5}} fontSize={14} text={item.data?.result || 'н/д'}/></GradientText>}
                             </li>
                         ))}
                     </ul>

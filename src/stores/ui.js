@@ -2,12 +2,22 @@ import { action, makeAutoObservable } from "mobx";
 import { animation } from "@stores/animation.js";
 
 class UiStore {
+
   colorScheme = "dark"; // Начальное значение
   isNavbarOpened = false;
   fontSearch = "";
   fontFamilies = [];
   searchFontFamilies = [];
   appkitMethods = {};
+
+  get getRed() {
+    return  `oklch${this.themeIsDark ?'(0.65 0.242 32.37)' : '(0.39 0.1423 32.37)'}`
+  }
+
+  get getGreen() {
+    return  `oklch${this.themeIsDark ?'(0.65 0.242 32.37)' : '(0.48 0.1786 32.37)'}`
+  }
+
 
   constructor() {
     makeAutoObservable(this, {

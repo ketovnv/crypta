@@ -10,7 +10,7 @@ import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import {uiStore} from "@stores/ui.js";
 
 // Иконки сетей
-const ChainIcon = ({chain,fontSize=9}) => {
+const ChainIcon = ({chain,fontSize=9,ethSize=27}) => {
     const getColor = () => {
         switch (chain) {
             case 'ethereum':
@@ -31,7 +31,7 @@ const ChainIcon = ({chain,fontSize=9}) => {
             animate={{scale: 1}}
             style={{fontSize}}            transition={{type: 'spring', stiffness: 300, damping: 50, friction: 35, mass: 10}}
         >
-            {chain === 'ethereum' && <Etherium/>}
+            {chain === 'ethereum' && <Etherium width={ethSize}/>}
             {chain === 'sepolia' && <Sepolia/>}
             {chain === 'holesky' && <Holesky/>}
             {/*{chain === 'arbitrum' && 'A'}*/}
@@ -170,7 +170,7 @@ const NetworkSelector = ({chainOpen, setChainOpen, chains, selectedChain, setSel
                                 }}
                                 whileHover={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}}
                             >
-                                <ChainIcon  chain={chain.id}/>
+                                <ChainIcon  chain={chain.id} ethSize={16}/>
                                 <span style={{fontSize: 'var(--mantine-font-size-sm)'}}>
                       {chain.name}
                     </span>
@@ -444,7 +444,7 @@ const VeryAdvancedWeb3Input = () => {
         }
 
         if (isValid === true) return 'oklch(0.87 0.294827 142.49)';
-        if (isValid === false) return 'oklch(0.63 0.2577 29.23)';
+        if (isValid === false) return uiStore.getRed;
     };
 
     // Копирование адреса
@@ -641,7 +641,7 @@ const VeryAdvancedWeb3Input = () => {
                                 height: '48px'
                             }}
                         >
-                            <ChainIcon chain={selectedChain}/>
+                            <ChainIcon chain={selectedChain} ethSize={22}/>
                         </motion.section>
                     }
                     rightSection={

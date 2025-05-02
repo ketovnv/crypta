@@ -1,5 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import chroma from "chroma-js";
+import {RAINBOWGRADIENT, RAINBOWV2GRADIENT} from "@stores/gradientColors.js";
+
 
 class GradientStore {
 
@@ -7,70 +9,98 @@ class GradientStore {
     makeAutoObservable(this);
   }
 
-  get darkMode() {
-    return {
-      color: "oklch(0.99 0 0)",
-      accentColor: "oklch(0.71 0.2086 263.9)",
-      boxShadow: "2px 1px rgba(0, 150, 150, 0.05)",
-      background: this.circleGradient(
-          [
-            "#040409",
-            "#010207",
-            "#000003",
-            "#060809",
-            "#010103",
-            "#030305",
-          ],
-          32,
-          10,
-          27,
-      ),
-      navBarButtonBackground: this.circleGradient(
-          ["#101210"
-            , "#000001",
-            "#081011",
-            "#010203"
-          ],
-        12,
-          100,
-        50,
-      ),
-      navBarButtonText: [
-        "#10CCDD",
-        "#4079ff",
-        "#99FFFF",
-        "0000ff",
-        "#1050CC"
-      ],
-      navBarActiveButtonText: [
-        "#FFFF00",
-        "#FFFF99",
-        "#CCCCCC",
-        "#FFFF00",
-        "#FFFFDD"
-      ],
-    };
+
+  get getRainbowV2Gradient(){
+    return RAINBOWV2GRADIENT
+  }
+ get getRainbowGradient(){
+    return RAINBOWGRADIENT
   }
 
-  get lightMode() {
+
+    scaleGradient = (colors, number) =>
+        chroma.bezier(colors).scale().mode("oklch").colors(number).join(", ");
+
+    circleGradient = (colors, number, angle, angleTwo) =>
+        `radial-gradient(in oklch circle at ${angle}% ${angleTwo}%, ${this.scaleGradient(colors, number)})`;
+
+    linearAngleGradient = (colors, number, angle) =>
+        `linear-gradient( ${angle}deg in oklch, ${this.scaleGradient(colors, number)})`;
+
+
+    linearAngleGradientCubehelix = (start, rotations, gamma, lightnessStart, lightnessEnd, number, angle) =>
+        `linear-gradient( ${angle}deg in oklch, ${this.scaleCubehelix(start, rotations, gamma, lightnessStart, lightnessEnd, number)})`;
+
+
+    scaleCubehelix = (start, rotations, gamma, lightnessStart, lightnessEnd, number) =>
+        chroma.cubehelix()
+            .start(start)
+            .rotations(rotations)
+            .gamma(gamma)
+            .lightness([lightnessStart, lightnessEnd])
+            .scale() // convert to chroma.scale
+            .correctLightness()
+            .colors(number);
+
+    averageOklch = (colors) => chroma.average(colors, 'oklch')
+
+    chromaSpectral = () => chroma.scale('Spectral').domain([1,0])
+
+
+    getTheme(theme) {
+        return {
+            color: theme.c,
+            accentColor: theme.c,
+            boxShadow: theme.bs,
+            background: this.circleGradient(theme.bg[0], theme.bg[1], theme.bg[2], theme.bg[3]),
+            navBarButtonBackground: this.circleGradient(theme.nbbb[0], theme.nbbb[1], theme.nbbb[2], theme.nbbb[3]),
+            navBarButtonText: theme.nbbt,
+            navBarActiveButtonText: theme.nbabt
+        }
+    }
+
+
+    get darkCubehelixMode() {
+        return {
+            color: "oklch(0.99 0 0)",
+            accentColor: "oklch(0.71 0.2086 263.9)",
+            boxShadow: "2px 1px rgba(0, 150, 150, 0.05)",
+            background: this.linearAngleGradientCubehelix(225, 0.2, 0.9, 0.08, 0.1, 32, 125),
+            navBarButtonBackground: this.circleGradient(
+                [
+                    "#101210",
+                    "#000001",
+                    "#081011",
+                    "#010203"
+                ],
+                12,
+                100,
+                50,
+            ),
+            navBarButtonText: [
+                "#10CCDD",
+                "#4079ff",
+                "#99FFFF",
+                "#0000ff",
+                "#1050CC"
+            ],
+            navBarActiveButtonText: [
+                "#FFFF00",
+                "#FFFF99",
+                "#CCCCCC",
+                "#FFFF00",
+                "#FFFFDD"
+            ],
+        };
+    }
+
+
+    get lightCubehelixMode() {
     return {
         color: "oklch(0.01 0 0)",
         accentColor: "oklch(0.42 0.2086 263.9)",
         boxShadow: "2px 1px rgba(0, 0, 0, 0.15)",
-      background: this.circleGradient(
-          [
-            "#fFfaFF",
-            "#FFFFEE",
-            "#fafaCF",
-            "#FFFFDD",
-            "#FFFFCF",
-            "#fafaFF",
-          ],
-        32,
-          10,
-          27,
-      ),
-
+        background: this.linearAngleGradientCubehelix(200, -0.35, 0.3, 0.7, 0.9, 32, 125),
       navBarButtonBackground: this.circleGradient(
           [
             "#f0Daa0",
@@ -78,15 +108,15 @@ class GradientStore {
             "#fafa99",
             "#FFFFED"
           ],
-        12,
-        0,
-        250,
+          12,
+          0,
+          250,
       ),
       navBarButtonText: [
         "#000055",
         "#4079ff",
         "#0525FF",
-        "0000ff",
+          "#0000ff",
         "#1050CC"
       ],
       navBarActiveButtonText: [
@@ -98,57 +128,15 @@ class GradientStore {
       ]
     };
 
-
   }
 
-  scaleGradient = (colors, number) =>
-      chroma.bezier(colors).scale().mode("hsl").colors(number).join(", ");
-
-  circleGradient = (colors, number, angle, angleTwo) =>
-      `radial-gradient(in oklch circle at ${angle}% ${angleTwo}%, ${this.scaleGradient(colors, number)})`;
 
 
 
 
-  setGradient(name) {
-    // if (this.gradients[name]) {
-    this.activeGradient = name;
-    // }
-  }
-
-  // get gradientConfig() {
-  //   return this.gradients[this.activeGradient];
-  // }
-
-  // Существующие методы
-  setMantineControlAnimation(newAnimation) {
-    this.mantineControlAnimations = {
-      ...this.mantineControlAnimations,
-      ...newAnimation,
-    };
-  }
-
-  setSpringAnimation(newAnimation) {
-    this.springAnimations = {
-      ...this.springAnimations,
-      ...newAnimation,
-    };
-  }
-
-  // Новые методы для интерполяций
-  createInterpolation(name, inputRange, outputRange, options = {}) {
-    // const interpolator = interpolate(inputRange, outputRange, options);
-    // this.interpolations[name] = interpolator;
-    // return interpolator;
-  }
-
-  getInterpolation(name, value) {
-    // if (!this.interpolations[name]) return value;
-    // return this.interpolations[name](value);
-  }
 
   // Методы для градиентов
-  createGradient(name, colorStops, type = "linear") {
+    // createGradient(name, colorStops, type = "linear") {
     // this.gradients[name] = {
     //   colorStops,
     //   type,
@@ -161,52 +149,8 @@ class GradientStore {
     //     return "";
     //   },
     // };
-  }
-
-  getGradient(name, options = {}) {
-    // if (!this.gradients[name]) return "";
-    // return this.gradients[name].getCSS(options.angle);
-  }
-
-  // Динамическое обновление градиента
-  updateGradient(name, colorStops) {
-    // if (this.gradients[name]) {
-    //   this.gradients[name].colorStops = colorStops;
     // }
-  }
 
-  // Интерполяция между двумя градиентами
-  interpolateGradients(name, fromGradientName, toGradientName, progress) {
-    // if (!this.gradients[fromGradientName] || !this.gradients[toGradientName])
-    return;
-
-    // const fromColors = this.gradients[fromGradientName].colorStops;
-    // const toColors = this.gradients[toGradientName].colorStops;
-
-    // Убедимся, что количество цветовых остановок совпадает
-    // if (fromColors.length !== toColors.length) return;
-    //
-    // // Интерполировать каждую цветовую остановку
-    // const interpolatedColors = fromColors.map((fromColor, index) => {
-    //   // Здесь нужна функция interpolateColor, которую можно реализовать
-    //   // с помощью color-interpolate или другой библиотеки
-    //   return interpolateColor(fromColor, toColors[index], progress);
-    // });
-
-    this.createGradient(
-      name,
-      // interpolatedColors,
-      // this.gradients[fromGradientName].type,
-    );
-  }
-}
-
-// Вспомогательная функция для интерполяции цветов
-function interpolateColor(fromColor, toColor, progress) {
-  // Здесь можно использовать библиотеку color-interpolate или реализовать самостоятельно
-  // Упрощенная реализация для RGB цветов в формате hex
-  // В реальном приложении используйте специализированную библиотеку
-  // return mixColors(fromColor, toColor, progress);
 }
 
 export const gradientStore = new GradientStore();

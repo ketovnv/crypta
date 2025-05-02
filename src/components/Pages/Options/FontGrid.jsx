@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 
 import { observer } from "mobx-react-lite";
-import classes from "@styles/fonts.module.css";
+// import classes from "@styles/fonts.module.css";
 
 // logger.warning("FontGridInit");
 

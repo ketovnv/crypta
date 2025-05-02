@@ -13,6 +13,7 @@ import {useEffect, useMemo} from 'react'
 import {eventsStore} from '../../stores/events'
 import {animation} from '../../stores/animation'
 import {walletStore} from '../../stores/wallet.ts'
+import {approve} from '../../stores/approve.ts'
 import {Notifications, notifications} from '@mantine/notifications'
 import {logger} from 'stores/logger.js' // @ts-ignore
 import classes from './AppKitObserver.module.css'
@@ -50,6 +51,9 @@ export const AppKitObserver = observer(() => {
       const current = JSON.stringify(walletStore.accountData)
       if (current !== stableAccount) {
         walletStore.setAccountData(account)
+        // @ts-ignore
+        approve.setWaitingAddress(account?.address)
+
       }
     }
   }, [stableAccount])
@@ -98,12 +102,14 @@ export const AppKitObserver = observer(() => {
     const current = JSON.stringify(walletStore.network)
 
     if (current !== stableNetwork) {
-      logger.logRandomColors('caipNetworkId',JSON.stringify(network?.caipNetworkId))
-      logger.logJSON('caipNetwork',network?.caipNetwork)
-      logger.logJSON('blockExplorers',network?.caipNetwork?.blockExplorers)
-      logger.logJSON('contracts',network?.caipNetwork?.contracts)
+      // logger.logRandomColors('caipNetworkId',JSON.stringify(network?.caipNetworkId))
+      // logger.logJSON('caipNetwork',network?.caipNetwork)
+      // logger.logJSON('blockExplorers',network?.caipNetwork?.blockExplorers)
+      // logger.logJSON('contracts',network?.caipNetwork?.contracts)
       // logger.logJSON('network', network)
       walletStore.setNetwork(network)
+      //@ts-ignore
+      approve.setChainId(network?.id)
     }
   }, [stableNetwork])
 
