@@ -12,7 +12,7 @@
       "rotateY": 0,
       "opacity": 1,
       "transition": {
-        "duration": 2,
+        "duration": 1,
         "ease": "easeInOut"
       }
     }
@@ -30,7 +30,7 @@
       "rotateY": 0,
       "opacity": 1,
       "transition": {
-        "duration": 2,
+        "duration": 1,
         "staggerChildren": 0.5,
         "ease": "easeInOut"
       }

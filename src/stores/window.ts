@@ -13,7 +13,8 @@ export class WindowStore {
 
     constructor() {
         makeAutoObservable(this)
-        this.init().then(()=>console.log('Window inited'))
+        this.init().then(()=>console.log('Window inited'));
+
     }
 
     async init() {

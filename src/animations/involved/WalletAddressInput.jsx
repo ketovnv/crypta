@@ -67,11 +67,12 @@ const WalletAddressInput = ({value, setValue,isValid,setIsValid,inputName ='На
         },
         input: {
             color:animation.theme.color,
-            fontWeight: focused?600:400,
-            fontFamily: 'Inter, sans-serif',
+            fontWeight: focused? 800 : 300,
+            fontFamily: 'Chivo Mono',
             height: '25px',
             background: 'transparent',
             border: 'none',
+            fontOpticalSizing: 'auto',
             borderBottom: `2px solid ${
                 isValid === true ? animation.theme.accentColor :
                     isValid === false ? uiStore.getRed

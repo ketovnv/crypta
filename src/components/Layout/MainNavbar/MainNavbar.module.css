@@ -10,35 +10,7 @@
   justify-content: space-between;
   background: rgba(0, 0, 0, 0);
   border-right: none;
-  color: var(--mantine-color-indigo-6);
   width: 300px;
   inset-inline-start: 0;
   inset-inline-end: 0;
-}
-
-.link span {
-  font-weight: 900;
-  font-size: 1.5em;
-  font-family: 'Anka/Coder', monospace;
-  background: none;
-  /*&:where([data-active], [aria-current='page']) {*/
-  /*    color: var(--mantine-color-green-2)*/
-  /*}*/
-  @mixin hover {
-    color: var(--mantine-color-indigo-5)        /*}*/
-  }
-}
-
-.navbar a:active {
-  color: var(--mantine-color-green-2) !important
-}
-
-.accordionItem {
-  padding: 0;
-  width: 300px;
-}
-
-.accordionItem span {
-  padding: 2px;
-  font-size: 12px !important;
 }

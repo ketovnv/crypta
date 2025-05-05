@@ -300,120 +300,120 @@ const ResolutionsButtonsLayout = () => {
                 </div>
             </div>
 
-            {/* Переключатель полноэкранного режима */}
-            <div>
-                <div
-                    style={styles.fullscreenToggle}
-                    onClick={() => setFullscreen(!fullscreen)}
-                >
-                    <motion.div
-                        style={{
-                            width: '48px',
-                            height: '24px',
-                            borderRadius: '24px',
-                            padding: '2px',
-                            display: 'flex',
-                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1) inset',
-                        }}
-                        variants={toggleVariants}
-                        animate={fullscreen ? "on" : "off"}
-                    >
-                        <motion.div
-                            style={{
-                                width: '20px',
-                                height: '20px',
-                                borderRadius: '50%',
-                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                            }}
-                            variants={toggleCircleVariants}
-                            animate={fullscreen ? "on" : "off"}
-                        />
-                    </motion.div>
-                    <motion.span
-                        transition={{type:'spring', visualDuration: 3,bounce: 0.5}}
-                        animate={{color: fullscreen ? animation.theme.accentColor : `oklch(${uiStore.themeIsDark ? 0.3 : 0.9} 0 0 )`,}}
-                        style={styles.toggleLabel}>Полноэкранный режим
-                    </motion.span>
-                </div>
-            </div>
+            {/*/!* Переключатель полноэкранного режима *!/*/}
+            {/*<div>*/}
+            {/*    <div*/}
+            {/*        style={styles.fullscreenToggle}*/}
+            {/*        onClick={() => setFullscreen(!fullscreen)}*/}
+            {/*    >*/}
+            {/*        <motion.div*/}
+            {/*            style={{*/}
+            {/*                width: '48px',*/}
+            {/*                height: '24px',*/}
+            {/*                borderRadius: '24px',*/}
+            {/*                padding: '2px',*/}
+            {/*                display: 'flex',*/}
+            {/*                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1) inset',*/}
+            {/*            }}*/}
+            {/*            variants={toggleVariants}*/}
+            {/*            animate={fullscreen ? "on" : "off"}*/}
+            {/*        >*/}
+            {/*            <motion.div*/}
+            {/*                style={{*/}
+            {/*                    width: '20px',*/}
+            {/*                    height: '20px',*/}
+            {/*                    borderRadius: '50%',*/}
+            {/*                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',*/}
+            {/*                }}*/}
+            {/*                variants={toggleCircleVariants}*/}
+            {/*                animate={fullscreen ? "on" : "off"}*/}
+            {/*            />*/}
+            {/*        </motion.div>*/}
+            {/*        <motion.span*/}
+            {/*            transition={{type:'spring', visualDuration: 3,bounce: 0.5}}*/}
+            {/*            animate={{color: fullscreen ? animation.theme.accentColor : `oklch(${uiStore.themeIsDark ? 0.3 : 0.9} 0 0 )`,}}*/}
+            {/*            style={styles.toggleLabel}>Полноэкранный режим*/}
+            {/*        </motion.span>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
-            {/* Кнопка применения */}
-            <motion.div
-                style={styles.buttonContainer}
-                whileHover={{
-                    scale: 1.04,
-                    opacity: 1,
-                    transition: {duration: 0.4}
-                }}
-                whileTap={{
-                    scale: 0.97,
-                    opacity: 1,
-                    transition: {duration: 0.2}
-                }}
-                onClick={resizeWindow}
-            >
-                {/* Фоновая анимация */}
-                <motion.div
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        background: `linear-gradient( in oklch to left, ${gradientStore.scaleGradient(animation.theme.navBarButtonText, 10)})`,
-                        borderRadius: '10px',
-                        zIndex: 0,
-                    }}
-                    variants={buttonBackgroundVariants}
-                    initial="idle"
-                />
+            {/*/!* Кнопка применения *!/*/}
+            {/*<motion.div*/}
+            {/*    style={styles.buttonContainer}*/}
+            {/*    whileHover={{*/}
+            {/*        scale: 1.04,*/}
+            {/*        opacity: 1,*/}
+            {/*        transition: {duration: 0.4}*/}
+            {/*    }}*/}
+            {/*    whileTap={{*/}
+            {/*        scale: 0.97,*/}
+            {/*        opacity: 1,*/}
+            {/*        transition: {duration: 0.2}*/}
+            {/*    }}*/}
+            {/*    onClick={resizeWindow}*/}
+            {/*>*/}
+            {/*    /!* Фоновая анимация *!/*/}
+            {/*    <motion.div*/}
+            {/*        style={{*/}
+            {/*            position: 'absolute',*/}
+            {/*            top: 0,*/}
+            {/*            left: 0,*/}
+            {/*            right: 0,*/}
+            {/*            bottom: 0,*/}
+            {/*            background: `linear-gradient( in oklch to left, ${gradientStore.scaleGradient(animation.theme.navBarButtonText, 10)})`,*/}
+            {/*            borderRadius: '10px',*/}
+            {/*            zIndex: 0,*/}
+            {/*        }}*/}
+            {/*        variants={buttonBackgroundVariants}*/}
+            {/*        initial="idle"*/}
+            {/*    />*/}
 
                  {/*Эффект свечения*/}
-                <motion.div
-                    style={{
-                        position: 'absolute',
-                        top: '-50%',
-                        left: '-50%',
-                        width: '200%',
-                        height: '200%',
-                        background: `linear-gradient( in oklch to left, ${gradientStore.scaleGradient(animation.theme.navBarActiveButtonText, 10)})`,
-                        zIndex: 2,
-                        opacity: 0,
-                    }}
-                    whileHover={{
-                        opacity: [0.2, 0.4, 0.2],
-                        scale: 1.1,
-                        transition: {
-                            repeat: Infinity,
-                            repeatType: "reverse",
-                            duration: 2,
-                            ease: 'easeInOut'
-                        }}}
-                />
+            {/*    <motion.div*/}
+            {/*        style={{*/}
+            {/*            position: 'absolute',*/}
+            {/*            top: '-50%',*/}
+            {/*            left: '-50%',*/}
+            {/*            width: '200%',*/}
+            {/*            height: '200%',*/}
+            {/*            background: `linear-gradient( in oklch to left, ${gradientStore.scaleGradient(animation.theme.navBarActiveButtonText, 10)})`,*/}
+            {/*            zIndex: 2,*/}
+            {/*            opacity: 0,*/}
+            {/*        }}*/}
+            {/*        whileHover={{*/}
+            {/*            opacity: [0.2, 0.4, 0.2],*/}
+            {/*            scale: 1.1,*/}
+            {/*            transition: {*/}
+            {/*                repeat: Infinity,*/}
+            {/*                repeatType: "reverse",*/}
+            {/*                duration: 2,*/}
+            {/*                ease: 'easeInOut'*/}
+            {/*            }}}*/}
+            {/*    />*/}
 
-                {/* Текст кнопки */}
-                <motion.div
-                    whileHover={{ color:'oklch(0.9 0.1151 81.53)'}}
-                    whileTap={{  color: gradientStore.averageOklch(animation.theme.navBarActiveButtonText)}}
-                    style={{
-                        color: 'oklch(0.9 0 0)',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        fontWeight: '600',
-                        fontSize: '1rem',
-                        zIndex: 3,
-                    }}
+            {/*    /!* Текст кнопки *!/*/}
+            {/*    <motion.div*/}
+            {/*        whileHover={{ color:'oklch(0.9 0.1151 81.53)'}}*/}
+            {/*        whileTap={{  color: gradientStore.averageOklch(animation.theme.navBarActiveButtonText)}}*/}
+            {/*        style={{*/}
+            {/*            color: 'oklch(0.9 0 0)',*/}
+            {/*            position: 'absolute',*/}
+            {/*            top: 0,*/}
+            {/*            left: 0,*/}
+            {/*            width: '100%',*/}
+            {/*            height: '100%',*/}
+            {/*            display: 'flex',*/}
+            {/*            justifyContent: 'center',*/}
+            {/*            alignItems: 'center',*/}
+            {/*            fontWeight: '600',*/}
+            {/*            fontSize: '1rem',*/}
+            {/*            zIndex: 3,*/}
+            {/*        }}*/}
 
-                >
-                    Применить
-                </motion.div>
-            </motion.div>
+            {/*    >*/}
+            {/*        Применить*/}
+            {/*    </motion.div>*/}
+            {/*</motion.div>*/}
         </div>
     );
 };

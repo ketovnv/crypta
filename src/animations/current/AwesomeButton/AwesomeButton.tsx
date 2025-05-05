@@ -81,7 +81,7 @@ layout
       key={buttonKey}
       variants={variants}
       transition={{ type: "tween", duration: 0.5 }}
-      style={{ ...style , fontFamily: 'Core Sans DS55 Bold'}}
+      style={{ ...style}}
       className={`${classes.awsBtn}  aws-btn`}
       ref={container}
     >
@@ -105,7 +105,7 @@ layout
           ref={content}
           className={`${classes.mainNavBtnContent}  aws-btn__content`}
         >
-          <Center mr={before? 6 :0}>{before}</Center>
+          <Center mr={before? 12 :0}>{before}</Center>
           <Center ref={child}>{children}</Center>
           {after}
         </motion.div>

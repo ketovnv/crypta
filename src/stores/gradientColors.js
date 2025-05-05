@@ -200,3 +200,19 @@ export const OKLABGRAY = [
     'oklab( 90% 0 0)',
     'oklab( 100% 0 0)',
 ]
+
+export const redGradientDark =
+    [
+        "#991122",
+        "#FF4400",
+        "#882200",
+        "#551100"
+    ]
+
+export  const redGradientLight =
+    [
+        "#FF7799",
+        "#FF5555",
+        "#FF7799",
+        "#FF3333"
+    ]

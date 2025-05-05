@@ -33,6 +33,7 @@ export const PageTransition = observer(() => {
       height: 0,
       rotateX: -225,
       y:600,
+      scale: 0.5
       // transition: {delay: 0.75},
     },
     visible: {
@@ -40,20 +41,20 @@ export const PageTransition = observer(() => {
       opacity: 1,
       rotateX: 0,
       y:0,
+        scale: router.getPageSizes[router.getCurrentPage]
     },
     exit: {
       height: 0,
       opacity: -0.5,
       rotateX: -200,
       y: 600,
+      scale: 0.5
     },
   };
 
 
   return (
-    <AnimatePresence
-      style={{ width: "100%", height: "100%", perspective: 2000 }}
-    >
+    <AnimatePresence>
       <motion.div
         layout
         key={router.getCurrentPage}

@@ -11,6 +11,7 @@
 }
 
 .textContent {
+  font-optical-sizing: auto;
   line-height: normal;
   display: inline-block;
   position: relative;

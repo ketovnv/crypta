@@ -37,6 +37,7 @@ import GradientSwitches from "./GradientSwitches";
 // import ResolutionsButtons from "./ResolutionsButtons";
 import ResolutionsButtonsLayout from "./ResolutionsButtonsLayout";
 import classes from "./Options.module.css";
+import ResolutionsButtons from "./ResolutionsButtons.jsx";
 
 
 const Options = observer(() => {
@@ -49,7 +50,7 @@ const Options = observer(() => {
   useEffect(() => {
     if (!monitors.length) {
       logger.logRandomColors('availableMonitors', 123)
-      // availableMonitors().then(setMonitors);
+      availableMonitors().then(setMonitors);
     }
   }, []);
 
@@ -148,55 +149,57 @@ const Options = observer(() => {
     <main className="pageWrapper">
       <animated.section className="pageCard" style={uiStore.themeStyle}>
         <AnimatePresence>
-          <GradientSwitches/>
-          {!monitors.length ?
-              <motion.div layout
-                          animate={{
-                            width: 600,
-                            paddingLeft: 75,
-                            fontSize: '2em',
-                            color: uiStore.getRed
-                          }}
-                         className={classes.monitorError}
-                          transition={{type: 'spring', visualDuration: 5, bounce: 0.5}}>
-                Монитор не доступен!
-              </motion.div> :
+          <
+            GradientSwitches/>
+          {/*{!monitors.length ?*/}
+          {/*    <motion.div layout*/}
+          {/*                animate={{*/}
+          {/*                  width: 600,*/}
+          {/*                  paddingLeft: 75,*/}
+          {/*                  fontSize: '2em',*/}
+          {/*                  color: uiStore.getRed*/}
+          {/*                }}*/}
+          {/*               className={classes.monitorError}*/}
+          {/*                transition={{type: 'spring', visualDuration: 5, bounce: 0.5}}>*/}
+          {/*      Монитор не доступен!*/}
+          {/*    </motion.div>*/}
+          {/*:*/}
 
-              <motion.div
-                  initial={{opacity: 0, y: -30}}
-                  animate={{opacity: 1, y: 0}}
-                  exit={{opacity: 0, y: 30}}
-                  transition={{duration: 2}}
-              >
-                {/*<LJ json={animation.theme.background}/>*/}
+          {/*    <motion.div*/}
+          {/*        initial={{opacity: 0, y: -30}}*/}
+          {/*        animate={{opacity: 1, y: 0}}*/}
+          {/*        exit={{opacity: 0, y: 30}}*/}
+          {/*        transition={{duration: 2}}*/}
+          {/*    >*/}
+          {/*      /!*<LJ json={animation.theme.background}/>*!/*/}
                 <ResolutionsButtonsLayout/>
                 {/*<ResolutionsButtons/>*/}
-                <motion.div
-                    layout
-                    animate={{opacity: 1, color: animation.theme.accentColor, width: '100%'}}
-                    transition={{duration: 2}}
-                    style={{
-                      position: 'absolute',
-                      fontSize: 14,
-                      opacity: 0,
-                      width: '95%'
-                    }}>{`Размер монитора ${monitors[0].size.width} на ${monitors[0].size.height}`}
-                  <motion.span
-                      layout
-                      animate={{width: '50%', color: animation.theme.color, right: -100, top: 0}}
-                      transition={{duration: 5}}
-                      style={{
-                        position: 'absolute',
-                        fontSize: 12,
-                        width: '90%',
-                        margin: 10,
-                        marginTop: 2,
-                        marginBottom: 5,
-                        right: -200,
-                        top: 50
-                      }}>{`Масштаб (${monitors[0].scaleFactor})`}</motion.span>
-                </motion.div>
-              </motion.div>}
+                {/*<motion.div*/}
+                {/*    layout*/}
+                {/*    animate={{opacity: 1, color: animation.theme.accentColor, width: '100%'}}*/}
+                {/*    transition={{duration: 2}}*/}
+                {/*    style={{*/}
+                {/*      position: 'absolute',*/}
+                {/*      fontSize: 14,*/}
+                {/*      opacity: 0,*/}
+                {/*      width: '95%'*/}
+                {/*    }}>{`Размер монитора ${monitors[0].size.width} на ${monitors[0].size.height}`}*/}
+                {/*  <motion.span*/}
+                {/*      layout*/}
+                {/*      animate={{width: '50%', color: animation.theme.color, right: -100, top: 0}}*/}
+                {/*      transition={{duration: 5}}*/}
+                {/*      style={{*/}
+                {/*        position: 'absolute',*/}
+                {/*        fontSize: 12,*/}
+                {/*        width: '90%',*/}
+                {/*        margin: 10,*/}
+                {/*        marginTop: 2,*/}
+                {/*        marginBottom: 5,*/}
+                {/*        right: -200,*/}
+                {/*        top: 50*/}
+                {/*      }}>{`Масштаб (${monitors[0].scaleFactor})`}</motion.span>*/}
+                {/*</motion.div>*/}
+              {/*</motion.div>}*/}
         </AnimatePresence>
       </animated.section>
     </main>)

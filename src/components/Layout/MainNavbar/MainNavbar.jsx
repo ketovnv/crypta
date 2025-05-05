@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import classes from "./MainNavbar.module.css";
 import {observer} from "mobx-react-lite";
 import {LayoutGroup, motion} from "motion/react";
-import {IoApertureSharp, IoFileTrayFullSharp, IoLogoReact, IoSettings, IoWallet,} from "react-icons/io5";
+import {IoApertureSharp, IoLogoReact, IoSettings, IoWallet,} from "react-icons/io5";
 import {animation} from "@stores/animation.js";
 import {router} from "@stores/router.js";
 import {AwesomeButton} from "@animations/current/AwesomeButton/AwesomeButton";
@@ -13,7 +13,7 @@ import {Etherium} from "@components/Layout/SvgIcons/Etherium.jsx";
 
 export const MainNavbar = observer(() => {
   const icons = {
-    Transactions: <Etherium/>,
+    Transactions: <Etherium width={20} initial={{x:-2}} animate={{x:12}} transition={{duration:5,repeat: Infinity, repeatType:'reverse'}} style={{marginRight:10}}/>,
     Home: <IoWallet size={34}/>,
     Approve: <IoLogoReact size={34}/>,
     Balance: <IoApertureSharp size={34}/>,
@@ -127,12 +127,14 @@ export const MainNavbar = observer(() => {
             key={path}
           >
             <GradientText
+                fontFamily="Nunito, sans-serif"
+                fontWeight={isActive ? 950 : 700}
                 colors={
                   isActive ?
                       animation.theme.navBarActiveButtonText :
                       animation.theme.navBarButtonText
                 }
-                fontSize={32}>
+                fontSize={30}>
               {name}
             </GradientText>
           </AwesomeButton>

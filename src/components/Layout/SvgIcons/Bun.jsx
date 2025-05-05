@@ -1,12 +1,12 @@
 import {motion, MotionConfig} from "motion/react";
 
-export function Bun(scale = 1, props) {
+export function Bun({scale = 1, props}) {
   return (
       <MotionConfig transition={{
         repeat: Infinity,
         repeatType: "reverse",
           type: 'spring',
-          stiffness: 400,
+          stiffness: 300,
           friction: 100,
           mass: 10,
           damping: 150,
@@ -21,8 +21,8 @@ export function Bun(scale = 1, props) {
       {...props}
     >
           <motion.path
-              initial={{fill: 'oklch(0.91  51  115.1)'}}
-              animate={{fill: 'oklch(0.99 0.1  0.1)'}}
+              initial={{fill: 'hsl(55 90% 65%)'}}
+              animate={{fill: 'hsl(42.6 100% 100%)'}}
         d='M29 17c0 5.65-5.82 10.23-13 10.23S3 22.61 3 17c0-3.5 2.24-6.6 5.66-8.44S14.21 4.81 16 4.81s3.32 1.54 7.34 3.71C26.76 10.36 29 13.46 29 17'
           ></motion.path>
           <motion.path

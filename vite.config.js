@@ -3,7 +3,8 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tauri from "vite-plugin-tauri";
-import tailwindcssPlugin from 'vite-plugin-tailwindcss'
+import webfontDownload from "vite-plugin-webfont-dl";
+// import tailwindcssPlugin from 'vite-plugin-tailwindcss'
 
 
 // Плагин для анализа размера бандла
@@ -27,7 +28,13 @@ export default defineConfig({
         ],
       },
     }),
-    tailwindcssPlugin(),
+    webfontDownload([
+      'https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap',
+      'https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700',
+      'https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap',
+      'https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900',
+
+    ]),
     tsconfigPaths(),
     tauri(),
     visualizer({
@@ -55,14 +62,20 @@ export default defineConfig({
   },
 
   build: {
-    target: "esnext",
-    minify: "terser",
+    minify: 'esbuild',
+    target: 'esnext',
+    esbuildOptions: {
+      legalComments: 'none',
+      treeShaking: true,
+    },
+    emptyOutDir: true,
+    outDir: "dist",
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "mobx", "mobx-react-lite"],
           mantine: ["@mantine/core", "@mantine/hooks"],
-          tauri: ["@tauri-apps/api"], // Выносим Tauri API
+          tauri: ["@tauri-apps/api"],
         },
       },
     },

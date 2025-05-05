@@ -34,6 +34,7 @@ const Layout = observer(() => {
           breakpoint: 'sm'
         }}
         style={{
+          // scale:0.8,
           position: 'absolute',
           left: 0,
           top: 0,
@@ -42,9 +43,9 @@ const Layout = observer(() => {
         }}
         padding={0}
       >
-        <AnimationObserver />
         <AppKitObserver />
-        <motion.div
+          <AnimationObserver/>
+          <motion.div
           animate={{
             opacity: eventsStore.state?.open ? 0.05 : 1,
             filter: eventsStore.state?.open ? 'blur(2px)' : 'blur(0px)'

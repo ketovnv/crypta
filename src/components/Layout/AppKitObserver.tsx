@@ -59,7 +59,6 @@ export const AppKitObserver = observer(() => {
   }, [stableAccount])
 
   useEffect(() => {
-
     uiStore.setAppkitMethods(
         {
           setThemeMode,

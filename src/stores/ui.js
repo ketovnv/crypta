@@ -1,9 +1,11 @@
 import { action, makeAutoObservable } from "mobx";
 import { animation } from "@stores/animation.js";
+import {gradientStore} from "@stores/gradient.js";
 
 class UiStore {
 
-  colorScheme = "dark"; // Начальное значение
+  colorScheme = "dark";
+  themeIsVeryColorised = false// Начальное значение
   isNavbarOpened = false;
   fontSearch = "";
   fontFamilies = [];
@@ -15,9 +17,10 @@ class UiStore {
   }
 
   get getGreen() {
-    return  `oklch${this.themeIsDark ?'(0.65 0.242 32.37)' : '(0.48 0.1786 32.37)'}`
+    return  `oklch(${this.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`
   }
-
+  get getTthemeIsVeryColorised() {
+    return this.themeIsVeryColorised  }
 
   constructor() {
     makeAutoObservable(this, {
@@ -46,6 +49,10 @@ class UiStore {
     });
   };
 
+  setThemeIsVeryColorised = (value) => {
+    this.themeIsVeryColorised = value;
+  }
+
   setColorScheme = (theme) => {
     this.colorScheme = theme;
     this.appkitMethods.setThemeMode(theme);
@@ -59,7 +66,7 @@ class UiStore {
         precision: 0.0001,
       },
     });
-    localStorage.setItem("my-app-color-scheme", theme);
+    localStorage.setItem("app-color-scheme", theme);
   };
 
   setFontFamilies = (value) => {

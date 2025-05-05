@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import React, {useState} from 'react';
+import {motion} from 'motion/react';
+import {observer} from "mobx-react-lite";
+import {logger} from "@stores/logger.js";
+import {LIGHT} from "@stores/gradientColors.js";
+import {gradientStore} from "@stores/gradient.js";
 
 // CSS стили для компонента
 const styles = {
@@ -9,7 +13,7 @@ const styles = {
         gap: '2rem',
         padding: '2rem',
         borderRadius: '1rem',
-        backgroundColor: '#f8f9fa',
+        backgroundColor: 'rgba(0,0,0,0.05)',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
         maxWidth: '600px',
         margin: '0 auto',
@@ -68,7 +72,7 @@ const styles = {
 
 // Градиенты для светлой темы
 const lightThemeGradients = [
-    'linear-gradient(45deg, #ff9a9e, #fad0c4)',
+    gradientStore.getThemeMeta('LIGHT')?.background,
     'linear-gradient(45deg, #a1c4fd, #c2e9fb)',
     'linear-gradient(45deg, #d4fc79, #96e6a1)',
     'linear-gradient(45deg, #ffecd2, #fcb69f)',
@@ -77,29 +81,40 @@ const lightThemeGradients = [
 
 // Градиенты для темной темы
 const darkThemeGradients = [
-    'linear-gradient(45deg, #434343, #000000)',
+    // gradientStore.getThemeMeta('DARK')?.background,
     'linear-gradient(45deg, #4b6cb7, #182848)',
     'linear-gradient(45deg, #3a1c71, #d76d77)',
     'linear-gradient(45deg, #0f2027, #203a43)',
     'linear-gradient(45deg, #5614b0, #dbd65c)',
 ];
 
-const GradientSwitches = () => {
+const GradientSwitches = observer(() => {
     // Состояния для выбранных градиентов
     const [selectedLightTheme, setSelectedLightTheme] = useState(0);
     const [selectedDarkTheme, setSelectedDarkTheme] = useState(0);
 
     // Анимация для кружков
-    const circleVariants = {
+    const circleVariants = (themeGradient) => {
+        logger.debug('🎃init🎃', 'Вызов градиента  👻📺🔴🟠🟡🟢🔵🟣🟤⚫⚪📺👻', 10)
+        return {
         idle: {
             scale: 1,
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            boxShadow:
+                '0px 0px 10px 0px rgba(255, 165, 0, 0.4),' +
+                ' 0px 0px 20px 0px rgba(255, 0, 0, 0.2),' +
+                '0px 0px 10px 0px rgba(255, 255, 0, 0.3),' +
+                '0px 0px 20px 0px rgba(255, 255, 0, 0.3)',
             transition: { duration: 0.3 }
         },
         hover: {
-            scale: 1.1,
-            boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
-            transition: { duration: 0.3 }
+            scale: 1.05,
+            // boxShadow: '0 6px 12px rgba(0, 0, 0, 0.15)',
+            boxShadow:
+                '0px 0px 20px 0px rgba(255, 165, 0, 0.7),' +
+                ' 0px 0px 40px 0px rgba(255, 0, 0, 0.5),' +
+                '0px 0px 20px 0px rgba(255, 255, 0, 0.5),' +
+                '0px 0px 40px 0px rgba(255, 255, 0, 0.5)',
+            transition: {duration: 0.3, repeat: Infinity, repeatType: 'reverse'}
         },
         tap: {
             scale: 0.95,
@@ -108,8 +123,13 @@ const GradientSwitches = () => {
         },
         selected: {
             scale: 1.05,
-            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-            transition: { duration: 0.3 }
+            boxShadow:
+                '0px 0px 30px 0px rgba(255, 165, 0, 1),' +
+                ' 0px 0px 60px 0px rgba(0 , 255, 255, 1),' +
+                '0px 0px 70px 0px rgba(255, 255, 0, 1),' +
+                '0px 0px 50px 0px rgba(255, 255, 0, 1)',
+            transition: {duration: 3, repeat: Infinity, repeatType: 'reverse'}
+        }
         }
     };
 
@@ -130,7 +150,6 @@ const GradientSwitches = () => {
         <div style={styles.container}>
             {/* Секция светлой темы */}
             <div style={styles.themeSection}>
-                <h3 style={styles.title}>Светлая тема</h3>
                 <div style={styles.switchesContainer}>
                     {lightThemeGradients.map((gradient, index) => (
                         <div
@@ -153,7 +172,7 @@ const GradientSwitches = () => {
                                     ...styles.circle,
                                     background: gradient,
                                 }}
-                                variants={circleVariants}
+                                variants={circleVariants(gradient)}
                                 initial="idle"
                                 animate={selectedLightTheme === index ? "selected" : "idle"}
                                 whileHover="hover"
@@ -174,7 +193,6 @@ const GradientSwitches = () => {
 
             {/* Секция темной темы */}
             <div style={styles.themeSection}>
-                <h3 style={styles.title}>Темная тема</h3>
                 <div style={styles.switchesContainer}>
                     {darkThemeGradients.map((gradient, index) => (
                         <div
@@ -197,7 +215,7 @@ const GradientSwitches = () => {
                                     ...styles.circle,
                                     background: gradient,
                                 }}
-                                variants={circleVariants}
+                                variants={circleVariants(gradient)}
                                 initial="idle"
                                 animate={selectedDarkTheme === index ? "selected" : "idle"}
                                 whileHover="hover"
@@ -217,6 +235,5 @@ const GradientSwitches = () => {
             </div>
         </div>
     );
-};
-
+})
 export default GradientSwitches;

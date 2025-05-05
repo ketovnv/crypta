@@ -19,6 +19,7 @@ import {
 } from './config'
 import Layout from '@components/Layout/index.js'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
+import {uiStore} from "@stores/ui.js";
 // import {uiStore} from "@stores/ui.js";
 
 const queryClient = new QueryClient()
@@ -34,7 +35,9 @@ createAppKit({
   }
 })
 
+
 // @ts-ignore
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <WagmiProvider config={wagmiAdapter.wagmiConfig}>
     <QueryClientProvider client={queryClient}>

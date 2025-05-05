@@ -1,6 +1,16 @@
 import {makeAutoObservable} from "mobx";
 import chroma from "chroma-js";
 import {RAINBOWGRADIENT, RAINBOWV2GRADIENT} from "@stores/gradientColors.js";
+import {DARK, LIGHT, redGradientDark, redGradientLight,} from "./gradientColors.js"
+import {uiStore} from "@stores/ui.js";
+import {logger} from "@stores/logger.js";
+
+
+const THEMES = {DARK, LIGHT}
+
+
+
+
 
 
 class GradientStore {
@@ -8,6 +18,9 @@ class GradientStore {
   constructor() {
     makeAutoObservable(this);
   }
+
+
+
 
 
   get getRainbowV2Gradient(){
@@ -47,7 +60,23 @@ class GradientStore {
     chromaSpectral = () => chroma.scale('Spectral').domain([1,0])
 
 
-    getTheme(theme) {
+    get getTheme() {
+        const theme = uiStore.themeIsDark ? this.darkCubehelixMode : this.lightCubehelixMode
+        return this.getColorTheme(uiStore.themeIsDark ? DARK : LIGHT)
+        // return this.darkCubehelixMode
+        // uiStore.setThemeIsVeryColorised(!!theme.themeIsVeryColorised)
+        // return theme
+    }
+
+    getThemeMeta(themeName) {
+        // const {color, background} = this.getColorTheme(this.darkCubehelixMode)
+
+        // logger.logJSON('👻👻👻👻👻👻',(logger.whatIs(this.darkCubehelixMode))
+
+        return  this.lightCubehelixMode.background    }
+
+
+    getColorTheme = (theme) => {
         return {
             color: theme.c,
             accentColor: theme.c,
@@ -62,21 +91,11 @@ class GradientStore {
 
     get darkCubehelixMode() {
         return {
-            color: "oklch(0.99 0 0)",
-            accentColor: "oklch(0.71 0.2086 263.9)",
-            boxShadow: "2px 1px rgba(0, 150, 150, 0.05)",
-            background: this.linearAngleGradientCubehelix(225, 0.2, 0.9, 0.08, 0.1, 32, 125),
-            navBarButtonBackground: this.circleGradient(
-                [
-                    "#101210",
-                    "#000001",
-                    "#081011",
-                    "#010203"
-                ],
-                12,
-                100,
-                50,
-            ),
+            color: "oklch(0.95 0.05 149.29)",
+            accentColor: "oklch(0.89 0.2631 111.18)",
+            boxShadow: "2px 1px rgba(25, 100, 50, 0.05)",
+            background: this.linearAngleGradientCubehelix(225, 0.2, 1, 0.01, 0.09, 64, 135),
+            navBarButtonBackground: this.linearAngleGradientCubehelix(275, 0.2, 0.9, 0.08, 0.1, 32, 125),
             navBarButtonText: [
                 "#10CCDD",
                 "#4079ff",
@@ -91,8 +110,10 @@ class GradientStore {
                 "#FFFF00",
                 "#FFFFDD"
             ],
+            // themeIsVeryColorised:true
         };
     }
+
 
 
     get lightCubehelixMode() {
@@ -100,8 +121,8 @@ class GradientStore {
         color: "oklch(0.01 0 0)",
         accentColor: "oklch(0.42 0.2086 263.9)",
         boxShadow: "2px 1px rgba(0, 0, 0, 0.15)",
-        background: this.linearAngleGradientCubehelix(200, -0.35, 0.3, 0.7, 0.9, 32, 125),
-      navBarButtonBackground: this.circleGradient(
+        background: this.linearAngleGradientCubehelix(225, 0.2, 0.5, 0.4, 0.7, 64, 125),
+        navBarButtonBackground: this.circleGradient(
           [
             "#f0Daa0",
             "#F9F9DD",
@@ -125,12 +146,15 @@ class GradientStore {
           "#FFEE00",
           "#BB7700",
           "#771100"
-      ]
+      ],
+        // themeIsVeryColorised:true
     };
 
   }
 
-
+    get getRedGradient() {
+        return uiStore.themeIsDark ? redGradientDark : redGradientLight
+    }
 
 
 

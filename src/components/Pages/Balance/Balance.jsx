@@ -1,5 +1,4 @@
 import {observer} from "mobx-react-lite";
-import {Center} from "@mantine/core";
 import {useEffect, useMemo} from "react";
 import {animated} from "@react-spring/web";
 import {motion} from "motion/react";
@@ -9,8 +8,6 @@ import {useBalance} from "wagmi";
 import GradientText from "@animations/involved/GradientText.jsx";
 import VeryAdvancedWeb3Input from "@animations/involved/VeryAdvancedWeb3Input.jsx";
 
-
-console.log(`[Balance.jsx] :`);
 
 // Отдельный компонент для каждого chainId
 function SingleBalance({chainId}) {
@@ -43,17 +40,19 @@ const Balance = observer(() => {
               {walletStore.getAddressForBalance && walletStore.getChains?.map(chainId => (
                   <SingleBalance key={chainId} chainId={chainId}/>
               ))}
-              <motion.ul>
+              <motion.div layout>
                   {
                       walletStore.getAddressForBalance && walletStore?.getAllBalances && Object.entries(walletStore?.getAllBalances).map(([key, [amount, symbol]]) =>
-                          <li
+                          <motion.span layout layoutId="price"
+                                       animate={{position: 'relative', paddingLeft:50}}
+                                    initial={{position: 'absolute',left:0,top:0,opacity:1}}
                               key={key}>
                               {key}:
                               <GradientText style={{padding:3}}>{amount}</GradientText>
                               {symbol}
-                          </li>
+                          </motion.span>
                       )}
-              </motion.ul>
+              </motion.div>
               {/*<WalletAddressInput/>*/}
               {/*<AdvancedWeb3Input/>*/}
           </animated.div>

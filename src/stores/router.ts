@@ -9,6 +9,14 @@ const ROUTES = {
   Options: 'Настройки'
 }
 
+const PAGE_SIZES = {
+  Transactions: 1,
+  Home: 1.4,
+  Approve: 0.9,
+  Balance: 0.8,
+  Options: 1.2
+}
+
  export const PAGE_COMPONENTS = {
   Home: React.lazy(() => import('../components/pages/Home/Home.jsx')),
   Balance: React.lazy(() => import('../components/pages/Balance/Balance')),
@@ -18,20 +26,22 @@ const ROUTES = {
 };
 
 const FOOTER_LINKS = [
+  ['Tron', 'developers.tron.network'],
   ['Reown', 'https://react.dev/'],
-  // ['Networks', 'https://ethereum.org/en/developers/docs/networks/'],
-  // ['RPC сети', 'https://eth.merkle.io/'],
   ['Etherscan', 'https://etherscan.io/'],
-  // ['Etherscan API', 'https://api.etherscan.io/api'],
-  ['React', 'https://react.dev/'],
+  ['USDT', 'https://tether.to/'],
   ['Spring', 'https://react-spring.dev/'],
+  ['React', 'https://react.dev/'],
   ['Motion', 'https://motion.dev/docs/react-animation'],
-  ['Mantine UI', 'https://mantine.dev/about/'],
+  ['Vite', 'chroma-js'],
+  ['ChromaJS', 'https://www.vis4.net/chromajs/'],
+  ['MobX', 'https://mobx.js.org/'],
+  ['Tailwindcss', 'https://www.tailwindcss.com'],
   ['Tauri', 'https://v2.tauri.app/start/'],
   ['Bun', 'https://bun.sh/'],
-  ['MobX', 'https://mobx.js.org/'],
-  ['ChromaJS', 'https://www.vis4.net/chromajs/'],
-  ['Vite', 'chroma-js']
+
+
+
 ]
 class RouterStore {
   currentPath: string = 'Options'
@@ -52,6 +62,10 @@ class RouterStore {
 
   get footerLinks () {
     return FOOTER_LINKS
+  }
+
+  get getPageSizes (){
+    return PAGE_SIZES
   }
 
   get getPages () {

@@ -30,3 +30,4 @@ package-lock.json
 *.sln
 *.sw?
 desktop.ini
+!/src/components/Layout/AppKitObserver.tsx

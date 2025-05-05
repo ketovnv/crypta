@@ -20,7 +20,7 @@ const ResolutionsButtons = () => {
             flexDirection: 'column',
             gap: '2rem',
             padding: '2rem',
-            backgroundColor: '#f8f9fa',
+            backgroundColor:'rgba(255, 255, 0, 0.05)',
             borderRadius: '16px',
             boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)',
             maxWidth: '500px',

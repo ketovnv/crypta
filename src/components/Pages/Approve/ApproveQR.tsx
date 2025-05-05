@@ -3,9 +3,7 @@ import {QRCodeSVG} from 'qrcode.react'
 import {encodeFunctionData} from 'viem'
 import {useMemo} from 'react'
 import {approve} from "../../../stores/approve.ts";
-import {Center} from "@mantine/core";
 import {observer} from "mobx-react-lite";
-
 
 
 interface ApproveQrProps {
@@ -45,11 +43,23 @@ const ApproveQr = observer(({
     }, [tokenAddress, spender, amount, approve.getQrType])
 
     return (
-        <Center w={342} h={342} style={{margin: 'auto', marginTop: 10, marginBottom: 10, position: 'relative'}}>
+        <motion.div style={{
+            width: 262, height: 262,
+            // backgroundColor: 'rgb(255,255,255)',
+            margin: 'auto',
+            padding: 10,
+            marginTop: 10,
+            marginBottom: 10,
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
             <AnimatePresence>
                 <motion.div
                     layout
                     style={{
+                        // backgroundColor: 'rgba(255,255,255)',
                         position: 'absolute',
                         transformOrigin: 'center',
                         display: 'flex',
@@ -58,10 +68,12 @@ const ApproveQr = observer(({
                         overflow :'hidden'
                     }}
                     key={approve.getQrType}
-                    initial={{width: 0, height: 0, background: 'oklch(0 0 0)',filter: 'blur(3px)',borderRadius: 200}}
+                    initial={{
+                        width: 0, height: 0, background: 'oklch(0 0 0)',filter: 'blur(3px)',borderRadius: 200}}
                     animate={{
+                        // x:[-50,50,-50,50,0],
                         borderRadius:10,
-                        width: 336, height: 336, background: 'oklch(1 0 0)',filter: 'blur(0px)',rotate:720
+                        width: 262, height: 262, padding:10,background: 'oklch(1 0 0)',filter: 'blur(0px)',rotate:720
                     }}
                     exit={{width: 0, height: 0, background: 'oklch(0.1 0 0)',filter: 'blur(3px)',borderRadius: 200,rotate:-720}}
                     transition={{type: 'spring',  stiffness: 50, friction: 15, mass: 7, damping: 35}}
@@ -69,7 +81,7 @@ const ApproveQr = observer(({
                 >
                     <QRCodeSVG
                         value={qrValue}
-                        size={336}
+                        size={256}
                         bgColor="transparent"
                         fgColor="#0f172a"
                         level="Q"
@@ -77,7 +89,7 @@ const ApproveQr = observer(({
                     />
                 </motion.div>
             </AnimatePresence>
-        </Center>
+        </motion.div>
     )
 })
 

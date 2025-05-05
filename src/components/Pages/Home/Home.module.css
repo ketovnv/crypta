@@ -7,15 +7,12 @@
 }
 
 .walletName {
-  font-family: 'SF UI Display', monospace !important;
-  font-style: normal;
-  font-weight: 900; /*color: #EEFF00;*/
-  text-align: left !important;
+  font-family: 'SF Pro Rounded', monospace !important;
 }
 
 .listText {
   font-size: 1.1em;
-  font-family: 'Microsoft YaHei', monospace !important;
+  /*font-family: 'Microsoft YaHei', monospace !important;*/
   /*font-style: italic;*/
   font-weight: 900;
   /*color: #DDFF99;*/
@@ -26,7 +23,7 @@
   top: -12px;
   left: -7px;
   font-size: 0.95em;
-  font-family: 'Cousine for Powerline', monospace !important;
+  /*font-family: 'Cousine for Powerline', monospace !important;*/
   font-weight: 900;
   /*color: #DDFF99;*/
 }
@@ -34,23 +31,19 @@
 .label {
   font-size: 1em;
   font-family: 'SF Pro Rounded', monospace !important;
-  font-weight: 600;
   text-align: left !important;
 }
 
 .testNetwork {
-  font-size: 1.5em;
-  padding-left: 30px;
-  font-family:  'Arial Rounded MT Pro Cyr',fantasy;
+  font-size: 1.2em;
+  margin: 0 auto 0;
+  font-family: 'Tactic Round Bld'
 
 }
 
 .walletAddress {
-  font-size: 1em;
-  font-family: 'SF UI Display', monospace !important;
-  font-weight: 600;
-  /*color: #DDFF99;*/
-  text-align: left !important;
+  font-family: 'Visby Round CF Bold';
+  font-optical-sizing: auto
 }
 
 .arrowIcon {
@@ -59,7 +52,35 @@
   left: 7px;
 }
 
-/*.walletAddress {*/
-/*    font-family: 'Inter';*/
-/*    font-style*/
-/*}*/
+.btnDisconnect {
+  position: relative;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  width: 135px;
+  height: 42px;
+  border-radius: 10px;
+  cursor: pointer;
+  inset: 0;
+}
+
+/* .btn--action:hover{
+box-shadow: inset 0 0 0 .25rem #ffbe76;
+} */
+.btnDisconnect span {
+  opacity: 1;
+  scale:1;
+  position: absolute;
+  top:5px;
+  left: 0;
+  width: 100%;
+  font-size: 1.1rem;
+  font-family: Comfortaa, sans-serif;
+}
+
+.btnDisconnect svg {
+  top: -1rem;
+  opacity: 0;
+}

@@ -1,4 +1,4 @@
-export function Holesky(width='2em', height='2em',props) {
+export function Holesky({width='2em', height='2em',props}) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

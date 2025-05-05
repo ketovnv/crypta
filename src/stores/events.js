@@ -9,8 +9,14 @@ const EVENTS = {
   },
   MODAL_OPEN: "empty",
   MODAL_CLOSE: "empty",
+  "MODAL_CREATED": "empty",
   SOCIAL_LOGIN_STARTED: "empty",
   SOCIAL_LOGIN_REQUEST_USER_DATA: "empty",
+  CLICK_NETWORKS: "empty",
+  "SWITCH_NETWORK": {
+  title: "Подключёна новая сеть",
+      message: ["network"],
+},
   DISCONNECT_SUCCESS: {
     title: "Кошелёк успешно отключён",
     message: "Подключайтесь к доступным кошелькам",

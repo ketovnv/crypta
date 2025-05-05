@@ -33,7 +33,7 @@ export const SpringAppName = observer(() => {
         position: "relative",
         fontSize: "2.5rem",
         fontWeight: 900,
-        fontFamily: "Tactic Round Bld, monospace",
+        fontFamily: "Tactic Round Blk, monospace",
       }}
       initial={{ scale: 0 }}
       animate={{ scale: 1, transition: { duration: 3 } }}

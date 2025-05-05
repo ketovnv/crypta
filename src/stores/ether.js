@@ -5,6 +5,11 @@ import {action, flow, makeAutoObservable} from 'mobx'
 const apiKey = "XTBB7AZ3A7JNRFUPSTDVTYW7Q181DCWM4D"
 const BASE_URL = 'https://api.etherscan.io/api';
 
+const networks = {
+    '1': 'Etherium Mainnet',
+    '17000': 'Holesky Testnet',
+    '11155111': 'Sepolia Testnet'}
+
 const address = "0xb5d85cbf7cb3ee0d56b3bb207d5fc4b82f43f511D"
 const chains = [42161, 8453, 10]
 const tabs = ['gas', 'tokens', 'balance', 'transactions'];

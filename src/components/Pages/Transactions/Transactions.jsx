@@ -1,16 +1,13 @@
-import {useQueries, useQuery} from '@tanstack/react-query'
+import {useQueries} from '@tanstack/react-query'
 import {observer} from "mobx-react-lite";
 import {logger} from "@stores/logger.js";
 import {useEffect} from "react";
-import {Center} from "@mantine/core";
 import {motion, useAnimate} from "motion/react";
 import {uiStore} from "@stores/ui.js";
 import {animated} from "@react-spring/web";
-import {walletStore} from "@stores/wallet.js";
 import GradientText from "@animations/involved/GradientText.jsx";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import {etherStore} from "@stores/ether.js";
-import {ethersAdapter} from "@/config/index.js";
 import {LJ} from "@components/logger/LJ.jsx";
 
 const StrokeAnimation = () => {
@@ -81,12 +78,7 @@ const Transactions = observer(({}) => {
 
 // Хук для одной цепи
     function useBalanceQuery(chainId) {
-        return useQuery({
-            queryKey: ['balance', chainId],
-            queryFn: () => fetchBalance(chainId),
-            staleTime: 60000, // 1 минута до устаревания данных
-        })
-    }
+
 
 // Хук для запроса балансов по всем цепям сразу
     const useAllBalances = () => {
@@ -137,33 +129,37 @@ const Transactions = observer(({}) => {
 
         return () => controls.stop()
     }, [])
-    return (
-        <main
-            className="pageWrapper"
-        >
-            <animated.section className="pageCard" style={uiStore.themeStyle}>
+        return (
+            <main
+                className="pageWrapper"
+            >
+                <animated.section className="pageCard" style={uiStore.themeStyle}>
 
-                <LJ json={etherStore.ethPrice}/>
+                    <LJ json={etherStore.ethPrice}/>
 
-                <div>
-                    <h3 style={{color: logger.getRandomColor(uiStore.themeIsDark ? 16 : 5)}}>Балансы по всем цепям</h3>
-                    {isLoading && <p>Загрузка данных...</p>}
-                    {isError && <p>Произошла ошибка при загрузке</p>}
-                    <ul ref={scope} layout>
-                        {balances.map(item => (
-                            <li key={item.chainId}>
-                                Цепь {item.chainId}:
-                                {item.isLoading ? ' загрузка...' :
-                                    item.error ? ` ошибка: ${item.error.message}` :
-                                        <GradientText><AppearingText style={{fontFamily:'Tactic Round Bld',paddingLeft:5}} fontSize={14} text={item.data?.result || 'н/д'}/></GradientText>}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </animated.section>
-        </main>
-    )
-})
+                    <div>
+                        <h3 style={{color: logger.getRandomColor(uiStore.themeIsDark ? 16 : 5)}}>Балансы по всем
+                            цепям</h3>
+                        {isLoading && <p>Загрузка данных...</p>}
+                        {isError && <p>Произошла ошибка при загрузке</p>}
+                        <ul ref={scope} layout>
+                            {balances.map(item => (
+                                <li key={item.chainId}>
+                                    Цепь {item.chainId}:
+                                    {item.isLoading ? ' загрузка...' :
+                                        item.error ? ` ошибка: ${item.error.message}` :
+                                            <GradientText><AppearingText
+                                                style={{fontFamily: 'Tactic Round Bld', paddingLeft: 5}} fontSize={14}
+                                                text={item.data?.result || 'н/д'}/></GradientText>}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                         </animated.section>
+                ) </main>
+        )
+    }}
+)
 export default Transactions;
 
 // Transaction

@@ -1,6 +1,5 @@
 import "@reown/appkit-wallet-button/react";
 import {observer} from "mobx-react-lite";
-import {Text} from "@mantine/core";
 import {useDisconnect} from "@reown/appkit/react";
 import {logger} from "@stores/logger.js";
 import React from "react";
@@ -8,16 +7,16 @@ import {AnimatePresence, motion, MotionConfig} from "motion/react";
 import {uiStore} from "@stores/ui.js";
 import {walletStore} from "@stores/wallet.js";
 import {animated} from "@react-spring/web";
-import {Metamask} from "@components/Layout/SvgIcons/Metamask";
-import {Google} from "@components/Layout/SvgIcons/Google";
-
 import classes from "./Home.module.css";
-import {AwesomeButton} from "@animations/current/AwesomeButton/AwesomeButton.js";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import {eventsStore} from "@stores/events.js";
-import {LJ} from "@components/logger/LJ.jsx";
+import GradientText from "@animations/involved/GradientText.jsx";
+import {animation} from "@stores/animation.js";
+import {Google} from "@components/Layout/SvgIcons/Google.jsx";
+import {Metamask} from "@components/Layout/SvgIcons/Metamask.jsx";
+import {Center, Group, Text} from "@mantine/core";
 import {gradientStore} from "@stores/gradient.js";
-
+import {Skull} from "@components/Layout/SvgIcons/Skull.jsx";
 
 
 const Home = observer(() => {
@@ -32,59 +31,109 @@ const Home = observer(() => {
       className="pageWrapper"
     >
 
-      <MotionConfig
-        transition={{
-          type: "spring",
-            visualDuration: 1.5,
-            bounce: 0.33,
-        }}
-      >
-          <animated.section className="pageCard" style={uiStore.themeStyle}>
-              <AwesomeButton
-                  onPress={() => disconnect()}
-                  style={{
-                      top: 5,
-                      right: 10,
-                      padding: 2,
-                      width: 300,
-                      minWidth: 100,
-                      height: 44,
-                      color: 'oklch(0.73 0.2577 29.23)',
-                  }}
-                  whileTap={{scale: 0.9}}
-                  whileHover={{scale: 1.01}}
-                  type="disconnectButton"
-                  buttonKey={"disconnected" + walletStore.isConnected}
-                  key={"disconnected" + walletStore.isConnected}
-              >
-                  Отключить
-              </AwesomeButton>
-              {walletStore.getNetwork && !eventsStore.state?.open && (
+          <MotionConfig
+              transition={{
+                  type: "spring",
+                  visualDuration: 1.5,
+                  bounce: 0.33,
+              }}
+          >
+
+              <animated.section className="pageCard" style={uiStore.themeStyle}>
+                  <Center h={65} w="100%">
+                      <AnimatePresence>
+                          {walletStore.getWalletInformation ?
+                              <motion.a layout
+                                        key={!!walletStore.getWalletInformation}
+
+                                        layoutId="button"
+                                        onClick={() => disconnect()}
+                                        className={classes.btnDisconnect}
+                                        animate={{marginLeft: 200}}
+                                        style={{
+                                            boxShadow: `0 5px ${uiStore.getRed}`,
+                                            background:
+                                                gradientStore.circleGradient(gradientStore.getRedGradient, 12, 10, 50)
+                                        }}
+                                        whileTap={{
+                                            scale: 0,
+                                            opacity: 0,
+                                            transform: "translate3d(0, 4px, 0)",
+                                            boxShadow: `0 1px ${uiStore.getRed}`
+                                        }}
+                                        whileHover="hover"
+                                        variants={{hover: {height: 70, width: 70,background:
+                                                    gradientStore.circleGradient(gradientStore.getRedGradient, 12, 150, -50)}}}
+                              >
+
+                                  <Skull
+                                      width="4.5em" style={{opacity: 0,scale:0.5, x: -5, y: 2}} layout
+                                      variants={{
+                                          initial: {opacity: 0},
+                                          hover: {opacity: 1, x: 0, y: 10,scale:1}
+                                      }}/>
+                                  <motion.span layoutId="button" layout
+                                               variants={{hover: {opacity: 0, scale: 0, top: 0, left: 0}}}
+                                               transition={{duration: 2, hover: {duration: 0.2}}}>Отключить
+                                  </motion.span>
+                              </motion.a>
+                              :
+                              <motion.section
+                                  key={!walletStore.getWalletInformation}
+                                  transition={{duration: 0.7}}
+                                  initial={{opacity: 0, scale: 0, position: 'absolute'}}
+                                  animate={{opacity: 1, scale: 1, x: -100}}
+                                  exit={{height: 0, scale: 0, x: 450, y: -300}}
+                                  layout
+                              >
+                                  <appkit-button label="Подключить кошелёк"/>
+                              </motion.section>
+                          }
+                      </AnimatePresence>
+                  </Center>
+
+                  {walletStore.getNetwork.caipNetwork?.id && !eventsStore.state?.open && (
                   <motion.div
                       layout
                       style={{
                           padding: 20,
                           display: "flex",
                           flexDirection: "row",
-                          justifyContent: "center",
                           alignItems: "center",
                           margin: 20
                       }}
                   >
-                      <AppearingText key={walletStore.getNetwork?.id} text={walletStore.getNetwork?.id??''}/>
-                      <motion.span
+                      <motion.div
+                          layout
+                          className={classes.label}
+                          key={walletStore.getWalletInformation?.type}
+                          transition={{duration: 0.7}}
+                          initial={{opacity: 0, width: 150}}
+                          style={{space: 10, opacity: 0}}
+                          animate={{opacity: 1}}>
+                          <AppearingText speed={5} fontSize={12} key={walletStore.getNetwork?.caipNetwork?.id}
+                                         text={walletStore.getNetwork?.caipNetwork?.id + '.API:'}/>
+                          <a href={walletStore.getNetwork.caipNetwork.blockExplorers.default.url} target='_blank'>
+                              <GradientText colors={animation.theme.navBarButtonText}>
+                                  <AppearingText speed={3} key={walletStore.getNetwork?.caipNetwork?.id}
+                                                 text={walletStore.getNetwork.caipNetwork.blockExplorers.default.name}/>
+                              </GradientText>
+                          </a>
+
+                      </motion.div>
+                      <motion.div
                           whileHover={{scale: 1.03}}
                           whileTap={{scale: 0.96}}
-                          layout>
+                      >
                           <appkit-network-button/>
-                      </motion.span>
-
+                      </motion.div>
                       {walletStore.getNetwork?.caipNetwork.testnet && (
                           <motion.span
                               layout
+                              initial={{marginLeft: 42}}
                               animate={{
-                                  marginLeft: 20,
-                                  color: `oklch(${uiStore.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`,
+                                  marginLeft: 42,
+                                  color: uiStore.getGreen,
                               }}
                               transition={{duration: 5}}
                               className={classes.testNetwork}
@@ -94,66 +143,81 @@ const Home = observer(() => {
                       )}
                   </motion.div>
               )}
-              {/*<LJ json={av}/>*/}
-              <AnimatePresence>
-              <motion.div
-                  layout
-                  style={{display: "flex", flexDirection: "row"}}
-                  justify="space-between"
-                  align="center"
-              >
 
-                  {(!walletStore.getWalletInformation && !eventsStore.state?.open) &&
-                      <motion.section
-                          initial={{height: 0}}
-                          animate={{height: 100}}
-                          exit={{height: 0, scale: 0, x: 450, y: -300}}
-                          key="apb"
-                          layout
-                      >
-                          <appkit-button label="Подключить кошелёк"/>
-                      </motion.section>
-                  }
+                  {walletStore.getAccountData?.isConnected && <motion.div
+                      animate={{
+                          marginLeft: 25,
+                          marginRight: 25,
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                          justifyContent: "center",
+                      }}>
+                      {walletStore.getWalletInformation?.type !== "WALLET_CONNECT"
+                          ?
+                          <Text className={classes.label}>
+                              Социальный аккаунт&nbsp;
+                              {walletStore.getWalletInformation?.name !== "ID_AUTH" ? walletStore.getWalletInformation?.social : ''}
+                          </Text>
+                          :
+                          <Text className={classes.label}>Кошелёк</Text>}
+                  </motion.div>}
 
-
-                  {(walletStore.getWalletInformation?.name && !eventsStore.state?.open) &&
+                  {walletStore.getAccountData?.isConnected &&
+                      walletStore.getWalletInformation?.name && !eventsStore.state?.open &&
                       <motion.div
-                          key="wallet-info"
-                          layout
-                          animate={{display: "flex", flexDirection: "row", alignItems: "center", space: 10}}>
-                          {walletStore.getWalletInformation?.type !== "WALLET_CONNECT" ?
-                              <Google/> :
-                              <Metamask/>
-                          }
-                          <motion.div layout animate={{paddingLeft: 10, paddingRight: 10, display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "center"}}>
-                              {walletStore.getWalletInformation?.type !== "WALLET_CONNECT"
-                                  ?
-                                  <Text className={classes.label}>
-                                      Социальный аккаунт&nbsp;
-                                      {walletStore.getWalletInformation?.name !== "ID_AUTH" ? walletStore.getWalletInformation?.social : ''}
-                                  </Text>
-                                  :
-                                  <Text className={classes.label}>Кошелёк</Text>}
-
-
-                              <Text className={classes.walletName}>
-                                  {walletStore.getWalletInformation?.type === "injected" ?
-                                      walletStore.getWalletInformation?.name :
-                                      (walletStore.getWalletInformation?.name !== "ID_AUTH" ? walletStore.getWalletInformation?.name : walletStore.getAccountData?.embeddedWalletInfo?.user.email)}
-                              </Text>
-                          </motion.div>
-
+                          key={walletStore.getWalletInformation?.type}                          // layout
+                          transition={{duration: 0.7}}
+                          initial={{opacity: 0}}
+                          style={{
+                              space: 10,
+                              opacity: 0,
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "flesh-start"
+                          }}
+                          animate={{opacity: 1, x: -22}}
+                          exit={{
+                              opacity: 0
+                          }}>
+                          <motion.span style={{opacity: 1}}>
+                              {walletStore.getWalletInformation?.type !== "WALLET_CONNECT" ?
+                                  <Google/> :
+                                  <Metamask/>
+                              }
+                          </motion.span>
+                          <GradientText>
+                              <AppearingText speed={25} fontSize={20} fontWeight={700} className={classes.walletAddress}
+                                             text={walletStore.getAccountData.address}/>
+                          </GradientText>
                       </motion.div>}
 
-              </motion.div>
-
-                  {walletStore.getAccountData && (
-                      <motion.div key="address" layout>
-                          <motion.div className={classes.label}>Адресс</motion.div>
-                          <AppearingText speed={25} className={classes.walletAddress}
-                                         text={walletStore.getAccountData.address}/>
-                      </motion.div>)}
-              </AnimatePresence>
+                  <Group justify="flex-end" pr={20} w='75%'>
+                      <GradientText colors={animation.theme.navBarActiveButtonText}>
+                          <motion.span layout style={{
+                              fontFamily: 'Nunito',
+                              fontSize: 38,
+                              fontOpticalSizing: 'auto',
+                              fontStyle: 'normal',
+                              fontWeight: 200,
+                              textShadow: '2px 0px 0px rgba(255, 255, 0, 0.1)',
+                              scale: 1,
+                              x: 20
+                          }}
+                                       animate={{
+                                           x: 150,
+                                           scale: 0.95,
+                                           fontWeight: 1000,
+                                           textShadow: '-3px 0px 0px rgba(255, 255, 0, 0.3)',
+                                       }}
+                                       transition={{duration: 5, repeat: Infinity, repeatType: 'reverse'}}>
+                              {walletStore.getWalletInformation?.type === "injected" ?
+                                  walletStore.getWalletInformation?.name :
+                                  (walletStore.getWalletInformation?.name !== "ID_AUTH" ? walletStore.getWalletInformation?.name : walletStore.getAccountData?.embeddedWalletInfo?.user.email)}
+                          </motion.span>
+                      </GradientText>
+                  </Group>
           </animated.section>
       </MotionConfig>
       </main>

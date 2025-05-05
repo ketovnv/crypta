@@ -142,7 +142,7 @@ class WalletStore {
         if (this.accountData?.address) { // @ts-ignore
             this.setAddressForBalance(this.accountData?.address)
         }
-        logger.logJSON('account', JSON.stringify(account))
+        // logger.logJSON('account', JSON.stringify(account))
     }
 
     setWagmiAccountData(
