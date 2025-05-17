@@ -1,5 +1,5 @@
 import {AppShell, MantineProvider} from '@mantine/core'
-import {motion} from 'motion/react'
+import {motion,AnimatePresence} from 'motion/react'
 import React, {useEffect} from 'react'
 import {MainNavbar} from './MainNavbar'
 import {MainHeader} from './MainHeader'
@@ -11,15 +11,17 @@ import {MainContent} from '@components/Layout/MainContent/index.js'
 import {AnimationObserver} from '@animations/involved/AnimationObserver.jsx'
 import {observer} from 'mobx-react-lite'
 import {ErrorBoundary} from "@components/pages/ErrorNotification/ErrorBoundary.jsx";
+import {uiStore} from "@stores/ui.js";
+import HeaderBitcoin from "@components/Layout/SvgIcons/HeaderBitcoin.jsx";
 
 const Layout = observer(() => {
   useEffect(() => {
       document.body.setAttribute('data-motion-debug', 'true')
-    console.log('Layout mounted')
+    // console.log('Layout mounted')
     // logger.info("🍰", " Layout mounted");
     return () => console.log('Layout unmounted')
   }, [])
-  console.log('LAYOUT')
+  // console.log('LAYOUT')
 
   logger.logRandomColors('LAYOUT', 'mounted', 12)
   return (
@@ -52,7 +54,17 @@ const Layout = observer(() => {
           }}
           transition={{ duration: 1.5 }}
         >
-          <MainHeader />
+              <AnimatePresence>
+                  {uiStore.isNavbarOpened ?
+                      <motion.div key={uiStore.isNavbarOpened} style={{position: 'absolute', top: 10, left: 10, zIndex: 9999, cursor: 'pointer'}}
+                      initial={{scale:0}} animate={{ scale: 1}} exit={{scale: 0,y:-50}} transition={{duration: 1}}
+                                  whileHover="hover"
+                                  whileTap={{scale: 0.5, transition: {duration: 0.2}}}
+                      >
+                          <HeaderBitcoin toggleNavbarOpened={uiStore.toggleNavbarOpened} isDark={uiStore.themeIsDark}/>
+                      </motion.div> :
+                      <MainHeader/>}
+              </AnimatePresence>
           <MainNavbar />
           <MainContent />
         </motion.div>

@@ -1,7 +1,9 @@
 import {action, makeAutoObservable, observable} from "mobx";
-import {uiStore} from "@stores/ui.js";
-import {gradientStore} from "@stores/gradient";
+import {uiStore} from "./ui";
+import {gradientStore} from "./gradient";
 import {Controller} from "@react-spring/web";
+import {windowStore} from "@stores/window.js";
+import {gpuStore} from "@stores/gpuStore.js";
 
 
 const APP_NAME = "ReactApproveAppkit";
@@ -25,8 +27,18 @@ class AnimationStore {
     });
   }
 
+
+  // get getAppNameArray() {
+  //   return appNameArray;
+  // }
+
+
   get getAppNameArray() {
-    return appNameArray;
+    return (
+        uiStore.screenSize.width + 'x' + uiStore.screenSize.height + "__"+
+        windowStore.width + 'x' + windowStore.height+ "__"+
+        gpuStore.currentMode?.width+'x'+gpuStore.currentMode?.height
+    ).split("");
   }
 
   get getAppNameIsHover() {
@@ -43,7 +55,7 @@ class AnimationStore {
 
   getMCAnimation = (name) => this.mantineControlAnimations[name];
 
-  @action
+
   setMantineControlAnimation = (newAnimation) =>
     (this.mantineControlAnimations = {
       ...newAnimation,
@@ -51,7 +63,7 @@ class AnimationStore {
 
   getSpringAnimation = (name) => this.springAnimations[name];
 
-  @action
+
   setSpringAnimation = (newAnimation) => (this.springAnimations = newAnimation);
 
 

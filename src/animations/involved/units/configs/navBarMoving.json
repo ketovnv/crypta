@@ -1,38 +1,46 @@
 {
   "variants": {
     "hidden": {
-      "x": -385,
-      "rotateZ": -10,
-      "rotateY": -110,
-      "opacity": 0
+      "x": -450,
+      "rotateZ": -25,
+      "y": 100,
+      "rotateY": -200,
+      "opacity": 0,
+      "transition": {
+        "type": "spring",
+        "visualDuration": 0.5,
+        "bounce": 0.3,
+        "marginTop": {
+          "type": "tween",
+          "duration": 3}
+      }
     },
     "visible": {
       "x": 0,
+      "marginTop": 7,
+      "y": 60,
       "rotateZ": 0,
       "rotateY": 0,
       "opacity": 1,
       "transition": {
-        "duration": 1,
-        "ease": "easeInOut"
+        "type": "spring",
+        "visualDuration": 0.75,
+        "bounce": 0.5,
+        "marginTop": { "visualDuration": 0.2,"bounce": 0.9}
       }
     }
   },
   "frameVariants": {
     "hidden": {
-      "x": -385,
-      "rotateZ": -10,
-      "rotateY": -110,
-      "opacity": 0
+      "transition": {
+        "staggerChildren": 0.1,
+        "staggerDirection": -1
+      }
     },
     "visible": {
-      "x": 0,
-      "rotateZ": 0,
-      "rotateY": 0,
-      "opacity": 1,
       "transition": {
-        "duration": 1,
-        "staggerChildren": 0.5,
-        "ease": "easeInOut"
+        "staggerChildren": 0.6,
+        "staggerDirection": 1
       }
     }
   }

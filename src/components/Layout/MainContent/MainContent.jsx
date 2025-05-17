@@ -3,6 +3,7 @@ import { animated } from "@react-spring/web";
 import { observer } from "mobx-react-lite";
 import { animation } from "@stores/animation.js";
 import { PageTransition } from "@animations/involved/units/PageTransition";
+// import {SmoothCursor} from "@animations/involved/SmoothCusor.js";
 
 export const MainContent = observer(() => {
   // import assert from 'assert'
@@ -18,6 +19,7 @@ export const MainContent = observer(() => {
       <animated.div
         style={{
           ...themeStyle,
+            // background: "transparent",
           height: "100vh",
           width: "100vw",
           position: "absolute",
@@ -33,6 +35,7 @@ export const MainContent = observer(() => {
           <PageTransition />
         </animated.div>
       </animated.div>
+        {/*<SmoothCursor />*/}
     </AppShell.Main>
   );
 });

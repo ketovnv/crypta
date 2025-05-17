@@ -5,9 +5,9 @@
   position: relative;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0);
-  line-height: var(--button-default-line-height); /*font-weight: bold;*/
-  font-style: var(--button-font-style);
-  letter-spacing: var(--button-letter-spacing);
+  line-height: 20; /*font-weight: bold;*/
+  font-style: normal;
+  letter-spacing: 0;
   text-rendering: auto;
   text-decoration: none;
   text-align: center;
@@ -21,20 +21,20 @@
   backface-visibility: hidden;
 }
 
-.mainNavBtnContent {
-  /*background: radial-gradient(*/
-  /*        in oklch circle at 25% 110%,*/
-  /*        #444444 0%,*/
-  /*        #3C3C3C 5%,*/
-  /*        #333333 20%,*/
-  /*        #2B2B2B 30%,*/
-  /*        #222222 45%,*/
-  /*        #1B1B1B 55%,*/
-  /*        #111111 80%,*/
-  /*        #070707 90%,*/
-  /*        #010101 95%*/
-  /*)*/
-}
+/*.mainNavBtnContent {*/
+/*  background: radial-gradient(*/
+/*          in oklch circle at 25% 110%,*/
+/*          #444444 0%,*/
+/*          #3C3C3C 5%,*/
+/*          #333333 20%,*/
+/*          #2B2B2B 30%,*/
+/*          #222222 45%,*/
+/*          #1B1B1B 55%,*/
+/*          #111111 80%,*/
+/*          #070707 90%,*/
+/*          #010101 95%*/
+/*  )*/
+/*}*/
 
 .mainNavBtnWrapper:before {
   background: radial-gradient(

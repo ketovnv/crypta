@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import {motion} from 'motion/react';
+import {animated} from '@react-spring/web';
 import {observer} from "mobx-react-lite";
 import {logger} from "@stores/logger.js";
-import {LIGHT} from "@stores/gradientColors.js";
-import {gradientStore} from "@stores/gradient.js";
-
+import {uiStore} from "@stores/ui.js";
+import ElasticSlider from "@animations/involved/ElasticSlider";
+// import {LIGHT} from "@stores/gradientColors.js";
+// import {gradientStore} from "@stores/gradient.js";
+const {bWG} = uiStore.themeStyle
 // CSS стили для компонента
 const styles = {
     container: {
@@ -13,7 +16,7 @@ const styles = {
         gap: '2rem',
         padding: '2rem',
         borderRadius: '1rem',
-        backgroundColor: 'rgba(0,0,0,0.05)',
+        background: bWG,
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
         maxWidth: '600px',
         margin: '0 auto',
@@ -72,7 +75,7 @@ const styles = {
 
 // Градиенты для светлой темы
 const lightThemeGradients = [
-    gradientStore.getThemeMeta('LIGHT')?.background,
+    // gradientStore.getThemeMeta('LIGHT')?.background,
     'linear-gradient(45deg, #a1c4fd, #c2e9fb)',
     'linear-gradient(45deg, #d4fc79, #96e6a1)',
     'linear-gradient(45deg, #ffecd2, #fcb69f)',
@@ -88,6 +91,7 @@ const darkThemeGradients = [
     'linear-gradient(45deg, #5614b0, #dbd65c)',
 ];
 
+
 const GradientSwitches = observer(() => {
     // Состояния для выбранных градиентов
     const [selectedLightTheme, setSelectedLightTheme] = useState(0);
@@ -95,7 +99,7 @@ const GradientSwitches = observer(() => {
 
     // Анимация для кружков
     const circleVariants = (themeGradient) => {
-        logger.debug('🎃init🎃', 'Вызов градиента  👻📺🔴🟠🟡🟢🔵🟣🟤⚫⚪📺👻', 10)
+        logger.debug('👻',  '👻📺🔴🟠🟡🟢🔵🟣🟤⚫⚪📺👻', 10)
         return {
         idle: {
             scale: 1,
@@ -147,7 +151,8 @@ const GradientSwitches = observer(() => {
     };
 
     return (
-        <div style={styles.container}>
+        <motion.div>
+            <animated.div style={styles.container}>
             {/* Секция светлой темы */}
             <div style={styles.themeSection}>
                 <div style={styles.switchesContainer}>
@@ -233,7 +238,17 @@ const GradientSwitches = observer(() => {
                     ))}
                 </div>
             </div>
-        </div>
+            </animated.div>
+            <ElasticSlider
+                // leftIcon={<>...your icon...</>}
+                // rightIcon={<>...your icon...</>}
+                startingValue={500}
+                defaultValue={750}
+                maxValue={1000}
+                isStepped
+                stepSize={10}
+            />
+        </motion.div>
     );
 })
 export default GradientSwitches;

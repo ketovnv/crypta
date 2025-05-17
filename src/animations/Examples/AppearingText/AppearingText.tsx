@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text } from "@mantine/core";
+import { motion } from "motion/react";
 
 const AppearingText = ({ text,fontSize=20, speed=10,...props }) => {
   // Состояние для текста с эффектом печатания
@@ -25,9 +25,9 @@ const AppearingText = ({ text,fontSize=20, speed=10,...props }) => {
   }, [charIndex]);
 
   return (
-    <Text fz={fontSize} {...props}>
+    <motion.span layout style={{fontSize,...props}}>
       {appearingText}
-    </Text>
+    </motion.span>
   );
 };
 

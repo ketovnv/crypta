@@ -1,10 +1,18 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable} from "mobx";
 import chroma from "chroma-js";
-import {RAINBOWGRADIENT, RAINBOWV2GRADIENT} from "@stores/gradientColors.js";
-import {DARK, LIGHT, redGradientDark, redGradientLight,} from "./gradientColors.js"
-import {uiStore} from "@stores/ui.js";
-import {logger} from "@stores/logger.js";
+import {
+    RAINBOWGRADIENT,
+    RAINBOWV2GRADIENT,
+    redGradientDark,
+    redGradientLight,
+    STANDART_DARK,
+    STANDART_LIGHT
+} from "./gradientColors";
+import {uiStore} from "./ui";
 
+
+const DARK = 0
+const LIGHT = 1
 
 const THEMES = {DARK, LIGHT}
 
@@ -12,14 +20,73 @@ const THEMES = {DARK, LIGHT}
 
 
 
-
 class GradientStore {
 
+
+    calculateTheme = (lightness, theme) => {
+
+        const calculate = (content) =>
+            lightness > 0 ?
+                this.preparedDarkThemes = content :
+                this.preparedLightThemes = content
+
+        switch (theme) {
+            case 0:
+                calculate(this.getColorTheme(lightness > 0 ? STANDART_LIGHT : STANDART_DARK))
+                break
+            case 1:
+                calculate(lightness > 0 ? this.lightCubehelixMode : this.darkCubehelixMode)
+                break
+            case 2:
+                calculate(this.getColorTheme(lightness > 0 ? STANDART_LIGHT : STANDART_DARK))
+                break
+            case 3:
+                calculate(this.getColorTheme(lightness > 0 ? STANDART_LIGHT : STANDART_DARK))
+                break
+            case 4:
+                calculate(this.getColorTheme(lightness > 0 ? STANDART_LIGHT : STANDART_DARK))
+                break
+            default:
+                calculate(this.getColorTheme(lightness > 0 ? STANDART_LIGHT : STANDART_DARK))
+                break
+        }
+    }
+
+    themesWorker = null
+
+    themesInit() {
+        this.selectedThemes.forEach(
+            (theme, index) =>
+                this.calculateTheme(index, theme)
+        )
+
+        this.themesWorker = setInterval(() => {
+            this.preparedDarkThemes.every((theme) => {
+                if (theme.color) return true
+                this.calculateTheme(DARK,theme)
+                return  false
+            })
+
+            this.preparedLightThemes.forEach((theme) => {
+                if (theme.color) return true
+                this.calculateTheme(LIGHT,theme)
+                return  false
+            })
+        }, 2000)
+    }
+
+
   constructor() {
-    makeAutoObservable(this);
+      makeAutoObservable(this, {calculateTheme: action});
+      // this.themesInit()
   }
 
 
+    preparedDarkThemes = [0, 1, 2, 3, 4]
+
+    preparedLightThemes = [0, 1, 2, 3, 4]
+
+    selectedThemes = [0, 0]
 
 
 
@@ -56,16 +123,16 @@ class GradientStore {
             .colors(number);
 
     averageOklch = (colors) => chroma.average(colors, 'oklch')
+    averageHex = (colors) => chroma.average(colors, 'hex')
 
     chromaSpectral = () => chroma.scale('Spectral').domain([1,0])
 
 
     get getTheme() {
-        const theme = uiStore.themeIsDark ? this.darkCubehelixMode : this.lightCubehelixMode
-        return this.getColorTheme(uiStore.themeIsDark ? DARK : LIGHT)
-        // return this.darkCubehelixMode
+        // const theme = uiStore.themeIsDark ? this.darkCubehelixMode : this.lightCubehelixMode
+        const theme = this.getColorTheme(uiStore.themeIsDark ? STANDART_DARK : STANDART_LIGHT)
         // uiStore.setThemeIsVeryColorised(!!theme.themeIsVeryColorised)
-        // return theme
+        return {...theme, bWG: this.blackWhiteGradient}
     }
 
     getThemeMeta(themeName) {
@@ -82,7 +149,10 @@ class GradientStore {
             accentColor: theme.c,
             boxShadow: theme.bs,
             background: this.circleGradient(theme.bg[0], theme.bg[1], theme.bg[2], theme.bg[3]),
+            // background: 'transparent',
             navBarButtonBackground: this.circleGradient(theme.nbbb[0], theme.nbbb[1], theme.nbbb[2], theme.nbbb[3]),
+            buttonStartColor: theme.nbbb[0][0],
+            buttonStopColor: theme.nbbb[0][3],
             navBarButtonText: theme.nbbt,
             navBarActiveButtonText: theme.nbabt
         }
@@ -156,7 +226,10 @@ class GradientStore {
         return uiStore.themeIsDark ? redGradientDark : redGradientLight
     }
 
-
+    get blackWhiteGradient() {
+        return this.linearAngleGradient(
+            uiStore.themeIsDark ? ['oklch(1 0 0)', 'oklch(0 0 0)'] : ['oklch(0 0 0)', 'oklch(1 0 0)'], 4, 0)
+    }
 
 
   // Методы для градиентов

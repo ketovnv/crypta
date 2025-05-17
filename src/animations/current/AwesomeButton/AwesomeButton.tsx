@@ -80,7 +80,7 @@ layout
       layoutId={layoutId}
       key={buttonKey}
       variants={variants}
-      transition={{ type: "tween", duration: 0.5 }}
+
       style={{ ...style}}
       className={`${classes.awsBtn}  aws-btn`}
       ref={container}

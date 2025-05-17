@@ -35,31 +35,48 @@ export const Web3Inch = ({isDark = true, variants}) => {
         y="0"
         width="200%"
         height="200%"
-        floodOpacity="0.5"
       >
           <motion.feDropShadow
           dx="0.3"
           dy="0.3"
-          stdDeviation="0.5"
-          variants={{hover: {floodColor: "hsl(0 200% 50%)"}}}
-          floodColor="hsl(360 100% 49%)"
-          floodOpacity="0.3"
+          stdDeviation={0.2}
+          variants={{
+              hover: {
+                  floodColor: "hsl(75 100% 65%)",
+                  floodOpacity: 0.5,
+                  stdDeviation: 0.05
+              }
+          }}
+          floodColor={"hsl(0 100% 49%)"}
+          floodOpacity={0.2}
         />
           <motion.feDropShadow
           dx="0.5"
           dy="0.7"
-          stdDeviation="0.7"
-          variants={{hover: {floodColor: "hsl(0 200% 35%)"}}}
-          floodColor="hsl(0 100% 35%)"
-          floodOpacity="0.3"
+          stdDeviation={0.3}
+          variants={{
+              hover: {
+                  floodColor: "hsl(25 100% 65%)",
+                  floodOpacity: 0.3,
+                  stdDeviation: 0.03
+              }
+          }}
+          floodColor={"hsl(50 100% 35%)"}
+          floodOpacity={0.1}
         />
           <motion.feDropShadow
           dx="0.5"
           dy="0.5"
-          stdDeviation="1"
-          variants={{hover: {floodColor: "hsl(0 200% 35%)"}}}
-          floodColor="hsl(0 100% 35%)"
-          floodOpacity="0.5"
+          stdDeviation={0.2}
+          variants={{
+              hover: {
+                  floodColor: "hsl(1 100% 50%)",
+                  floodOpacity: 0.2,
+                  stdDeviation: 0.02
+              }
+          }}
+          floodColor={"hsl(75 100% 65%)"}
+          floodOpacity={0.2}
         />
       </filter>
       <defs>

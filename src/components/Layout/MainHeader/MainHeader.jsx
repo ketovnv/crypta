@@ -2,21 +2,21 @@
 // @ts-ignore
 // @ts-ignore
 
-import { AppShell, Group } from "@mantine/core";
-import { observer } from "mobx-react-lite";
+import {AppShell, Group} from "@mantine/core";
+import {observer} from "mobx-react-lite";
 import classes from "./MainHeader.module.css";
-import { useEventListener } from "@mantine/hooks";
-import { animated, config, useTransition } from "@react-spring/web";
-import { uiStore } from "@stores/ui";
-import { motion } from "motion/react";
-import { SpringAppName } from "@animations/involved/units/SpringAppName";
+import {useEventListener, useViewportSize} from "@mantine/hooks";
+import {animated, config, useTransition} from "@react-spring/web";
+import {uiStore} from "@stores/ui";
+import {motion} from "motion/react";
+import {SpringAppName} from "@animations/involved/units/SpringAppName";
 import HeaderBitcoin from "@components/Layout/SvgIcons/HeaderBitcoin";
-import { walletStore } from "@stores/wallet.js";
+import {walletStore} from "@stores/wallet.js";
 import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 
 export const MainHeader = observer(() => {
   const ref = useEventListener("click", () => uiStore.toggleNavbarOpened());
-
+    const {height, width} = useViewportSize();
   const transitions = useTransition(!!walletStore.getAccountData, {
     from: {
       opacity: 0,
@@ -40,7 +40,8 @@ export const MainHeader = observer(() => {
     config: { ...config.molasses }, // Настройки пружины
     keys: null,
   });
-
+    uiStore.setScreenHeight(height)
+    uiStore.setScreenWidth(width)
   return (
     <AppShell.Header className={classes.header} align="center">
       <motion.div
@@ -78,7 +79,7 @@ export const MainHeader = observer(() => {
           >
             <HeaderBitcoin  isDark={uiStore.themeIsDark}/>
           </motion.button>
-          <SpringAppName />
+            {!uiStore.isNavbarOpened && <SpringAppName/>}
         </Group>
         {transitions((style, item) =>
           item ? (
@@ -95,10 +96,12 @@ export const MainHeader = observer(() => {
             </animated.div>
           ) : null,
         )}
-        <ThemeToggle
+
+          <ThemeToggle
           isDark={uiStore.themeIsDark}
           setColorScheme={uiStore.setColorScheme}
-        />
+          />
+
       </motion.div>
     </AppShell.Header>
   );

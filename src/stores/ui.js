@@ -1,6 +1,5 @@
-import { action, makeAutoObservable } from "mobx";
-import { animation } from "@stores/animation.js";
-import {gradientStore} from "@stores/gradient.js";
+import {action, makeAutoObservable} from "mobx";
+import {animation} from "./animation";
 
 class UiStore {
 
@@ -11,6 +10,8 @@ class UiStore {
   fontFamilies = [];
   searchFontFamilies = [];
   appkitMethods = {};
+  screenHeight = 0;
+  screenWidth = 0;
 
   get getRed() {
     return  `oklch${this.themeIsDark ?'(0.65 0.242 32.37)' : '(0.39 0.1423 32.37)'}`
@@ -29,6 +30,10 @@ class UiStore {
       setNavbarInterval: action,
       toggleColorScheme: action,
       setColorScheme: action,
+      setScreenHeight: action,
+      setScreenWidth: action,
+      setThemeIsVeryColorised: action,
+
     });
   }
 
@@ -39,6 +44,9 @@ class UiStore {
     return {...animation.themeController.springs};
   }
 
+  get screenSize() {
+    return {height: this.screenHeight, width: this.screenWidth}
+  }
   setAppkitMethods = (appkitMethods) => {
     this.appkitMethods = appkitMethods;
     appkitMethods.setThemeMode(this.themeIsDark ? "dark" : "light");
@@ -48,10 +56,10 @@ class UiStore {
       "--w3m-color-mix-strength": 300,
     });
   };
+  setScreenHeight = (value) => this.screenHeight = value;
+  setScreenWidth = (value) => this.screenWidth = value;
+  setThemeIsVeryColorised = (value) => this.themeIsVeryColorised = value;
 
-  setThemeIsVeryColorised = (value) => {
-    this.themeIsVeryColorised = value;
-  }
 
   setColorScheme = (theme) => {
     this.colorScheme = theme;

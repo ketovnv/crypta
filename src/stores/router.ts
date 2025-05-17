@@ -1,5 +1,6 @@
 import { action, makeAutoObservable } from 'mobx'
 import React from "react";
+import {uiStore} from "./ui";
 
 const ROUTES = {
   Transactions: 'Etherscan',
@@ -9,9 +10,11 @@ const ROUTES = {
   Options: 'Настройки'
 }
 
+const RESOLUTION_SCALER= 1/1707;
+
 const PAGE_SIZES = {
-  Transactions: 1,
-  Home: 1.4,
+  Transactions: 0.8,
+  Home: 1.6,
   Approve: 0.9,
   Balance: 0.8,
   Options: 1.2
@@ -66,6 +69,10 @@ class RouterStore {
 
   get getPageSizes (){
     return PAGE_SIZES
+  }
+
+ getPageSize= (page)=>{
+    return PAGE_SIZES[page]*uiStore.screenSize.width*RESOLUTION_SCALER
   }
 
   get getPages () {

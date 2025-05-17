@@ -29,28 +29,7 @@ export const MainNavbar = observer(() => {
     <motion.nav
         layout
       animate={animation.getMCAnimation("NavBarMoving").control}
-      variants={{
-        hidden: {
-          // opacity: 0,
-          transition: {
-            type: "spring",
-            visualDuration: 2,
-            bounce: 0.5,
-            staggerChildren: 0.2,
-            staggerDirection: -1,
-          },
-        },
-        visible: {
-          opacity: 1,
-          transition: {
-            type: "spring",
-            visualDuration: 2,
-            bounce: 0.5,
-            staggerChildren: 0.3,
-            staggerDirection: 1,
-          },
-        },
-      }}
+      variants={animation.getMCAnimation("NavBarMoving").frameVariants}
       className={classes.navbar}
       initial="hidden"
     >
@@ -62,16 +41,29 @@ export const MainNavbar = observer(() => {
             // rotateZ: -180,
             y: -200,
             scale: 0.1,
-            rotateY: -360,
+            rotateY: -100,
+            rotateZ: -100,
+            rotate: 760,
             opacity: 0.5,
+            "transition": {
+              "type": "spring",
+              "visualDuration": 1,
+              "bounce": 0.5
+            }
           },
           visible: {
             x: 0,
-            y: 60,
-            // rotateZ:
+            y: 35,
+            rotate: 0,
+            rotateZ: 0,
             scale: 1,
             rotateY: 0,
             opacity: 1,
+            "transition": {
+              "type": "spring",
+              "visualDuration": 1,
+              "bounce": 0.55
+            }
           },
         }}
         isDark={uiStore.themeIsDark}
@@ -85,22 +77,7 @@ export const MainNavbar = observer(() => {
         return (
           <AwesomeButton
             background={animation.theme.navBarButtonBackground}
-            variants={{
-              hidden: {
-                x: -450,
-                // rotateZ: -180,
-                y: 100,
-                rotateY: -360,
-
-              },
-              visible: {
-                x: 0,
-                y: 60,
-                // rotateZ: 0,
-                rotateY: 0,
-                opacity: 1,
-              },
-            }}
+            variants={animation.getMCAnimation("NavBarMoving").variants}
             style={{
               marginTop: 0,
               padding: 2,

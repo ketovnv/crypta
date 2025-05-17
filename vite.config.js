@@ -1,14 +1,19 @@
-import {defineConfig} from "vite";
+import {
+  defineConfig
+} from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tauri from "vite-plugin-tauri";
 import webfontDownload from "vite-plugin-webfont-dl";
+import tailwindcss from "@tailwindcss/vite";
 // import tailwindcssPlugin from 'vite-plugin-tailwindcss'
 
 
 // Плагин для анализа размера бандла
-import {visualizer} from "rollup-plugin-visualizer";
+import {
+  visualizer
+} from "rollup-plugin-visualizer";
 
 export default defineConfig({
   base: "./",
@@ -29,12 +34,13 @@ export default defineConfig({
       },
     }),
     webfontDownload([
-      'https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap',
+      // 'https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap',
       'https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700',
       'https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap',
       'https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900',
 
     ]),
+    tailwindcss(),
     tsconfigPaths(),
     tauri(),
     visualizer({
@@ -45,6 +51,7 @@ export default defineConfig({
       filename: "analyze.html", // будет создан в папке dist
     }),
   ],
+  clearScreen: false,
   test: {
     globals: true,
     environment: 'jsdom'
@@ -83,6 +90,7 @@ export default defineConfig({
   },
 
   server: {
+    open: false,
     port: 3000,
     strictPort: true,
     historyApiFallback: true,

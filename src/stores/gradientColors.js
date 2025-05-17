@@ -1,4 +1,4 @@
-export const DARK = {
+export const STANDART_DARK = {
     "c": "oklch(0.99 0 0)",
     "ac": "oklch(0.71 0.2086 263.9)",
     "bs": "2px 1px rgba(0, 150, 150, 0.05)",
@@ -34,7 +34,7 @@ export const DARK = {
     ]
 }
 
-export const LIGHT = {
+export const STANDART_LIGHT = {
     "c": "oklch(0.01 0 0)",
     "ac": "oklch(0.42 0.2086 263.9)",
     "bs": "2px 1px rgba(0, 0, 0, 0.15)",

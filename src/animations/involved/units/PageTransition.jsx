@@ -41,7 +41,7 @@ export const PageTransition = observer(() => {
       opacity: 1,
       rotateX: 0,
       y:0,
-        scale: router.getPageSizes[router.getCurrentPage]
+        scale: router.getPageSize(router.getCurrentPage)
     },
     exit: {
       height: 0,

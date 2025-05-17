@@ -7,14 +7,10 @@
   ],
   "compilerOptions": {
     "target": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": [
-      "motions/react",        // Типы для Framer Motion (встроены в библиотеку)
-      "@react-spring/web"     // Типы для react-spring (если используются)
+      "motions/react", // Типы для Framer Motion (встроены в библиотеку)
+      "@react-spring/web" // Типы для react-spring (если используются)
     ],
     "module": "ESNext",
     "skipLibCheck": true,
@@ -27,22 +23,15 @@
     "allowJs": true,
     "esModuleInterop": true,
     "checkJs": false,
-    "strict": false,
+    "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": false,
     "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ]
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
+  "exclude": ["node_modules", "dist"],
   "references": []
 }

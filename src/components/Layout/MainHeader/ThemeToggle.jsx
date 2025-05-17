@@ -5,12 +5,13 @@ import { FiMoon, FiSun } from "react-icons/fi";
 const ThemeToggle = ({ isDark, setColorScheme }) => {
   const sliderAnimation = useSpring({
     rotateZ: isDark ? 0 : 100,
-    right: isDark ? 30 : 55,
-    top: isDark ? 1 : 5,
+    right: isDark ? 3 : 15,
+    top: 50,
     config: {
-      mass: 10,
-      tension: 200,
+      mass: 20,
+      tension: 300,
       friction: 20,
+      damping: 20,
     },
   });
 

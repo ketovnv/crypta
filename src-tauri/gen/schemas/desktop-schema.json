@@ -2073,6 +2073,18 @@
           "markdownDescription": "Denies the unminimize command without any pre-configured scope."
         },
         {
+          "description": "Enables the show_snap_overlay command without any pre-configured scope.",
+          "type": "string",
+          "const": "decorum:allow-show-snap-overlay",
+          "markdownDescription": "Enables the show_snap_overlay command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the show_snap_overlay command without any pre-configured scope.",
+          "type": "string",
+          "const": "decorum:deny-show-snap-overlay",
+          "markdownDescription": "Denies the show_snap_overlay command without any pre-configured scope."
+        },
+        {
           "description": "Allows the log command\n#### This default permission set includes:\n\n- `allow-log`",
           "type": "string",
           "const": "log:default",

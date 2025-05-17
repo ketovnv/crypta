@@ -22,7 +22,7 @@ import {runInAction} from 'mobx'
 
 export const AppKitObserver = observer(() => {
   // useEffect(() => {
-  logger.debug('🎃init🎃', 'AppKitObserver📺📺', 10)
+  // logger.debug('🎃init🎃', 'AppKitObserver📺📺', 10)
   // }, [])
 
   const account = useAppKitAccount()
@@ -68,9 +68,14 @@ export const AppKitObserver = observer(() => {
 
   useEffect(() => {
     const {title, message} = eventsStore.addEvent(event)
-    if (event.reportedErrors) {
-      logger.logJSON('☠️reportedErrors☠️', event.reportedErrors)
+    logger.success(title,message)
+    if (Object.keys(event.reportedErrors).length > 0) {
+      logger.logJSON('☠️reportedErrors☠️', {...event.reportedErrors})
+      for (const key in event.reportedErrors) {
+        logger.error(event.reportedErrors[key]);
+      }
     }
+
     if (!title && !message) return
 
     setTimeout(() => {

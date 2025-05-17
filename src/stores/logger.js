@@ -1,6 +1,7 @@
 import {action, makeAutoObservable, reaction, toJS} from "mobx";
 import {uiStore} from "@stores/ui.js"; // console.log('%c a spicy log message ?',
-
+import chalk from 'chalk';
+import gradient from 'gradient-string';
 // console.log('%c a spicy log message ?',
 //     [
 //       'background: linear-gradient(#D33106, #571402)'
@@ -315,12 +316,11 @@ class loggerStore {
 
 
 
-  logJSON = (label, data, fontSize = 20) => {
+  logJSON = (label, data, fontSize = 15) => {
     if (!data || data==={}) return;
     if (this.whatIs(data) === "String") data = JSON.parse(data);
 
-    this.logWhiteRandom("🥷", "Сейчас будет JSON 🥷");
-    this.success("♠️♦️", label + "💘♣️");
+    console.log(gradient(['cyan', 'pink'])("🥷♠️♦️🥷"+ label + "🥷💘♣️🥷"));
 
     Object.entries(data ?? { key: "null" }).forEach(([key, value]) => {
       console.log(
@@ -363,6 +363,12 @@ class loggerStore {
     valueColor = "yellow",
   ) => {
     const timestamp = formatTime();
+    if(!data) {
+      if(!message)
+      data = message
+      message='👻'
+    }
+
     // const { message, styles } = this.formatMessage(messageTemplate, ...args);
 
     // const styles = {};

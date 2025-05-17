@@ -23,12 +23,13 @@ const FrontCoinSVG = ({width = '1em', height = '1em', isDark=true
 
 
 // Компонент вращающейся монеты
-const HeaderBitcoin = ({size = 50,isDark=true}) => { // size - размер монеты в px
+const HeaderBitcoin = ({size = 50,isDark=true,toggleNavbarOpened}) => { // size - размер монеты в px
 
     return (
         // Контейнер для задания перспективы
         <div style={{perspective: '1000px', display: 'inline-block'}}>
             <motion.div
+                onMouseDown={toggleNavbarOpened}
                 // Основной контейнер монеты
                 style={{
                     width: size,
@@ -37,6 +38,7 @@ const HeaderBitcoin = ({size = 50,isDark=true}) => { // size - размер мо
                     transformStyle: 'preserve-3d', // Включаем 3D-пространство для дочерних элементов
                 }}
                 // Анимация вращения
+                variants={{hover: {rotateX: 3600, rotateZ: 3600}}}
                 animate={{rotateY: 360}} // Вращаем на 360 градусов по оси Y
                 transition={{
                     duration: 6, // Длительность одного оборота (в секундах)

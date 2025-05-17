@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 import { animated, useTrail } from "@react-spring/web";
 
 export const SpringAppName = observer(() => {
-  logger.logRandomColors("SpringApp", "Render!!!", 32);
+  // logger.logRandomColors("SpringApp", "Render!!!", 32);
 
   const appNameArray = [
     ...animation.getAppNameArray,
@@ -31,7 +31,7 @@ export const SpringAppName = observer(() => {
         margin: 0,
         padding: 0,
         position: "relative",
-        fontSize: "2.5rem",
+        fontSize: "1.25rem",
         fontWeight: 900,
         fontFamily: "Tactic Round Blk, monospace",
       }}
