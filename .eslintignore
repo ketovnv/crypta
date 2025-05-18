@@ -1,0 +1,26 @@
+# Пакеты и билды
+node_modules/
+build/
+target/
+
+# Конфиги (если не хотите их линтить)
+*.config.[cm]js   # *.config.js / *.config.cjs / *.config.mjs
+vite.config.*[jt]s
+tailwind.config.*[jt]s
+postcss.config.*[jt]s
+
+# Типы
+**/*.d.ts
+
+# CSS
+**/*.css
+
+# Логи и лок-файлы
+*.lock
+# Тесты
+tests/
+
+# Прочее
+.DS_Store
+.env
+!.env.example

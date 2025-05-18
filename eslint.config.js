@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import js from "@eslint/js";
 import globals from "globals";
 import react from "eslint-plugin-react";
@@ -5,6 +6,8 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import importPlugin from "eslint-plugin-import";
 import perfPlugin from "eslint-plugin-react-perf";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import typescriptParser from "@typescript-eslint/parser";
 
 // Импортируем jsx-a11y используя ESM синтаксис
 import jsxA11y from "eslint-plugin-jsx-a11y";
@@ -12,27 +15,35 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 export default [
   // Базовые настройки игнорирования
   {
-    ignores: ["dist", "build", "node_modules", "*.config.js", "vite.config.js"]
+    ignores: [
+      "dist",
+      "build",
+      "node_modules",
+      "*.config.js",
+      "vite.config.js",
+      "**/*.d.ts",
+    ],
   },
 
   // Основные правила для JavaScript и React файлов
   {
-    files: ["**/*.{js,jsx}"],
+    files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: "module",
       globals: {
         ...globals.browser,
         ...globals.node,
-        ...globals.es2021
+        ...globals.es2021,
       },
       parserOptions: {
         ecmaVersion: "latest",
         ecmaFeatures: {
           jsx: true,
-          experimentalObjectRestSpread: true
+          experimentalObjectRestSpread: true,
         },
         sourceType: "module",
+        project: "./tsconfig.json",
       },
     },
 
@@ -40,13 +51,13 @@ export default [
     settings: {
       react: {
         version: "18.3",
-        runtime: "automatic"
+        runtime: "automatic",
       },
       "import/resolver": {
         node: {
-          extensions: [".js", ".jsx"]
-        }
-      }
+          extensions: [".js", ".jsx", ".ts", ".tsx"],
+        },
+      },
     },
 
     // Подключаем все необходимые плагины
@@ -54,9 +65,11 @@ export default [
       react,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
-      "import": importPlugin,
+      import: importPlugin,
       "react-perf": perfPlugin,
+      "@typescript-eslint": typescriptEslint,
     },
+    parser: typescriptParser,
 
     // Правила
     rules: {
@@ -78,10 +91,20 @@ export default [
       "import/named": "error",
       "import/default": "error",
       "import/namespace": "error",
-      "import/order": ["error", {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "newlines-between": "always"
-      }],
+      "import/order": [
+        "error",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+          ],
+          "newlines-between": "always",
+        },
+      ],
 
       // Правила для хуков
       "react-hooks/rules-of-hooks": "error",
@@ -94,16 +117,31 @@ export default [
       // Правила для React Refresh
       "react-refresh/only-export-components": [
         "warn",
-        { allowConstantExport: true }
+        { allowConstantExport: true },
+      ],
+
+      // Правила для TypeScript
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
       ],
 
       // Дополнительные правила для улучшения производительности
-      "react/jsx-no-bind": ["warn", {
-        allowArrowFunctions: true,
-        allowFunctions: false,
-        allowBind: false
-      }],
+      "react/jsx-no-bind": [
+        "warn",
+        {
+          allowArrowFunctions: true,
+          allowFunctions: false,
+          allowBind: false,
+        },
+      ],
       "react/jsx-no-constructed-context-values": "error",
-    }
-  }
+    },
+  },
 ];

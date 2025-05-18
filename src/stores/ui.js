@@ -1,10 +1,9 @@
-import {action, makeAutoObservable} from "mobx";
-import {animation} from "./animation";
+import { action, makeAutoObservable } from "mobx";
+import { animation } from "./animation";
 
 class UiStore {
-
   colorScheme = "dark";
-  themeIsVeryColorised = false// Начальное значение
+  themeIsVeryColorised = false; // Начальное значение
   isNavbarOpened = false;
   fontSearch = "";
   fontFamilies = [];
@@ -12,16 +11,6 @@ class UiStore {
   appkitMethods = {};
   screenHeight = 0;
   screenWidth = 0;
-
-  get getRed() {
-    return  `oklch${this.themeIsDark ?'(0.65 0.242 32.37)' : '(0.39 0.1423 32.37)'}`
-  }
-
-  get getGreen() {
-    return  `oklch(${this.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`
-  }
-  get getTthemeIsVeryColorised() {
-    return this.themeIsVeryColorised  }
 
   constructor() {
     makeAutoObservable(this, {
@@ -33,20 +22,33 @@ class UiStore {
       setScreenHeight: action,
       setScreenWidth: action,
       setThemeIsVeryColorised: action,
-
     });
+  }
+
+  get getRed() {
+    return `oklch${this.themeIsDark ? "(0.65 0.242 32.37)" : "(0.39 0.1423 32.37)"}`;
+  }
+
+  get getGreen() {
+    return `oklch(${this.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`;
+  }
+
+  get getTthemeIsVeryColorised() {
+    return this.themeIsVeryColorised;
   }
 
   get themeIsDark() {
     return this.colorScheme === "dark";
   }
+
   get themeStyle() {
-    return {...animation.themeController.springs};
+    return { ...animation.themeController.springs };
   }
 
   get screenSize() {
-    return {height: this.screenHeight, width: this.screenWidth}
+    return { height: this.screenHeight, width: this.screenWidth };
   }
+
   setAppkitMethods = (appkitMethods) => {
     this.appkitMethods = appkitMethods;
     appkitMethods.setThemeMode(this.themeIsDark ? "dark" : "light");
@@ -56,10 +58,9 @@ class UiStore {
       "--w3m-color-mix-strength": 300,
     });
   };
-  setScreenHeight = (value) => this.screenHeight = value;
-  setScreenWidth = (value) => this.screenWidth = value;
-  setThemeIsVeryColorised = (value) => this.themeIsVeryColorised = value;
-
+  setScreenHeight = (value) => (this.screenHeight = value);
+  setScreenWidth = (value) => (this.screenWidth = value);
+  setThemeIsVeryColorised = (value) => (this.themeIsVeryColorised = value);
 
   setColorScheme = (theme) => {
     this.colorScheme = theme;
@@ -69,8 +70,8 @@ class UiStore {
       config: {
         tension: 50,
         friction: 75,
-        mass: 10,
-        damping: 75,
+        mass: 5,
+        damping: 100,
         precision: 0.0001,
       },
     });

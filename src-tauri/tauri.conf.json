@@ -15,16 +15,15 @@
         "width": 2560,
         "height": 1440,
         "preventOverflow": true,
-        "fullscreen": true,
+        "fullscreen": false,
         "resizable": true,
         "transparent": true,
-        "decorations": true
+        "decorations": true,
+        "additionalBrowserArgs": "--force-device-scale-factor=1"
       }
     ],
     "security": {
-      "dangerousDisableAssetCspModification": [
-        "style-src"
-      ],
+      "dangerousDisableAssetCspModification": ["style-src"],
       "csp": "default-src 'self' style-src 'self' 'unsafe-inline' font-src 'self' data: assets://* img-src 'self' data: assets://* script-src 'self' 'wasm-unsafe-eval"
     }
   },

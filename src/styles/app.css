@@ -120,14 +120,16 @@
 
 @layer base {
   * {
-    @reference border-border;
+    border-color: var(--border);
   }
   html {
-    @reference scroll-smooth;
+    scroll-behavior: smooth;
   }
 
   body {
-    @reference bg-background text-foreground overscroll-none;
+    background-color: var(--background);
+    color: var(--foreground);
+    overscroll-behavior: none;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
   }
@@ -158,8 +160,23 @@
   }
 
   .steps > h3:before {
-    @reference absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center -indent-px font-mono text-base font-medium;
-    @reference ml-[-50px] mt-[-4px];
+    position: absolute;
+    display: inline-flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border-width: 4px;
+    border-color: var(--background);
+    background-color: var(--muted);
+    text-align: center;
+    text-indent: -1px;
+    font-family: ui-monospace, monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: -50px;
+    margin-top: -4px;
     content: counter(steps);
   }
 }
@@ -221,25 +238,40 @@
 }
 
 [data-rehype-pretty-code-figure] {
-  @reference relative text-white w-full;
+  position: relative;
+  color: white;
+  width: 100%;
 }
 
 [data-rehype-pretty-code-figure] code {
-  @reference grid min-w-full break-words rounded-none border-0 bg-transparent;
+  display: grid;
+  min-width: 100%;
+  word-break: break-word;
+  border-radius: 0;
+  border-width: 0;
+  background-color: transparent;
   counter-reset: line;
   box-decoration-break: clone;
 }
 
 [data-rehype-pretty-code-figure] [data-line] {
-  @reference px-4 min-h-[1rem] py-0.5 w-full inline-block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-height: 1rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  width: 100%;
+  display: inline-block;
 }
 
 [data-rehype-pretty-code-figure] [data-line-numbers] [data-line] {
-  @reference px-2;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 [data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
-  @reference text-zinc-50/40 text-xs;
+  color: rgba(244, 244, 245, 0.4);
+  font-size: 0.75rem;
   counter-increment: line;
   content: counter(line);
   display: inline-block;
@@ -249,36 +281,50 @@
 }
 
 [data-rehype-pretty-code-figure] .line--highlighted {
-  @reference bg-zinc-700/50;
+  background-color: rgba(63, 63, 70, 0.5);
 }
 
 [data-rehype-pretty-code-figure] .line-highlighted span {
-  @reference relative;
+  position: relative;
 }
 
 [data-rehype-pretty-code-figure] .word--highlighted {
-  @reference rounded-md bg-zinc-700/50 border-zinc-700/70 p-1;
+  border-radius: 0.375rem;
+  background-color: rgba(63, 63, 70, 0.5);
+  border-color: rgba(63, 63, 70, 0.7);
+  padding: 0.25rem;
 }
 
 .dark [data-rehype-pretty-code-figure] .word--highlighted {
-  @reference bg-zinc-900;
+  background-color: rgb(24, 24, 27);
 }
 
 [data-rehype-pretty-code-title] {
-  @reference mt-2 pt-6 px-4 text-sm font-medium text-foreground;
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
 }
 
 [data-rehype-pretty-code-title] + pre {
-  @reference mt-2;
+  margin-top: 0.5rem;
 }
 
 .mdx > .steps:first-child > h3:first-child {
-  @reference mt-0;
+  margin-top: 0;
 }
 
 .steps > h3 {
-  @reference mt-8 mb-4 text-base font-semibold;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
 }
+
+/* ScrollList Component styles have been moved to a dedicated CSS file in animations/involved/scrollList.css */
 
 
 

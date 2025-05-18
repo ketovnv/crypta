@@ -4,15 +4,13 @@ import {
   getCurrentWindow,
   LogicalPosition,
   LogicalSize,
-  PhysicalPosition,
-  PhysicalSize,
 } from "@tauri-apps/api/window";
 import { gpuStore } from "./gpuStore.ts";
 import { logger } from "./logger";
 
 const RESOLUTIONS = [
-  [800, 600],
-  [1024, 768],
+  // [800, 600],
+  // [1024, 768],
   [1920, 1080],
   [2560, 1440],
 ];
@@ -46,11 +44,11 @@ export class WindowStore {
     const top = await this.currentWindow.isAlwaysOnTop();
     const factor = await getCurrentWindow().scaleFactor();
     logger.success("factor", factor);
-    const unlisten = await getCurrentWindow().onResized(({ payload: size }) => {
-      logger.logJSON(size.type, size.toJSON());
-      logger.logJSON("Logical", size.toLogical(factor));
-      // logger.logJSON('Window resized', size);
-    });
+    // const unlisten = await getCurrentWindow().onResized(({ payload: size }) => {
+    // logger.logJSON(size.type, size.toJSON());
+    // logger.logJSON("Logical", size.toLogical(factor));
+    // logger.logJSON('Window resized', size);
+    // });
 
     runInAction(() => {
       this.width = size.width;
@@ -59,7 +57,7 @@ export class WindowStore {
       this.y = pos.y;
       this.isFullscreen = fs;
       this.isAlwaysOnTop = top;
-      this.unlistenWindow = unlisten;
+      // this.unlistenWindow = unlisten;
     });
   }
 
