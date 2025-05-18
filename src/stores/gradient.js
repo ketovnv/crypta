@@ -21,7 +21,7 @@ class GradientStore {
 
   constructor() {
     makeAutoObservable(this, { calculateTheme: action });
-    this.themesInit();
+    // this.themesInit();
   }
 
   get getRainbowV2Gradient() {
