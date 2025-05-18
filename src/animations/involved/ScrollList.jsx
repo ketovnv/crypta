@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { observer } from "mobx-react-lite";
+import { listItemsStore } from "../../stores";
 import "./scrollList.css";
 
 const AnimatedItem = ({
@@ -41,25 +43,8 @@ const AnimatedItem = ({
   );
 };
 
-const ScrollList = ({
-  items = [
-    "Item 1",
-    "Item 2",
-    "Item 3",
-    "Item 4",
-    "Item 5",
-    "Item 6",
-    "Item 7",
-    "Item 8",
-    "Item 9",
-    "Item 10",
-    "Item 11",
-    "Item 12",
-    "Item 13",
-    "Item 14",
-    "Item 15",
-  ],
-  setItems,
+const ScrollList = observer(({
+  // Store is used instead of items prop
   onItemSelect,
   showGradients = true,
   enableArrowNavigation = true,
@@ -69,10 +54,19 @@ const ScrollList = ({
   initialSelectedIndex = -1,
 }) => {
   const listRef = useRef(null);
-  const [selectedIndex, setSelectedIndex] = useState(initialSelectedIndex);
   const [keyboardNav, setKeyboardNav] = useState(false);
   const [topGradientOpacity, setTopGradientOpacity] = useState(0);
   const [bottomGradientOpacity, setBottomGradientOpacity] = useState(1);
+  
+  // Use MobX store for items and selection
+  const { items, selectedIndex } = listItemsStore;
+  
+  // Initialize selected index from prop
+  useEffect(() => {
+    if (initialSelectedIndex >= 0) {
+      listItemsStore.setSelectedIndex(initialSelectedIndex);
+    }
+  }, [initialSelectedIndex]);
 
   const handleScroll = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.target;
@@ -83,11 +77,9 @@ const ScrollList = ({
     );
   };
 
-  // Add a new item to the list (typically at the beginning)
+  // Add a new item to the list using the MobX store
   const addItem = (newItem) => {
-    if (setItems && typeof setItems === 'function') {
-      setItems([newItem, ...items]);
-    }
+    listItemsStore.addItem(newItem);
   };
 
   // Keyboard navigation: arrow keys, tab, and enter selection
@@ -98,11 +90,11 @@ const ScrollList = ({
       if (e.key === "ArrowDown" || (e.key === "Tab" && !e.shiftKey)) {
         e.preventDefault();
         setKeyboardNav(true);
-        setSelectedIndex((prev) => Math.min(prev + 1, items.length - 1));
+        listItemsStore.setSelectedIndex(Math.min(selectedIndex + 1, items.length - 1));
       } else if (e.key === "ArrowUp" || (e.key === "Tab" && e.shiftKey)) {
         e.preventDefault();
         setKeyboardNav(true);
-        setSelectedIndex((prev) => Math.max(prev - 1, 0));
+        listItemsStore.setSelectedIndex(Math.max(selectedIndex - 1, 0));
       } else if (e.key === "Enter") {
         if (selectedIndex >= 0 && selectedIndex < items.length) {
           e.preventDefault();
@@ -162,9 +154,9 @@ const ScrollList = ({
             <AnimatedItem
               key={`item-${index}-${typeof item === 'string' ? item : index}`}
               index={index}
-              onMouseEnter={() => setSelectedIndex(index)}
+              onMouseEnter={() => listItemsStore.setSelectedIndex(index)}
               onClick={() => {
-                setSelectedIndex(index);
+                listItemsStore.setSelectedIndex(index);
                 if (onItemSelect) {
                   onItemSelect(item, index);
                 }
@@ -196,17 +188,20 @@ const ScrollList = ({
   );
 };
 
-// Example of usage in parent component:
+// Example of usage in parent component with MobX:
 // 
-// const [listItems, setListItems] = useState(['Item 1', 'Item 2']);
+// // Initialize store if needed
+// useEffect(() => {
+//   listItemsStore.setItems(['Item 1', 'Item 2']);
+// }, []);
 // 
 // useEffect(() => {
 //   // Add a new item when seconds change
 //   if (seconds.seconds % 5 === 0 && seconds.seconds !== 0) {
-//     setListItems(prev => [`New Item ${Date.now()}`, ...prev]);
+//     listItemsStore.addItem(`New Item ${Date.now()}`);
 //   }
 // }, [seconds.seconds]);
 // 
-// <ScrollList items={listItems} setItems={setListItems} />
+// <ScrollList />
 
-export default ScrollList;
+export default observer(ScrollList);

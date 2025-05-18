@@ -6,39 +6,23 @@ import { gpuStore } from "@stores/gpuStore";
 import { windowStore } from "@stores/window";
 import { logger } from "@stores/logger";
 import { router } from "@stores/router";
-import ScrollList from "@animations/involved/ScrollList";
+// import ScrollList from "@animations/involved/ScrollList";
 import SpringContent from "@animations/involved/SpringContent";
 import Counter from "@animations/involved/Counter.jsx";
 import time from "@stores/time.js";
 import seconds from "@stores/seconds.js";
 
 const Options = observer(() => {
-  const [items, setItems] = useState([
-    "Item 1",
-    "Item 2",
-    "Item 3",
-    "Item 4",
-    "Item 5",
-    "Item 6",
-    "Item 7",
-    "Item 8",
-    "Item 9",
-    "Item 10",
-  ]);
 
+  logger.error("RENDER", "😈👻😈");
   useEffect(() => {
-    logger.error("RENDER", "😈👻😈");
+  
     gpuStore.fetchMonitorModes();
   }, []);
-  useEffect(() => {
-    return () => {
-      items.unshift("Item " + parseInt(0 - seconds.seconds));
-      setItems([...items]);
-    };
-  }, [seconds.seconds]);
 
+ 
   return (
-    <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]">
+    <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]">     
       <div className="relative flex flex-1 flex-col justify-between gap-3">
         <SpringContent
           distance={150}
@@ -51,7 +35,15 @@ const Options = observer(() => {
           threshold={0.2}
           display="flex"
         >
-          <Counter
+           <GradientSwitches />
+          {gpuStore.currentMode && (
+            <ResolutionsButtonsLayout
+              width={windowStore.width}
+              height={windowStore.height}
+              mode={gpuStore.currentMode}
+            />
+          )}
+          {/* <Counter
             value={seconds.seconds}
             places={[100, 10, 1]}
             fontSize={80}
@@ -59,8 +51,8 @@ const Options = observer(() => {
             gap={10}
             textColor="white"
             fontWeight={900}
-          />
-          <GradientSwitches />
+          /> */}
+         
         </SpringContent>
         {router.isActiveOptions && (
           <SpringContent
@@ -74,19 +66,12 @@ const Options = observer(() => {
             threshold={0.2}
             display="flex"
           >
-            <ScrollList
+            {/* <ScrollList
               items={items}
               onItemSelect={(item, index) => console.log(item, index)}
               showGradients={true}
               enableArrowNavigation={true}
-            />
-            {gpuStore.currentMode && (
-              <ResolutionsButtonsLayout
-                width={windowStore.width}
-                height={windowStore.height}
-                mode={gpuStore.currentMode}
-              />
-            )}
+            /> */}
           </SpringContent>
         )}
       </div>

@@ -46,15 +46,15 @@ const Home = observer(() => {
   // return(<main><div style={{color: 'oklch(0.71 0.2086 263.9'}}>🏩 Hello Home!</div></main>    );
 
   return (
-    <main className="pageWrapper">
-      <MotionConfig
-        transition={{
-          type: "spring",
-          visualDuration: 1.5,
-          bounce: 0.33,
-        }}
-      >
-        <animated.section className="pageCard" style={uiStore.themeStyle}>
+    <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]">
+      <div className="relative flex flex-1 flex-col justify-between gap-3">
+        <MotionConfig
+          transition={{
+            type: "spring",
+            visualDuration: 1.5,
+            bounce: 0.33,
+          }}
+        >
           <motion.div
             drag="x"
             dragConstraints={{ left: 0, right: 360 }}
@@ -309,9 +309,9 @@ const Home = observer(() => {
               </motion.span>
             </GradientText>
           </Group>
-        </animated.section>
-      </MotionConfig>
-    </main>
+        </MotionConfig>
+      </div>
+    </div>
   );
 });
 export default Home;
