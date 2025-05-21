@@ -9,8 +9,8 @@ import { gpuStore } from "./gpuStore.ts";
 import { logger } from "./logger";
 
 const RESOLUTIONS = [
-  // [800, 600],
-  // [1024, 768],
+  [1024, 768],
+  [1707, 960],
   [1920, 1080],
   [2560, 1440],
 ];
@@ -74,29 +74,29 @@ export class WindowStore {
   setPosition(x: number, y: number) {
     this.x = x;
     this.y = y;
-    appWindow.setPosition(new LogicalPosition(x, y));
+    this.currentWindow.setPosition(new LogicalPosition(x, y));
   }
 
   async toggleFullscreen() {
     this.isFullscreen = !this.isFullscreen;
-    await appWindow.setFullscreen(this.isFullscreen);
+    await this.currentWindow.setFullscreen(this.isFullscreen);
   }
 
   async toggleAlwaysOnTop() {
     this.isAlwaysOnTop = !this.isAlwaysOnTop;
-    await appWindow.setAlwaysOnTop(this.isAlwaysOnTop);
+    await this.currentWindow.setAlwaysOnTop(this.isAlwaysOnTop);
   }
 
   async minimize() {
-    await appWindow.minimize();
+    await this.currentWindow.minimize();
   }
 
   async maximize() {
-    await appWindow.maximize();
+    await this.currentWindow.maximize();
   }
 
   async close() {
-    await appWindow.close();
+    await this.currentWindow.close();
   }
 }
 

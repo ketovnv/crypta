@@ -1,5 +1,6 @@
 import { motion, useSpring, useTransform } from "motion/react";
 import { useEffect } from "react";
+import seconds from "@stores/seconds.js";
 
 function Number({ mv, number, height }) {
   let y = useTransform(mv, (latest) => {
@@ -51,7 +52,7 @@ function Digit({ place, value, height, digitStyle }) {
 }
 
 export default function Counter({
-  value,
+  value = null,
   fontSize = 100,
   padding = 0,
   places = [100, 10, 1],
@@ -118,7 +119,7 @@ export default function Counter({
           <Digit
             key={place}
             place={place}
-            value={value}
+            value={value ? null : seconds.seconds}
             height={height}
             digitStyle={digitStyle}
           />

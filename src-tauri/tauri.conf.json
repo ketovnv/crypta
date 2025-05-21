@@ -18,12 +18,13 @@
         "fullscreen": false,
         "resizable": true,
         "transparent": true,
-        "decorations": true,
-        "additionalBrowserArgs": "--force-device-scale-factor=1"
+        "decorations": true
       }
     ],
     "security": {
-      "dangerousDisableAssetCspModification": ["style-src"],
+      "dangerousDisableAssetCspModification": [
+        "style-src"
+      ],
       "csp": "default-src 'self' style-src 'self' 'unsafe-inline' font-src 'self' data: assets://* img-src 'self' data: assets://* script-src 'self' 'wasm-unsafe-eval"
     }
   },

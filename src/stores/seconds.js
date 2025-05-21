@@ -9,6 +9,8 @@ class TimerStore {
   // Приватные поля, не являющиеся наблюдаемыми
   _startTime = 0;
   _timerId = null;
+  items = [];
+  selectedIndex = -1;
 
   constructor() {
     // Делаем свойства наблюдаемыми автоматически

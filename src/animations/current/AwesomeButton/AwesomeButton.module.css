@@ -5,38 +5,63 @@
   position: relative;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0);
-  line-height: 20; /*font-weight: bold;*/
+  line-height: 1.5;
   font-style: normal;
   letter-spacing: 0;
   text-rendering: auto;
   text-decoration: none;
   text-align: center;
-  transition: opacity 0.1s ease-out;
+  transition: all 0.3s ease-out;
   border: none;
-  opacity: 0;
+  opacity: 1;
   cursor: pointer;
   -webkit-font-smoothing: antialiased;
   transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transform-style: preserve-3d;
+  padding: 10px 20px;
+  border-radius: 4px;
+  min-width: 120px;
 }
 
-/*.mainNavBtnContent {*/
-/*  background: radial-gradient(*/
-/*          in oklch circle at 25% 110%,*/
-/*          #444444 0%,*/
-/*          #3C3C3C 5%,*/
-/*          #333333 20%,*/
-/*          #2B2B2B 30%,*/
-/*          #222222 45%,*/
-/*          #1B1B1B 55%,*/
-/*          #111111 80%,*/
-/*          #070707 90%,*/
-/*          #010101 95%*/
-/*  )*/
-/*}*/
+.mainNavBtnContent {
+  background: radial-gradient(
+          circle at 25% 110%,
+          #444444 0%,
+          #3C3C3C 5%,
+          #333333 20%,
+          #2B2B2B 30%,
+          #222222 45%,
+          #1B1B1B 55%,
+          #111111 80%,
+          #070707 90%,
+          #010101 95%
+  );
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  transform-style: preserve-3d;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+.mainNavBtnWrapper_Options:before {
+  background: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+  z-index: -1;
+  transform: translateZ(-2px);
+}
 
-.mainNavBtnWrapper:before {
+.mainNavBtnWrapper_Balance:before {
   background: radial-gradient(
           circle at 25% 110%,
           #fdf497 0%,
@@ -45,5 +70,14 @@
           #d6249f 60%,
           #285aeb 90%
   );
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+  z-index: -1;
+  transform: translateZ(-2px);
   color: #fff;
 }

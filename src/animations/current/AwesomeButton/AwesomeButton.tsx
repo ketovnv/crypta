@@ -1,14 +1,10 @@
 import React, { useRef } from "react";
 import { Center } from "@mantine/core";
-import { motion } from "motion/react"; // @ts-ignore
-import { router } from "@stores/router"; // @ts-ignore
+import { motion, useMotionValue, useTransform } from "motion/react";
 import classes from "./AwesomeButton.module.css";
+import "./ButtonContainer.css";
 
 const POSITION_STATES = ["middle", "left", "right"];
-
-const Button = React.forwardRef<HTMLButtonElement>((props, ref) => (
-  <button ref={ref} {...props} />
-));
 
 export type ButtonType = {
   isActive?: boolean;
@@ -42,6 +38,7 @@ export type ButtonType = {
   type?: string;
   buttonKey?: string;
   visible?: boolean;
+  skewY?: null;
 };
 
 export const AwesomeButton = ({
@@ -60,57 +57,123 @@ export const AwesomeButton = ({
   children = null,
   extra = null,
   style = {},
+  skewY = null,
 }: ButtonType) => {
-  const button = useRef(null);
-  const content = useRef(null);
-  const container = useRef(null);
-  const child = useRef(null);
+  const buttonRef = useRef(null);
+  const contentRef = useRef(null);
+  
   const handlePress = (onPress: any) => {
     if (onPress) onPress();
-    // return null;
+  };
+  
+  // Motion values for tilt effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  // Transform mouse position to rotation values
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
+  
+  // Handle mouse movement over the button
+  const handleMouseMove = (event) => {
+    if (!buttonRef.current) return;
+    
+    const rect = buttonRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    
+    // Calculate mouse position relative to button center (values between -0.5 and 0.5)
+    const x = (event.clientX - rect.left) / width - 0.5;
+    const y = (event.clientY - rect.top) / height - 0.5;
+    
+    // Update motion values
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+  
+  // Reset tilt on mouse leave
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+  
+  // Scale effect for button on hover and tap
+  const buttonHoverVariants = {
+    initial: { scale: 1 },
+    hover: { scale: 1.05, transition: { duration: 0.2 } },
+    tap: { scale: 0.95, transition: { duration: 0.1 } },
   };
 
   return (
-    <motion.button
-      whileHover={whileHover}
-      whileTap={whileTap}
-      animate={animate}
-      onClick={() => handlePress(onPress)}
-layout
-      layoutId={layoutId}
-      key={buttonKey}
-      variants={variants}
-
-      style={{ ...style}}
-      className={`${classes.awsBtn}  aws-btn`}
-      ref={container}
+    <motion.div
+      className="button-container"
+      style={{ 
+        perspective: 800,
+        ...style 
+      }}
     >
-      <span
-        ref={button}
-        className={`${classes.mainNavBtnWrapper}  aws-btn__wrapper`}
+      <motion.button
+        ref={buttonRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => handlePress(onPress)}
+        layout
+        layoutId={layoutId}
+        key={buttonKey}
+        variants={variants || buttonHoverVariants}
+        initial="initial"
+        whileHover={whileHover || "hover"}
+        whileTap={whileTap || "tap"}
+        animate={animate || (isActive ? "tap" : "initial")}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: 'preserve-3d',
+        }}
+        transition={{
+          rotateX: { type: "spring", stiffness: 300, damping: 15 },
+          rotateY: { type: "spring", stiffness: 300, damping: 15 },
+          default: { type: "spring", stiffness: 400 }
+        }}
+        className={`${classes.awsBtn} aws-btn aws-btn--visible`} // Added aws-btn--visible to make button visible
       >
-        <motion.div
-          initial={{ transform: "translate3d(0, 0, 0 )" }}
-          transition={{
-            type: "tween",
-            duration: 0.2,
-            background: { duration: 3 },
+        <motion.span
+          className={
+            classes[`mainNavBtnWrapper_` + buttonKey] + " aws-btn__wrapper"
+          }
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: 'translateZ(-0.5px)',
           }}
-          animate={{
-            transform: isActive
-              ? "translate3d(0, 3px, 0)"
-              : "translate3d(0, 0, 0)",
-            background: background,
-          }}
-          ref={content}
-          className={`${classes.mainNavBtnContent}  aws-btn__content`}
         >
-          <Center mr={before? 12 :0}>{before}</Center>
-          <Center ref={child}>{children}</Center>
-          {after}
-        </motion.div>
-        {extra}
-      </span>
-    </motion.button>
+          <motion.div
+            ref={contentRef}
+            className={`${classes.mainNavBtnContent} aws-btn__content`}
+            initial={{ transform: "translate3d(0, 0, 0)" }}
+            animate={{
+              transform: isActive
+                ? "translate3d(0, 3px, 0)"
+                : "translate3d(0, 0, 0)",
+              background: background,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 500,
+              damping: 30,
+              background: { duration: 0.3 },
+            }}
+            style={{
+              transformStyle: 'preserve-3d',
+              transform: 'translateZ(1px)',
+            }}
+          >
+            <Center mr={before ? 12 : 0}>{before}</Center>
+            <Center>{children}</Center>
+            {after}
+          </motion.div>
+          {extra}
+        </motion.span>
+      </motion.button>
+    </motion.div>
   );
 };

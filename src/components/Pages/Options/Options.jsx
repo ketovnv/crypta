@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { animated, useSpring } from "@react-spring/web";
 import { observer } from "mobx-react-lite";
 import GradientSwitches from "./GradientSwitches";
 import ResolutionsButtonsLayout from "./ResolutionsButtonsLayout";
@@ -6,24 +7,56 @@ import { gpuStore } from "@stores/gpuStore";
 import { windowStore } from "@stores/window";
 import { logger } from "@stores/logger";
 import { router } from "@stores/router";
-// import ScrollList from "@animations/involved/ScrollList";
 import SpringContent from "@animations/involved/SpringContent";
 import Counter from "@animations/involved/Counter.jsx";
 import time from "@stores/time.js";
-import seconds from "@stores/seconds.js";
+import ScrollList from "@animations/involved/ScrollList";
+import { Tabs } from "@animations/involved/Tabs";
+import { uiStore } from "@stores/ui.js";
 
 const Options = observer(() => {
-
   logger.error("RENDER", "😈👻😈");
   useEffect(() => {
-  
     gpuStore.fetchMonitorModes();
   }, []);
 
- 
+  const tabs = [
+    {
+      title: "Темы",
+      value: "product",
+      content: (
+        <animated.div
+          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900"
+          style={{ ...uiStore.themeStyle }}
+        >
+          <GradientSwitches />
+        </animated.div>
+      ),
+    },
+    {
+      title: "Разрешение",
+      value: "resolutions",
+      content: (
+        <animated.div
+          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900"
+          style={{ ...uiStore.themeStyle }}
+        >
+          <ResolutionsButtonsLayout
+            width={windowStore.width}
+            height={windowStore.height}
+            mode={gpuStore.currentMode}
+          />
+        </animated.div>
+      ),
+    },
+  ];
+
   return (
-    <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]">     
+    <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]">
       <div className="relative flex flex-1 flex-col justify-between gap-3">
+        <div className="h-[20rem] md:h-[40rem] [perspective:700px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-40">
+          <Tabs tabs={tabs} />
+        </div>
         <SpringContent
           distance={150}
           direction="vertical"
@@ -34,26 +67,8 @@ const Options = observer(() => {
           scale={1.1}
           threshold={0.2}
           display="flex"
-        >
-           <GradientSwitches />
-          {gpuStore.currentMode && (
-            <ResolutionsButtonsLayout
-              width={windowStore.width}
-              height={windowStore.height}
-              mode={gpuStore.currentMode}
-            />
-          )}
-          {/* <Counter
-            value={seconds.seconds}
-            places={[100, 10, 1]}
-            fontSize={80}
-            padding={5}
-            gap={10}
-            textColor="white"
-            fontWeight={900}
-          /> */}
-         
-        </SpringContent>
+        ></SpringContent>
+
         {router.isActiveOptions && (
           <SpringContent
             distance={150}
@@ -66,12 +81,22 @@ const Options = observer(() => {
             threshold={0.2}
             display="flex"
           >
-            {/* <ScrollList
-              items={items}
-              onItemSelect={(item, index) => console.log(item, index)}
-              showGradients={true}
-              enableArrowNavigation={true}
-            /> */}
+            <Counter
+              places={[100, 10, 1]}
+              fontSize={80}
+              padding={5}
+              gap={10}
+              textColor="white"
+              fontWeight={900}
+            />
+            {
+              <ScrollList
+                // items={items}
+                onItemSelect={(item, index) => console.log(item, index)}
+                showGradients={true}
+                enableArrowNavigation={true}
+              />
+            }
           </SpringContent>
         )}
       </div>

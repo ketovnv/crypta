@@ -15,9 +15,8 @@ const ResolutionsButtonsLayout = ({ width, height }) => {
     container: {
       opacity: 0,
       flex: 1,
-      scale: 0.3,
       display: "flex",
-      // padding: "1rem",
+      padding: "1rem",
       flexDirection: "column",
       // boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)',
       borderRadius: 16,
@@ -27,7 +26,7 @@ const ResolutionsButtonsLayout = ({ width, height }) => {
     resolutionContainer: {
       position: "relative",
       overflow: "hidden",
-      // minHeight: '75px',
+      minHeight: "75px",
     },
     radioRow: {
       display: "flex",
