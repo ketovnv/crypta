@@ -23,10 +23,11 @@ class GpuStore {
   constructor() {
     makeAutoObservable(this, { fetchMonitorModes: action });
     // this.fetchGpuInfo();
+    this.fetchMonitorModes();
   }
 
   toggleGpu() {
-    this.isGpuEnabled = !this.isGpuEnabled;
+    // this.isGpuEnabled = !this.isGpuEnabled;
   }
 
   toggleBackground() {
@@ -35,7 +36,7 @@ class GpuStore {
 
   async fetchGpuInfo() {
     try {
-      this.gpuInfo = await invoke("get_gpu_info");
+      // this.gpuInfo = await invoke("get_gpu_info");
     } catch (e) {
       console.error("GPU info fetch failed", e);
     }
@@ -62,7 +63,7 @@ class GpuStore {
         this.loading = false;
       });
     } catch (e) {
-      console.error("Monitor modes fetch failed", e);
+      console.log("Monitor modes fetch failed", e);
     }
   }
 

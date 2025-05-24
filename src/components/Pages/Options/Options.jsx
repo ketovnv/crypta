@@ -15,7 +15,6 @@ import { Tabs } from "@animations/involved/Tabs";
 import { uiStore } from "@stores/ui.js";
 
 const Options = observer(() => {
-  logger.error("RENDER", "😈👻😈");
   useEffect(() => {
     gpuStore.fetchMonitorModes();
   }, []);

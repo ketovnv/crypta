@@ -7,6 +7,7 @@ import GradientText from "@animations/involved/GradientText.jsx";
 
 const ResolutionsButtonsLayout = ({ width, height }) => {
   const resizeWindow = (res) => {
+    alert("resize window");
     windowStore.applySize(res[0], res[1]);
     // gpuStore.setWindowSize(res[0], res[1]);
   };

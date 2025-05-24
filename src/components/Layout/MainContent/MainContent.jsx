@@ -2,16 +2,12 @@ import { AppShell } from "@mantine/core";
 import { animated } from "@react-spring/web";
 import { observer } from "mobx-react-lite";
 import { animation } from "@stores/animation.js";
-import { PageTransition } from "@animations/involved/units/PageTransition";
+// import { PageTransition } from "@animations/involved/units/PageTransition";
+import { uiStore } from "@stores/ui.js";
 // import {SmoothCursor} from "@animations/involved/SmoothCusor.js";
+import { animationEngine } from "@animations/animationEngine";
 
 export const MainContent = observer(() => {
-  // import assert from 'assert'
-  // import { isValidChecksumAddress, unpadBuffer } from '@ethereumjs/util'
-
-  // assert.ok(isValidChecksumAddress('0x2F015C60E0be116B1f0CD534704Db9c92118FB6A'))
-  //
-  // assert.ok(unpadBuffer(Buffer.from('000000006600', 'hex')).equals(Buffer.from('6600', 'hex')))
   const themeStyle = animation.themeController.springs;
 
   return (
@@ -19,7 +15,7 @@ export const MainContent = observer(() => {
       <animated.div
         style={{
           ...themeStyle,
-            // background: "transparent",
+          // background: "transparent",
           height: "100vh",
           width: "100vw",
           position: "absolute",
@@ -29,13 +25,15 @@ export const MainContent = observer(() => {
       >
         <animated.div
           style={{
-            ...animation.getSpringAnimation("PageWithNavBarMoving"),
+            ...animationEngine.getPageWithNavBarValues(),
           }}
         >
-          <PageTransition />
+          <span>321</span>
+          {/*<PageTransition />*/}
         </animated.div>
       </animated.div>
-        {/*<SmoothCursor />*/}
+
+      {/*<SmoothCursor />*/}
     </AppShell.Main>
   );
 });

@@ -1,7 +1,7 @@
-import {action, makeAutoObservable, reaction, toJS} from "mobx";
-import {uiStore} from "@stores/ui.js"; // console.log('%c a spicy log message ?',
-import chalk from 'chalk';
-import gradient from 'gradient-string';
+import { action, makeAutoObservable, reaction, toJS } from "mobx";
+import { uiStore } from "@stores/ui.js"; // console.log('%c a spicy log message ?',
+import chalk from "chalk";
+import gradient from "gradient-string";
 // console.log('%c a spicy log message ?',
 //     [
 //       'background: linear-gradient(#D33106, #571402)'
@@ -133,16 +133,16 @@ class loggerStore {
     return this.bounds;
   }
 
-  @action
+  // @@action
   setBounds = (bounds) => (this.bounds = bounds);
 
-  @action
+  // @@action
   setBoundsMouse = (clientX, clientY) => {
     this.bounds.mouseX = Math.round(clientX - this.bounds.left);
     this.bounds.mouseY = Math.round(clientY - this.bounds.top);
   };
 
-  @action
+  // @@action
   setBoundsMouseHover = (isHover) => (this.bounds.isMouseHover = isHover);
 
   // Форматирование значений разных типов
@@ -230,17 +230,17 @@ class loggerStore {
     return uniqueElementsInfo.join(", ");
   }
 
-   getFontSizeLog(length) {
-     const minSize = 1.7;   // для очень длинного текста
-     const maxSize =7;     // для супер-короткого текста
-     const maxLen  = 200;   // длина, при которой уже сразу minSize
+  getFontSizeLog(length) {
+    const minSize = 1.7; // для очень длинного текста
+    const maxSize = 7; // для супер-короткого текста
+    const maxLen = 200; // длина, при которой уже сразу minSize
 
-     // нормализуем длину: от 0 (коротко) до 1 (длиннее maxLen)
-     const t = Math.min(length / maxLen, 1);
+    // нормализуем длину: от 0 (коротко) до 1 (длиннее maxLen)
+    const t = Math.min(length / maxLen, 1);
 
-     // размер = от maxSize (t=0) до minSize (t=1)
-     const size = minSize + (maxSize - minSize) * (1 - t);
-     return size + 'em';
+    // размер = от maxSize (t=0) до minSize (t=1)
+    const size = minSize + (maxSize - minSize) * (1 - t);
+    return size + "em";
   }
 
   whatIs = (object) => {
@@ -313,14 +313,11 @@ class loggerStore {
     });
   };
 
-
-
-
   logJSON = (label, data, fontSize = 15) => {
-    if (!data || data==={}) return;
+    if (!data || data === {}) return;
     if (this.whatIs(data) === "String") data = JSON.parse(data);
 
-    console.log(gradient(['cyan', 'pink'])("🥷♠️♦️🥷"+ label + "🥷💘♣️🥷"));
+    console.log(gradient(["cyan", "pink"])("🥷♠️♦️🥷" + label + "🥷💘♣️🥷"));
 
     Object.entries(data ?? { key: "null" }).forEach(([key, value]) => {
       console.log(
@@ -363,10 +360,9 @@ class loggerStore {
     valueColor = "yellow",
   ) => {
     const timestamp = formatTime();
-    if(!data) {
-      if(!message)
-      data = message
-      message='👻'
+    if (!data) {
+      if (!message) data = message;
+      message = "👻";
     }
 
     // const { message, styles } = this.formatMessage(messageTemplate, ...args);

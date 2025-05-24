@@ -19,8 +19,9 @@ class UiStore {
       setNavbarInterval: action,
       toggleColorScheme: action,
       setColorScheme: action,
-      setScreenHeight: action,
-      setScreenWidth: action,
+      // setScreenHeight: action,
+      // setScreenWidth: action,
+      setAppkitMethods: action,
       setThemeIsVeryColorised: action,
     });
   }
@@ -58,8 +59,8 @@ class UiStore {
       "--w3m-color-mix-strength": 300,
     });
   };
-  setScreenHeight = (value) => (this.screenHeight = value);
-  setScreenWidth = (value) => (this.screenWidth = value);
+  // setScreenHeight = (value) => (this.screenHeight = value);
+  // setScreenWidth = (value) => (this.screenWidth = value);
   setThemeIsVeryColorised = (value) => (this.themeIsVeryColorised = value);
 
   setColorScheme = (theme) => {

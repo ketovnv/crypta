@@ -71,33 +71,33 @@ export class WindowStore {
     return true;
   }
 
-  setPosition(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-    this.currentWindow.setPosition(new LogicalPosition(x, y));
-  }
-
-  async toggleFullscreen() {
-    this.isFullscreen = !this.isFullscreen;
-    await this.currentWindow.setFullscreen(this.isFullscreen);
-  }
-
-  async toggleAlwaysOnTop() {
-    this.isAlwaysOnTop = !this.isAlwaysOnTop;
-    await this.currentWindow.setAlwaysOnTop(this.isAlwaysOnTop);
-  }
-
-  async minimize() {
-    await this.currentWindow.minimize();
-  }
-
-  async maximize() {
-    await this.currentWindow.maximize();
-  }
-
-  async close() {
-    await this.currentWindow.close();
-  }
+  // setPosition(x: number, y: number) {
+  //   this.x = x;
+  //   this.y = y;
+  //   this.currentWindow.setPosition(new LogicalPosition(x, y));
+  // }
+  //
+  // async toggleFullscreen() {
+  //   this.isFullscreen = !this.isFullscreen;
+  //   await this.currentWindow.setFullscreen(this.isFullscreen);
+  // }
+  //
+  // async toggleAlwaysOnTop() {
+  //   this.isAlwaysOnTop = !this.isAlwaysOnTop;
+  //   await this.currentWindow.setAlwaysOnTop(this.isAlwaysOnTop);
+  // }
+  //
+  // async minimize() {
+  //   await this.currentWindow.minimize();
+  // }
+  //
+  // async maximize() {
+  //   await this.currentWindow.maximize();
+  // }
+  //
+  // async close() {
+  //   await this.currentWindow.close();
+  // }
 }
 
 export const windowStore = new WindowStore();

@@ -1,19 +1,16 @@
-import {
-  defineConfig
-} from "vite";
+import { defineConfig } from "vite";
+// import reactSWC from "@vitejs/plugin-react-swc";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tauri from "vite-plugin-tauri";
 import webfontDownload from "vite-plugin-webfont-dl";
+// import requirePlugin from "vite-plugin-require";
 import tailwindcss from "@tailwindcss/vite";
 // import tailwindcssPlugin from 'vite-plugin-tailwindcss'
 
-
 // Плагин для анализа размера бандла
-import {
-  visualizer
-} from "rollup-plugin-visualizer";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
   base: "./",
@@ -33,13 +30,22 @@ export default defineConfig({
         ],
       },
     }),
+    // reactSWC({
+    //   // Опции для SWC, если нужны
+    //   // Например, для поддержки декораторов MobX
+    //   devTarget: "esnext",
+    //   useAtYourOwnRisk_mutateSwcOptions(options) {
+    //     options.jsc.parser.decorators = true;
+    //     options.jsc.transform.decoratorVersion = "2022-03";
+    //   },
+    // }),
     webfontDownload([
       // 'https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap',
-      'https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700',
-      'https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap',
-      'https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900',
-
+      "https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700",
+      "https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap",
+      "https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900",
     ]),
+    // requirePlugin(),
     tailwindcss(),
     tsconfigPaths(),
     tauri(),
@@ -54,7 +60,7 @@ export default defineConfig({
   clearScreen: false,
   test: {
     globals: true,
-    environment: 'jsdom'
+    environment: "jsdom",
   },
   resolve: {
     alias: {
@@ -69,10 +75,10 @@ export default defineConfig({
   },
 
   build: {
-    minify: 'esbuild',
-    target: 'esnext',
+    minify: "esbuild",
+    target: "esnext",
     esbuildOptions: {
-      legalComments: 'none',
+      legalComments: "none",
       treeShaking: true,
     },
     emptyOutDir: true,

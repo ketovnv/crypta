@@ -1,16 +1,12 @@
-import{useEffect}   from 'react';
 import { observer } from "mobx-react-lite";
-import { NavBarMoving, PageWithNavBarMoving } from "@animations/involved/units";
-import {uiStore} from "@stores/ui.js";
+import { NavBarMoving } from "@animations/involved/units";
 
 export const AnimationObserver = observer(() => {
-    useEffect(() => {
+  // useEffect(() => {}, []);
 
-    }, []);
   return (
     <>
       <NavBarMoving />
-      <PageWithNavBarMoving />
     </>
   );
 });

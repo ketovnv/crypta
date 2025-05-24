@@ -1,18 +1,17 @@
-import {useSpring} from "@react-spring/web";
-import {animation} from "@stores/animation";
-import {observer} from "mobx-react-lite";
-import {uiStore} from "@stores/ui";
-import params from './configs/pageWithNavBarMoving.json'
+import { animation } from "@stores/animation";
+import { animationEngine } from "@animations/animationEngine";
 
-export const PageWithNavBarMoving = observer(() => {
-    const i = uiStore.isNavbarOpened ? 0 : 1
-    const {x, scale, y, config} = params
-    const spring = useSpring({
-        x: x[i],
-        scale: scale[i],
-        y: y[i],
-        config
-    })
-    animation.setSpringAnimation({PageWithNavBarMoving: spring});
-    return null
-})
+/**
+ * @deprecated Use animationEngine.getPageWithNavBarValues() directly instead
+ */
+export const PageWithNavBarMoving = () => {
+  // Get animation values from the centralized animation engine
+  const animationValues = animationEngine.getPageWithNavBarValues();
+  
+  // Keep this for backward compatibility with existing code
+  animation.setSpringAnimation({
+    PageWithNavBarMoving: animationValues,
+  });
+
+  return null;
+};

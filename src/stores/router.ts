@@ -12,12 +12,12 @@ const ROUTES = {
 
 const RESOLUTION_SCALER = 1 / 1707;
 
-const PAGE_SIZES = {
-  Transactions: 0.8,
-  Home: 1.6,
-  Approve: 0.9,
-  Balance: 0.8,
-  Options: 1.2,
+const PAGE_SIZES_PRESSES_WRAPPERS = {
+  Transactions: [0.8, 1, true],
+  Home: [1.6, 1, true],
+  Approve: [0.9, 1, true],
+  Balance: [0.8, 1, true],
+  Options: [1.2, 1, false],
 };
 
 export const PAGE_COMPONENTS = {
@@ -50,7 +50,9 @@ class RouterStore {
   currentPath: string = "Options";
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      goTo: action,
+    });
   }
 
   get isActiveEtherium() {
@@ -69,21 +71,24 @@ class RouterStore {
     return FOOTER_LINKS;
   }
 
-  get getPageSizes() {
-    return PAGE_SIZES;
-  }
-
   get getPages() {
     return Object.entries(ROUTES);
   }
 
-  getPageSize = (page) => {
-    return PAGE_SIZES[page] * uiStore.screenSize.width * RESOLUTION_SCALER;
-  };
+  get getCurrentPageMeta() {
+    const meta = PAGE_SIZES_PRESSES_WRAPPERS[this.currentPath];
+    return [
+      meta[0] * uiStore.screenSize.width * RESOLUTION_SCALER,
+      meta[1],
+      meta[2],
+    ];
+  }
 
-  getPageComponent = (route: string) => PAGE_COMPONENTS[route];
+  get getCurrentPageComponent() {
+    return [PAGE_COMPONENTS[this.currentPath], this.getCurrentPageMeta];
+  }
 
-  @action
+  // @@action
   goTo(path: string) {
     if (this.currentPath === path) return;
     this.currentPath = path;
