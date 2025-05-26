@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { animated, useSpring } from "@react-spring/web";
 import { TextInput } from "@mantine/core";
 import { animations } from "@stores/animations.js";
 import { uiStore } from "@stores/ui.js";
+import { approveAnimations } from "../unified/presets/ApproveAnimations";
+import { animationCore } from "../unified/AnimationCore";
 
 const WalletAddressInput = ({
   value,
@@ -14,6 +16,67 @@ const WalletAddressInput = ({
   const [focused, setFocused] = useState(false);
   const [animateError, setAnimateError] = useState(false);
   const floating = focused || value.length > 0;
+
+  // Анимация для лейбла
+  const labelSpring = useSpring({
+    y: floating ? -27 : 0,
+    scale: floating ? 0.85 : 1,
+    color:
+      isValid === true
+        ? uiStore.theme.accentColor
+        : isValid === false
+          ? uiStore.getRed
+          : `oklch(${uiStore.themeIsDark ? 0.65 : 0.35} 0 0)`,
+    config: {
+      tension: 200,
+      friction: 20,
+    },
+  });
+
+  // Анимация для иконки валидации
+  const validationIconSpring = useSpring({
+    opacity: value.length > 0 ? 1 : 0,
+    scale: value.length > 0 ? 1 : 0.8,
+    config: {
+      tension: 300,
+      friction: 15,
+    },
+  });
+
+  // Анимация для подчеркивания
+  const underlineSpring = useSpring({
+    scaleX: focused ? 2 : 0,
+    backgroundColor:
+      isValid === true
+        ? uiStore.theme.accentColor
+        : isValid === false
+          ? uiStore.getRed
+          : `oklch(${uiStore.themeIsDark ? 0.65 : 0.35} 0 0)`,
+    config: {
+      tension: 500,
+      friction: 25,
+    },
+  });
+
+  // Анимация для сообщения валидации
+  const validationMessageSpring = useSpring({
+    opacity: isValid !== null ? 1 : 0,
+    y: isValid !== null ? 0 : -10,
+    config: {
+      tension: 200,
+      friction: 20,
+    },
+  });
+
+  // Анимация для тряски при ошибке
+  const errorShakeSpring = useSpring({
+    x: animateError ? [0, -4, 4, -4, 4, 0] : 0,
+    config: {
+      tension: 300,
+      friction: 10,
+      mass: 0.5,
+    },
+  });
 
   // Проверка валидности Ethereum адреса
   const validateEthAddress = (address) => {
@@ -39,28 +102,23 @@ const WalletAddressInput = ({
     } else {
       setIsValid(null);
     }
-  }, [value]);
+  }, [value, setIsValid]);
 
-  // Варианты анимации для лейбла
-  const labelVariants = {
-    default: {
-      y: 0,
-      scale: 1,
-      color: `oklch(${uiStore.themeIsDark ? 0.65 : 0.35} 0 0)`,
-      transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] },
-    },
-    floating: {
-      y: -27,
-      scale: 0.85,
-      color:
-        isValid === true
-          ? uiStore.theme.accentColor
-          : isValid === false
-            ? uiStore.getRed
-            : `oklch(${uiStore.themeIsDark ? 0.65 : 0.35} 0 0)`,
-      transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] },
-    },
-  };
+  // Интеграция с системой анимаций
+  useEffect(() => {
+    // Регистрируем анимацию для оптимизации производительности
+    const animationId = `input-${Math.random().toString(36).slice(2)}`;
+
+    // Используем предустановленные анимации для инпута
+    if (isValid !== undefined) {
+      approveAnimations.inputFirst.update(isValid, focused);
+    }
+
+    return () => {
+      // Удаляем анимацию при размонтировании
+      animationCore.optimizeVisibility({ [animationId]: false });
+    };
+  }, [isValid, focused]);
 
   // Стили для инпута
   const inputStyles = {
@@ -122,58 +180,38 @@ const WalletAddressInput = ({
           data-floating={floating}
           rightSection={
             value.length > 0 && (
-              <AnimatePresence>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {isValid === true && (
-                    <motion.div
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 150,
-                        friction: 5,
-                        mass: 10,
-                      }}
-                      animate={{
-                        color: `oklch(${uiStore.themeIsDark ? 0.9 : 0.5} 0.166 147)`,
-                        fontSize: "16px",
-                      }}
-                    >
-                      ✓
-                    </motion.div>
-                  )}
-                  {isValid === false && (
-                    <motion.div
-                      style={{ cursor: "pointer", fontSize: "16px" }}
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.9 }}
-                      animate={{
-                        x: animateError ? [0, -4, 4, -4, 4, 0] : [],
-                        color: uiStore.getRed,
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                        x: { repeat: Infinity },
-                      }}
-                      onClick={() => setValue("0x")}
-                    >
-                      ✗
-                    </motion.div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+              <animated.div style={validationIconSpring}>
+                {isValid === true && (
+                  <animated.div
+                    style={{
+                      color: `oklch(${uiStore.themeIsDark ? 0.9 : 0.5} 0.166 147)`,
+                      fontSize: "16px",
+                    }}
+                  >
+                    ✓
+                  </animated.div>
+                )}
+                {isValid === false && (
+                  <animated.div
+                    style={{
+                      ...errorShakeSpring,
+                      cursor: "pointer",
+                      fontSize: "16px",
+                      color: uiStore.getRed,
+                    }}
+                    onClick={() => setValue("0x")}
+                  >
+                    ✗
+                  </animated.div>
+                )}
+              </animated.div>
             )
           }
         />
 
-        <motion.div
+        <animated.div
           style={{
+            ...labelSpring,
             position: "absolute",
             top: "14px",
             left: "0",
@@ -182,31 +220,25 @@ const WalletAddressInput = ({
             alignItems: "center",
             zIndex: 2,
           }}
-          variants={labelVariants}
-          initial="default"
-          animate={floating ? "floating" : "default"}
         >
           <span style={{ fontWeight: floating ? "500" : "400" }}>
             {inputName}
           </span>
-          <motion.span
+          <animated.span
             style={{
               marginLeft: "2px",
-            }}
-            initial={{ opacity: 0 }}
-            animate={{
               color: uiStore.theme.accentColor,
               opacity: floating ? 1 : 0,
             }}
           >
             *
-          </motion.span>
-        </motion.div>
+          </animated.span>
+        </animated.div>
 
         {/* Анимированная линия под инпутом */}
-        <motion.div
-          key={"line" + focused + isValid}
+        <animated.div
           style={{
+            ...underlineSpring,
             position: "absolute",
             bottom: "0",
             left: "0",
@@ -214,51 +246,31 @@ const WalletAddressInput = ({
             width: "100%",
             transformOrigin: "left",
           }}
-          initial={{ scaleX: 0 }}
-          animate={{
-            scale: focused ? 2 : 0,
-            backgroundColor:
-              isValid === true
-                ? uiStore.theme.accentColor
-                : focused === false
-                  ? uiStore.getRed
-                  : `oklch(${uiStore.themeIsDark ? 0.65 : 0.35} 0 0)`,
-          }}
-          transition={{ duration: 0.5 }}
         />
       </div>
       {/* Сообщение о валидации */}
-      <AnimatePresence>
+      <animated.div
+        style={{
+          ...validationMessageSpring,
+          fontSize: "var(--mantine-font-size-xs)",
+          marginTop: "4px",
+        }}
+      >
         {isValid === false && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0, color: uiStore.getRed }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            style={{
-              fontSize: "var(--mantine-font-size-xs)",
-              marginTop: "4px",
-            }}
-          >
+          <span style={{ color: uiStore.getRed }}>
             Пример: 0x71C7656EC7ab88b098defB751B7401B5f6d8976F
-          </motion.div>
+          </span>
         )}
         {isValid === true && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+          <span
             style={{
               color: `oklch(${uiStore.themeIsDark ? 0.9 : 0.5} 0.166 147.29)`,
-              fontSize: "var(--mantine-font-size-xs)",
-              marginTop: "4px",
             }}
           >
             Формат адреса корректен
-          </motion.div>
+          </span>
         )}
-      </AnimatePresence>
+      </animated.div>
     </div>
   );
 };

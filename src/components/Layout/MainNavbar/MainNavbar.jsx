@@ -8,7 +8,6 @@ import {
   IoSettings,
   IoWallet,
 } from "react-icons/io5";
-import { animation } from "@stores/animation.js";
 import { router } from "@stores/router.js";
 import { AwesomeButton } from "@animations/current/AwesomeButton/AwesomeButton";
 import { Web3Inch } from "@components/Layout/SvgIcons/Web3Inch";
@@ -34,15 +33,15 @@ export const MainNavbar = observer(() => {
   };
 
   useEffect(() => {
-    const navBarMoving = animation.getMCAnimation("NavBarMoving");
-    navBarMoving.control.start("visible");
+    // const navBarMoving = animation.getMCAnimation("NavBarMoving");
+    // navBarMoving.control.start("visible");
   }, []);
 
   return (
     <motion.nav
       layout
-      animate={animation.getMCAnimation("NavBarMoving").control}
-      variants={animation.getMCAnimation("NavBarMoving").frameVariants}
+      // animate={animation.getMCAnimation("NavBarMoving").control}
+      // variants={animation.getMCAnimation("NavBarMoving").frameVariants}
       className={classes.navbar}
       initial="hidden"
     >
@@ -89,8 +88,8 @@ export const MainNavbar = observer(() => {
           // logger.info('path', path + ' ' + JSON.stringify(isActive))
           return (
             <AwesomeButton
-              background={animation.theme.navBarButtonBackground}
-              variants={animation.getMCAnimation("NavBarMoving").variants}
+              background={uiStore.theme.navBarButtonBackground}
+              // variants={animation.getMCAnimation("NavBarMoving").variants}
               style={{
                 marginTop: 0,
                 padding: 2,
@@ -121,8 +120,8 @@ export const MainNavbar = observer(() => {
                 fontWeight={isActive ? 950 : 700}
                 colors={
                   isActive
-                    ? animation.theme.navBarActiveButtonText
-                    : animation.theme.navBarButtonText
+                    ? uiStore.theme.navBarActiveButtonText
+                    : uiStore.theme.navBarButtonText
                 }
                 fontSize={30}
               >

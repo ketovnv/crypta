@@ -47,7 +47,7 @@ const FOOTER_LINKS = [
 ];
 
 class RouterStore {
-  currentPath: string = "Options";
+  currentPath: string = "Home";
 
   constructor() {
     makeAutoObservable(this, {

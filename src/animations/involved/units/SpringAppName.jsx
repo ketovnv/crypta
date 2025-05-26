@@ -1,4 +1,4 @@
-import { animation } from "@stores/animation";
+import { animations } from "@stores/animations";
 import { uiStore as ui } from "@stores/ui.js";
 import { motion } from "motion/react";
 import { logger } from "@stores/logger.js";

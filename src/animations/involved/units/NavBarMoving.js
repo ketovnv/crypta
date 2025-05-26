@@ -1,4 +1,4 @@
-import { animation } from "@stores/animation";
+import { animations } from "@stores/animations";
 import { useAnimation } from "motion/react";
 import params from "./configs/navBarMoving.json";
 

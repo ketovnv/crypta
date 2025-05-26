@@ -1,7 +1,45 @@
 import { makeAutoObservable, action, observable, computed } from "mobx";
+import { useEffect, useRef } from "react";
+import { motionValue } from "motion/react";
+
+const useFramerMotionSync = (
+  animationControls,
+  options = { forceUpdateInNonVSyncOnly: true },
+) => {
+  const componentId = useRef(`framer-${Math.random()}`).current;
+
+  useEffect(() => {
+    const updateCallback = (frameId, deltaTime, elapsedTime) => {
+      if (timerStore._vsyncEnabled && options.forceUpdateInNonVSyncOnly) {
+        // В режиме VSync, возможно, не нужно принудительно вызывать update,
+        // если только не передавать deltaTime/elapsedTime для специфичных нужд.
+        // Например, можно передать deltaTime в кастомное свойство анимации, если это требуется.
+        // animationControls.set({ customDeltaTime: deltaTime }); // Если Framer Motion это поддерживает напрямую
+        return;
+      }
+      // В режиме Non-VSync или если forceUpdateInNonVSyncOnly = false
+      if (animationControls && typeof animationControls.update === "function") {
+        animationControls.update();
+      }
+    };
+
+    timerStore.registerRenderCallback(componentId, updateCallback);
+
+    // Убедимся, что таймер запущен (если это политика по умолчанию для этих хуков)
+    // Возможно, запуск таймера лучше оставить на усмотрение приложения, а не каждого хука.
+    if (!timerStore.isRunning) {
+      timerStore.setTargetFps(60).start(); // или .disableVSync().start() если это основной режим
+    }
+
+    return () => timerStore.unregisterRenderCallback(componentId);
+  }, [animationControls, options.forceUpdateInNonVSyncOnly, componentId]); // componentId добавлен для полноты, хотя он и const в рамках рендера
+};
 
 class EngineStore {
   // Наблюдаемые значения
+
+  motionElapsedTime = motionValue(0);
+
   elapsedTime = 0; // в миллисекундах
   isRunning = false;
   precision = 100; // частота обновления в мс (10 раз в секунду)
@@ -36,6 +74,8 @@ class EngineStore {
       fps: observable,
       targetFps: observable,
       frameId: observable,
+      timeScale: observable,
+      setTimeScale: action,
 
       // Computed свойства
       averageFrameTime: computed,
@@ -55,6 +95,7 @@ class EngineStore {
       _updateFps: action,
       _limitFrameRate: action,
     });
+    this.motionElapsedTime = motionValue(0);
   }
 
   get seconds() {
@@ -262,7 +303,7 @@ class EngineStore {
       // Хранить данные только для последних 60 кадров
       this._frameTimings.shift();
     }
-
+    this.motionElapsedTime.set(this.elapsedTime);
     // Обновляем FPS каждую секунду
     if (now - this.lastFpsUpdateTime >= this.fpsUpdateInterval) {
       this._updateFps();
@@ -353,6 +394,97 @@ class EngineStore {
     }
 
     return this; // Для цепочки вызовов
+  }
+
+  @action
+  setTimeScale(scale) {
+    if (scale < 0) scale = 0; // Отрицательное время обычно не используется для простого масштабирования
+    this.timeScale = scale;
+    // Если таймер запущен и не используется VSync, возможно, потребуется перезапустить интервал,
+    // если deltaTime влияет на расчет интервала (хотя обычно timeScale влияет на *использование* deltaTime).
+    // В данном случае, он будет влиять на deltaTime, передаваемый в колбэки.
+    return this;
+  }
+
+  _tick() {
+    if (!this.isRunning) return;
+
+    const now = Date.now();
+
+    if (!this._vsyncEnabled && !this._limitFrameRate(this.targetFps)) {
+      return;
+    }
+
+    // Обновляем elapsedTime с учетом timeScale только если startTime используется как база.
+    // Если elapsedTime инкрементально обновляется, то deltaTime нужно масштабировать.
+    // this.elapsedTime = now - this._startTime; // Этот способ не учитывает timeScale напрямую для общей суммы,
+    // timeScale лучше применять к deltaTime.
+
+    const actualDeltaTime = now - this._lastFrameTime;
+    const scaledDeltaTime = actualDeltaTime * this.timeScale;
+
+    // Обновляем общее прошедшее время (масштабированное)
+    // Если this.elapsedTime должно отражать "реальное" прошедшее время, а масштабирование только для анимаций,
+    // то this.elapsedTime не меняем, а scaledDeltaTime передаем в колбэки.
+    // Если this.elapsedTime должно отражать "игровое" или "анимационное" время:
+    this.elapsedTime += scaledDeltaTime; // Если elapsedTime инкрементируется
+
+    // Если this.elapsedTime считается от _startTime, то _startTime нужно корректировать при изменении timeScale или при паузе,
+    // чтобы elapsedTime отражало масштабированное течение времени.
+    // Проще всего обновлять elapsedTime инкрементально с scaledDeltaTime, если оно используется как "анимационное время".
+    // Давайте предположим, что elapsedTime = это общее "виртуальное" время анимации.
+    // При старте: this.elapsedTime = 0 (или сохраненное); this._startTime = Date.now(); this._lastFrameTime = now;
+    // В _tick:
+    // this.elapsedTime = (Date.now() - this._startTime) * this.timeScale; // Это неверно, т.к. _startTime не меняется с timeScale.
+    // Правильнее так:
+    // this.elapsedTime += scaledDeltaTime; (при старте elapsedTime = 0 или сохраненное значение)
+
+    this._lastFrameTime = now;
+    this.frameCount++;
+    this.frameId++;
+
+    // ... (обновление FPS) ...
+
+    // Выполняем все зарегистрированные колбэки рендеринга, передавая scaledDeltaTime
+    this.renderCallbacks.forEach((callback, id) => {
+      try {
+        // Передаем frameId, масштабированное deltaTime и текущее масштабированное elapsedTime
+        callback(this.frameId, scaledDeltaTime, this.elapsedTime);
+      } catch (e) {
+        console.error(`Error in render callback (id: ${id}):`, e);
+      }
+    });
+
+    // ... (одноразовые колбэки, также передаем scaledDeltaTime)
+    nextFrameCallbacks.forEach((callback) => {
+      try {
+        callback(this.frameId, scaledDeltaTime, this.elapsedTime);
+      } catch (e) {
+        // ...
+      }
+    });
+  }
+
+  // При старте таймера, если elapsedTime накапливается:
+  start() {
+    if (this.isRunning) return;
+    this.isRunning = true;
+    // this._startTime = Date.now() - this.elapsedTime; // Если elapsedTime - реальное время
+    // Если elapsedTime - это виртуальное время, и оно накапливается:
+    if (this.elapsedTime === 0) {
+      // Или если сбрасывалось
+      this._startTime = Date.now(); // Для расчета общего реального времени если нужно
+    }
+    this._lastFrameTime = Date.now();
+    // ... остальная логика start ...
+  }
+
+  reset() {
+    this.stop();
+    this.elapsedTime = 0;
+    this.timeScale = 1.0; // Сбрасываем и timeScale
+    // ... остальная логика reset ...
+    return this;
   }
 
   // Приватный метод для обновления времени

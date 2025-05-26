@@ -3,7 +3,7 @@ import { TextInput } from "@mantine/core";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { Etherium } from "@components/Layout/SvgIcons/Etherium.jsx";
 import { Sepolia } from "@components/Layout/SvgIcons/Sepolia.jsx";
-import { animation } from "@stores/animation.js";
+import { animations } from "@stores/animations.js";
 import { Holesky } from "@components/Layout/SvgIcons/Holesky.jsx";
 import GradientText from "@animations/involved/GradientText.jsx";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
@@ -166,8 +166,8 @@ const NetworkSelector = ({
             animate={{
               opacity: 1,
               y: 0,
-              color: animation.theme.color,
-              background: animation.theme.background,
+              color: uiStore.theme.color,
+              background: uiStore.theme.background,
             }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}

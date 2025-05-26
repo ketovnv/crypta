@@ -1,5 +1,7 @@
-import { action, makeAutoObservable } from "mobx";
-import { animation } from "./animation";
+import { action, makeAutoObservable, reaction } from "mobx";
+import { gradientStore } from "./gradient";
+import { logger } from "@stores/logger.js";
+import nBMParams from "../animations/configs/navBarMoving.json";
 
 class UiStore {
   colorScheme = "dark";
@@ -8,7 +10,11 @@ class UiStore {
   fontSearch = "";
   fontFamilies = [];
   searchFontFamilies = [];
-  appkitMethods = {};
+  withFooter = true;
+  appkitMethods = {
+    setThemeMode: null,
+    setThemeVariables: null,
+  };
   screenHeight = 0;
   screenWidth = 0;
 
@@ -24,6 +30,14 @@ class UiStore {
       setAppkitMethods: action,
       setThemeIsVeryColorised: action,
     });
+  }
+
+  get theme() {
+    return { ...gradientStore.getTheme };
+  }
+
+  get isNbOpen() {
+    return this.isNavbarOpened;
   }
 
   get getRed() {
@@ -43,11 +57,15 @@ class UiStore {
   }
 
   get themeStyle() {
-    return { ...animation.themeController.springs };
+    return { ...uiStore.themeController.springs };
   }
 
   get screenSize() {
     return { height: this.screenHeight, width: this.screenWidth };
+  }
+
+  get renderFooter() {
+    return this.withFooter;
   }
 
   setAppkitMethods = (appkitMethods) => {
@@ -59,24 +77,39 @@ class UiStore {
       "--w3m-color-mix-strength": 300,
     });
   };
+
+  setupReactions() {
+    // Реакция на открытие/закрытие навбара
+    reaction(
+      () => this.isNbOpen,
+      (isOpen) => this.animateNavbarState(isOpen),
+      { fireImmediately: true },
+    );
+  }
+
+  // Продвинутые методы анимации
+  async animateNavbarState(isOpened) {
+    if (isOpened) {
+      // Последовательная анимация открытия
+      await this.navigation.to({ opacity: 1, scale: 1 });
+      await this.page.to({ x: 250, scale: 1, y: 50 });
+      logger.success("Навбар удачно анимировал открытие");
+    } else {
+      // Параллельная анимация закрытия
+      await Promise.all([
+        this.navigation.to({ opacity: 0, x: -50, scale: 0.95 }),
+        this.page.to({ x: 225, scale: 1.7, y: -50 }),
+      ]);
+      logger.success("Навбар удачно анимировал закрытие");
+    }
+  }
+
   // setScreenHeight = (value) => (this.screenHeight = value);
   // setScreenWidth = (value) => (this.screenWidth = value);
   setThemeIsVeryColorised = (value) => (this.themeIsVeryColorised = value);
 
   setColorScheme = (theme) => {
     this.colorScheme = theme;
-    this.appkitMethods.setThemeMode(theme);
-    animation.themeController.start({
-      ...animation.theme,
-      config: {
-        tension: 50,
-        friction: 75,
-        mass: 5,
-        damping: 100,
-        precision: 0.0001,
-      },
-    });
-    localStorage.setItem("app-color-scheme", theme);
   };
 
   setFontFamilies = (value) => {
@@ -85,8 +118,8 @@ class UiStore {
   };
 
   toggleNavbarOpened = () => {
-    const navBarMoving = animation.getMCAnimation("NavBarMoving");
-    navBarMoving.control.start(this.isNavbarOpened ? "visible" : "hidden");
+    // const navBarMoving = animation.getMCAnimation("NavBarMoving");
+    // navBarMoving.control.start(this.isNavbarOpened ? "visible" : "hidden");
     this.isNavbarOpened = !this.isNavbarOpened;
   };
 

@@ -14,9 +14,11 @@ import HeaderBitcoin from "@components/Layout/SvgIcons/HeaderBitcoin";
 import { walletStore } from "@stores/wallet.js";
 import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 import React from "react";
+import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 
 export const MainHeader = observer(() => {
   const ref = useEventListener("click", () => uiStore.toggleNavbarOpened());
+  consoleGradient("Header 🪖🪖🪖", "render", { fileSize: 50 });
   // const { height, width } = useViewportSize();
   // uiStore.setScreenHeight(height)
   // uiStore.setScreenWidth(width)

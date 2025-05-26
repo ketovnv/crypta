@@ -1,4 +1,4 @@
-import { action, makeAutoObservable } from "mobx";
+import { action, makeAutoObservable, reaction, when } from "mobx";
 import chroma from "chroma-js";
 import {
   RAINBOWGRADIENT,
@@ -9,6 +9,7 @@ import {
   STANDART_LIGHT,
 } from "./gradientColors";
 import { uiStore } from "./ui";
+import { logger } from "@stores/logger.js";
 
 const DARK = 0;
 const LIGHT = 1;
@@ -179,6 +180,7 @@ class GradientStore {
         this.calculateTheme(LIGHT, theme);
         return false;
       });
+      this.setupReactions();
     }, 2000);
   }
 
@@ -257,6 +259,41 @@ class GradientStore {
       navBarActiveButtonText: theme.nbabt,
     };
   };
+
+  setupReactions() {
+    //  Реакция на изменение темы
+    reaction(
+      () => [uiStore?.themeIsDark],
+      ([theme]) => {
+        this.colorScheme = theme;
+        if (uiStore.appkitMethods?.setThemeMode) {
+          uiStore.appkitMethods.setThemeMode(theme);
+        }
+        this.themeController.start({
+          ...this.theme,
+          config: {
+            ...this.settings.ultraSpring,
+          },
+          configs: {
+            background: { tension: 120, friction: 14 },
+            shadowOpacity: { tension: 300, friction: 10 },
+          },
+        });
+        logger.success("themeController", "end");
+        localStorage.setItem("app-color-scheme", theme);
+      },
+      { fireImmediately: true },
+    );
+    when(
+      () => uiStore.appkitMethods?.setThemeMode !== null,
+      () => {
+        // Принудительно обновляем/ тему
+        // после загрузки        appkitЕруьу
+        uiStore.appkitMethods.setThemeMode(uiStore.themeIsDark);
+        logger.success("appkitMethods", "end");
+      },
+    );
+  }
 
   // Методы для градиентов
   // createGradient(name, colorStops, type = "linear") {

@@ -1,6 +1,11 @@
 import React, { useRef } from "react";
 import { Center } from "@mantine/core";
-import { motion, useMotionValue, useTransform } from "motion/react";
+import {
+  motion,
+  // useMotionValue,
+  // useTransform
+} from "motion/react";
+//@ts-ignore
 import classes from "./AwesomeButton.module.css";
 import "./ButtonContainer.css";
 
@@ -61,42 +66,44 @@ export const AwesomeButton = ({
 }: ButtonType) => {
   const buttonRef = useRef(null);
   const contentRef = useRef(null);
-  
+
   const handlePress = (onPress: any) => {
-    if (onPress) onPress();
+    return null;
   };
-  
-  // Motion values for tilt effect
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  // Transform mouse position to rotation values
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
-  
-  // Handle mouse movement over the button
-  const handleMouseMove = (event) => {
-    if (!buttonRef.current) return;
-    
-    const rect = buttonRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    
-    // Calculate mouse position relative to button center (values between -0.5 and 0.5)
-    const x = (event.clientX - rect.left) / width - 0.5;
-    const y = (event.clientY - rect.top) / height - 0.5;
-    
-    // Update motion values
-    mouseX.set(x);
-    mouseY.set(y);
-  };
-  
-  // Reset tilt on mouse leave
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-  
+  //   if (onPress) onPress();
+  // };
+  //
+  // // Motion values for tilt effect
+  // const mouseX = useMotionValue(0);
+  // const mouseY = useMotionValue(0);
+  //
+  // // Transform mouse position to rotation values
+  // const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  // const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
+  //
+  // // Handle mouse movement over the button
+  // const handleMouseMove = (event) => {
+  //   if (!buttonRef.current) return;
+  //
+  //   const rect = buttonRef.current.getBoundingClientRect();
+  //   const width = rect.width;
+  //   const height = rect.height;
+  //
+  //   // Calculate mouse position relative to button center (values between -0.5 and 0.5)
+  //   const x = (event.clientX - rect.left) / width - 0.5;
+  //   const y = (event.clientY - rect.top) / height - 0.5;
+  //
+  //   // Update motion values
+  //   mouseX.set(x);
+  //   mouseY.set(y);
+  // };
+  //
+  // // Reset tilt on mouse leave
+  // const handleMouseLeave = () => {
+  //   mouseX.set(0);
+  //   mouseY.set(0);
+  // };
+
   // Scale effect for button on hover and tap
   const buttonHoverVariants = {
     initial: { scale: 1 },
@@ -107,33 +114,33 @@ export const AwesomeButton = ({
   return (
     <motion.div
       className="button-container"
-      style={{ 
+      style={{
         perspective: 800,
-        ...style 
+        ...style,
       }}
     >
       <motion.button
         ref={buttonRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        // onMouseMove={handleMouseMove}
+        // onMouseLeave={handleMouseLeave}
         onClick={() => handlePress(onPress)}
         layout
         layoutId={layoutId}
         key={buttonKey}
-        variants={variants || buttonHoverVariants}
+        // variants={variants || buttonHoverVariants}
         initial="initial"
         whileHover={whileHover || "hover"}
         whileTap={whileTap || "tap"}
         animate={animate || (isActive ? "tap" : "initial")}
         style={{
-          rotateX,
-          rotateY,
-          transformStyle: 'preserve-3d',
+          // rotateX,
+          // rotateY,
+          transformStyle: "preserve-3d",
         }}
         transition={{
           rotateX: { type: "spring", stiffness: 300, damping: 15 },
           rotateY: { type: "spring", stiffness: 300, damping: 15 },
-          default: { type: "spring", stiffness: 400 }
+          default: { type: "spring", stiffness: 400 },
         }}
         className={`${classes.awsBtn} aws-btn aws-btn--visible`} // Added aws-btn--visible to make button visible
       >
@@ -142,8 +149,8 @@ export const AwesomeButton = ({
             classes[`mainNavBtnWrapper_` + buttonKey] + " aws-btn__wrapper"
           }
           style={{
-            transformStyle: 'preserve-3d',
-            transform: 'translateZ(-0.5px)',
+            transformStyle: "preserve-3d",
+            transform: "translateZ(-0.5px)",
           }}
         >
           <motion.div
@@ -163,8 +170,8 @@ export const AwesomeButton = ({
               background: { duration: 0.3 },
             }}
             style={{
-              transformStyle: 'preserve-3d',
-              transform: 'translateZ(1px)',
+              transformStyle: "preserve-3d",
+              transform: "translateZ(1px)",
             }}
           >
             <Center mr={before ? 12 : 0}>{before}</Center>

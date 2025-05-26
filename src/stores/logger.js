@@ -1,6 +1,6 @@
 import { action, makeAutoObservable, reaction, toJS } from "mobx";
 import { uiStore } from "@stores/ui.js"; // console.log('%c a spicy log message ?',
-import chalk from "chalk";
+// import chalk from "chalk";
 import gradient from "gradient-string";
 // console.log('%c a spicy log message ?',
 //     [
@@ -419,9 +419,8 @@ class loggerStore {
 
     // Применяем все стили в консоли
     console.log(
-      // "%c" + timestamp +
-      ` %c${message} : ` + ` %c${data}`,
-      // timeColor,
+      "%c" + timestamp + ` %c${message} : ` + ` %c${data}`,
+      timeColor,
 
       messageColor + ";font-size:" + fontSize + "px;",
       valueColor +

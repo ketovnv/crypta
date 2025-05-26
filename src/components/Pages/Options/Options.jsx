@@ -13,6 +13,7 @@ import time from "@stores/time.js";
 import ScrollList from "@animations/involved/ScrollList";
 import { Tabs } from "@animations/involved/Tabs";
 import { uiStore } from "@stores/ui.js";
+import { useTransform, motion } from "motion/react";
 
 const Options = observer(() => {
   useEffect(() => {
@@ -49,6 +50,10 @@ const Options = observer(() => {
       ),
     },
   ];
+  // const x = useTransform(
+  //   // unnnnnnnnnnnnnnnnnnnn.motionElapsedTime,
+  //   (value) => (value / 1000) % 100,
+  // ); // Пример
 
   return (
     <div className="border-0.75 relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D]">
@@ -80,6 +85,8 @@ const Options = observer(() => {
             threshold={0.2}
             display="flex"
           >
+            <motion.div style={{ x }} />
+            ;
             <Counter
               places={[100, 10, 1]}
               fontSize={80}
@@ -88,14 +95,14 @@ const Options = observer(() => {
               textColor="white"
               fontWeight={900}
             />
-            {
-              <ScrollList
-                // items={items}
-                onItemSelect={(item, index) => console.log(item, index)}
-                showGradients={true}
-                enableArrowNavigation={true}
-              />
-            }
+            {/*{*/}
+            {/*  <ScrollList*/}
+            {/*    // items={items}*/}
+            {/*    onItemSelect={(item, index) => console.log(item, index)}*/}
+            {/*    showGradients={true}*/}
+            {/*    enableArrowNavigation={true}*/}
+            {/*  />*/}
+            {/*}*/}
           </SpringContent>
         )}
       </div>
@@ -366,7 +373,7 @@ export default Options;
   /*    >*/
 }
 {
-  /*      /!*<LJ json={animation.theme.background}/>*!/*/
+  /*      /!*<LJ json={uiStore.theme.background}/>*!/*/
 }
 {
   /*<ResolutionsButtons/>*/
@@ -378,7 +385,7 @@ export default Options;
   /*    layout*/
 }
 {
-  /*    animate={{opacity: 1, color: animation.theme.accentColor, width: '100%'}}*/
+  /*    animate={{opacity: 1, color: uiStore.theme.accentColor, width: '100%'}}*/
 }
 {
   /*    transition={{duration: 2}}*/
@@ -408,7 +415,7 @@ export default Options;
   /*      layout*/
 }
 {
-  /*      animate={{width: '50%', color: animation.theme.color, right: -100, top: 0}}*/
+  /*      animate={{width: '50%', color: uiStore.theme.color, right: -100, top: 0}}*/
 }
 {
   /*      transition={{duration: 5}}*/

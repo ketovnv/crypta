@@ -1,6 +1,6 @@
 import React from "react";
 import { animated, useSpring } from "@react-spring/web";
-import { animation } from "@stores/animation.js";
+import { animations } from "@stores/animations.js";
 
 const AppearanceAnimation = ({ condition, children }) => {
   const { currentAnimation } = animation;

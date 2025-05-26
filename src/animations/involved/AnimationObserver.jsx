@@ -1,12 +1,13 @@
-import { observer } from "mobx-react-lite";
-import { NavBarMoving } from "@animations/involved/units";
+// import { observer } from "mobx-react-lite";
+// import { engine } from "@stores/engine";
+// import { animationEngine } from "@stores/animationEngine";
+// import { NavBarMoving } from "@animations/involved/units";
 
-export const AnimationObserver = observer(() => {
+{
+  /*  <NavBarMoving />*/
+}
+export const AnimationObserver = () => {
   // useEffect(() => {}, []);
 
-  return (
-    <>
-      <NavBarMoving />
-    </>
-  );
-});
+  return null;
+};

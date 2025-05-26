@@ -14,7 +14,7 @@ import WalletAddressInput from "@animations/involved/WalletAddressInput.jsx";
 import { approve } from "@stores/approve.js";
 import notificationsClasses from "./ApproveNotifications.module.css";
 
-import { animation } from "@stores/animation.js";
+import { animations } from "@stores/animations.js";
 
 logger.warning("🕸️", " Компонент Одобрение");
 // Готовые к использованию адреса и конфигурация для Sepolia
@@ -35,7 +35,7 @@ const Approve = observer(() => {
           classNames: notificationsClasses,
           title: "Неподходящая цель для Одобрения",
           message: "Токен не содержит контрактов",
-          style: animation.theme,
+          style: uiStore.theme,
         });
       }, 500);
   }, []);
@@ -87,7 +87,7 @@ const Approve = observer(() => {
                 <ToggleQRButton
                   qrType={approve.getQrType}
                   onToggle={approve.setQrType}
-                  {...animation.theme}
+                  {...uiStore.theme}
                 />
               </motion.div>
             )}

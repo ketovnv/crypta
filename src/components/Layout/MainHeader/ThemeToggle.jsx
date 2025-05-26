@@ -1,8 +1,12 @@
 import classes from "./MainHeader.module.css";
 import { animated, config, useSpring } from "@react-spring/web";
 import { FiMoon, FiSun } from "react-icons/fi";
+import { gradientStore } from "@stores/gradient.js";
+import { consoleGradient } from "@components/logger/ConsoleGradient.js";
+import { logger } from "@stores/logger.js";
 
 const ThemeToggle = ({ isDark, setColorScheme }) => {
+  logger.debug("ThemeToggle", "start");
   const sliderAnimation = useSpring({
     rotateZ: isDark ? 0 : 100,
     right: isDark ? 3 : 15,
@@ -14,7 +18,7 @@ const ThemeToggle = ({ isDark, setColorScheme }) => {
       damping: 20,
     },
   });
-
+  logger.debug("ThemeToggle", "start2");
   const lightIconAnimation = useSpring({
     scale: isDark ? 0.2 : 1.2,
     rotateZ: isDark ? -360 : 0,
@@ -45,20 +49,25 @@ const ThemeToggle = ({ isDark, setColorScheme }) => {
           animationConfig,
         );
         await new Promise((resolve) => setTimeout(resolve, 500));
+        logger.debug("ThemeToggle", "start3");
         await ctrl.start(
           { filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0.3))" },
           animationConfig,
         );
+        logger.debug("ThemeToggle", "start4");
       } else {
+        logger.debug("ThemeToggle", "star5");
         await ctrl.start({
           opacity: 0,
           scale: 0.1,
           filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0))",
         });
+        logger.debug("ThemeToggle", "star6");
       }
     },
   });
 
+  logger.debug("ThemeToggle", "star7");
   const darkIconAnimation = useSpring({
     scale: !isDark ? 0 : 1.3,
     rotateZ: !isDark ? 360 : -0,
@@ -71,6 +80,7 @@ const ThemeToggle = ({ isDark, setColorScheme }) => {
     config: { ...config.molasses, stiffness: 300, damping: 20 },
   });
 
+  logger.debug("ThemeToggle", "star8");
   return (
     <animated.button
       onClick={(event) => setColorScheme(isDark ? "light" : "dark")}
@@ -94,5 +104,5 @@ const ThemeToggle = ({ isDark, setColorScheme }) => {
     </animated.button>
   );
 };
-
+logger.debug("ThemeToggle", "star9");
 export default ThemeToggle;

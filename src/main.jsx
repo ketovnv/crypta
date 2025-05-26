@@ -18,12 +18,11 @@ import {
   wagmiAdapter,
 } from "./config";
 import Layout from "@components/Layout/index.js";
-import { EthersAdapter } from "@reown/appkit-adapter-ethers";
-import { uiStore } from "@stores/ui.js";
-// import {uiStore} from "@stores/ui.js";
+import { logger } from "@stores/logger.js";
 
 const queryClient = new QueryClient();
 
+logger.info(1);
 createAppKit({
   adapters: [wagmiAdapter, ethersAdapter],
   projectId,
@@ -34,7 +33,7 @@ createAppKit({
     analytics: true,
   },
 });
-
+logger.info(2);
 // @ts-ignore
 
 ReactDOM.createRoot(document.getElementById("root")).render(

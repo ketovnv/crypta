@@ -17,7 +17,7 @@ import classes from "./Home.module.css";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import { eventsStore } from "@stores/events.js";
 import GradientText from "@animations/involved/GradientText.jsx";
-import { animation } from "@stores/animation.js";
+import { animations } from "@stores/animations.js";
 import { Google } from "@components/Layout/SvgIcons/Google.jsx";
 import { Metamask } from "@components/Layout/SvgIcons/Metamask.jsx";
 import { Center, Group } from "@mantine/core";
@@ -170,7 +170,7 @@ const Home = observer(() => {
                     }
                     target="_blank"
                   >
-                    <GradientText colors={animation.theme.navBarButtonText}>
+                    <GradientText colors={uiStore.theme.navBarButtonText}>
                       <AppearingText
                         speed={3}
                         key={walletStore.getNetwork?.caipNetwork?.id}
@@ -275,7 +275,7 @@ const Home = observer(() => {
             )}
 
           <Group justify="flex-end" pr={20} w="75%">
-            <GradientText colors={animation.theme.navBarActiveButtonText}>
+            <GradientText colors={uiStore.theme.navBarActiveButtonText}>
               <motion.span
                 layout
                 style={{
