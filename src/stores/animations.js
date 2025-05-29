@@ -7,13 +7,20 @@ import { timeEngine } from "../stores/timeEngine";
 import { gradientStore } from "../stores/gradient";
 import { Controller } from "@react-spring/web";
 
-// Сторы (реэкспорт для удобства)
-export { timeEngine } from "../stores/timeEngine";
-export { gradientStore } from "../stores/gradient";
+const animateElement = (element, target, config) => {
+  return null;
+};
 
 // Дополнительные утилиты
 const ANIMATION_PRESETS = {
   // Базовые пресеты
+  ultraSpring: {
+    tension: 50,
+    friction: 75,
+    mass: 5,
+    damping: 100,
+    precision: 0.0001,
+  },
   instant: { tension: 1000, friction: 100, mass: 0.1 },
   snappy: { tension: 400, friction: 25, mass: 0.8 },
   gentle: { tension: 120, friction: 14, mass: 1 },
@@ -76,37 +83,6 @@ export const initAnimationSystem = (config = {}) => {
   };
 };
 
-// Экспорт по умолчанию - объект с основными функциями
-export default {
-  // Система
-  system: baseAnimationSystem,
-  engine: timeEngine,
-
-  // Основные функции
-  animate: animateElement,
-  spring: animateWithSpring,
-  css: animateWithCSS,
-  gradient: animateWithGradient,
-
-  // Управление
-  start: startAnimationEngine,
-  stop: stopAnimationEngine,
-  pause: pauseAllAnimations,
-
-  // Утилиты
-  getTime: getAnimationTime,
-  getFPS: getAnimationFPS,
-  setSpeed: setAnimationSpeed,
-  getMetrics: getAnimationMetrics,
-
-  // Инициализация
-  init: initAnimationSystem,
-
-  // Пресеты
-  presets: ANIMATION_PRESETS,
-  easing: EASING_FUNCTIONS,
-};
-
 export const animateWithSpring = (element, values, config = {}) => {
   return animateElement(element, values, {
     type: "spring",
@@ -135,11 +111,6 @@ export const animateWithCSS = (element, values, config = {}) => {
   });
 };
 
-// Интеграция с градиентами
-
-const animateElement = (element, target, config) => {
-  return null;
-};
 export const animateWithGradient = (element, target, config = {}) => {
   if (!element) return null;
 
@@ -198,7 +169,7 @@ export const useQuickAnimation = (config = {}) => {
   };
 };
 
-const createSmartController = (
+export const createSmartController = (
   name,
   initialVals,
   type = "notSmart",
@@ -208,7 +179,7 @@ const createSmartController = (
 ) => {
   const ctrl = new Controller({
     ...initialVals,
-    config: this.config.get(preset, opts.config),
+    config: opts?.config ?? preset,
     ...opts,
   });
   const api =
@@ -278,3 +249,26 @@ const optimizeVisibility = (visibilityMap) => {
 if (typeof window !== "undefined") {
   startAnimationEngine();
 }
+
+export default {
+  // Система
+  system: baseAnimationSystem,
+  engine: timeEngine,
+
+  // Основные функции
+  animate: animateElement,
+  spring: animateWithSpring,
+  css: animateWithCSS,
+  gradient: animateWithGradient,
+
+  // Управление
+  start: startAnimationEngine,
+  stop: stopAnimationEngine,
+  pause: pauseAllAnimations,
+
+  // Утилиты
+  getTime: getAnimationTime,
+  getFPS: getAnimationFPS,
+  setSpeed: setAnimationSpeed,
+  getMetrics: getAnimationMetrics,
+};

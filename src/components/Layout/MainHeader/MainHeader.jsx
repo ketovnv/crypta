@@ -15,6 +15,7 @@ import { walletStore } from "@stores/wallet.js";
 import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 import React from "react";
 import { consoleGradient } from "@components/logger/ConsoleGradient.js";
+import { logger } from "@stores/logger.js";
 
 export const MainHeader = observer(() => {
   const ref = useEventListener("click", () => uiStore.toggleNavbarOpened());
@@ -45,6 +46,7 @@ export const MainHeader = observer(() => {
     config: { ...config.molasses }, // Настройки пружины
     keys: null,
   });
+  logger.debug("ThemeToggle", "start111");
 
   return (
     <AppShell.Header className={classes.header} align="center">
@@ -64,6 +66,8 @@ export const MainHeader = observer(() => {
             exit={{ scale: 0, y: -50 }}
             transition={{ duration: 1 }}
             whileHover="hover"
+            onMouseEnter={() => uiStore.setAppNameIsHover(true)}
+            onMouseLeave={() => uiStore.setAppNameIsHover(false)}
             whileTap={{ scale: 0.5, transition: { duration: 0.2 } }}
           >
             <HeaderBitcoin

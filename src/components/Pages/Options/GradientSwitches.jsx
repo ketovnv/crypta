@@ -73,6 +73,12 @@ const styles = {
   },
 };
 
+// Включение прозрачного заголовка
+// await invoke('toggle_titlebar', { enabled: true });
+
+// Отключение прозрачного заголовка
+// await invoke('toggle_titlebar', { enabled: false });
+
 // Градиенты для светлой темы
 const lightThemeGradients = [
   // gradientStore.getThemeMeta('LIGHT')?.background,

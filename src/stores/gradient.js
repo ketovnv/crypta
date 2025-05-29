@@ -8,8 +8,8 @@ import {
   STANDART_DARK,
   STANDART_LIGHT,
 } from "./gradientColors";
-import { uiStore } from "./ui";
 import { logger } from "@stores/logger.js";
+import { animations as presets, createSmartController } from "./animations.js";
 
 const DARK = 0;
 const LIGHT = 1;
@@ -19,10 +19,29 @@ class GradientStore {
   preparedDarkThemes = [0, 1, 2, 3, 4];
   preparedLightThemes = [0, 1, 2, 3, 4];
   selectedThemes = [0, 0];
+  animations = {};
 
   constructor() {
     makeAutoObservable(this, { calculateTheme: action });
+    createSmartController(
+      "mainThemeController",
+      this.getTheme,
+      "smart",
+      (api) => (this.animations[api.name] = api),
+      {
+        tension: 50,
+        friction: 75,
+        mass: 5,
+        damping: 100,
+        precision: 0.0001,
+      },
+    );
+
     // this.themesInit();
+  }
+
+  get uiStore() {
+    return import("./ui").then((module) => module.uiStore);
   }
 
   get getRainbowV2Gradient() {
@@ -33,10 +52,15 @@ class GradientStore {
     return RAINBOWGRADIENT;
   }
 
+  get animatedTheme() {
+    return this.animations["mainThemeController"]?.springs;
+  }
+
   get getTheme() {
+    if (!this.uiStore) return {};
     // const theme = uiStore.themeIsDark ? this.darkCubehelixMode : this.lightCubehelixMode
     const theme = this.getColorTheme(
-      uiStore.themeIsDark ? STANDART_DARK : STANDART_LIGHT,
+      this.uiStore.themeIsDark ? STANDART_DARK : STANDART_LIGHT,
     );
     // uiStore.setThemeIsVeryColorised(!!theme.themeIsVeryColorised)
     return { ...theme, bWG: this.blackWhiteGradient };
@@ -110,12 +134,12 @@ class GradientStore {
   }
 
   get getRedGradient() {
-    return uiStore.themeIsDark ? redGradientDark : redGradientLight;
+    return this.uiStore.themeIsDark ? redGradientDark : redGradientLight;
   }
 
   get blackWhiteGradient() {
     return this.linearAngleGradient(
-      uiStore.themeIsDark
+      this.uiStore.themeIsDark
         ? ["oklch(1 0 0)", "oklch(0 0 0)"]
         : ["oklch(0 0 0)", "oklch(1 0 0)"],
       4,
@@ -263,12 +287,13 @@ class GradientStore {
   setupReactions() {
     //  Реакция на изменение темы
     reaction(
-      () => [uiStore?.themeIsDark],
+      () => [this.uiStore?.themeIsDark],
       ([theme]) => {
         this.colorScheme = theme;
-        if (uiStore.appkitMethods?.setThemeMode) {
-          uiStore.appkitMethods.setThemeMode(theme);
-        }
+        // if (this.uiStore.appkitMethods?.setThemeMode) {
+        //   this.uiStore.appkitMethods.setThemeMode(theme);
+        // }
+
         this.themeController.start({
           ...this.theme,
           config: {
@@ -284,15 +309,15 @@ class GradientStore {
       },
       { fireImmediately: true },
     );
-    when(
-      () => uiStore.appkitMethods?.setThemeMode !== null,
-      () => {
-        // Принудительно обновляем/ тему
-        // после загрузки        appkitЕруьу
-        uiStore.appkitMethods.setThemeMode(uiStore.themeIsDark);
-        logger.success("appkitMethods", "end");
-      },
-    );
+    // when(
+    //   () => this.uiStore.appkitMethods?.setThemeMode !== null,
+    //   () => {
+    //     // Принудительно обновляем/ тему
+    //     // после загрузки        appkitЕруьу
+    //     this.uiStore.appkitMethods.setThemeMode(this.uiStore.themeIsDark);
+    //     logger.success("appkitMethods", "end");
+    //   },
+    // );
   }
 
   // Методы для градиентов

@@ -8,6 +8,8 @@ import classes from "./ErrorBoundary.module.css";
 import { logger } from "@stores/logger.js";
 import { animations } from "@stores/animations.js";
 import { uiStore } from "@stores/ui.js";
+import GradientText from "@animations/involved/GradientText.jsx";
+import { gradientStore } from "@stores/gradient.js";
 
 const NotFoundError = ({ message }) => {
   const navigate = useNavigate();
@@ -32,13 +34,18 @@ const NotFoundError = ({ message }) => {
 };
 const DefaultError = ({ message }) => {
   return (
-    <main className="pageWrapper" style={{ paddingLeft: 0 }}>
+    <main className="pageWrapper" style={{ paddingLeft: 0, y: -200 }}>
       <motion.section
-        className="pageCard"
         layout
-        animate={{ height: "fit-content" }}
-        transition={{ duration: 1.5 }}
-        style={{ background: uiStore.theme.background, height: 0, width: 700 }}
+        className="pageCard"
+        animate={{ height: 475 }}
+        transition={{ duration: 3 }}
+        style={{
+          ...uiStore.theme,
+          borderRadius: 20,
+          height: 0,
+          width: 700,
+        }}
       >
         <motion.div
           layout
@@ -69,13 +76,17 @@ const DefaultError = ({ message }) => {
         </motion.div>
         <motion.div
           layout
-          style={{ color: "oklch(0.65 0.2236 29.65)" }}
           animate={{
             filter: "drop-shadow(0px 2px 1px oklch(0.65 0.2236 29.65))",
           }}
-          className={classes.title}
         >
-          Что-то пошло не так...
+          <GradientText
+            colors={gradientStore.getRedGradient}
+            fontSize={"3rem"}
+            className={classes.title}
+          >
+            Что-то пошло не так...
+          </GradientText>
         </motion.div>
         {/*<motion.div*/}
         {/*    layout*/}

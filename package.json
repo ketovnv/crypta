@@ -12,7 +12,9 @@
     "preview": "vite preview",
     "start": "web-dev-server",
     "dev:tauri": "tauri:dev",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "log-server": "bun run src-tauri/src/index.ts",
+    "log-server:dev": "bun run --watch src-tauri/src/index.ts"
   },
   "dependencies": {
     "@mantine/core": "^8.0.1",
@@ -34,6 +36,7 @@
     "@tauri-apps/api": "^2.5.0",
     "@tauri-apps/cli": "^2.5.0",
     "@tauri-apps/plugin-log": "^2.4.0",
+    "@types/node": "^22.15.21",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
     "axios": "^1.9.0",
@@ -81,6 +84,7 @@
     "@tanstack/eslint-plugin-query": "^5.74.7",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@types/bun": "^1.2.14",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.5.0",

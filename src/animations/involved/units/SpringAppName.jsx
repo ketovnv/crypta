@@ -1,5 +1,5 @@
 import { animations } from "@stores/animations";
-import { uiStore as ui } from "@stores/ui.js";
+import { uiStore, uiStore as ui } from "@stores/ui.js";
 import { motion } from "motion/react";
 import { logger } from "@stores/logger.js";
 import { observer } from "mobx-react-lite";
@@ -9,14 +9,14 @@ export const SpringAppName = observer(() => {
   // logger.logRandomColors("SpringApp", "Render!!!", 32);
 
   const appNameArray = [
-    ...animation.getAppNameArray,
+    ...uiStore.getAppNameArray,
     // '_',
     // ...JSON.stringify(ui.themeIsDark).split('')
   ];
 
   const trail = useTrail(appNameArray.length, {
-    x: !animation.getAppNameIsHover ? 0 : -25,
-    opacity: !animation.getAppNameIsHover ? 0.85 : 1,
+    x: !uiStore.getAppNameIsHover ? 0 : -25,
+    opacity: !uiStore.getAppNameIsHover ? 0.85 : 1,
     color: logger.getRandomColor(ui.themeIsDark ? 16 : 6),
   });
 
@@ -42,8 +42,6 @@ export const SpringAppName = observer(() => {
         transition: { duration: 3 },
       }}
       whileTap={{ scale: 0.96 }}
-      onHoverStart={() => animation.setAppNameIsHover(true)}
-      onHoverEnd={() => animation.setAppNameIsHover(false)}
     >
       {trail.map(({ x, ...rest }, index) => (
         <animated.div

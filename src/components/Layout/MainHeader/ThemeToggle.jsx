@@ -6,7 +6,6 @@ import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 import { logger } from "@stores/logger.js";
 
 const ThemeToggle = ({ isDark, setColorScheme }) => {
-  logger.debug("ThemeToggle", "start");
   const sliderAnimation = useSpring({
     rotateZ: isDark ? 0 : 100,
     right: isDark ? 3 : 15,
@@ -18,7 +17,6 @@ const ThemeToggle = ({ isDark, setColorScheme }) => {
       damping: 20,
     },
   });
-  logger.debug("ThemeToggle", "start2");
   const lightIconAnimation = useSpring({
     scale: isDark ? 0.2 : 1.2,
     rotateZ: isDark ? -360 : 0,
@@ -28,43 +26,43 @@ const ThemeToggle = ({ isDark, setColorScheme }) => {
       ? "drop-shadow(0 0 0 rgba(255, 196, 0, 0))"
       : "drop-shadow(0 10px 30px rgba(255, 196, 0, 1))",
     config: { ...config.molasses, stiffness: 300, damping: 20 },
-    onRest: async (result, ctrl, item) => {
-      const animationConfig = { duration: 500 };
-      if (!isDark) {
-        await ctrl.start({
-          filter: "drop-shadow(0 0 3px rgba(255, 196, 0, 1))",
-        });
-        await new Promise((resolve) => setTimeout(resolve, 300));
-        await ctrl.start(
-          {
-            filter: "drop-shadow(0 0 5px rgba(255, 196, 100, 0.7))",
-          },
-          animationConfig,
-        );
-        await new Promise((resolve) => setTimeout(resolve, 300));
-        await ctrl.start(
-          {
-            filter: "drop-shadow(0 0 2px rgba(255, 196, 100, 0.5))",
-          },
-          animationConfig,
-        );
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        logger.debug("ThemeToggle", "start3");
-        await ctrl.start(
-          { filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0.3))" },
-          animationConfig,
-        );
-        logger.debug("ThemeToggle", "start4");
-      } else {
-        logger.debug("ThemeToggle", "star5");
-        await ctrl.start({
-          opacity: 0,
-          scale: 0.1,
-          filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0))",
-        });
-        logger.debug("ThemeToggle", "star6");
-      }
-    },
+    // onRest: async (result, ctrl, item) => {
+    //   const animationConfig = { duration: 500 };
+    //   if (!isDark) {
+    //     await ctrl.start({
+    //       filter: "drop-shadow(0 0 3px rgba(255, 196, 0, 1))",
+    //     });
+    //     await new Promise((resolve) => setTimeout(resolve, 300));
+    //     await ctrl.start(
+    //       {
+    //         filter: "drop-shadow(0 0 5px rgba(255, 196, 100, 0.7))",
+    //       },
+    //       animationConfig,
+    //     );
+    //     await new Promise((resolve) => setTimeout(resolve, 300));
+    //     await ctrl.start(
+    //       {
+    //         filter: "drop-shadow(0 0 2px rgba(255, 196, 100, 0.5))",
+    //       },
+    //       animationConfig,
+    //     );
+    //     await new Promise((resolve) => setTimeout(resolve, 500));
+    //     logger.debug("ThemeToggle", "start3");
+    //     await ctrl.start(
+    //       { filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0.3))" },
+    //       animationConfig,
+    //     );
+    //     logger.debug("ThemeToggle", "start4");
+    //   } else {
+    //     logger.debug("ThemeToggle", "star5");
+    //     await ctrl.start({
+    //       opacity: 0,
+    //       scale: 0.1,
+    //       filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0))",
+    //     });
+    //     logger.debug("ThemeToggle", "star6");
+    //   }
+    // },
   });
 
   logger.debug("ThemeToggle", "star7");
@@ -104,5 +102,5 @@ const ThemeToggle = ({ isDark, setColorScheme }) => {
     </animated.button>
   );
 };
-logger.debug("ThemeToggle", "star9");
+
 export default ThemeToggle;

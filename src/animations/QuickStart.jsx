@@ -7,6 +7,7 @@ import {
 } from "./BaseAnimationSystem";
 import { timeEngine } from "../stores/timeEngine";
 import { gradientStore } from "../stores/gradient";
+import LoggerTest from "../components/LoggerTest.jsx";
 
 const QuickStart = observer(() => {
   const demoRef = useRef(null);
@@ -170,6 +171,11 @@ import { useAnimation } from './animations/core/BaseAnimationSystem';
 
 const { start } = useAnimation({ tension: 200, friction: 20 });
 start(elementRef.current, { x: 100, y: 50, scale: 1.2 });`}</pre>
+      </div>
+
+      {/* Logger Test Section */}
+      <div className="mt-8 border-t pt-8">
+        <LoggerTest />
       </div>
     </div>
   );

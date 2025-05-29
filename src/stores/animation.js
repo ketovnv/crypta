@@ -11,8 +11,6 @@
 // // import { modernAnimationEngine } from "@animations/unified/ModernAnimationEngine";
 // // import { modernAnimationEngine } from "@animations/unified/ModernAnimationEngine";
 
-// const APP_NAME = "ReactApproveAppkit";
-// const appNameArray = APP_NAME.split("");
 
 // /**
 //  * AnimationStore - класс MobX для централизованного управления анимациями
@@ -21,7 +19,7 @@
 // logger.debug("check");
 
 // class AnimationStore {
-//   appNameIsHover = false;
+//
 //   mantineControlAnimations = {};
 //   springAnimations = {};
 //   requestAnimationFrame;
@@ -30,9 +28,7 @@
 //   animations = {};
 //   animations = new Map();
 
-//   // get getAppNameArray() {
-//   //   return appNameArray;
-//   // }
+
 //   // Настройки
 //   settings = {
 //     ultraSpring: {
@@ -131,9 +127,6 @@
 //     );
 //   }
 
-//   get getAppNameIsHover() {
-//     return this.appNameIsHover;
-//   }
 
 //   get animatedTheme() {
 //     return { ...this.themeController.springs };
@@ -183,7 +176,7 @@
 //     // }
 //   }
 
-//   setAppNameIsHover = (isHover) => (this.appNameIsHover = isHover);
+//
 
 
 //   //

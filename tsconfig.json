@@ -14,8 +14,10 @@
     ],
     "types": [
       "motion/react",
-      "@react-spring/web"
-    ],
+      "@react-spring/web",
+      "node",
+      "bun"
+    ], 
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",

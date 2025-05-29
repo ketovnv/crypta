@@ -5,13 +5,14 @@ import { PageTransition } from "@animations/involved/units/PageTransition";
 import { uiStore } from "@stores/ui.js";
 // import {SmoothCursor} from "@animations/involved/SmoothCusor.js";
 import { animations } from "@stores/animations";
+import { gradientStore } from "@stores/gradient.js";
 
 export const MainContent = observer(() => {
   return (
     <AppShell.Main>
       <animated.div
         style={{
-          ...animation.animatedTheme,
+          ...gradientStore.animatedTheme,
           // background: "transparent",
           height: "100vh",
           width: "100vw",

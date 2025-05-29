@@ -3,8 +3,12 @@ import { gradientStore } from "./gradient";
 import { logger } from "@stores/logger.js";
 import nBMParams from "../animations/configs/navBarMoving.json";
 
+const APP_NAME = "ReactApproveAppkit";
+const appNameArray = APP_NAME.split("");
+
 class UiStore {
   colorScheme = "dark";
+  appNameIsHover = false;
   themeIsVeryColorised = false; // Начальное значение
   isNavbarOpened = false;
   fontSearch = "";
@@ -32,8 +36,16 @@ class UiStore {
     });
   }
 
+  get getAppNameArray() {
+    return appNameArray;
+  }
+
   get theme() {
     return { ...gradientStore.getTheme };
+  }
+
+  get getAppNameIsHover() {
+    return this.appNameIsHover;
   }
 
   get isNbOpen() {
@@ -67,6 +79,8 @@ class UiStore {
   get renderFooter() {
     return this.withFooter;
   }
+
+  setAppNameIsHover = (isHover) => (this.appNameIsHover = isHover);
 
   setAppkitMethods = (appkitMethods) => {
     this.appkitMethods = appkitMethods;
