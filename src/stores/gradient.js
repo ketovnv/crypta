@@ -9,7 +9,7 @@ import {
   STANDART_LIGHT,
 } from "./gradientColors";
 import { logger } from "@stores/logger.js";
-import { core, ANIMATION_PRESETS } from "./core.js";
+import { core } from "./core.js";
 
 const DARK = 0;
 const LIGHT = 1;
@@ -44,11 +44,11 @@ class GradientStore {
         (this.themeController = core.createController(
           "mainThemeController",
           this.getTheme,
-          ANIMATION_PRESETS.ultraSpring,
+          core.getAnimationPreset("ultraSpring"),
         )),
       0,
     );
-    false && this.themesInit();
+    this.themesInit(); //
   }
 
   get getRainbowV2Gradient() {
@@ -66,9 +66,13 @@ class GradientStore {
   get getTheme() {
     if (!this.uiStore) return {};
     // const theme = uiStore.themeIsDark ? this.darkCubehelixMode : this.lightCubehelixMode
-    const theme = this.getColorTheme(
-      this.uiStore.themeIsDark ? STANDART_DARK : STANDART_LIGHT,
-    );
+    // const theme = this.getColorTheme(
+    //   this.uiStore.themeIsDark ? STANDART_DARK : STANDART_LIGHT,
+    // );
+
+    const theme = this.uiStore.themeIsDark
+      ? this.preparedDarkThemes[0]
+      : this.preparedLightThemes[0];
     // uiStore.setThemeIsVeryColorised(!!theme.themeIsVeryColorised)
     return { ...theme, bWG: this.blackWhiteGradient };
   }
@@ -159,8 +163,8 @@ class GradientStore {
   calculateTheme = (lightness, theme) => {
     const calculate = (content) =>
       lightness > 0
-        ? (this.preparedDarkThemes = content)
-        : (this.preparedLightThemes = content);
+        ? (this.preparedDarkThemes[theme] = content)
+        : (this.preparedLightThemes[theme] = content);
 
     switch (theme) {
       case 0:
@@ -313,7 +317,7 @@ class GradientStore {
         this.themeController.start({
           ...this.theme,
           config: {
-            ...this.settings.ultraSpring,
+            ...this.settings.ultraSpringTheme,
           },
           configs: {
             background: { tension: 120, friction: 14 },

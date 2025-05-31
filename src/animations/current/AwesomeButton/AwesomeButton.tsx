@@ -2,14 +2,40 @@ import React, { useRef } from "react";
 import { Center } from "@mantine/core";
 import {
   motion,
-  // useMotionValue,
-  // useTransform
+  //@ts-ignore
+  useMotionValue,
+  //@ts-ignore
+  useTransform,
 } from "motion/react";
 //@ts-ignore
 import classes from "./AwesomeButton.module.css";
 import "./ButtonContainer.css";
 
 const POSITION_STATES = ["middle", "left", "right"];
+
+// .aws-btn--left:before {
+//   transform: skewY(calc(1deg * var(--button-hover-pressure) * 1)) translate3d(0, calc(-1px * var(--button-hover-pressure) / 2), 0)
+// }
+//
+// .aws-btn--left .aws-btn__content {
+//   transform: skewY(calc(1deg * var(--button-hover-pressure) * -1))
+// }
+//
+// .aws-btn--right:before {
+//   transform: skewY(calc(1deg * var(--button-hover-pressure) * -1)) translate3d(0, calc(-1px * var(--button-hover-pressure) / 2), 0)
+// }
+//
+// .aws-btn--right .aws-btn__content {
+//   transform: skewY(calc(1deg * var(--button-hover-pressure) * 1))
+// }
+//
+// .aws-btn--middle:before {
+//   transform: translate3d(0, calc(-1px * var(--button-hover-pressure)), 0)
+// }
+//
+// .aws-btn--middle .aws-btn__content {
+//   transform: translate3d(0, calc(1px * var(--button-hover-pressure)), 0)
+// }
 
 export type ButtonType = {
   isActive?: boolean;
@@ -73,13 +99,13 @@ export const AwesomeButton = ({
   //   if (onPress) onPress();
   // };
   //
-  // // Motion values for tilt effect
-  // const mouseX = useMotionValue(0);
-  // const mouseY = useMotionValue(0);
+  // Motion values for tilt effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   //
   // // Transform mouse position to rotation values
-  // const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
-  // const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
   //
   // // Handle mouse movement over the button
   // const handleMouseMove = (event) => {
@@ -94,15 +120,16 @@ export const AwesomeButton = ({
   //   const y = (event.clientY - rect.top) / height - 0.5;
   //
   //   // Update motion values
-  //   mouseX.set(x);
-  //   mouseY.set(y);
+  // mouseX.set(x);
+  // mouseY.set(y);
   // };
   //
   // // Reset tilt on mouse leave
-  // const handleMouseLeave = () => {
-  //   mouseX.set(0);
-  //   mouseY.set(0);
-  // };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   // Scale effect for button on hover and tap
   const buttonHoverVariants = {
@@ -122,12 +149,12 @@ export const AwesomeButton = ({
       <motion.button
         ref={buttonRef}
         // onMouseMove={handleMouseMove}
-        // onMouseLeave={handleMouseLeave}
+        onMouseLeave={handleMouseLeave}
         onClick={() => handlePress(onPress)}
         layout
         layoutId={layoutId}
         key={buttonKey}
-        // variants={variants || buttonHoverVariants}
+        variants={variants || buttonHoverVariants}
         initial="initial"
         whileHover={whileHover || "hover"}
         whileTap={whileTap || "tap"}
@@ -140,7 +167,7 @@ export const AwesomeButton = ({
         transition={{
           rotateX: { type: "spring", stiffness: 300, damping: 15 },
           rotateY: { type: "spring", stiffness: 300, damping: 15 },
-          default: { type: "spring", stiffness: 400 },
+          default: { type: "spring", duration: 2 },
         }}
         className={`${classes.awsBtn} aws-btn aws-btn--visible`} // Added aws-btn--visible to make button visible
       >

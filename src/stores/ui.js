@@ -83,6 +83,9 @@ class UiStore {
 
   setAppNameIsHover = (isHover) => (this.appNameIsHover = isHover);
 
+  /**
+   * @param {{setThemeMode: {(themeMode: ThemeMode): void}; setThemeVariables: {(themeVariables: ThemeVariables): void}}} appkitMethods
+   */
   setAppkitMethods = (appkitMethods) => {
     this.appkitMethods = appkitMethods;
     appkitMethods.setThemeMode(this.themeIsDark ? "dark" : "light");

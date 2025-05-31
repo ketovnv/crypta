@@ -14,6 +14,8 @@ import { Web3Inch } from "@components/Layout/SvgIcons/Web3Inch";
 import GradientText from "@animations/involved/GradientText";
 import { uiStore } from "@stores/ui.js";
 import { Etherium } from "@components/Layout/SvgIcons/Etherium.jsx";
+import { LJ } from "@components/logger/LJ.jsx";
+import { gradientStore } from "@stores/gradient.js";
 
 export const MainNavbar = observer(() => {
   const icons = {
@@ -43,7 +45,10 @@ export const MainNavbar = observer(() => {
       // animate={animation.getMCAnimation("NavBarMoving").control}
       // variants={animation.getMCAnimation("NavBarMoving").frameVariants}
       className={classes.navbar}
-      initial="hidden"
+      // initial="hidden"
+      // initial="hidden"
+      // initial="hidden"
+      initial="visible"
     >
       <LayoutGroup path={router.getCurrentPage} layout>
         <Web3Inch
@@ -80,9 +85,16 @@ export const MainNavbar = observer(() => {
           }}
           isDark={uiStore.themeIsDark}
         />
-        {/*<ChromaInterpolationExample />*/}
-        {/*<FixedImperativeLoopAnimation />*/}
-
+        {/*<div*/}
+        {/*  style={{*/}
+        {/*    width: 300,*/}
+        {/*    height: 400,*/}
+        {/*    background: "blue",*/}
+        {/*    color: "yellow",*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <span>{JSON.stringify(gradientStore.getTheme)} </span>*/}
+        {/*</div>*/}
         {router.getPages.map(([path, name]) => {
           const isActive = path === router.getCurrentPage;
           // logger.info('path', path + ' ' + JSON.stringify(isActive))

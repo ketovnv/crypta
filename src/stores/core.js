@@ -11,25 +11,9 @@ import { raf } from "@react-spring/rafz";
 import chroma from "chroma-js";
 import seedrandom from "seedrandom";
 import { useEffect, useRef, useState } from "react";
+import { ANIMATION_PRESETS } from "./animationPresets";
 
 // ===== 1. Конфигурации и пресеты =====
-const ANIMATION_PRESETS = {
-  instant: { tension: 1000, friction: 100, mass: 0.1 },
-  snappy: { tension: 400, friction: 25, mass: 0.8 },
-  gentle: { tension: 120, friction: 14, mass: 1 },
-  wobbly: { tension: 180, friction: 12, mass: 1 },
-  stiff: { tension: 210, friction: 20, mass: 1 },
-  micro: { tension: 300, friction: 10, mass: 0.2 },
-  page: { tension: 280, friction: 30, mass: 1.2 },
-  modal: { tension: 250, friction: 22, mass: 1 },
-  theme: { tension: 150, friction: 18, mass: 1.5 },
-  mobile: { tension: 200, friction: 25, mass: 1, clamp: true },
-  desktop: { tension: 350, friction: 28, mass: 0.9 },
-  reduced: { duration: 200, easing: "linear" },
-  ultraSpring: { tension: 500, friction: 30, mass: 0.5 },
-  fluid: { tension: 80, friction: 8, mass: 1.2 },
-  bounce: { tension: 300, friction: 8, mass: 1 },
-};
 
 const clamp = (v, mi = 0, ma = 1) => Math.min(ma, Math.max(mi, v));
 const modHue = (h) => ((h % 360) + 360) % 360;
@@ -40,7 +24,7 @@ class AdaptiveConfigManager {
   constructor() {
     this.deviceCapabilities = this.detectDevice();
     this.userPreferences = this.getUserPreferences();
-    this.performanceProfile = this.createPerformanceProfile();
+    this.performanceProfile = this.createPerformanceProfile(true);
   }
 
   detectDevice() {
@@ -76,12 +60,13 @@ class AdaptiveConfigManager {
     }
   }
 
-  createPerformanceProfile() {
-    const { isLowEnd, isMobile, hasGPU } = this.deviceCapabilities;
+  createPerformanceProfile(ultraProfile = false) {
+    const { isLowEnd, hasGPU } = this.deviceCapabilities;
 
-    if (isLowEnd) return "minimal";
-    if (isMobile && !hasGPU) return "balanced";
+    if (ultraProfile) return "ultra";
     if (hasGPU) return "performance";
+    if (isLowEnd) return "minimal";
+    if (!hasGPU) return "balanced";
     return "standard";
   }
 
@@ -107,6 +92,8 @@ class AdaptiveConfigManager {
         break;
       case "performance":
         config = { ...config, precision: 0.001 };
+      case "ultra":
+        config = { ...config, precision: 0.0001 };
         break;
     }
 
@@ -333,6 +320,8 @@ class Core {
     );
   }
 
+  getAnimationPreset = (preset) => this.configManager.getConfig(preset);
+
   setupGlobalOptimizations() {
     Globals.assign({
       skipAnimation: this.configManager.deviceCapabilities.prefersReducedMotion,
@@ -478,9 +467,7 @@ class Core {
   addCallback(id, callback, phase = "update") {
     // phase: 'read', 'update', 'write', 'finish'
     if (!this._callbacksByPhase[phase]) {
-      console.warn(
-        `Unifiedcore: Unknown phase "${phase}". Defaulting to "update".`,
-      );
+      console.warn(`Unknown phase "${phase}". Defaulting to "update".`);
       phase = "update";
     }
     // Сохраняем коллбэк с его состоянием активности
@@ -993,4 +980,4 @@ export const applySVGEffect = (effect) => ({
 });
 
 // Простые константы для быстрого доступа
-export { ANIMATION_PRESETS, clamp, modHue, lerp };
+export { clamp, modHue, lerp };
