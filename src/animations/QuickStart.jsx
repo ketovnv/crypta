@@ -3,9 +3,10 @@ import { observer } from "mobx-react-lite";
 import {
   useAnimation,
   createSpringAnimation,
-  baseAnimationSystem,
+  // baseAnimationSystem,
 } from "./BaseAnimationSystem";
-import { timeEngine } from "../stores/timeEngine";
+// import { timeEngine } from "../stores/timeEngine";
+import { core } from "@stores/_core.js";
 import { gradientStore } from "../stores/gradient";
 import LoggerTest from "../components/LoggerTest.jsx";
 
@@ -25,9 +26,9 @@ const QuickStart = observer(() => {
   useEffect(() => {
     console.log("🚀 QuickStart: Initializing animation system...");
 
-    if (!timeEngine.isRunning) {
-      timeEngine.start();
-      console.log("✅ TimeEngine started");
+    if (!core.isRunning) {
+      core.start();
+      console.log("✅ Core started 👻👻👻");
     }
 
     console.log("✅ BaseAnimationSystem initialized");
@@ -37,8 +38,8 @@ const QuickStart = observer(() => {
   useEffect(() => {
     const updateMetrics = () => {
       setMetrics({
-        ...baseAnimationSystem.getMetrics(),
-        elapsedTime: Math.floor(timeEngine.elapsedTime / 1000),
+        ...core.getMetrics(),
+        elapsedTime: Math.floor(core.elapsedTime / 1000),
       });
     };
 
@@ -82,14 +83,16 @@ const QuickStart = observer(() => {
     const element = demoRef.current;
     element.style.background = gradientStore.getTheme.background;
 
-    createSpringAnimation(element, {
-      tension: 120,
-      friction: 15,
-    }).start({
-      x: Math.random() * 300,
-      y: Math.random() * 100,
-      scale: 0.8 + Math.random() * 0.4,
-    });
+    core
+      .createSpringAnimation(element, {
+        tension: 120,
+        friction: 15,
+      })
+      .start({
+        x: Math.random() * 300,
+        y: Math.random() * 100,
+        scale: 0.8 + Math.random() * 0.4,
+      });
   };
 
   const theme = gradientStore.getTheme;
@@ -108,8 +111,8 @@ const QuickStart = observer(() => {
           <span className="text-green-800 font-medium">System Ready</span>
         </div>
         <div className="mt-2 text-sm text-green-700">
-          TimeEngine: {timeEngine.isRunning ? "Running" : "Stopped"} •
-          Animations: {metrics.activeAnimations || 0} • FPS: {metrics.fps || 0}
+          TimeEngine: {core.isRunning ? "Running" : "Stopped"} • Animations:{" "}
+          {metrics.activeAnimations || 0} • FPS: {metrics.fps || 0}
         </div>
       </div>
 
@@ -131,12 +134,10 @@ const QuickStart = observer(() => {
         </button>
 
         <button
-          onClick={() =>
-            timeEngine.setTimeScale(timeEngine.timeScale === 1 ? 0.5 : 1)
-          }
+          onClick={() => core.setTimeScale(core.timeScale === 1 ? 0.5 : 1)}
           className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
         >
-          Speed: {timeEngine.timeScale}x
+          Speed: {core.timeScale}x
         </button>
       </div>
 
@@ -174,9 +175,7 @@ start(elementRef.current, { x: 100, y: 50, scale: 1.2 });`}</pre>
       </div>
 
       {/* Logger Test Section */}
-      <div className="mt-8 border-t pt-8">
-        <LoggerTest />
-      </div>
+      <div className="mt-1 border-t pt-8">{/*<LoggerTest />*/}</div>
     </div>
   );
 });

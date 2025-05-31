@@ -41,6 +41,7 @@ class UiStore {
   }
 
   get theme() {
+    gradientStore.setUIStore(this);
     return { ...gradientStore.getTheme };
   }
 
@@ -69,7 +70,7 @@ class UiStore {
   }
 
   get themeStyle() {
-    return { ...uiStore.themeController.springs };
+    return { ...core.themeController.springs };
   }
 
   get screenSize() {
@@ -105,14 +106,14 @@ class UiStore {
   async animateNavbarState(isOpened) {
     if (isOpened) {
       // Последовательная анимация открытия
-      await this.navigation.to({ opacity: 1, scale: 1 });
-      await this.page.to({ x: 250, scale: 1, y: 50 });
+      // await this.navigation.to({ opacity: 1, scale: 1 });
+      // await this.page.to({ x: 250, scale: 1, y: 50 });
       logger.success("Навбар удачно анимировал открытие");
     } else {
       // Параллельная анимация закрытия
       await Promise.all([
-        this.navigation.to({ opacity: 0, x: -50, scale: 0.95 }),
-        this.page.to({ x: 225, scale: 1.7, y: -50 }),
+        // this.navigation.to({ opacity: 0, x: -50, scale: 0.95 }),
+        // this.page.to({ x: 225, scale: 1.7, y: -50 }),
       ]);
       logger.success("Навбар удачно анимировал закрытие");
     }

@@ -1,7 +1,6 @@
 "use client";
 import { invoke } from "@tauri-apps/api/core";
 
-invoke("start_bun_log_server");
 import React from "react";
 import ReactDOM from "react-dom/client";
 
@@ -10,9 +9,6 @@ import "@mantine/core/styles.css";
 
 import "@styles/app.css";
 import "@styles/AwesomeButton.css";
-
-// Импортируем console logger для перехвата логов
-import "@utils/console-logger.js";
 
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -43,9 +39,9 @@ logger.info(2);
 // @ts-ignore
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <WagmiProvider config={wagmiAdapter.wagmiConfig}>
-    <QueryClientProvider client={queryClient}>
-      <Layout />
-    </QueryClientProvider>
-  </WagmiProvider>,
+  // <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+  //   <QueryClientProvider client={queryClient}>
+  <Layout />,
+  //   </QueryClientProvider>
+  // </WagmiProvider>,
 );

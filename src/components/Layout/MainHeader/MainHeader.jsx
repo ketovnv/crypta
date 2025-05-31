@@ -16,36 +16,37 @@ import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 import React from "react";
 import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 import { logger } from "@stores/logger.js";
+import { SingleSpringPresence } from "@animations/involved/SingleSpringPresence.js";
 
 export const MainHeader = observer(() => {
-  const ref = useEventListener("click", () => uiStore.toggleNavbarOpened());
   consoleGradient("Header 🪖🪖🪖", "render", { fileSize: 50 });
   // const { height, width } = useViewportSize();
   // uiStore.setScreenHeight(height)
   // uiStore.setScreenWidth(width)
-  const transitions = useTransition(!!walletStore.getAccountData, {
+  const variants = {
     from: {
       opacity: 0,
-      transform: "translateY(-50px)",
+      top: 500,
       scale: 0,
       filter: "blur(10px)",
     }, // Входящая (начало)
     enter: {
       opacity: 1,
-      transform: "translateY(0px)",
-      top: 15,
+      top: 10,
       scale: 1,
       filter: "blur(0px)",
-    }, // Входящая (конец)
+    },
     leave: {
       opacity: 0,
-      transform: "translateY(-50px)",
+      top: 500,
       scale: 0,
       filter: "blur(10px)",
-    }, // УХОДЯЩАЯ АНИМАЦИЯ
-    config: { ...config.molasses }, // Настройки пружины
-    keys: null,
-  });
+    },
+    config: { ...config.molasses },
+  };
+
+  // const transitions = useTransition(!!walletStore.getAccountData, variants);
+  const transitions = useTransition(!uiStore.isNavbarOpened, variants);
   logger.debug("ThemeToggle", "start111");
 
   return (
@@ -61,9 +62,9 @@ export const MainHeader = observer(() => {
               zIndex: 9999,
               cursor: "pointer",
             }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0, y: -50 }}
+            // initial={{ scale: 0 }}
+            // animate={{ scale: 1 }}
+            // exit={{ scale: 0, y: -50 }}
             transition={{ duration: 1 }}
             whileHover="hover"
             onMouseEnter={() => uiStore.setAppNameIsHover(true)}
@@ -93,7 +94,15 @@ export const MainHeader = observer(() => {
             }}
             transition={{ duration: 2, delay: 0.3, ease: "easeInOut" }}
           >
-            <Group ref={ref} className={classes.pressableGroup} w="50%">
+            <motion.div
+              layout
+              className={classes.pressableGroup}
+              onMouseDown={uiStore.toggleNavbarOpened}
+              initial={{ scale: 0, opacity: 0, width: "1%" }}
+              animate={{ scale: 1, opacity: 1, width: "50%" }}
+              exit={{ scale: 0, opacity: 0, width: "1%" }}
+              transition={{ duration: 1.5 }}
+            >
               <motion.button
                 style={{
                   background: "none",
@@ -115,30 +124,49 @@ export const MainHeader = observer(() => {
                 }}
                 whileTap={{ scale: 0.7 }}
               >
-                <HeaderBitcoin isDark={uiStore.themeIsDark} />
+                <HeaderBitcoin />
               </motion.button>
-              {!uiStore.isNavbarOpened && <SpringAppName />}
-            </Group>
-            {transitions((style, item) =>
-              item ? (
-                <animated.div
-                  style={{
-                    ...style,
-                    position: "absolute",
-                    right: 175,
-                    color: "blue !important",
-                  }}
-                  key={item}
-                >
-                  <appkit-button balance="show" />
-                </animated.div>
-              ) : null,
-            )}
+              <SpringAppName />
+            </motion.div>
+            {/*{transitions((style, item) =>*/}
+            {/*  item ? (*/}
+            {/*    <animated.div*/}
+            {/*      style={{*/}
+            {/*        ...style,*/}
+            {/*        position: "absolute",*/}
+            {/*        right: 175,*/}
+            {/*        color: "blue !important",*/}
+            {/*      }}*/}
+            {/*      key={item}*/}
+            {/*    >*/}
+            {/*      /!*<appkit-network-button />*!/*/}
+            {/*      <appkit-button balance="show" />*/}
+            {/*    </animated.div>*/}
+            {/*  ) : null,*/}
+            {/*)}*/}
 
-            <ThemeToggle
-              isDark={uiStore.themeIsDark}
-              setColorScheme={uiStore.setColorScheme}
-            />
+            <SingleSpringPresence
+              item={
+                uiStore.isNavbarOpened
+                  ? { id: "navbar", label: "НавБар" }
+                  : null
+              }
+              keyExtractor={(i) => i.id}
+              from={() => variants.from}
+              enter={() => variants.enter}
+              leave={() => variants.leave}
+              preset="molasses"
+              onDisappear={() => alert("navbar disappeared")}
+            >
+              {(item, springs) => (
+                <div style={{ ...springs, position: "absolute" }}>
+                  {item.label}
+                  <appkit-button balance="show" />
+                </div>
+              )}
+            </SingleSpringPresence>
+
+            <ThemeToggle />
           </motion.div>
         )}
       </AnimatePresence>

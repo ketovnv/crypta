@@ -33,7 +33,8 @@ class AdaptiveConfigManager {
   }
 
   detectDevice() {
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    // на мобильные и линукс не отвлекаемся,  только Windows !!!
+    // const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const isLowEnd =
       navigator.hardwareConcurrency <= 4 || window.devicePixelRatio < 1.5;
     const prefersReducedMotion = window.matchMedia(
@@ -64,9 +65,9 @@ class AdaptiveConfigManager {
       config = { ...config, clamp: true, precision: 0.01 };
     }
 
-    if (this.deviceCapabilities.isMobile) {
-      config = { ...config, friction: config.friction * 1.2 }; // Немного медленнее на мобильных
-    }
+    // if (this.deviceCapabilities.isMobile) {
+    //   config = { ...config, friction: config.friction * 1.2 };
+    // }
 
     // Применяем пользовательские настройки
     if (this.userPreferences.animationIntensity < 1) {

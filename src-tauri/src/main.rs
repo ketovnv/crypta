@@ -3,9 +3,11 @@
     windows_subsystem = "windows"
 )]
 
+
+
 use std::process::Command;
 use tauri::Manager;
-
+use log;
 mod commands;
 mod websocket_logger;
 mod win_effects;
@@ -49,8 +51,17 @@ async fn send_test_log(level: String, message: String) -> Result<(), String> {
 
 // Команда для получения console.log из фронтенда
 #[tauri::command]
-async fn console_log(level: String, message: String, source: Option<String>) -> Result<(), String> {
-    websocket_logger::send_console_message(&level, &message, source.as_deref());
+async fn console_log(level_str: String, message: String, source: Option<String>) -> Result<(), String> {
+    let log_level = match level_str.to_lowercase().as_str() {
+        "error" => log::Level::Error,
+        "warn" => log::Level::Warn,
+        "info" => log::Level::Info,
+        "debug" => log::Level::Debug,
+        "trace" => log::Level::Trace,
+        _ => log::Level::Info, // Уровень по умолчанию, если строка не распознана
+    };
+    // Теперь log_level имеет тип log::Level
+    websocket_logger::send_websocket_log(log_level, &message, source.as_deref());
     Ok(())
 }
 
@@ -63,6 +74,14 @@ async fn frontend_log(
     line: Option<u32>,
     component: Option<String>,
 ) -> Result<(), String> {
+    let log_level = match level.to_lowercase().as_str() {
+        "error" => log::Level::Error,
+        "warn" => log::Level::Warn,
+        "info" => log::Level::Info,
+        "debug" => log::Level::Debug,
+        "trace" => log::Level::Trace,
+        _ => log::Level::Info, // Уровень по умолчанию, если строка не распознана
+    };
     let source_info = match (file, line, component) {
         (Some(f), Some(l), Some(c)) => Some(format!("{}:{}:{}", c, f, l)),
         (Some(f), Some(l), None) => Some(format!("{}:{}", f, l)),
@@ -70,7 +89,7 @@ async fn frontend_log(
         _ => None,
     };
 
-    websocket_logger::send_console_message(&level, &message, source_info.as_deref());
+    websocket_logger::send_websocket_log(log_level, &message, source_info.as_deref());
     Ok(())
 }
 

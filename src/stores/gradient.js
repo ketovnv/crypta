@@ -9,39 +9,46 @@ import {
   STANDART_LIGHT,
 } from "./gradientColors";
 import { logger } from "@stores/logger.js";
-import { animations as presets, createSmartController } from "./animations.js";
+import { core, ANIMATION_PRESETS } from "./core.js";
 
 const DARK = 0;
 const LIGHT = 1;
 
 class GradientStore {
+  uiStore = null;
   themesWorker = null;
+  themeController = null;
   preparedDarkThemes = [0, 1, 2, 3, 4];
   preparedLightThemes = [0, 1, 2, 3, 4];
   selectedThemes = [0, 0];
   animations = {};
 
   constructor() {
-    makeAutoObservable(this, { calculateTheme: action });
-    createSmartController(
-      "mainThemeController",
-      this.getTheme,
-      "smart",
-      (api) => (this.animations[api.name] = api),
-      {
-        tension: 50,
-        friction: 75,
-        mass: 5,
-        damping: 100,
-        precision: 0.0001,
-      },
+    makeAutoObservable(this, { calculateTheme: action, setUIStore: action });
+    // createSmartController(
+    //   "mainThemeController",
+    //   this.getTheme,
+    //   "smart",c
+    //   (api) => (this.animations[api.name] = api),
+    //   {
+    //     tension: 50,
+    //     friction: 75,
+    //     mass: 5,
+    //     damping: 100,
+    //     precision: 0.0001,
+    //   },
+    // );
+
+    setTimeout(
+      () =>
+        (this.themeController = core.createController(
+          "mainThemeController",
+          this.getTheme,
+          ANIMATION_PRESETS.ultraSpring,
+        )),
+      0,
     );
-
-    // this.themesInit();
-  }
-
-  get uiStore() {
-    return import("./ui").then((module) => module.uiStore);
+    false && this.themesInit();
   }
 
   get getRainbowV2Gradient() {
@@ -53,7 +60,7 @@ class GradientStore {
   }
 
   get animatedTheme() {
-    return this.animations["mainThemeController"]?.springs;
+    return this.themeController?.springs;
   }
 
   get getTheme() {
@@ -147,6 +154,8 @@ class GradientStore {
     );
   }
 
+  setUIStore = (store) => (this.uiStore = store);
+
   calculateTheme = (lightness, theme) => {
     const calculate = (content) =>
       lightness > 0
@@ -192,20 +201,27 @@ class GradientStore {
       this.calculateTheme(index, theme),
     );
 
-    this.themesWorker = setInterval(() => {
-      this.preparedDarkThemes.every((theme) => {
-        if (theme.color) return true;
-        this.calculateTheme(DARK, theme);
-        return false;
-      });
+    logger.logJSON("preparedDarkThemes", this.preparedDarkThemes);
+    this.themesWorker =
+      false &&
+      setInterval(() => {
+        this.preparedDarkThemes.every((theme) => {
+          if (theme.color) return true;
+          console.log("preparedDarkThemes2", this.preparedDarkThemes);
+          logger.logJSON("preparedLightThemes2", this.preparedLightThemes);
+          this.calculateTheme(DARK, theme);
+          return false;
+        });
 
-      this.preparedLightThemes.forEach((theme) => {
-        if (theme.color) return true;
-        this.calculateTheme(LIGHT, theme);
-        return false;
-      });
-      this.setupReactions();
-    }, 2000);
+        logger.logJSON("preparedLightThemes", this.preparedLightThemes);
+        this.preparedLightThemes.forEach((theme) => {
+          if (theme.color) return true;
+          console.log("preparedLightThemes2", this.preparedLightThemes);
+          this.calculateTheme(LIGHT, theme);
+          return false;
+        });
+        this.setupReactions();
+      }, 2000);
   }
 
   scaleGradient = (colors, number) =>
@@ -338,3 +354,31 @@ class GradientStore {
 }
 
 export const gradientStore = new GradientStore();
+// export const SVGNoiseFilter = () => (
+//     <svg className="hidden">
+//       <defs>
+//         <filter id="noise">
+//           <feTurbulence
+//               type="fractalNoise"
+//               baseFrequency="0.65"
+//               numOctaves="3"
+//               stitchTiles="stitch"
+//           />
+//           <feColorMatrix type="saturate" values="0" />
+//         </filter>
+//
+//         <filter id="fluid">
+//           <feTurbulence baseFrequency="0.02" numOctaves="3" />
+//           <feDisplacementMap in="SourceGraphic" scale="15" />
+//         </filter>
+//
+//         <filter id="glow">
+//           <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+//           <feMerge>
+//             <feMergeNode in="coloredBlur" />
+//             <feMergeNode in="SourceGraphic" />
+//           </feMerge>
+//         </filter>
+//       </defs>
+//     </svg>
+// );

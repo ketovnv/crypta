@@ -42,7 +42,7 @@ const Layout = () => {
           }}
           padding={0}
         >
-          <AppKitObserver />
+          {/*<AppKitObserver />*/}
           {/*<AnimationObserver />*/}
           <MainHeader />
           <MainNavbar />

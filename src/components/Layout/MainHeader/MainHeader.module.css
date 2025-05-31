@@ -6,6 +6,10 @@
 
 .pressableGroup {
   cursor: pointer;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .appIcon {

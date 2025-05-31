@@ -8,7 +8,7 @@ import { GlowingEffect } from "@animations/involved/units/GlowingEffect.jsx";
 import { logger } from "@stores/logger.js";
 import params from "@animations/configs/pageTransition.json";
 import { LJ } from "@components/logger/LJ.jsx";
-import QuickStart from "@animations/QuickStart.jsx";
+// import QuickStart from "@animations/QuickStart.jsx";
 // return router.getCurrentPageComponent[1][2] ? (
 //     <main className="pageWrapper">
 {
@@ -123,7 +123,7 @@ export const PageTransition = observer(() => {
         exit="exit"
       >
         <main>
-          <QuickStart />;
+          {/*<QuickStart />;*/}
           {/*<div style={{ color: "oklch(0.71 0.2086 263.9", fontSize: 50 }}>*/}
           {/*  🏩 Hello Page!*/}
           {/*</div>*/}
