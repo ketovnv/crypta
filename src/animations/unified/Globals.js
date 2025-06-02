@@ -182,7 +182,7 @@ class ColorAnimationController {
     this.batchColorUpdates = raf.throttle(this.updateColors)
   }
   
-  @action.bound
+  .bound
   updateColors() {
     // Batch обновления всех цветов за один кадр
     for (const [key, spring] of this.colors) {

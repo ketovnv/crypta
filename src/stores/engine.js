@@ -396,7 +396,6 @@ class EngineStore {
     return this; // Для цепочки вызовов
   }
 
-  @action
   setTimeScale(scale) {
     if (scale < 0) scale = 0; // Отрицательное время обычно не используется для простого масштабирования
     this.timeScale = scale;

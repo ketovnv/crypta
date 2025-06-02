@@ -88,7 +88,7 @@ class RouterStore {
     return PAGE_COMPONENTS[this.currentPath], this.getCurrentPageMeta;
   }
 
-  // @@action
+  // @
   goTo(path: string) {
     if (this.currentPath === path) return;
     this.currentPath = path;

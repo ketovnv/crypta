@@ -211,7 +211,7 @@ class TimerScale {
         });
     }
 
-    @action
+
     setTimeScale(scale) {
         if (scale < 0) scale = 0; // Отрицательная скорость обычно не нужна
         this.timeScale = scale;
@@ -219,7 +219,7 @@ class TimerScale {
         return this;
     }
 
-    @action
+
     start() {
         if (this.isRunning) return this;
         this.isRunning = true;
@@ -255,7 +255,7 @@ class TimerScale {
         return this;
     }
 
-    @action
+
     stop() {
         if (!this.isRunning) return this;
         this.isRunning = false;
@@ -271,7 +271,7 @@ class TimerScale {
         return this;
     }
 
-    @action
+
     reset() {
         this.stop();
         this.elapsedTime = 0;
@@ -285,7 +285,7 @@ class TimerScale {
         return this;
     }
 
-    @action
+
     _tick() {
         if (!this.isRunning) return;
 
@@ -351,7 +351,7 @@ class TimerScale {
         });
     }
 
-    @action
+
     _updateFps(currentTime) {
         // Принимаем currentTime для большей точности
         const elapsedSinceLastUpdate = currentTime - this.lastFpsUpdateTime;
@@ -363,7 +363,7 @@ class TimerScale {
         }
     }
 
-    @action
+
     lockDetailLevel(level) {
         const targetLevel = this._optimizerConfig.levels.find(
             (l) => l.id === level,
@@ -378,7 +378,7 @@ class TimerScale {
         return this;
     }
 
-    @action
+
     unlockDetailLevel() {
         if (this.userLockedDetailLevel !== null) {
             this.userLockedDetailLevel = null;
@@ -391,7 +391,7 @@ class TimerScale {
     }
 
     // Вызывается из _updateFps или по отдельному таймеру
-    @action
+
     _evaluatePerformance() {
         if (this.userLockedDetailLevel !== null) return; // Не работаем, если уровень заблокирован
 
@@ -458,7 +458,7 @@ class TimerScale {
     }
 
     // Внутренний метод для изменения уровня детализации
-    @action
+
     _setDetailLevelInternal(newLevelId, force = false) {
         if (newLevelId === this.currentDetailLevel && !force) return;
 
@@ -480,7 +480,7 @@ class TimerScale {
     }
 
     // В _updateFps нужно добавить вызов _evaluatePerformance:
-    // @action
+    // 
     // _updateFps(currentTime) {
     //   ... (расчет fps)
     //   this._evaluatePerformance(); // Вызываем после обновления FPS

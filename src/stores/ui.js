@@ -1,6 +1,6 @@
 import { action, makeAutoObservable, reaction } from "mobx";
 import { gradientStore } from "./gradient";
-import { logger } from "@stores/logger.js";
+import { logger } from "./logger.js";
 import nBMParams from "../animations/configs/navBarMoving.json";
 
 const APP_NAME = "ReactApproveAppkit";
@@ -34,7 +34,7 @@ class UiStore {
       setAppkitMethods: action,
       setThemeIsVeryColorised: action,
     });
-    gradientStore.setUIStore(this);
+    // gradientStore.setUIStore(this);
   }
 
   get getAppNameArray() {

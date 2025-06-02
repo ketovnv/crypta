@@ -8,7 +8,7 @@ import {
   STANDART_DARK,
   STANDART_LIGHT,
 } from "./gradientColors";
-import { logger } from "@stores/logger.js";
+import { logger } from "./logger.js";
 import { core } from "./core.js";
 import ParallelGradientSystem from "./parallelGradientSystem.js";
 
@@ -424,7 +424,7 @@ class GradientStore {
     try {
       localStorage.setItem(key, JSON.stringify(theme));
     } catch (error) {
-      logger.warn("Failed to save theme to storage:", error);
+      logger.warning("Failed to save theme to storage:", error);
     }
   };
 
@@ -433,7 +433,7 @@ class GradientStore {
       const stored = localStorage.getItem(key);
       return stored ? JSON.parse(stored) : null;
     } catch (error) {
-      logger.warn("Failed to load theme from storage:", error);
+      logger.warning("Failed to load theme from storage:", error);
       return null;
     }
   };
@@ -638,7 +638,7 @@ class GradientStore {
         this.selectedThemes = JSON.parse(storedSelection);
       }
     } catch (error) {
-      logger.warn("Failed to load theme selection:", error);
+      logger.warning("Failed to load theme selection:", error);
     }
 
     reaction(

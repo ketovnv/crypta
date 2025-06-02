@@ -23,10 +23,10 @@ class ParallelGradientSystem {
   }
 
   initializeHighPerformanceMode() {
-    if (window.__TAURI__) {
-      // Tauri-специфичные оптимизации
-      this.isHighPerformanceMode = true;
-    }
+    // if (window.__TAURI__) {
+    // Tauri-специфичные оптимизации
+    this.isHighPerformanceMode = true;
+    // }
   }
 
   // Оптимизированная генерация scale с кэшированием
@@ -58,7 +58,7 @@ class ParallelGradientSystem {
   };
 
   // Анимированный радиальный градиент с параллельными параметрами
-  @action
+
   createAnimatedCircleGradient(id, initialConfig) {
     const {
       colors = ["#ff0000", "#00ff00", "#0000ff"],
@@ -117,7 +117,7 @@ class ParallelGradientSystem {
   }
 
   // Анимированный линейный градиент
-  @action
+
   createAnimatedLinearGradient(id, initialConfig) {
     const {
       colors = ["#ff0000", "#0000ff"],
@@ -225,7 +225,7 @@ class ParallelGradientSystem {
   }
 
   // Анимация параметров градиента
-  @action
+
   animateGradient(id, animations) {
     const gradient = this.gradients.get(id);
     if (!gradient) return;
@@ -263,7 +263,7 @@ class ParallelGradientSystem {
   }
 
   // Создание системы из 64 градиентов для максимального эффекта
-  @action
+
   createMegaGradientSystem() {
     const gradients = [];
 
@@ -303,7 +303,7 @@ class ParallelGradientSystem {
   }
 
   // Глобальная анимация всех градиентов
-  @action
+
   animateAllGradients() {
     const gradientIds = Array.from(this.gradients.keys());
 
@@ -364,7 +364,7 @@ class ParallelGradientSystem {
   }
 
   // Очистка ресурсов
-  @action
+
   dispose() {
     this.gradients.forEach((gradient) => {
       gradient.angleSpring?.stop();

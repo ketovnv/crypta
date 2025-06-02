@@ -12,7 +12,7 @@ import chroma from "chroma-js";
 import seedrandom from "seedrandom";
 import { useEffect, useRef, useState } from "react";
 import { ANIMATION_PRESETS } from "./animationPresets";
-import { logger } from "@stores/logger.js";
+import { logger } from "./logger.js";
 
 // ===== 1. Конфигурации и пресеты =====
 
@@ -29,11 +29,12 @@ class AdaptiveConfigManager {
   }
 
   detectDevice() {
-    const isLowEnd =
-      navigator.hardwareConcurrency <= 4 || window.devicePixelRatio < 1.5;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const isLowEnd = false;
+    // navigator.hardwareConcurrency <= 4 || window.devicePixelRatio < 1.5;
+    const prefersReducedMotion = false;
+    // window.matchMedia(
+    //   "(prefers-reduced-motion: reduce)",
+    // ).matches;
     const hasGPU = this.detectGPUCapability();
     const isMobile =
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -401,14 +402,14 @@ class Core {
 
   setupReactions() {
     // Реакция на изменение темы
-    if (typeof window !== "undefined" && window.uiStore) {
-      reaction(
-        () => window.uiStore.theme,
-        (theme) => this.animateThemeChange(theme),
-        { fireImmediately: true },
-      );
-    }
-    this.start();
+    // if (window.uiStore) {
+    //   reaction(
+    //     () => window.uiStore.theme,
+    //     (theme) => this.animateThemeChange(theme),
+    //     { fireImmediately: true },
+    //   );
+    // }
+    // this.start();
   }
 
   async animateThemeChange(theme) {
@@ -834,77 +835,6 @@ export const useVisibilityAwareAnimation = (initialValues, options = {}) => {
   }, [controller, id]);
 
   return { ref, springs: controller.springs, isVisible: inView };
-};
-
-export const useThemeAnimation = (lightTheme, darkTheme, preset = "theme") => {
-  const controllerName = useRef(
-    `theme-anim-${Math.random().toString(36).slice(2)}`,
-  ).current;
-
-  // Используем useState для контроллера, чтобы он создавался один раз
-  const [controller] = useState(() => {
-    // Получаем начальную тему, если uiStore доступен, иначе lightTheme
-    let initialThemeValues = lightTheme;
-    if (
-      typeof window !== "undefined" &&
-      window.uiStore &&
-      typeof window.uiStore.theme !== "undefined"
-    ) {
-      initialThemeValues =
-        window.uiStore.theme === "dark" ? darkTheme : lightTheme;
-    }
-    return core.createController(controllerName, initialThemeValues, preset);
-  });
-
-  useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      window.uiStore &&
-      typeof window.uiStore.theme !== "undefined"
-    ) {
-      const updateAnimationTheme = (currentUiTheme) => {
-        const themeToApply = currentUiTheme === "dark" ? darkTheme : lightTheme;
-        if (controller) {
-          controller.start(themeToApply); // Используем controller.start или controller.to
-        }
-      };
-
-      // Настраиваем реакцию MobX
-      // Она будет срабатывать при изменении window.uiStore.theme
-      const disposer = reaction(
-        () => window.uiStore.theme, // Наблюдаемое значение
-        (newTheme, previousTheme) => {
-          // Функция, вызываемая при изменении
-          // console.log(`Theme changed from ${previousTheme} to ${newTheme}`); // Для отладки
-          updateAnimationTheme(newTheme);
-        },
-        {
-          fireImmediately: true, // Вызвать функцию сразу после создания реакции с текущим значением
-          // delay: 100 // Можно добавить небольшую задержку для debounce, если изменения темы слишком частые
-        },
-      );
-    } else {
-      // Если uiStore или его тема недоступны, можно установить тему по умолчанию
-      // (уже сделано при инициализации useState для controller)
-      // или вывести предупреждение.
-      console.warn(
-        "useThemeAnimation: window.uiStore.theme не доступен для MobX реакции. Используется начальная тема.",
-      );
-
-      const checkTheme = setInterval(updateTheme, 1000);
-      // Функция очистки при размонтировании компонента
-      return () => {
-        if (typeof disposer === "function") {
-          disposer(); // Отписываемся от реакции MobX
-        }
-        if (controller) {
-          controller.dispose(); // Освобождаем ресурсы контроллера анимации
-        }
-      };
-    }
-  }, [controller, lightTheme, darkTheme]);
-
-  return controller.springs;
 };
 
 export const useSyncedAnimation = (api, options = {}) => {

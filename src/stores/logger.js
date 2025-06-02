@@ -1,5 +1,5 @@
 import { action, makeAutoObservable, reaction, toJS } from "mobx";
-import { uiStore } from "@stores/ui.js"; // console.log('%c a spicy log message ?',
+import { uiStore } from "./ui.js"; // console.log('%c a spicy log message ?',
 // import chalk from "chalk";
 import gradient from "gradient-string";
 // console.log('%c a spicy log message ?',
@@ -133,16 +133,16 @@ class loggerStore {
     return this.bounds;
   }
 
-  // @@action
+  // @
   setBounds = (bounds) => (this.bounds = bounds);
 
-  // @@action
+  // @
   setBoundsMouse = (clientX, clientY) => {
     this.bounds.mouseX = Math.round(clientX - this.bounds.left);
     this.bounds.mouseY = Math.round(clientY - this.bounds.top);
   };
 
-  // @@action
+  // @
   setBoundsMouseHover = (isHover) => (this.bounds.isMouseHover = isHover);
 
   // Форматирование значений разных типов
@@ -197,28 +197,28 @@ class loggerStore {
    */
   collectElementsWithClasses() {
     // Получаем все элементы в документе
-    const allElements = document.querySelectorAll("*");
+    // const allElements = document.querySelectorAll("*");
 
     // Создаем массив для хранения информации о каждом элементе
     const elementsInfo = [];
 
     // Проходим по всем элементам
-    allElements.forEach((element) => {
-      // Получаем имя тега элемента
-      const tagName = element.tagName.toLowerCase();
+    // allElements.forEach((element) => {
+    // Получаем имя тега элемента
+    // const tagName = element.tagName.toLowerCase();
 
-      // Получаем все классы элемента
-      const classes = Array.from(element.classList);
-
-      // Если у элемента есть классы, добавляем их к имени тега
-      if (classes.length > 0) {
-        const classString = classes.join(".");
-        elementsInfo.push(`${tagName}.${classString}`);
-      } else {
-        // Если у элемента нет классов, добавляем только имя тега
-        elementsInfo.push(tagName);
-      }
-    });
+    // Получаем все классы элемента
+    //   const classes = Array.from(element.classList);
+    //
+    //   // Если у элемента есть классы, добавляем их к имени тега
+    //   if (classes.length > 0) {
+    //     const classString = classes.join(".");
+    //     elementsInfo.push(`${tagName}.${classString}`);
+    //   } else {
+    //     // Если у элемента нет классов, добавляем только имя тега
+    //     elementsInfo.push(tagName);
+    //   }
+    // });
 
     // Удаляем дубликаты
     const uniqueElementsInfo = [...new Set(elementsInfo)];
