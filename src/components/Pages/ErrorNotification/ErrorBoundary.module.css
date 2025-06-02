@@ -1,44 +1,35 @@
 
 .image {
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    opacity: .9;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  opacity: .9;
 }
 
 .icon {
-    overflow: hidden;
-    display: flex;
-    z-index: 0;
-    opacity: 1;
-    height: 0;
-    font-size: 65px;
-    text-align: center;
-    width: 700px;
+  overflow: hidden;
+  display: flex;
+  z-index: 0;
+  opacity: 1;
+  height: 0;
+  font-size: 65px;
+  text-align: center;
+  width: 700px;
 }
-
 
 .content {
-    padding-top: 20px;
-    z-index: 1;
-}
-
-.title {
-    font-family: "Tactic Round Bld", monospace;
-    /*color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-dark-0));*/
-    text-align: center;
-    font-weight: 700;
-    font-size: 3em;
+  padding-top: 20px;
+  z-index: 1;
 }
 
 .description {
-    color: oklch(0.3 0.0001 100.1);
-    font-family: "Volte Rounded", monospace;
-    height: fit-content;
-    opacity: 0;
-    text-align: center;
-    line-height: 1.2;
-    font-weight: 600;
-    margin-left: auto;
-    margin-right: auto;
+  color: oklch(0.3 0.0001 100.1);
+  font-family: "Volte Rounded", monospace;
+  height: fit-content;
+  opacity: 0;
+  text-align: center;
+  line-height: 1.2;
+  font-weight: 600;
+  margin-left: auto;
+  margin-right: auto;
 }
