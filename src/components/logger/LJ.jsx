@@ -28,9 +28,9 @@ const renderString = (key, val, color, fontSize = 16) => {
 const renderJSON = (label = "", json, fontSize = 10) => {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 5 }}
     >
       <motion.div
         layout

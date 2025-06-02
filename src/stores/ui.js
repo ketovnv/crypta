@@ -34,6 +34,7 @@ class UiStore {
       setAppkitMethods: action,
       setThemeIsVeryColorised: action,
     });
+    gradientStore.setUIStore(this);
   }
 
   get getAppNameArray() {
@@ -41,7 +42,6 @@ class UiStore {
   }
 
   get theme() {
-    gradientStore.setUIStore(this);
     return { ...gradientStore.getTheme };
   }
 
@@ -66,6 +66,7 @@ class UiStore {
   }
 
   get themeIsDark() {
+    console.log(this.colorScheme === "dark" ? "⚫" : "⚪");
     return this.colorScheme === "dark";
   }
 
@@ -99,7 +100,7 @@ class UiStore {
   setupReactions() {
     // Реакция на открытие/закрытие навбара
     reaction(
-      () => this.isNbOpen,
+      () => [this.isNbOpen],
       (isOpen) => this.animateNavbarState(isOpen),
       { fireImmediately: true },
     );

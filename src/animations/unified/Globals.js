@@ -63,7 +63,7 @@ const gradientSpring = useSpring({
 
 // Или через ваш MobX подход
 class GradientController {
-  @observable gradientSpring = new SpringValue(
+  gradientSpring = new SpringValue(
     'linear-gradient(45deg, oklch(0.7 0.15 0), oklch(0.8 0.1 120))'
   )
   
@@ -175,7 +175,7 @@ Globals.assign({
 
 // 3. MobX контроллер с rafz оптимизациями
 class ColorAnimationController {
-  @observable colors = new Map()
+ colors = new Map()
   
   constructor() {
     // rafz автоматически использует наш кастомный RAF
@@ -224,8 +224,8 @@ Globals.assign({
 
 // 2. Используем CSS "in oklch" для финального градиента
 class AdvancedGradientController {
-  @observable gradientColors = []
-  @observable gradientAngle = 45
+  gradientColors = []
+  gradientAngle = 45
   
   // Анимируем отдельные цвета через React Spring
   animateColor(index, newColor) {

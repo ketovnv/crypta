@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { animated } from "@react-spring/web";
 import { AnimatePresence, motion } from "motion/react";
 import { uiStore } from "@stores/ui.js";
+import { core } from "@stores/core";
 import { GlowingEffect } from "@animations/involved/units/GlowingEffect.jsx";
 import { logger } from "@stores/logger.js";
 import params from "@animations/configs/pageTransition.json";
@@ -90,11 +91,23 @@ import { LJ } from "@components/logger/LJ.jsx";
 //     cacheKey: (props) => props.page,
 //   },
 // );
+// <LJ json={{ router: router.getCurrentPage }} />;
 const AsyncPage = () => {
-  return <LJ json={{ router: router.getCurrentPage }} />;
-  // <Suspense fallback={<div>''</div>}>
-  //   {router.getCurrentPageComponent[0]}
-  // </Suspense>
+  return (
+    <Suspense
+      fallback={
+        <motion.span
+          style={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={params.transition}
+        >
+          👻👻👻
+        </motion.span>
+      }
+    >
+      {router.getCurrentPageComponent}
+    </Suspense>
+  );
 };
 
 export const PageTransition = observer(() => {
@@ -102,6 +115,27 @@ export const PageTransition = observer(() => {
 
   return (
     <AnimatePresence>
+      <motion.div
+        animate={{ right: 75 }}
+        transition={params.transition}
+        style={{
+          color: "oklch(0.71 0.2086 263.9",
+          fontSize: 50,
+          position: "absolute",
+          right: 750,
+          top: 75,
+        }}
+      >
+        <motion.span
+          style={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={params.transition}
+        >
+          🏩
+        </motion.span>
+        Hello Page!
+        <LJ json={core.getMetrics()} />
+      </motion.div>
       <motion.div
         layout
         key={router.getCurrentPage}
@@ -124,11 +158,8 @@ export const PageTransition = observer(() => {
       >
         <main>
           {/*<QuickStart />;*/}
-          {/*<div style={{ color: "oklch(0.71 0.2086 263.9", fontSize: 50 }}>*/}
-          {/*  🏩 Hello Page!*/}
-          {/*</div>*/}
+          <AsyncPage key={router.getCurrentPage} />
         </main>
-        <AsyncPage key={router.getCurrentPage} />
       </motion.div>
     </AnimatePresence>
   );

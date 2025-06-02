@@ -5,7 +5,7 @@
 import { AppShell, Group } from "@mantine/core";
 import { observer } from "mobx-react-lite";
 import classes from "./MainHeader.module.css";
-import { useEventListener, useViewportSize } from "@mantine/hooks";
+// import { useEventListener, useViewportSize } from "@mantine/hooks";
 import { animated, config, useTransition } from "@react-spring/web";
 import { uiStore } from "@stores/ui";
 import { motion, AnimatePresence } from "motion/react";
@@ -14,12 +14,12 @@ import HeaderBitcoin from "@components/Layout/SvgIcons/HeaderBitcoin";
 import { walletStore } from "@stores/wallet.js";
 import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 import React from "react";
-import { consoleGradient } from "@components/logger/ConsoleGradient.js";
+// import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 import { logger } from "@stores/logger.js";
 import { SingleSpringPresence } from "@animations/involved/SingleSpringPresence.js";
 
 export const MainHeader = observer(() => {
-  consoleGradient("Header 🪖🪖🪖", "render", { fileSize: 50 });
+  logger.logRandomColors("Header 🪖🪖🪖", "render");
   // const { height, width } = useViewportSize();
   // uiStore.setScreenHeight(height)
   // uiStore.setScreenWidth(width)
@@ -128,43 +128,43 @@ export const MainHeader = observer(() => {
               </motion.button>
               <SpringAppName />
             </motion.div>
-            {/*{transitions((style, item) =>*/}
-            {/*  item ? (*/}
-            {/*    <animated.div*/}
-            {/*      style={{*/}
-            {/*        ...style,*/}
-            {/*        position: "absolute",*/}
-            {/*        right: 175,*/}
-            {/*        color: "blue !important",*/}
-            {/*      }}*/}
-            {/*      key={item}*/}
-            {/*    >*/}
-            {/*      /!*<appkit-network-button />*!/*/}
-            {/*      <appkit-button balance="show" />*/}
-            {/*    </animated.div>*/}
-            {/*  ) : null,*/}
-            {/*)}*/}
-
-            <SingleSpringPresence
-              item={
-                uiStore.isNavbarOpened
-                  ? { id: "navbar", label: "НавБар" }
-                  : null
-              }
-              keyExtractor={(i) => i.id}
-              from={() => variants.from}
-              enter={() => variants.enter}
-              leave={() => variants.leave}
-              preset="molasses"
-              onDisappear={() => alert("navbar disappeared")}
-            >
-              {(item, springs) => (
-                <div style={{ ...springs, position: "absolute" }}>
-                  {item.label}
+            {transitions((style, item) =>
+              item ? (
+                <animated.div
+                  style={{
+                    ...style,
+                    position: "absolute",
+                    right: 175,
+                    color: "blue !important",
+                  }}
+                  key={item}
+                >
+                  {/*<appkit-network-button />*/}
                   <appkit-button balance="show" />
-                </div>
-              )}
-            </SingleSpringPresence>
+                </animated.div>
+              ) : null,
+            )}
+
+            {/*<SingleSpringPresence*/}
+            {/*  item={*/}
+            {/*    uiStore.isNavbarOpened*/}
+            {/*      ? { id: "navbar", label: "НавБар" }*/}
+            {/*      : null*/}
+            {/*  }*/}
+            {/*  keyExtractor={(i) => i.id}*/}
+            {/*  from={() => variants.from}*/}
+            {/*  enter={() => variants.enter}*/}
+            {/*  leave={() => variants.leave}*/}
+            {/*  preset="molasses"*/}
+            {/*  onDisappear={() => alert("navbar disappeared")}*/}
+            {/*>*/}
+            {/*  {(item, springs) => (*/}
+            {/*    <div style={{ ...springs, position: "absolute" }}>*/}
+            {/*      {item.label}*/}
+            {/*      <appkit-button balance="show" />*/}
+            {/*    </div>*/}
+            {/*  )}*/}
+            {/*</SingleSpringPresence>*/}
 
             <ThemeToggle />
           </motion.div>

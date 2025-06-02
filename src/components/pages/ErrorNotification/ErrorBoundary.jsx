@@ -3,10 +3,8 @@ import { Button, Center, Container, Text } from "@mantine/core";
 import { SVGIllustration404 } from "@components/pages/ErrorNotification/SVGIllustration404.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
-
 import classes from "./ErrorBoundary.module.css";
 import { logger } from "@stores/logger.js";
-import { animations } from "@stores/animations.js";
 import { uiStore } from "@stores/ui.js";
 import GradientText from "@animations/involved/GradientText.jsx";
 import { gradientStore } from "@stores/gradient.js";
@@ -38,10 +36,9 @@ const DefaultError = ({ message }) => {
       <motion.section
         layout
         className="pageCard"
-        animate={{ height: 475 }}
+        animate={{ ...uiStore.theme, height: 475 }}
         transition={{ duration: 3 }}
         style={{
-          ...uiStore.theme,
           borderRadius: 20,
           height: 0,
           width: 700,
@@ -82,8 +79,12 @@ const DefaultError = ({ message }) => {
         >
           <GradientText
             colors={gradientStore.getRedGradient}
-            fontSize={"3rem"}
-            className={classes.title}
+            style={{
+              fontFamily: "Tactic Round Bld",
+              textAlign: "center",
+              fontWeight: 700,
+              fontSize: "3em",
+            }}
           >
             Что-то пошло не так...
           </GradientText>

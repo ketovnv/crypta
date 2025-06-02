@@ -85,7 +85,7 @@ class RouterStore {
   }
 
   get getCurrentPageComponent() {
-    return [PAGE_COMPONENTS[this.currentPath], this.getCurrentPageMeta];
+    return PAGE_COMPONENTS[this.currentPath], this.getCurrentPageMeta;
   }
 
   // @@action

@@ -5,11 +5,10 @@ import { MainFooter } from "./MainFooter";
 import { logger } from "@/stores/logger.js";
 import { AppKitObserver } from "./AppKitObserver";
 import { MainContent } from "@components/Layout/MainContent/index.js";
-import { AnimationObserver } from "@animations/involved/AnimationObserver.jsx";
+// import { AnimationObserver } from "@animations/involved/AnimationObserver.jsx";
 import { ErrorBoundary } from "@components/pages/ErrorNotification/ErrorBoundary.jsx";
 import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 
-logger.info(3);
 const Layout = () => {
   // useEffect(() => {
   // document.body.setAttribute('data-motion-debug', 'true')
@@ -42,7 +41,7 @@ const Layout = () => {
           }}
           padding={0}
         >
-          {/*<AppKitObserver />*/}
+          <AppKitObserver />
           {/*<AnimationObserver />*/}
           <MainHeader />
           <MainNavbar />

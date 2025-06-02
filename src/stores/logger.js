@@ -361,8 +361,8 @@ class loggerStore {
   ) => {
     const timestamp = formatTime();
     if (!data) {
-      if (!message) data = message;
-      message = "👻";
+      data = "👻";
+      message = "👻" + message + "👻";
     }
 
     // const { message, styles } = this.formatMessage(messageTemplate, ...args);

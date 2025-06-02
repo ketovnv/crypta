@@ -1,4 +1,27 @@
-// import { test, expect } from 'bun:test'
+import { useDeferredValue } from "react";
+import { createAppKit } from "@reown/appkit/react";
+import { useRef } from "react";
+
+import {
+  ethersAdapter,
+  metadata,
+  networks,
+  projectId,
+  wagmiAdapter,
+  // @ts-config
+} from "@/config";
+
+createAppKit({
+  adapters: [wagmiAdapter, ethersAdapter],
+  projectId,
+  metadata,
+  networks,
+  debug: true,
+  features: {
+    analytics: true,
+  },
+});
+
 import "@mantine/notifications/styles.css";
 import { observer } from "mobx-react-lite";
 import {
@@ -10,33 +33,44 @@ import {
   useWalletInfo,
 } from "@reown/appkit/react";
 import { useEffect, useMemo } from "react";
-import { eventsStore } from "../../stores/events";
-import { animation } from "../../stores/animation";
-import { walletStore } from "../../stores/wallet.ts";
-import { approve } from "../../stores/approve.ts";
+// @ts-ignore
+import { eventsStore } from "@stores/events";
+// @ts-ignore
+import { walletStore } from "@stores/wallet.ts";
+// @ts-ignore
+import { uiStore } from "@stores/ui";
+// @ts-ignore
+import { approve } from "@stores/approve.ts";
 import { Notifications, notifications } from "@mantine/notifications";
 import { logger } from "stores/logger.js"; // @ts-ignore
 import classes from "./AppKitObserver.module.css";
-import { uiStore } from "../../stores/ui";
+
 import { runInAction } from "mobx";
 
-export const AppKitObserver = observer(() => {
-  // useEffect(() => {
-  // logger.debug('🎃init🎃', 'AppKitObserver📺📺', 10)
-  // }, [])
+function useLazyAppKitState() {
+  return {
+    account: useDeferredValue(useAppKitAccount()),
+    state: useDeferredValue(useAppKitState()),
+    event: useDeferredValue(useAppKitEvents()),
+    network: useDeferredValue(useAppKitNetwork()),
+    walletInfo: useDeferredValue(useWalletInfo()),
+  };
+}
 
-  const account = useAppKitAccount();
-  // const wagmiAccount = useAccount()
-  const state = useAppKitState();
-  const network = useAppKitNetwork();
-  const event = useAppKitEvents();
+export const AppKitObserver = observer(() => {
+  // logger.debug("🎃init🎃", "AppKitObserver📺📺", 10);
   const {
     // themeMode,
     // themeVariables,
     setThemeMode,
     setThemeVariables,
   } = useAppKitTheme();
-  const { walletInfo } = useWalletInfo();
+  const themeSettersRef = useRef({ setThemeMode, setThemeVariables });
+  useEffect(() => {
+    uiStore.setAppkitMethods(themeSettersRef.current);
+  }, []);
+
+  const { account, state, event, network, walletInfo } = useLazyAppKitState();
 
   const stableAccount = useMemo(() => JSON.stringify(account), [account]);
   const stableNetwork = useMemo(() => JSON.stringify(network), [network]);
@@ -57,13 +91,6 @@ export const AppKitObserver = observer(() => {
       }
     }
   }, [stableAccount]);
-
-  useEffect(() => {
-    uiStore.setAppkitMethods({
-      setThemeMode,
-      setThemeVariables,
-    });
-  }, [setThemeMode]);
 
   useEffect(() => {
     const { title, message } = eventsStore.addEvent(event);
@@ -116,5 +143,6 @@ export const AppKitObserver = observer(() => {
     }
   }, [stableNetwork]);
 
+  // useInterceptFrameEvents(state.internal?.w3mFrame);
   return <Notifications position="bottom-right" />;
 });

@@ -17,7 +17,7 @@ import classes from "./Home.module.css";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
 import { eventsStore } from "@stores/events.js";
 import GradientText from "@animations/involved/GradientText.jsx";
-import { animations } from "@stores/animations.js";
+
 import { Google } from "@components/Layout/SvgIcons/Google.jsx";
 import { Metamask } from "@components/Layout/SvgIcons/Metamask.jsx";
 import { Center, Group } from "@mantine/core";

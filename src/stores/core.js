@@ -12,6 +12,7 @@ import chroma from "chroma-js";
 import seedrandom from "seedrandom";
 import { useEffect, useRef, useState } from "react";
 import { ANIMATION_PRESETS } from "./animationPresets";
+import { logger } from "@stores/logger.js";
 
 // ===== 1. Конфигурации и пресеты =====
 
@@ -396,18 +397,6 @@ class Core {
       },
       "page",
     );
-
-    // Анимации темы
-    this.theme = this.createController(
-      "theme",
-      {
-        background: "#ffffff",
-        textColor: "#000000",
-        highlightColor: "#0066cc",
-        borderRadius: 4,
-      },
-      "theme",
-    );
   }
 
   setupReactions() {
@@ -419,6 +408,7 @@ class Core {
         { fireImmediately: true },
       );
     }
+    this.start();
   }
 
   async animateThemeChange(theme) {
@@ -522,11 +512,13 @@ class Core {
   }
 
   // ===== Фабрика контроллеров =====
-  createController(name, initialValues, preset = "gentle", options = {}) {
-    const config = this.configManager.getConfig(preset, options.config);
+  createController(
+    name,
+    initialValues,
+    options = { config: this.configManager.getConfig("gentle") },
+  ) {
     const controller = new Controller({
       ...initialValues,
-      config,
       ...options,
     });
 
@@ -539,7 +531,7 @@ class Core {
         this.activeAnimations.add(name);
         return controller.start({
           values,
-          config: customConfig || config,
+          config: customConfig || options.config,
           onRest: () => {
             this.activeAnimations.delete(name);
             options.onComplete?.();
@@ -547,7 +539,17 @@ class Core {
         });
       },
 
-      start: (values, customConfig) => api.start(values, customConfig),
+      start: (values, customConfig) => {
+        this.activeAnimations.add(name);
+        return controller.start({
+          ...values,
+          config: customConfig?.config || options.config,
+          onRest: () => {
+            this.activeAnimations.delete(name);
+            customConfig?.onComplete?.() || options.onComplete?.();
+          },
+        });
+      },
 
       sequence: async (steps) => {
         for (const step of steps) {
@@ -766,10 +768,10 @@ class Core {
       timeScale: this.timeScale,
       detailLevel: this.detailLevel,
       averageFrameTime: avgFrameTime,
-      activeCallbacks: this._callbacks.size,
-      activeControllers: this.controllers.size,
-      activeAnimations: this.activeAnimations.size,
-      activeSprings: this.springs.size,
+      // activeCallbacks: this._callbacks.size,
+      // activeControllers: this.controllers.size,
+      // activeAnimations: this.activeAnimations.size,
+      // activeSprings: this.springs.size,
       isRunning: this.isRunning,
       performanceProfile: this.configManager.performanceProfile,
     };

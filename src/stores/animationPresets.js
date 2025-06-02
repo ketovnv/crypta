@@ -1,5 +1,5 @@
 export const ANIMATION_PRESETS = {
-  config: {
+  configBlackHorse: {
     tension: 50,
     friction: 50,
     mass: 10,

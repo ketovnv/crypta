@@ -67,7 +67,6 @@ const ThemeToggle = observer(() => {
     // },
   });
 
-  logger.debug("ThemeToggle", "star7");
   // const darkIconAnimation = useSpring({
   //   scale: !uiStore.themeIsDark ? 0 : 1.3,
   //   rotateZ: !uiStore.themeIsDark ? 360 : -0,
@@ -80,7 +79,6 @@ const ThemeToggle = observer(() => {
   //   config: { ...config.molasses, stiffness: 300, damping: 20 },
   // });
 
-  logger.debug("ThemeToggle", "star8");
   return (
     <FiSun style={{ fontSize: "2em" }} />
     // <animated.button
