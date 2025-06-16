@@ -94,9 +94,10 @@ export const AwesomeButton = ({
   const contentRef = useRef(null);
 
   const handlePress = (onPress: any) => {
-    return null;
+    if (onPress) onPress();
+    return true;
   };
-  //   if (onPress) onPress();
+  //
   // };
   //
   // Motion values for tilt effect

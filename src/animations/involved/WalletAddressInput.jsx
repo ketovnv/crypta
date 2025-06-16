@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { TextInput } from "@mantine/core";
-import { animations } from "@stores/animations.js";
+// import { animations } from "@stores/animations.js";
 import { uiStore } from "@stores/ui.js";
 
 const WalletAddressInput = ({

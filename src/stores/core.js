@@ -305,7 +305,8 @@ class Core {
     this._currentScaledDt = 0; // Для передачи в коллбэки фаз
 
     this.setupGlobalOptimizations();
-    this.setupRAFWithPhases(); // <--- ИЗМЕНЕНО НА НОВЫЙ МЕТОД
+    // this.setupRAFWithPhases(); // <--- ИЗМЕНЕНО НА НОВЫЙ МЕТОД
+    this.setupRAF(); // <--- ИЗМЕНЕНО НА НОВЫЙ МЕТОД
     this.createCoreAnimations();
     this.setupReactions();
   }
@@ -331,6 +332,45 @@ class Core {
         ? "demand"
         : "always",
     });
+  }
+
+  setupRAF() {
+    const tick = (now) => {
+      if (!this.isRunning) return;
+
+      const realDt = Math.min(now - this._lastTime, 1000 / 15);
+      this._lastTime = now;
+      this.realElapsedTime += realDt;
+
+      const scaledDt = realDt * this.timeScale;
+
+      runInAction(() => {
+        this.elapsedTime += scaledDt;
+        this.frameId++;
+      });
+
+      // Простая обработка всех коллбэков
+      this._callbacksByPhase.update.forEach((cbData, id) => {
+        if (cbData && cbData._active) {
+          try {
+            cbData.original(this.frameId, scaledDt, this.elapsedTime);
+          } catch (err) {
+            console.error(`Callback error [${id}]:`, err);
+          }
+        }
+      });
+
+      this.updateFPS(now);
+      this.updatePerformanceStats(realDt);
+
+      if (this.elapsedTime - this._optimizerState.lastCheck > 5000) {
+        this.evaluatePerformance();
+      }
+
+      requestAnimationFrame(tick);
+    };
+
+    this._tick = tick;
   }
 
   setupRAFWithPhases() {
@@ -455,21 +495,40 @@ class Core {
   }
 
   // ===== Система приоритетов =====
-  addCallback(id, callback, phase = "update") {
-    // phase: 'read', 'update', 'write', 'finish'
-    if (!this._callbacksByPhase[phase]) {
-      console.warn(`Unknown phase "${phase}". Defaulting to "update".`);
-      phase = "update";
-    }
-    // Сохраняем коллбэк с его состоянием активности
-    this._callbacksByPhase[phase].set(id, {
+  addCallback(id, callback, priority = "normal") {
+    // Все коллбэки идут в update фазу
+    this._callbacksByPhase.update.set(id, {
       original: callback,
       _active: true,
     });
 
     if (!this.isRunning) this.start();
-    return () => this.removeCallback(id, phase);
+    return () => this.removeCallback(id);
   }
+
+  removeCallback(id) {
+    this._callbacksByPhase.update.delete(id);
+    // Также проверяем другие фазы на всякий случай
+    Object.values(this._callbacksByPhase).forEach((phase) => {
+      phase.delete(id);
+    });
+  }
+
+  // addCallback(id, callback, phase = "update") {
+  //   // phase: 'read', 'update', 'write', 'finish'
+  //   if (!this._callbacksByPhase[phase]) {
+  //     console.warn(`Unknown phase "${phase}". Defaulting to "update".`);
+  //     phase = "update";
+  //   }
+  //   // Сохраняем коллбэк с его состоянием активности
+  //   this._callbacksByPhase[phase].set(id, {
+  //     original: callback,
+  //     _active: true,
+  //   });
+  //
+  //   // if (!this.isRunning) this.start();
+  //   return () => this.removeCallback(id, phase);
+  // }
 
   // addCallback(id, callback, priority = 'normal') {
   //     this._callbacks.set(id, callback);
@@ -478,19 +537,19 @@ class Core {
   //     return () => this.removeCallback(id);
   // }
 
-  removeCallback(id, phase = null) {
-    if (phase && this._callbacksByPhase[phase]) {
-      this._callbacksByPhase[phase].delete(id);
-    } else {
-      // Если фаза не указана, ищем по всем фазам
-      for (const phaseName in this._callbacksByPhase) {
-        if (this._callbacksByPhase[phaseName].has(id)) {
-          this._callbacksByPhase[phaseName].delete(id);
-          break;
-        }
-      }
-    }
-  }
+  // removeCallback(id, phase = null) {
+  //   if (phase && this._callbacksByPhase[phase]) {
+  //     this._callbacksByPhase[phase].delete(id);
+  //   } else {
+  //     // Если фаза не указана, ищем по всем фазам
+  //     for (const phaseName in this._callbacksByPhase) {
+  //       if (this._callbacksByPhase[phaseName].has(id)) {
+  //         this._callbacksByPhase[phaseName].delete(id);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
 
   _processPhaseCallbacks(phaseName, dt) {
     if (!this._callbacksByPhase[phaseName]) return;
@@ -779,6 +838,12 @@ class Core {
   }
 }
 
+// Безопасный автозапуск
+if (typeof window !== "undefined") {
+  window.addEventListener("DOMContentLoaded", () => {
+    core.start();
+  });
+}
 // ===== Единственный экземпляр =====
 export const core = new Core();
 

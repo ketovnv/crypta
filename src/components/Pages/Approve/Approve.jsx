@@ -14,7 +14,7 @@ import WalletAddressInput from "@animations/involved/WalletAddressInput.jsx";
 import { approve } from "@stores/approve.js";
 import notificationsClasses from "./ApproveNotifications.module.css";
 
-import { animations } from "@stores/animations.js";
+// // import { animations } from "@stores/animations.js";
 
 logger.warning("🕸️", " Компонент Одобрение");
 // Готовые к использованию адреса и конфигурация для Sepolia

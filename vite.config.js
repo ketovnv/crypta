@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
-// import reactSWC from "@vitejs/plugin-react-swc";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
+// import react from "@vitejs/plugin-react";
 import path from "path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tauri from "vite-plugin-tauri";

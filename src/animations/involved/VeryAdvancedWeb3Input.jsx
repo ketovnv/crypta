@@ -3,7 +3,7 @@ import { TextInput } from "@mantine/core";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { Etherium } from "@components/Layout/SvgIcons/Etherium.jsx";
 import { Sepolia } from "@components/Layout/SvgIcons/Sepolia.jsx";
-import { animations } from "@stores/animations.js";
+// import { animations } from "@stores/animations.js";
 import { Holesky } from "@components/Layout/SvgIcons/Holesky.jsx";
 import GradientText from "@animations/involved/GradientText.jsx";
 import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";

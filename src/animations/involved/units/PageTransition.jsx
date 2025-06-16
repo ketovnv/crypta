@@ -95,17 +95,17 @@ import { LJ } from "@components/logger/LJ.jsx";
 const AsyncPage = () => {
   return (
     <Suspense
-      fallback={
-        <motion.span
-          style={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={params.transition}
-        >
-          👻👻👻
-        </motion.span>
-      }
+    // fallback={
+    //   <motion.span
+    //     style={{ opacity: 0 }}
+    //     animate={{ opacity: 1 }}
+    //     transition={params.transition}
+    //   >
+    //     👻👻👻
+    //   </motion.span>
+    // }
     >
-      {router.getCurrentPageComponent}
+      <router.getCurrentPageComponent />
     </Suspense>
   );
 };

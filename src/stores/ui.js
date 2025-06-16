@@ -2,6 +2,7 @@ import { action, makeAutoObservable, reaction } from "mobx";
 import { gradientStore } from "./gradient";
 import { logger } from "./logger.js";
 import nBMParams from "../animations/configs/navBarMoving.json";
+import { core } from "@stores/core.js";
 
 const APP_NAME = "ReactApproveAppkit";
 const appNameArray = APP_NAME.split("");

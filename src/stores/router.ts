@@ -20,14 +20,12 @@ const PAGE_SIZES_PRESSES_WRAPPERS = {
   Options: [1.2, 1, false],
 };
 
-export const PAGE_COMPONENTS = {
-  Home: React.lazy(() => import("../components/pages/Home/Home.jsx")),
-  Balance: React.lazy(() => import("../components/pages/Balance/Balance")),
-  Approve: React.lazy(() => import("../components/pages/Approve/Approve")),
-  Transactions: React.lazy(
-    () => import("../components/pages/Transactions/Transactions"),
-  ),
-  Options: React.lazy(() => import("../components/pages/Options/Options")),
+const PAGE_COMPONENTS = {
+  Home: React.lazy(() => import("../components/pages/Home")),
+  Balance: React.lazy(() => import("../components/pages/Balance")),
+  Approve: React.lazy(() => import("../components/pages/Approve")),
+  Transactions: React.lazy(() => import("../components/pages/Transactions")),
+  Options: React.lazy(() => import("../components/pages/Options")),
 };
 
 const FOOTER_LINKS = [
@@ -85,7 +83,7 @@ class RouterStore {
   }
 
   get getCurrentPageComponent() {
-    return PAGE_COMPONENTS[this.currentPath], this.getCurrentPageMeta;
+    return PAGE_COMPONENTS[this.currentPath];
   }
 
   // @

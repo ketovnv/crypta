@@ -383,14 +383,14 @@ class ParallelGradientSystem {
 }
 
 // Использование:
-const gradientSystem = new ParallelGradientSystem();
+// const gradientSystem = new ParallelGradientSystem();
 
 // Создаем мега-систему из 64 градиентов
-const megaGradients = gradientSystem.createMegaGradientSystem();
+// const megaGradients = gradientSystem.createMegaGradientSystem();
 
 // Запускаем глобальную анимацию
-setInterval(() => {
-  gradientSystem.animateAllGradients();
-}, 5000);
+// setInterval(() => {
+//   gradientSystem.animateAllGradients();
+// }, 5000);
 
 export default ParallelGradientSystem;
