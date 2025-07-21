@@ -35,7 +35,7 @@ class UiStore {
       setAppkitMethods: action,
       setThemeIsVeryColorised: action,
     });
-    // gradientStore.setUIStore(this);
+    gradientStore.setUIStore(this);
   }
 
   get getAppNameArray() {

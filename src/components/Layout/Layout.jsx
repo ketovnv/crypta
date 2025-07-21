@@ -7,7 +7,7 @@ import { AppKitObserver } from "./AppKitObserver";
 import { MainContent } from "@components/Layout/MainContent/index.js";
 // import { AnimationObserver } from "@animations/involved/AnimationObserver.jsx";
 import { ErrorBoundary } from "@components/pages/ErrorNotification/ErrorBoundary.jsx";
-import { consoleGradient } from "@components/logger/ConsoleGradient.js";
+// import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 
 const Layout = () => {
   // useEffect(() => {
@@ -18,8 +18,8 @@ const Layout = () => {
   // }, []);
   // console.log('LAYOUT')
 
-  logger.logRandomColors("LAYOUT", "mounted", 12);
-  consoleGradient("LAYOUT", "mounted", { fontSize: 20 });
+  // logger.logRandomColors("LAYOUT", "mounted", 12);
+  // consoleGradient("LAYOUT", "mounted", { fontSize: 20 });
   return (
     <ErrorBoundary>
       <MantineProvider>

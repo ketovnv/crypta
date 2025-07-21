@@ -47,7 +47,7 @@ export const MainHeader = observer(() => {
 
   // const transitions = useTransition(!!walletStore.getAccountData, variants);
   const transitions = useTransition(!uiStore.isNavbarOpened, variants);
-  logger.debug("ThemeToggle", "start111");
+  // logger.debug("ThemeToggle", "start111");
 
   return (
     <AppShell.Header className={classes.header} align="center">

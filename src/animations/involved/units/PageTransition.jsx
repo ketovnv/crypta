@@ -111,7 +111,7 @@ const AsyncPage = () => {
 };
 
 export const PageTransition = observer(() => {
-  logger.logWhiteRandom("📺", " Компонент PageTransition", 12);
+  // logger.logWhiteRandom("📺", " Компонент PageTransition", 12);
 
   return (
     <AnimatePresence>

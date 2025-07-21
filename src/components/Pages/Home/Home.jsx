@@ -25,7 +25,7 @@ import { gradientStore } from "@stores/gradient.js";
 import { Skull } from "@components/Layout/SvgIcons/Skull.jsx";
 
 const Home = observer(() => {
-  logger.logWhiteRandom("🏩", " Компонент Home", 12);
+  // logger.logWhiteRandom("🏩", " Компонент Home", 12);
   const { disconnect } = useDisconnect();
   const { setThemeVariables } = useAppKitTheme();
   const hue = useMotionValue(120);
@@ -59,9 +59,7 @@ const Home = observer(() => {
             drag="x"
             dragConstraints={{ left: 0, right: 360 }}
             style={{ x: hue }}
-          >
-            Перетащите для изменения цвета темы
-          </motion.div>
+          ></motion.div>
           <Center h={65} w="100%">
             <AnimatePresence>
               {walletStore.getWalletInformation ? (

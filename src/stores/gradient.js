@@ -20,16 +20,15 @@ const LIGHT = 1;
 class GradientStore {
   uiStore = null;
   themesWorker = null;
-  themeController = null;
+  themeController = {};
   preparedDarkThemes = [null, null, null, null, null];
   preparedLightThemes = [null, null, null, null, null];
-  selectedThemes = [0, 0];
+  selectedThemes = [2, 2];
 
   constructor() {
     makeAutoObservable(this, {
       calculateTheme: action,
       setUIStore: action,
-      themeController: false,
     });
 
     this.parallelGradientSystem = new ParallelGradientSystem();
@@ -39,7 +38,7 @@ class GradientStore {
       if (core) {
         this.themeController = core.createController(
           "mainThemeController",
-          this.getTheme,
+          this._getTheme(),
           { config: core.getAnimationPreset("gentle") },
         );
       }
@@ -54,7 +53,7 @@ class GradientStore {
     const navColors = this.scaleCubehelix(275, 0.2, 0.9, 0.08, 0.1, 32);
 
     return {
-      c: "oklch(0.95 0.05 149.29)",
+      c: "oklch(0.97 0.1 100.29)",
       ac: "oklch(0.89 0.2631 111.18)",
       bs: "2px 1px rgba(25, 100, 50, 0.05)",
       bg: [colors.slice(0, 6), 64, 45, 135], // 6 цветов, number, angle1, angle2
@@ -79,32 +78,7 @@ class GradientStore {
   }
 
   get animatedTheme() {
-    return this.themeController?.springs || this.getTheme;
-  }
-
-  get getTheme() {
-    if (!this.uiStore) {
-      return this.getColorTheme(STANDART_DARK);
-    }
-
-    const selectedThemeIndex =
-      this.selectedThemes[this.uiStore.themeIsDark ? 0 : 1];
-    const themeData = this.uiStore.themeIsDark
-      ? this.preparedDarkThemes[selectedThemeIndex]
-      : this.preparedLightThemes[selectedThemeIndex];
-
-    if (!themeData) {
-      const fallback = this.uiStore.themeIsDark
-        ? STANDART_DARK
-        : STANDART_LIGHT;
-      return this.getColorTheme(fallback);
-    }
-
-    const theme = this.getColorTheme(themeData);
-    return {
-      ...theme,
-      bWG: this.blackWhiteGradient,
-    };
+    return this.themeController.springs;
   }
 
   // Все вспомогательные методы остаются без изменений
@@ -128,6 +102,34 @@ class GradientStore {
 
   get getRainbowGradient() {
     return RAINBOWGRADIENT;
+  }
+
+  _getTheme() {
+    logger.warning("getTheme");
+    if (!this.uiStore) {
+      return this.getColorTheme(STANDART_DARK);
+    }
+
+    const selectedThemeIndex =
+      this.selectedThemes[this.uiStore.themeIsDark ? 0 : 1];
+    logger.debug(selectedThemeIndex, JSON.stringify(this.selectedThemes));
+
+    const themeData = this.uiStore.themeIsDark
+      ? this.preparedDarkThemes[selectedThemeIndex]
+      : this.preparedLightThemes[selectedThemeIndex];
+
+    if (!themeData) {
+      const fallback = this.uiStore.themeIsDark
+        ? STANDART_DARK
+        : STANDART_LIGHT;
+      return this.getColorTheme(fallback);
+    }
+
+    const theme = this.getColorTheme(themeData);
+    return {
+      ...theme,
+      bWG: this.blackWhiteGradient,
+    };
   }
 
   // Единый метод преобразования любой темы в стандартный формат
@@ -175,7 +177,7 @@ class GradientStore {
 
   // Вспомогательный метод для извлечения цветов из CSS градиента
   extractColorsFromGradient(gradient) {
-    // Извлекаем oklch цвета из градиента
+    // Извлекаем ``oklch цвета из градиента
     const oklchMatches = gradient.match(/oklch\([^)]+\)/g);
     if (oklchMatches && oklchMatches.length >= 4) {
       return oklchMatches.slice(0, 4);
@@ -282,6 +284,35 @@ class GradientStore {
 
   // Единый метод для получения темы в финальном формате
   getColorTheme = (theme) => {
+    const background = this.circleGradient(
+      theme.bg[0],
+      theme.bg[1],
+      theme.bg[2],
+      theme.bg[3],
+    );
+
+    const navBarButtonBackground = this.circleGradient(
+      theme.nbbb[0],
+      theme.nbbb[1],
+      theme.nbbb[2],
+      theme.nbbb[3],
+    );
+
+    return {
+      color: theme.c,
+      accentColor: theme.c,
+      boxShadow: theme.bs,
+      background: background,
+      // background: 'transparent',
+      navBarButtonBackground: navBarButtonBackground,
+      buttonStartColor: theme.nbbb[0][0],
+      buttonStopColor: theme.nbbb[0][3],
+      navBarButtonText: theme.nbbt,
+      navBarActiveButtonText: theme.nbabt,
+    };
+  };
+
+  getColorNormalisedTheme = (theme) => {
     const normalized = this.normalizeTheme(theme);
 
     return {
@@ -300,6 +331,7 @@ class GradientStore {
         normalized.nbbb[2],
         normalized.nbbb[3],
       ),
+
       buttonStartColor: normalized.nbbb[0][0],
       buttonStopColor: normalized.nbbb[0][3],
       navBarButtonText: normalized.nbbt,
@@ -308,6 +340,7 @@ class GradientStore {
   };
 
   calculateTheme = (themeType, themeIndex) => {
+    // logger.debug("calculateTheme" + themeType, "index" + parseInt(themeIndex));
     const isDark = themeType === DARK;
     const targetArray = isDark
       ? this.preparedDarkThemes
@@ -323,7 +356,11 @@ class GradientStore {
       case 1:
         calculatedTheme = isDark ? STANDART_DARK : STANDART_LIGHT;
         break;
-      case 2:
+      case 22:
+        calculatedTheme = this.generateAdvancedGradientTheme(isDark);
+        break;
+
+      case 22:
         calculatedTheme = this.generateAdvancedGradientTheme(isDark);
         break;
       case 3:
@@ -346,31 +383,33 @@ class GradientStore {
   };
 
   themesInit() {
+    let darkCanWork = true;
+    let lightCanWork = true;
+
     this.themesWorker = setInterval(() => {
-      let hasWork = false;
-
-      this.preparedDarkThemes.forEach((theme, index) => {
-        if (theme === null) {
-          this.calculateTheme(DARK, index);
-          hasWork = true;
-          return false;
-        }
-      });
-
-      if (!hasWork) {
-        this.preparedLightThemes.forEach((theme, index) => {
-          if (theme === null) {
-            this.calculateTheme(LIGHT, index);
-            hasWork = true;
-            return false;
+      if (darkCanWork) {
+        for (let i = 0; i < 5; i++) {
+          if (this.preparedDarkThemes[i] === null) {
+            this.calculateTheme(DARK, i);
+            darkCanWork = false;
+            lightCanWork = true;
+            break;
           }
-        });
+        }
+      } else {
+        for (let i = 0; i < 5; i++) {
+          if (this.preparedLightThemes[i] === null) {
+            this.calculateTheme(LIGHT, i);
+            darkCanWork = true;
+            lightCanWork = false;
+            break;
+          }
+        }
       }
 
-      if (!hasWork) {
-        clearInterval(this.themesWorker);
+      if (lightCanWork && darkCanWork) {
         this.themesWorker = null;
-        logger.info("All themes calculated");
+        logger.success("All themes calculated!!!", null, 30);
       }
     }, 1000);
   }
@@ -379,29 +418,16 @@ class GradientStore {
     reaction(
       () => this.uiStore?.themeIsDark,
       (isDark) => {
-        logger.info(`Theme changed to: ${isDark ? "dark" : "light"}`);
-
-        if (this.themeController) {
-          // Анимируем на новую тему
-          this.themeController.to(this.getTheme, {
-            ...core.getAnimationPreset("gentle"),
-            duration: 800,
-          });
-        }
+        logger.info(`Theme changed to`, isDark ? "dark" : "light");
+        this.switchTheme();
       },
     );
   }
 
-  switchTheme = (themeIndex) => {
-    if (themeIndex < 0 || themeIndex >= 5) return;
-
-    const currentThemeType = this.uiStore?.themeIsDark ? 0 : 1;
-    this.selectedThemes[currentThemeType] = themeIndex;
-
-    if (this.themeController) {
-      this.themeController.to(this.getTheme, {
-        ...core.getAnimationPreset("bouncy"),
-        duration: 600,
+  switchTheme = () => {
+    if (this.themeController.springs) {
+      this.themeController.to(this._getTheme(), {
+        ...core.getAnimationPreset("ultraSpringTheme"),
       });
     }
   };
@@ -410,9 +436,11 @@ class GradientStore {
   scaleGradient = (colors, number = 64) =>
     chroma.bezier(colors).scale().mode("oklch").colors(number).join(", ");
 
-  circleGradient = (colors, number = 64, angle, angleTwo) =>
-    `radial-gradient(in oklch circle at ${angle}% ${angleTwo}%, ${this.scaleGradient(colors, number)})`;
-
+  circleGradient = (colors, number = 64, angle, angleTwo) => {
+    const cg = `radial-gradient(in oklch circle at ${angle}% ${angleTwo}%, ${this.scaleGradient(colors, number)})`;
+    return cg;
+    // logger.info("Circle gradient colors " + number, JSON.stringify(cg));
+  };
   linearAngleGradient = (colors, number = 64, angle) =>
     `linear-gradient(${angle}deg in oklch, ${this.scaleGradient(colors, number)})`;
 

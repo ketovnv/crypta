@@ -582,15 +582,22 @@ class Core {
       ...options,
     });
 
+    // this.controllers.set(name, api);
+
     const api = {
       controller,
       name,
       springs: controller.springs,
 
       to: (values, customConfig) => {
-        this.activeAnimations.add(name);
+        logger.info(
+          "start from",
+          JSON.stringify(controller.springs.background),
+        );
+        logger.info("start to", JSON.stringify(values.background));
+        // this.activeAnimations.add(name);
         return controller.start({
-          values,
+          ...values,
           config: customConfig || options.config,
           onRest: () => {
             this.activeAnimations.delete(name);
@@ -636,7 +643,6 @@ class Core {
         this.activeAnimations.delete(name);
       },
     };
-
     this.controllers.set(name, api);
     return api;
   }

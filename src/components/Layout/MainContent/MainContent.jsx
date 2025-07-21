@@ -12,21 +12,21 @@ import { LJ } from "@components/logger/LJ.jsx";
 export const MainContent = observer(() => {
   return (
     <AppShell.Main>
-      <animated.div
-        style={{
-          ...gradientStore.animatedTheme,
-          // background: "transparent",
-          height: "100vh",
-          width: "100vw",
-          position: "absolute",
-          top: 0,
-          left: 0,
-        }}
-      >
-        <PageTransition />
-      </animated.div>
-      {/*</animated.div>*/}
-
+      <div>
+        <animated.div
+          style={{
+            ...gradientStore.animatedTheme,
+            // background: "transparent",
+            height: "100vh",
+            width: "100vw",
+            position: "absolute",
+            top: 0,
+            left: 0,
+          }}
+        >
+          <PageTransition />
+        </animated.div>
+      </div>
       {/*<SmoothCursor />*/}
     </AppShell.Main>
   );

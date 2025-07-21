@@ -49,20 +49,20 @@ const ThemeToggle = observer(() => {
           animationConfig,
         );
         await new Promise((resolve) => setTimeout(resolve, 500));
-        logger.debug("ThemeToggle", "start3");
+        // logger.debug("ThemeToggle", "start3");
         await ctrl.start(
           { filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0.3))" },
           animationConfig,
         );
-        logger.debug("ThemeToggle", "start4");
+        // logger.debug("ThemeToggle", "start4");
       } else {
-        logger.debug("ThemeToggle", "star5");
+        // logger.debug("ThemeToggle", "star5");
         await ctrl.start({
           opacity: 0,
           scale: 0.1,
           filter: "drop-shadow(0 0 0 rgba(255, 196, 0, 0))",
         });
-        logger.debug("ThemeToggle", "star6");
+        // logger.debug("ThemeToggle", "star6");
       }
     },
   });
