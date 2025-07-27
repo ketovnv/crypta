@@ -7,7 +7,7 @@ import GradientText from "@animations/involved/GradientText.jsx";
 import { Bun } from "../SvgIcons/Bun";
 import { ReactSVG } from "../SvgIcons/ReactSVG";
 import { uiStore } from "@stores/ui";
-import { gradientStore } from "@stores/gradient";
+import { GradientMaker } from "@components/classes/GradientMaker";
 import { Etherium } from "../SvgIcons/Etherium";
 import { Vite } from "../SvgIcons/Vite";
 import { Tailwindcss } from "../SvgIcons/Tailwindcss";
@@ -138,7 +138,7 @@ export const MainFooter = observer(() => {
                   {["ChromaJS"].includes(link[0]) && (
                     <GradientText
                       fontSize={26}
-                      colors={gradientStore.getRainbowGradient}
+                      colors={GradientMaker.getRainbowGradient}
                       fontWeight={700}
                     >
                       <motion.span>{link[0]}</motion.span>

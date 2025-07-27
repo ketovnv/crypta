@@ -16,82 +16,82 @@ mod win_effects;
 use crate::win_effects::{ColorType, EffectSettings, OklchColor, WindowEffect};
 
 // Команда для запуска лог-сервера Bun
-#[tauri::command]
-async fn start_log_server() -> Result<String, String> {
-    let output = Command::new("bun")
-        .args(&["run", "log-server"])
-        .current_dir(".")
-        .spawn();
-
-    match output {
-        Ok(_) => {
-            log::info!("Лог-сервер запущен успешно");
-            Ok("Лог-сервер запущен".to_string())
-        }
-        Err(e) => {
-            let error_msg = format!("Ошибка запуска лог-сервера: {}", e);
-            log::error!("{}", error_msg);
-            Err(error_msg)
-        }
-    }
-}
+// #[tauri::command]
+// async fn start_log_server() -> Result<String, String> {
+//     let output = Command::new("bun")
+//         .args(&["run", "log-server"])
+//         .current_dir(".")
+//         .spawn();
+//
+//     match output {
+//         Ok(_) => {
+//             log::info!("Лог-сервер запущен успешно");
+//             Ok("Лог-сервер запущен".to_string())
+//         }
+//         Err(e) => {
+//             let error_msg = format!("Ошибка запуска лог-сервера: {}", e);
+//             log::error!("{}", error_msg);
+//             Err(error_msg)
+//         }
+//     }
+// }
 
 // Команда для отправки тестового лога
-#[tauri::command]
-async fn send_test_log(level: String, message: String) -> Result<(), String> {
-    match level.as_str() {
-        "error" => log::error!("{}", message),
-        "warn" => log::warn!("{}", message),
-        "info" => log::info!("{}", message),
-        "debug" => log::debug!("{}", message),
-        _ => log::info!("{}", message),
-    }
-    Ok(())
-}
+// #[tauri::command]
+// async fn send_test_log(level: String, message: String) -> Result<(), String> {
+//     match level.as_str() {
+//         "error" => log::error!("{}", message),
+//         "warn" => log::warn!("{}", message),
+//         "info" => log::info!("{}", message),
+//         "debug" => log::debug!("{}", message),
+//         _ => log::info!("{}", message),
+//     }
+//     Ok(())
+// }
 
 // Команда для получения console.log из фронтенда
-#[tauri::command]
-async fn console_log(level_str: String, message: String, source: Option<String>) -> Result<(), String> {
-    let log_level = match level_str.to_lowercase().as_str() {
-        "error" => log::Level::Error,
-        "warn" => log::Level::Warn,
-        "info" => log::Level::Info,
-        "debug" => log::Level::Debug,
-        "trace" => log::Level::Trace,
-        _ => log::Level::Info, // Уровень по умолчанию, если строка не распознана
-    };
-    // Теперь log_level имеет тип log::Level
-    websocket_logger::send_websocket_log(log_level, &message, source.as_deref());
-    Ok(())
-}
+// #[tauri::command]
+// async fn console_log(level_str: String, message: String, source: Option<String>) -> Result<(), String> {
+//     let log_level = match level_str.to_lowercase().as_str() {
+//         "error" => log::Level::Error,
+//         "warn" => log::Level::Warn,
+//         "info" => log::Level::Info,
+//         "debug" => log::Level::Debug,
+//         "trace" => log::Level::Trace,
+//         _ => log::Level::Info, // Уровень по умолчанию, если строка не распознана
+//     };
+//     // Теперь log_level имеет тип log::Level
+//     websocket_logger::send_websocket_log(log_level, &message, source.as_deref());
+//     Ok(())
+// }
 
 // Команда для отправки структурированных логов из фронтенда
-#[tauri::command]
-async fn frontend_log(
-    level: String,
-    message: String,
-    file: Option<String>,
-    line: Option<u32>,
-    component: Option<String>,
-) -> Result<(), String> {
-    let log_level = match level.to_lowercase().as_str() {
-        "error" => log::Level::Error,
-        "warn" => log::Level::Warn,
-        "info" => log::Level::Info,
-        "debug" => log::Level::Debug,
-        "trace" => log::Level::Trace,
-        _ => log::Level::Info, // Уровень по умолчанию, если строка не распознана
-    };
-    let source_info = match (file, line, component) {
-        (Some(f), Some(l), Some(c)) => Some(format!("{}:{}:{}", c, f, l)),
-        (Some(f), Some(l), None) => Some(format!("{}:{}", f, l)),
-        (None, None, Some(c)) => Some(c),
-        _ => None,
-    };
-
-    websocket_logger::send_websocket_log(log_level, &message, source_info.as_deref());
-    Ok(())
-}
+// #[tauri::command]
+// async fn frontend_log(
+//     level: String,
+//     message: String,
+//     file: Option<String>,
+//     line: Option<u32>,
+//     component: Option<String>,
+// ) -> Result<(), String> {
+//     let log_level = match level.to_lowercase().as_str() {
+//         "error" => log::Level::Error,
+//         "warn" => log::Level::Warn,
+//         "info" => log::Level::Info,
+//         "debug" => log::Level::Debug,
+//         "trace" => log::Level::Trace,
+//         _ => log::Level::Info, // Уровень по умолчанию, если строка не распознана
+//     };
+//     let source_info = match (file, line, component) {
+//         (Some(f), Some(l), Some(c)) => Some(format!("{}:{}:{}", c, f, l)),
+//         (Some(f), Some(l), None) => Some(format!("{}:{}", f, l)),
+//         (None, None, Some(c)) => Some(c),
+//         _ => None,
+//     };
+//
+//     websocket_logger::send_websocket_log(log_level, &message, source_info.as_deref());
+//     Ok(())
+// }
 
 // Команда для управления заголовком окна
 #[tauri::command]
@@ -251,10 +251,10 @@ fn main() {
             create_color_harmony,
             create_oklch_gradient,
             // Логирование
-            start_log_server,
-            send_test_log,
-            console_log,
-            frontend_log,
+//             start_log_server,
+//             send_test_log,
+//             console_log,
+//             frontend_log,
             // Интерфейс
             toggle_titlebar
         ])
@@ -262,26 +262,26 @@ fn main() {
             log::info!("🚀 Crypta приложение запускается...");
 
             // Инициализируем WebSocket логгер
-            websocket_logger::init_websocket_logger("ws://localhost:9999/ws");
+//             websocket_logger::init_websocket_logger("ws://localhost:9999/ws");
 
             // Запускаем лог-сервер автоматически
-            tauri::async_runtime::spawn(async {
-                // Небольшая задержка перед запуском лог-сервера
-                tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
-
-                if let Err(e) = start_log_server().await {
-                    crate::ws_error!("Не удалось запустить лог-сервер: {}", e);
-                } else {
-                    crate::ws_info!("📊 Лог-сервер доступен по адресу: http://localhost:9999");
-
-                    // Отправляем тестовые логи после запуска сервера
-                    tokio::time::sleep(tokio::time::Duration::from_secs(2)).await;
-                    crate::ws_info!("😺 WebSocket логгер подключен");
-                    crate::ws_warn!("👾️ Тестовое предупреждение");
-                    crate::ws_error!("☠️ Тестовая ошибка");
-                    crate::ws_debug!("👻 Тестовое отладочное сообщение");
-                }
-            });
+//             tauri::async_runtime::spawn(async {
+//                 // Небольшая задержка перед запуском лог-сервера
+//                 tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
+//
+//                 if let Err(e) = start_log_server().await {
+//                     crate::ws_error!("Не удалось запустить лог-сервер: {}", e);
+//                 } else {
+//                     crate::ws_info!("📊 Лог-сервер доступен по адресу: http://localhost:9999");
+//
+//                     // Отправляем тестовые логи после запуска сервера
+//                     tokio::time::sleep(tokio::time::Duration::from_secs(2)).await;
+//                     crate::ws_info!("😺 WebSocket логгер подключен");
+//                     crate::ws_warn!("👾️ Тестовое предупреждение");
+//                     crate::ws_error!("☠️ Тестовая ошибка");
+//                     crate::ws_debug!("👻 Тестовое отладочное сообщение");
+//                 }
+//             });
 
             // Применяем эффект по умолчанию к главному окну
             if let Some(webview_window) = app.get_webview_window("main") {

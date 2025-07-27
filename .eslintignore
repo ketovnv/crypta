@@ -24,3 +24,4 @@ tests/
 .DS_Store
 .env
 !.env.example
+/src/components/classes/gradient.js

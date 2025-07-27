@@ -5,18 +5,15 @@
 import { AppShell, Group } from "@mantine/core";
 import { observer } from "mobx-react-lite";
 import classes from "./MainHeader.module.css";
-// import { useEventListener, useViewportSize } from "@mantine/hooks";
 import { animated, config, useTransition } from "@react-spring/web";
 import { uiStore } from "@stores/ui";
 import { motion, AnimatePresence } from "motion/react";
 import { SpringAppName } from "@animations/involved/units/SpringAppName";
 import HeaderBitcoin from "@components/Layout/SvgIcons/HeaderBitcoin";
-import { walletStore } from "@stores/wallet.js";
 import ThemeToggle from "@components/Layout/MainHeader/ThemeToggle.jsx";
 import React from "react";
-// import { consoleGradient } from "@components/logger/ConsoleGradient.js";
+
 import { logger } from "@stores/logger.js";
-import { SingleSpringPresence } from "@animations/involved/SingleSpringPresence.js";
 
 export const MainHeader = observer(() => {
   logger.logRandomColors("Header 🪖🪖🪖", "render");

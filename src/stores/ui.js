@@ -1,8 +1,7 @@
 import { action, makeAutoObservable, reaction } from "mobx";
-import { gradientStore } from "./gradient";
 import { logger } from "./logger.js";
-import nBMParams from "../animations/configs/navBarMoving.json";
 import { core } from "@stores/core.js";
+import { themeStore } from "@stores/theme.js";
 
 const APP_NAME = "ReactApproveAppkit";
 const appNameArray = APP_NAME.split("");
@@ -35,7 +34,7 @@ class UiStore {
       setAppkitMethods: action,
       setThemeIsVeryColorised: action,
     });
-    gradientStore.setUIStore(this);
+    themeStore.setUIStore(this);
   }
 
   get getAppNameArray() {
@@ -43,7 +42,8 @@ class UiStore {
   }
 
   get theme() {
-    return { ...gradientStore.getTheme };
+    //temporary
+    return { ...themeStore._getTheme() };
   }
 
   get getAppNameIsHover() {

@@ -1,7 +1,6 @@
 import "@reown/appkit-wallet-button/react";
 import { observer } from "mobx-react-lite";
 import { useAppKitTheme, useDisconnect } from "@reown/appkit/react";
-import { logger } from "@stores/logger.js";
 import React, { useEffect } from "react";
 import {
   AnimatePresence,
@@ -14,14 +13,14 @@ import { uiStore } from "@stores/ui.js";
 import { walletStore } from "@stores/wallet.js";
 import { animated } from "@react-spring/web";
 import classes from "./Home.module.css";
-import AppearingText from "@animations/Examples/AppearingText/AppearingText.js";
+import AppearingText from "@animations/involved/AppearingText/AppearingText";
 import { eventsStore } from "@stores/events.js";
-import GradientText from "@animations/involved/GradientText.jsx";
+import GradientText from "@animations/involved/GradientText";
 
 import { Google } from "@components/Layout/SvgIcons/Google.jsx";
 import { Metamask } from "@components/Layout/SvgIcons/Metamask.jsx";
 import { Center, Group } from "@mantine/core";
-import { gradientStore } from "@stores/gradient.js";
+// import { gradientStore } from "@components/classes/gradient.js";
 import { Skull } from "@components/Layout/SvgIcons/Skull.jsx";
 
 const Home = observer(() => {

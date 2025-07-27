@@ -9,6 +9,7 @@ import { GlowingEffect } from "@animations/involved/units/GlowingEffect.jsx";
 import { logger } from "@stores/logger.js";
 import params from "@animations/configs/pageTransition.json";
 import { LJ } from "@components/logger/LJ.jsx";
+import PerformanceMonitor from "@components/logger/PerformanceMonitor.js";
 // import QuickStart from "@animations/QuickStart.jsx";
 // return router.getCurrentPageComponent[1][2] ? (
 //     <main className="pageWrapper">
@@ -134,7 +135,8 @@ export const PageTransition = observer(() => {
           🏩
         </motion.span>
         Hello Page!
-        <LJ json={core.getMetrics()} />
+        {/*<PerformanceMonitor />*/}
+        {/*<LJ json={core.getMetrics()} />*/}
       </motion.div>
       <motion.div
         layout

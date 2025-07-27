@@ -15,7 +15,6 @@ import GradientText from "@animations/involved/GradientText";
 import { uiStore } from "@stores/ui.js";
 import { Etherium } from "@components/Layout/SvgIcons/Etherium.jsx";
 import { LJ } from "@components/logger/LJ.jsx";
-import { gradientStore } from "@stores/gradient.js";
 
 export const MainNavbar = observer(() => {
   const icons = {

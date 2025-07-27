@@ -1,7 +1,6 @@
 import classes from "./MainHeader.module.css";
 import { animated, config, useSpring } from "@react-spring/web";
 import { FiMoon, FiSun } from "react-icons/fi";
-import { gradientStore } from "@stores/gradient.js";
 import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 import { logger } from "@stores/logger.js";
 import { observer } from "mobx-react-lite";

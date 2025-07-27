@@ -7,7 +7,8 @@ import classes from "./ErrorBoundary.module.css";
 import { logger } from "@stores/logger.js";
 import { uiStore } from "@stores/ui.js";
 import GradientText from "@animations/involved/GradientText.jsx";
-import { gradientStore } from "@stores/gradient.js";
+import { GradientMaker } from "@components/classes/GradientMaker.js";
+// import { gradientStore } from "@components/classes/gradient.js";
 
 const NotFoundError = ({ message }) => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const DefaultError = ({ message }) => {
           }}
         >
           <GradientText
-            colors={gradientStore.getRedGradient}
+            colors={GradientMaker.getRedGradient}
             style={{
               fontFamily: "Tactic Round Bld",
               textAlign: "center",
