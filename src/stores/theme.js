@@ -15,6 +15,7 @@ const ultraSpringTheme = {
 
 import { core } from "./core.js";
 import { logger } from "@stores/logger.js";
+import { GlobalControlOld } from "@components/classes/GlobalControlOld.js";
 
 class ThemeStore {
   uiStore = null;
@@ -24,33 +25,54 @@ class ThemeStore {
     [null, null, null, null, null],
     [null, null, null, null, null],
   ];
-  selectedThemes = [0, 0];
-  selectedThemeType = this.uiStore?.themeIsDark ? 0 : 1;
+  selectedThemes = [1, 1];
   selectedThemeIndex = this.selectedThemes[this.selectedThemeType];
+  2;
 
   constructor() {
     makeAutoObservable(this, {
+      setupPreparedTheme: action,
       calculateTheme: action,
       setUIStore: action,
     });
 
     // Инициализируем контроллер с задержкой
     setTimeout(() => {
-      if (core) {
-        this.themeController = core.createController(
-          "mainThemeController",
-          this._getTheme(),
-          { config: ultraSpringTheme },
-        );
-      }
+      if (core) this.setThemeController();
     }, 100);
-
-    this.themesInit();
+    this.themesInit().then((res) => {
+      logger.logJSON("Черная успешно установлена", this.preparedThemes[0][1]);
+      // logger.logJSON("Белая успешно установлена", this.preparedThemes[1][1]);
+    });
   }
 
   get animatedTheme() {
     return this.themeController.springs;
   }
+
+  get selectedThemeType() {
+    return this.uiStore?.themeIsDark ? DARK : LIGHT;
+  }
+
+  setThemeController = () => {
+    this.themeController = core.createController(
+      "mainThemeController",
+      this._getTheme(),
+      {
+        config: ultraSpringTheme,
+        reactions: [
+          {
+            tracker: () => this.selectedThemeType,
+            effect: (DARK, ctrl) => {
+              logger.info(`Theme changed to ${DARK ? "dark" : "light"}`);
+              ctrl.to(this._getTheme(), ultraSpringTheme);
+            },
+            options: { fireImmediately: true },
+          },
+        ],
+      },
+    );
+  };
 
   setupPreparedTheme = (themeType, themeIndex) =>
     (this.preparedThemes[themeType][themeIndex] = GradientMaker.calculateTheme(
@@ -65,7 +87,7 @@ class ThemeStore {
   async themesInit() {
     let darkCanWork = true;
     let lightCanWork = true;
-
+    // GlobalControlOld.interpolatorInit();
     if (
       this.preparedThemes[this.selectedThemeType][this.selectedThemeIndex] ===
       null
@@ -77,36 +99,37 @@ class ThemeStore {
       await this.delay(1000);
     }
 
-    this.themesWorker = setInterval(() => {
-      if (darkCanWork) {
-        for (let i = 0; i < 5; i++) {
-          if (this.preparedThemes[0][i] === null) {
-            GradientMaker.calculateTheme(DARK, i);
-            darkCanWork = false;
-            lightCanWork = true;
-            break;
-          }
-        }
-      } else {
-        for (let i = 0; i < 5; i++) {
-          if (this.preparedThemes[1][i] === null) {
-            GradientMaker.calculateTheme(LIGHT, i);
-            darkCanWork = true;
-            lightCanWork = false;
-            break;
-          }
-        }
-      }
-
-      if (lightCanWork && darkCanWork) {
-        this.themesWorker = null;
-        logger.success("All themes calculated!!!", null, 30);
-      }
-    }, 1000);
+    // this.themesWorker = setInterval(() => {
+    //   if (darkCanWork) {
+    //     for (let i = 0; i < 5; i++) {
+    //       if (this.preparedThemes[0][i] === null) {
+    //         GradientMaker.calculateTheme(DARK, i);
+    //         darkCanWork = false;
+    //         lightCanWork = true;
+    //         break;
+    //       }
+    //     }
+    //   } else {
+    //     for (let i = 0; i < 5; i++) {
+    //       if (this.preparedThemes[1][i] === null) {
+    //         GradientMaker.calculateTheme(LIGHT, i);
+    //         darkCanWork = true;
+    //         lightCanWork = false;
+    //         break;
+    //       }
+    //     }
+    //   }
+    //
+    //   if (lightCanWork && darkCanWork) {
+    //     this.themesWorker = null;
+    //     return "All themes calculated!!!";
+    //   }
+    // }, 1000);
   }
 
   setUIStore = (store) => {
     this.uiStore = store;
+    logger.success("UiStore set");
     this.setupReactions();
   };
 

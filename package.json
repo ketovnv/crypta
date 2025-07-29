@@ -40,6 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "axios": "^1.11.0",
+    "bun-plugin-tailwind": "^0.0.15",
     "chalk": "^5.4.1",
     "chroma-js": "^3.1.2",
     "classnames": "^2.5.1",

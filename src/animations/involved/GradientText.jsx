@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import classes from "./GradientText.module.css";
 import { uiStore } from "@stores/ui.js";
 import { GradientMaker } from "@components/classes/GradientMaker.js";
+import { logger } from "@stores/logger.js";
 
 export default function GradientText({
   children,
@@ -25,6 +26,7 @@ export default function GradientText({
         : ["#007700", "#777700", "#770077", "#990000", "#000088"];
   }
 
+  logger.warning("GradientText", "Gradienr text Render!!!", 32);
   return (
     <motion.span
       className={classes.textContent}

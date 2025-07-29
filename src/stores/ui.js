@@ -35,6 +35,7 @@ class UiStore {
       setThemeIsVeryColorised: action,
     });
     themeStore.setUIStore(this);
+    this.setupReactions();
   }
 
   get getAppNameArray() {

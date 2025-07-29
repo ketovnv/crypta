@@ -1,0 +1,1 @@
+export type OKLCHFast = [number, number, number, number]; // [L, C, H, Alpha]

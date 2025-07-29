@@ -1,3 +1,6 @@
+import { GlobalControlOldVariant } from "@components/classes/GlobalControlOldVariant.js";
+
+GlobalControlOldVariant.interpolatorInit();
 import { AppShell, MantineProvider } from "@mantine/core";
 import { MainNavbar } from "./MainNavbar";
 import { MainHeader } from "./MainHeader";
@@ -5,8 +8,8 @@ import { MainFooter } from "./MainFooter";
 import { logger } from "@/stores/logger.js";
 import { AppKitObserver } from "./AppKitObserver";
 import { MainContent } from "@components/Layout/MainContent/index.js";
-// import { AnimationObserver } from "@animations/involved/AnimationObserver.jsx";
 import { ErrorBoundary } from "@components/pages/ErrorNotification/ErrorBoundary.jsx";
+import LoggerTest from "@components/LoggerTest.jsx";
 // import { consoleGradient } from "@components/logger/ConsoleGradient.js";
 
 const Layout = () => {
@@ -42,9 +45,9 @@ const Layout = () => {
           padding={0}
         >
           <AppKitObserver />
-          {/*<AnimationObserver />*/}
           <MainHeader />
           <MainNavbar />
+          {/*<LoggerTest />*/}
           <MainContent />
           <MainFooter />
         </AppShell>

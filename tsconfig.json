@@ -17,7 +17,7 @@
       "@react-spring/web",
       "node",
       "bun"
-    ], 
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",

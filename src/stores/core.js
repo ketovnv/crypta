@@ -1,15 +1,11 @@
 import { makeAutoObservable, runInAction, reaction } from "mobx";
 import { Controller } from "@react-spring/web";
+import { raf } from "@react-spring/rafz";
 import seedrandom from "seedrandom";
 import { useEffect, useRef, useState } from "react";
 import { logger } from "./logger.js";
 
 class Core {
-  springs = new Map();
-  controllers = new Map();
-  activeAnimations = new Set();
-  visibilityStates = new Map();
-
   constructor() {
     makeAutoObservable(this);
   }
@@ -17,12 +13,14 @@ class Core {
   createController(
     name,
     initialValues,
-    options = { config: { tension: 120, friction: 14, mass: 1 } },
+    options = { config: this.configManager.getConfig("gentle") },
   ) {
     const controller = new Controller({
       ...initialValues,
       ...options,
     });
+
+    // this.controllers.set(name, api);
 
     const api = {
       controller,
@@ -40,19 +38,20 @@ class Core {
           ...values,
           config: customConfig || options.config,
           onRest: () => {
-            this.activeAnimations.delete(name);
+            // this.activeAnimations.delete(name);
+            logger.success("animation", "completed", 30);
             options.onComplete?.();
           },
         });
       },
 
       start: (values, customConfig) => {
-        this.activeAnimations.add(name);
+        // this.activeAnimations.add(name);
         return controller.start({
           ...values,
           config: customConfig?.config || options.config,
           onRest: () => {
-            this.activeAnimations.delete(name);
+            // this.activeAnimations.delete(name);
             customConfig?.onComplete?.() || options.onComplete?.();
           },
         });
@@ -83,7 +82,7 @@ class Core {
         this.activeAnimations.delete(name);
       },
     };
-    this.controllers.set(name, api);
+    // this.controllers.set(name, api);
     return api;
   }
 

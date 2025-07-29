@@ -79,7 +79,7 @@ const DefaultError = ({ message }) => {
           }}
         >
           <GradientText
-            colors={GradientMaker.getRedGradient}
+            colors={GradientMaker.getRedGradient()}
             style={{
               fontFamily: "Tactic Round Bld",
               textAlign: "center",
